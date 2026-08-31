@@ -1,0 +1,142 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { relative, join } from 'node:path';
+import type { Plugin } from 'vite';
+import { transformSource } from './transform';
+
+const COLLECTOR_PATH = '/__appmap/interactions';
+const COLLECTOR_BODY_LIMIT = 50 * 1024 * 1024;
+const INTERACTION_RECORDER_VIRTUAL_ID = 'virtual:appmap-interaction-recorder';
+const RESOLVED_INTERACTION_RECORDER_VIRTUAL_ID = '\0' + INTERACTION_RECORDER_VIRTUAL_ID;
+
+// Build-time instrumentation (docs/design/03). This plugin is the React
+// agent's analogue of the Go agent's toolexec wrapper — except Vite
+// transforms are a first-class, documented extension point, so we don't
+// have to own the toolchain. The transform itself is host-agnostic and
+// lives in ./transform (also usable as a standalone pre-build pass for
+// runtimes without a loader hook, e.g. Deno); this plugin selects files,
+// gates on mode, and hosts the interaction collector.
+//
+// Labels (component / hook) are derived at runtime from naming
+// conventions. Nested functions are not instrumented — wrap those by
+// hand (instrumentHandler) where wanted.
+//
+// Gating: the transform applies in dev and test, never in production
+// builds, unless `force` overrides.
+//
+// Zero-touch interaction recording (docs/design/07): passing `app`
+// auto-injects installInteractionRecorder() into every page via
+// transformIndexHtml — the same trick @vitejs/plugin-react itself uses
+// to inject its Fast Refresh preamble. Application code (main.tsx)
+// needs no import, no call. Explicit installInteractionRecorder() is
+// still there and still documented for callers who want non-default
+// options (custom idleMs, a different collector, etc.) — de-emphasized,
+// not removed.
+
+export interface AppMapPluginOptions {
+  /** Project-root-relative directory prefixes to instrument (the
+   * appmap.yml `packages:` equivalent), e.g. ['src']. */
+  include: string[];
+  /** Directory prefixes to skip within include. */
+  exclude?: string[];
+  /** Instrument even in production builds. Default: never. */
+  force?: boolean;
+  /** App name for interaction AppMaps. Set to auto-inject
+   * installInteractionRecorder() into every page with no application
+   * code changes; omit to leave interaction recording opt-in and
+   * hand-wired (see installInteractionRecorder). */
+  app?: string;
+}
+
+export function appmapVitePlugin(options: AppMapPluginOptions): Plugin {
+  let root = process.cwd();
+  let enabled = true;
+
+  const selected = (id: string): string | undefined => {
+    const file = id.split('?')[0];
+    if (!/\.[jt]sx?$/.test(file) || file.includes('/node_modules/')) return undefined;
+    const rel = relative(root, file);
+    if (rel.startsWith('..')) return undefined;
+    if (!options.include.some((dir) => rel === dir || rel.startsWith(dir + '/'))) return undefined;
+    if (options.exclude?.some((dir) => rel === dir || rel.startsWith(dir + '/'))) return undefined;
+    return rel;
+  };
+
+  return {
+    name: 'appmap-instrument',
+    enforce: 'pre',
+    configResolved(config) {
+      root = config.root;
+      enabled = options.force || config.mode !== 'production';
+    },
+    // The collector (docs/design/04): browsers can't write tmp/appmap/,
+    // so the in-page recorder POSTs finished interaction AppMaps here —
+    // the remote recording protocol with roles reversed.
+    configureServer(server) {
+      const outDir = join(root, 'tmp', 'appmap', 'interactions');
+      let seq = 0;
+      server.middlewares.use(COLLECTOR_PATH, (req, res) => {
+        if (req.method !== 'POST') {
+          res.statusCode = 405;
+          res.end();
+          return;
+        }
+        let body = '';
+        req.on('data', (chunk) => {
+          body += chunk;
+          if (body.length > COLLECTOR_BODY_LIMIT) req.destroy();
+        });
+        req.on('end', () => {
+          try {
+            const appmap = JSON.parse(body);
+            const name = String(appmap?.metadata?.name ?? 'interaction')
+              .replace(/[^a-zA-Z0-9._-]+/g, '_')
+              .replace(/^_+|_+$/g, '')
+              .slice(0, 150);
+            mkdirSync(outDir, { recursive: true });
+            const file = join(outDir, `${name}_${String(++seq).padStart(3, '0')}.appmap.json`);
+            writeFileSync(file, JSON.stringify(appmap, null, 2));
+            server.config.logger.info(`appmap: wrote ${relative(root, file)}`);
+            res.statusCode = 204;
+            res.end();
+          } catch {
+            res.statusCode = 400;
+            res.end('invalid appmap json');
+          }
+        });
+      });
+    },
+    async transform(code, id) {
+      if (!enabled) return null;
+      const rel = selected(id);
+      if (!rel) return null;
+
+      return transformSource(code, {
+        relPath: rel,
+        filename: id,
+        jsx: /\.[jt]sx$/.test(id.split('?')[0]),
+      });
+    },
+    resolveId(id) {
+      if (!enabled || !options.app) return;
+      if (id === INTERACTION_RECORDER_VIRTUAL_ID) return RESOLVED_INTERACTION_RECORDER_VIRTUAL_ID;
+    },
+    load(id) {
+      if (id !== RESOLVED_INTERACTION_RECORDER_VIRTUAL_ID) return;
+      return [
+        `import { installInteractionRecorder } from '@funwithappmap/react-recorder';`,
+        `installInteractionRecorder(${JSON.stringify({ app: options.app })});`,
+      ].join('\n');
+    },
+    transformIndexHtml() {
+      if (!enabled || !options.app) return;
+      return [
+        {
+          tag: 'script',
+          attrs: { type: 'module' },
+          children: `import ${JSON.stringify(INTERACTION_RECORDER_VIRTUAL_ID)};`,
+          injectTo: 'head' as const,
+        },
+      ];
+    },
+  };
+}

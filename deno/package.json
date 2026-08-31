@@ -1,0 +1,15 @@
+{
+  "name": "funwithappmap-deno",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Deno session driver: per-request AppMap recording for Deno.serve / Supabase edge functions.",
+  "bin": {
+    "appmap-deno": "bin/appmap-deno.ts"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^3.1.3"
+  }
+}

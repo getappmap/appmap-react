@@ -1,0 +1,9 @@
+{
+  "name": "deno-edge-example",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Runnable spike (docs/design/05): a Deno.serve edge function instrumented and recorded with the deno/ driver.",
+  "scripts": {
+    "test": "node scripts/smoke.mjs"
+  }
+}

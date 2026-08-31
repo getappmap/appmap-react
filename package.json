@@ -1,0 +1,17 @@
+{
+  "name": "appmap-react",
+  "private": true,
+  "version": "0.0.1",
+  "description": "AppMap agent for React (browser) and Deno edge functions: records AppMap v1.2 from both and links frontend AppMaps to backend AppMaps via W3C Trace Context.",
+  "workspaces": [
+    "recorder",
+    "linker",
+    "deno",
+    "examples/petclinic-react",
+    "examples/deno-edge"
+  ],
+  "scripts": {
+    "test": "npm run test --workspaces --if-present",
+    "link:demo": "npm test --workspace examples/petclinic-react && node linker/bin/simulate-backend.mjs examples/petclinic-react/tmp/appmap/tests --out examples/petclinic-react/tmp/appmap/backend && node linker/bin/appmap-link.mjs examples/petclinic-react/tmp/appmap --out examples/petclinic-react/tmp/appmap/links"
+  }
+}
