@@ -194,6 +194,19 @@ EXPECT['T9 should add proper page title and meta description'] = [
 ]
 
 
+# Expectations found wrong after the fact (ACCEPTANCE-SPEC rule 4: never
+# edit EXPECTATIONS.md; say so in RESULTS.md). Each entry names the item,
+# what EXPECTATIONS.md says, what the pinned source says, and why.
+EXPECTATION_ERRATA = {
+    ('src/lib/authorization.tsx', 'checkAccess', 35): {
+        'lineno': 36,
+        'why': 'EXPECTATIONS.md cites line 35, the `const checkAccess = React.useCallback(` line; '
+               'the function itself, the arrow `({ allowedRoles }) => {`, starts on line 36 at 9506629 '
+               '(src/lib/authorization.tsx:35-36), and a function\'s lineno is where the function starts',
+    },
+}
+
+
 def labels_of(m):
     out = {}
 
@@ -217,8 +230,10 @@ def check_item(m, item):
         if not hits:
             return ('missing', None)
         problems = []
-        if item.get('lineno') and hits[0].get('lineno') != item['lineno']:
-            problems.append(f"lineno {hits[0].get('lineno')} != {item['lineno']}")
+        erratum = EXPECTATION_ERRATA.get((item['path'], item['method_id'], item.get('lineno')))
+        lineno = erratum['lineno'] if erratum else item.get('lineno')
+        if lineno and hits[0].get('lineno') != lineno:
+            problems.append(f"lineno {hits[0].get('lineno')} != {lineno}")
         if item.get('param'):
             # A parameter "contains" the expected text if its value does, or
             # (for an expected field name) if the spec's `properties` list
@@ -236,7 +251,9 @@ def check_item(m, item):
         if len(hits) < want:
             problems.append(f'called {len(hits)}x, expected >= {want}x')
         return ('wrong' if problems else 'found', {'event': quote(hits[0]), 'calls': len(hits),
-                                                    'problems': problems})
+                                                    'problems': problems,
+                                                    **({'expectation_wrong': f"line {item['lineno']} -> {lineno}: {erratum['why']}"}
+                                                       if erratum else {})})
     # http
     pairs = [(e, s) for e, s in http_pairs(m)
              if e['http_client_request']['request_method'] == item['method']
