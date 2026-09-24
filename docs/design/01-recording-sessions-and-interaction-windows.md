@@ -88,7 +88,7 @@ exactly the prologue/epilogue the doc 03 transform will inject, with
 `try/finally` (and promise `.then` chaining for async functions)
 playing the role of Go's `defer`.
 
-**Why linearized events tolerate async overlap.** AppMap v1.2 events
+**Why linearized events tolerate async overlap.** AppMap v1.12 events
 are a flat list where each `return` names its `call` via `parent_id`.
 Two in-flight fetches interleave in the stream but stay correctly
 paired — no tree structure has to be repaired when completions arrive
@@ -144,3 +144,39 @@ windows. Those are doc 04's spike.
   If real-world interaction recording shows frequent overlap (slow
   fetches + fast clicking), that surfaces as thrown errors we can
   measure, and becomes the trigger to invest in mechanism 3.
+
+## Amendment (2026-09-01): thread assignment under concurrency
+
+The "why linearized events tolerate async overlap" claim above is true
+for *pairing* (`return.parent_id` always identifies the right `call`,
+regardless of settlement order) but was incomplete for *hierarchical
+reconstruction*. `thread_id` is a required AppMap field precisely
+because a single flat, positionally-nested event stream ("push on
+call, pop on return, per thread") can only represent one call being
+open at a time on a given thread — true concurrent siblings (e.g. both
+legs of a `Promise.all`, both still open at once) violate that if they
+share a `thread_id`. The doc 01 spike's own owner-detail example
+(`getOwner` and `getVets` both fetching concurrently, sharing
+`thread_id: 1`) is exactly this shape, and would reconstruct
+incorrectly under the positional-stack model standard AppMap tooling
+uses, even though `parent_id` pairing alone stayed correct.
+
+**Fix:** `Recording` (`recorder/src/recording.ts`) now assigns threads
+based on real synchronous nesting rather than a single constant. It
+tracks `syncStack` — call ids currently *synchronously* executing,
+mirroring the real single-threaded JS call stack, popped the instant a
+call yields control back to its caller (returns, or hands back a
+pending `Promise`) — plus which threads currently have a call that has
+left its sync frame but not yet settled ("dangling"). A new call
+inherits its parent's thread when safe; when the candidate thread
+already has a dangling, non-ancestor call open (a genuine concurrent
+sibling), it gets a fresh thread instead. This requires no
+`AsyncLocalStorage`, Zone.js, or continuation-passing (mechanisms 2/3
+above stay exactly as expensive/deferred as before) — it only needs to
+know whether an invocation's result was a `Promise`, which the
+Enter/Exit wrapper already had to know.
+
+Ordinary sequential (non-overlapping) calls are unaffected and stay on
+one thread, as before. See `recorder/test/concurrency.test.ts` for the
+Promise.all case this fixes, asserted against the actual pairing
++ positional-nesting invariant standard tooling relies on.

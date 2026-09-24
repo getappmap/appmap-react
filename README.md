@@ -2,7 +2,7 @@
 
 An [AppMap](https://appmap.io) agent for React (browser) apps and Deno
 edge functions, sharing one recorder core. Together they record
-[AppMap v1.2](https://github.com/getappmap/appmap) JSON from component
+[AppMap v1.12](https://github.com/getappmap/appmap) JSON from component
 renders, hooks, event handlers, `fetch` calls, and `Deno.serve`
 requests — and the headline goal is **full-stack linking**:
 correlating frontend AppMaps with backend AppMaps via W3C Trace
@@ -28,7 +28,7 @@ specific to this repo is in `docs/design/`.
 
 ## Status
 
-Nine design docs, listed below with what each one proved. Highlights:
+Eleven design docs, listed below with what each one proved. Highlights:
 full-stack linking (doc 02) now has a real end-to-end test with no
 external dependency (doc 09), and both runtimes record with zero
 application-code changes (docs 06 and 07). Interaction-window capture
@@ -37,7 +37,7 @@ is still pending a manual real-browser run (doc 04).
 - [`recorder/`](recorder) — the recorder core (Enter/Exit + CallToken
   contract, value capture with size caps, `fetch` →
   `http_client_request`/`response` events with `traceparent` stamping,
-  AppMap v1.2 serializer), Vitest per-test recording hooks
+  AppMap v1.12 serializer), Vitest per-test recording hooks
   (`./vitest`), and the Vite plugin (`./vite`) that auto-instruments
   top-level functions in configured paths — dev/test only, with
   components and hooks labeled by naming convention.
@@ -72,6 +72,16 @@ is still pending a manual real-browser run (doc 04).
   **not** Supabase Edge Functions, which expose no equivalent hook —
   that gap is named, not silently missing. See
   [doc 06](docs/design/06-zero-touch-deno.md).
+  Work a handler hands to `EdgeRuntime.waitUntil` (runs after the
+  response is sent) is recorded too, and a recording cut off mid-write
+  is repaired rather than lost. See
+  [doc 11](docs/design/11-waituntil-background-work.md).
+- [`linker/bin/appmap-trace.mjs`](linker/bin/appmap-trace.mjs) — the
+  tracing agent: shows each interaction as an ASCII call tree and a
+  mermaid sequence diagram, and with `--baseline <dir>` shows a
+  behavior diff (added, removed and changed steps) against an earlier
+  set of recordings. Label-aware, no dependencies. See
+  [doc 10](docs/design/10-behavior-diff-tracing-agent.md).
 
 ## Quickstart
 
@@ -86,6 +96,9 @@ ls examples/petclinic-react/tmp/appmap/links/   # appmap-links.json + .puml diag
 npm test --workspace examples/deno-edge         # real deno run, if deno is on PATH
                                                  # (this also runs the real React <-> Deno
                                                  # e2e test in examples/petclinic-react, doc 09)
+
+# tracing agent: ASCII + mermaid per interaction (add --baseline <dir> to diff)
+node linker/bin/appmap-trace.mjs examples/petclinic-react/tmp/appmap
 ```
 
 To run the example app against a live PetClinicGo backend
@@ -131,3 +144,10 @@ not history rewrites.
 - [09 — real end-to-end test: React ↔ real Deno backend](docs/design/09-real-e2e-deno.md)
   (no sibling repo needed, unlike the Go e2e test — real appmap-deno
   process, real fetch, real appmap-link, on every checkout with `deno`)
+- [10 — behavior-diff tracing agent](docs/design/10-behavior-diff-tracing-agent.md)
+  (ASCII + mermaid views and a computed behavior diff; spiked by
+  `appmap-trace` over the example recordings, checked against the real
+  mermaid parser)
+- [11 — recording background work (`EdgeRuntime.waitUntil`)](docs/design/11-waituntil-background-work.md)
+  (found by the first real edge function the Deno driver met; also
+  repairs recordings cut off mid-write)

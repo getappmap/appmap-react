@@ -49,7 +49,7 @@ describe('interaction-window recording', () => {
     }
 
     const appmap = shipped[0] as any;
-    expect(appmap.version).toBe('1.2');
+    expect(appmap.version).toBe('1.12');
     expect(appmap.metadata.name).toMatch(/^click button/);
     expect(appmap.metadata.recorder.name).toBe('funwithappmap-react');
 

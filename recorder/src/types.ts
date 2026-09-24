@@ -1,8 +1,8 @@
-// AppMap data format v1.2 — the subset this agent emits.
+// AppMap data format v1.12 — the subset this agent emits.
 // https://github.com/getappmap/appmap (appmap.json spec)
 
 export interface AppMap {
-  version: '1.2';
+  version: '1.12';
   metadata: Metadata;
   classMap: ClassMapEntry[];
   events: Event[];
@@ -23,6 +23,12 @@ export interface Metadata {
   // Backend request maps only: the span-id of the frontend fetch that
   // caused this request (copied from the incoming traceparent).
   parent_span_id?: string;
+  // Set by toAppMap() when it had to synthesize returns for calls still
+  // open at serialization time (a hard teardown mid-flight — e.g. a
+  // Supabase edge function killed during EdgeRuntime.waitUntil work,
+  // docs/design/11). The map is balanced and safe to sanitize, but
+  // incomplete: some returns are synthetic.
+  truncated?: boolean;
 }
 
 export type ClassMapEntry = PackageEntry | ClassEntry | FunctionEntry;
@@ -60,6 +66,10 @@ export interface ParameterValue {
   class: string;
   value: string;
   kind?: 'req';
+  /** Element/key count for array/object values. */
+  size?: number;
+  /** Stable identity for object-valued params within one recording. */
+  object_id?: number;
 }
 
 export interface CallEvent {
@@ -80,7 +90,7 @@ export interface ReturnEvent {
   thread_id: number;
   parent_id: number;
   elapsed?: number;
-  return_value?: { class: string; value: string };
+  return_value?: { class: string; value: string; size?: number; object_id?: number };
   exceptions?: { class: string; message: string }[];
 }
 

@@ -1,5 +1,23 @@
 export type * from './types';
-export { Recording, formatValue, VALUE_SIZE_CAP, type CallToken } from './recording';
+export {
+  Recording,
+  formatValue,
+  VALUE_SIZE_CAP,
+  setValueSizeCap,
+  type CallToken,
+  type ObjectIdTracker,
+} from './recording';
+import { setValueSizeCap as __setValueSizeCap } from './recording';
+
+// APPMAP_EVENT_VALUESIZE, like the .NET agent: the in-page recorder has
+// no process.env of its own, so the Vite plugin injects this constant
+// into the client bundle (define) when the env var is set at build/dev
+// time; `typeof` is safe here even when the identifier is never defined.
+declare const __APPMAP_EVENT_VALUESIZE__: number | undefined;
+// eslint-disable-next-line no-undef
+if (typeof __APPMAP_EVENT_VALUESIZE__ !== 'undefined') {
+  __setValueSizeCap(__APPMAP_EVENT_VALUESIZE__);
+}
 export { startRecording, stopRecording, activeRecording } from './session';
 export {
   instrument,

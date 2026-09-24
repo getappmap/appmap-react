@@ -48,10 +48,20 @@ const E2E_DIR = join(EXAMPLE_ROOT, 'tmp', 'appmap', 'e2e');
 
 const PETCLINIC_GO_DIR =
   process.env.PETCLINIC_GO_DIR ??
-  join(REPO_ROOT, '..', 'FunwithAppMapandClaudeGolang', 'FunwithAppMapandClaudeGolang', 'examples', 'PetClinicGo');
+  join(REPO_ROOT, '..', 'FunwithAppMapandClaudeGolang', 'examples', 'PetClinicGo');
 
 const goAvailable = spawnSync('go', ['version']).status === 0;
 const backendAvailable = goAvailable && existsSync(join(PETCLINIC_GO_DIR, 'main.go'));
+
+if (!backendAvailable) {
+  console.warn(
+    `appmap: skipping full-stack e2e test — ${
+      !goAvailable
+        ? 'no `go` binary on PATH'
+        : `no PetClinicGo checkout at ${PETCLINIC_GO_DIR} (set PETCLINIC_GO_DIR to override)`
+    }`,
+  );
+}
 
 function freePort(): Promise<number> {
   return new Promise((resolve, reject) => {

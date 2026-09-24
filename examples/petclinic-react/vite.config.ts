@@ -12,8 +12,7 @@ const recorderSrc = (file: string) =>
 export default defineConfig({
   // appmap.yml equivalent: instrument everything under src/. The plugin
   // is dev/test-only; production builds get untouched code. `app` also
-  // zero-touch-injects installInteractionRecorder() (docs/design/07) —
-  // main.tsx does not call it.
+  // injects interaction recording without application code changes.
   plugins: [appmapVitePlugin({ include: ['src'], app: 'petclinic-react' }), react()],
   resolve: {
     alias: [

@@ -6,7 +6,7 @@ import { transformSource } from './transform';
 const COLLECTOR_PATH = '/__appmap/interactions';
 const COLLECTOR_BODY_LIMIT = 50 * 1024 * 1024;
 const INTERACTION_RECORDER_VIRTUAL_ID = 'virtual:appmap-interaction-recorder';
-const RESOLVED_INTERACTION_RECORDER_VIRTUAL_ID = '\0' + INTERACTION_RECORDER_VIRTUAL_ID;
+const RESOLVED_INTERACTION_RECORDER_VIRTUAL_ID = `\0${INTERACTION_RECORDER_VIRTUAL_ID}`;
 
 // Build-time instrumentation (docs/design/03). This plugin is the React
 // agent's analogue of the Go agent's toolexec wrapper — except Vite
@@ -17,20 +17,10 @@ const RESOLVED_INTERACTION_RECORDER_VIRTUAL_ID = '\0' + INTERACTION_RECORDER_VIR
 // gates on mode, and hosts the interaction collector.
 //
 // Labels (component / hook) are derived at runtime from naming
-// conventions. Nested functions are not instrumented — wrap those by
-// hand (instrumentHandler) where wanted.
+// conventions. Nested functions and handlers are handled by the transform.
 //
 // Gating: the transform applies in dev and test, never in production
 // builds, unless `force` overrides.
-//
-// Zero-touch interaction recording (docs/design/07): passing `app`
-// auto-injects installInteractionRecorder() into every page via
-// transformIndexHtml — the same trick @vitejs/plugin-react itself uses
-// to inject its Fast Refresh preamble. Application code (main.tsx)
-// needs no import, no call. Explicit installInteractionRecorder() is
-// still there and still documented for callers who want non-default
-// options (custom idleMs, a different collector, etc.) — de-emphasized,
-// not removed.
 
 export interface AppMapPluginOptions {
   /** Project-root-relative directory prefixes to instrument (the
@@ -40,10 +30,7 @@ export interface AppMapPluginOptions {
   exclude?: string[];
   /** Instrument even in production builds. Default: never. */
   force?: boolean;
-  /** App name for interaction AppMaps. Set to auto-inject
-   * installInteractionRecorder() into every page with no application
-   * code changes; omit to leave interaction recording opt-in and
-   * hand-wired (see installInteractionRecorder). */
+  /** App name for zero-touch interaction recording injection. */
   app?: string;
 }
 
@@ -64,6 +51,18 @@ export function appmapVitePlugin(options: AppMapPluginOptions): Plugin {
   return {
     name: 'appmap-instrument',
     enforce: 'pre',
+    config() {
+      // APPMAP_EVENT_VALUESIZE, like the .NET agent: propagate the
+      // value-size cap into the client bundle, since the in-page
+      // recorder has no process.env of its own. Read by recorder/src/
+      // index.ts at import time.
+      const raw = process.env.APPMAP_EVENT_VALUESIZE;
+      const n = raw ? Number(raw) : undefined;
+      if (n !== undefined && Number.isFinite(n) && n > 0) {
+        return { define: { __APPMAP_EVENT_VALUESIZE__: JSON.stringify(n) } };
+      }
+      return undefined;
+    },
     configResolved(config) {
       root = config.root;
       enabled = options.force || config.mode !== 'production';

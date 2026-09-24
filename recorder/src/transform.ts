@@ -1,5 +1,11 @@
 import { basename } from 'node:path';
-import { transformAsync, types as t, type BabelFileResult, type NodePath, type PluginObj } from '@babel/core';
+import {
+  transformAsync,
+  types as t,
+  type BabelFileResult,
+  type PluginObj,
+  type NodePath,
+} from '@babel/core';
 
 // The build-time instrumentation transform (docs/design/03), host-
 // agnostic: no Vite types here, so any driver can run it — the Vite
@@ -19,17 +25,21 @@ import { transformAsync, types as t, type BabelFileResult, type NodePath, type P
 // one thing hosts genuinely disagree on: a bare npm specifier for
 // Vite/Node, a URL or import-map name for Deno.
 //
-// Labels (docs/design/08): a `@label` line in the function's leading
-// comment, no import required — the appmap-java /
-// com.appland.appmap.annotation equivalent, but free: nothing to add
-// to package.json.
+// 2026 amendment (docs/design/03): the transform also reaches inside
+// each top-level function/component/hook body — nested named
+// functions, nested `const x = arrow/function`, arrows passed as the
+// first argument to useCallback/useMemo, and arrow/function
+// expressions used inline as JSX event-handler props (onClick,
+// onSubmit, …) — using the same 2-arg call shape the hand-written
+// `instrumentHandler` used, since Babel gives real `loc` info here
+// with no hand-supplied line numbers needed. `instrumentHandler`
+// itself stays exported as the advanced-scenarios escape hatch for
+// shapes the transform still doesn't reach (e.g. functions built up
+// dynamically at runtime).
 //
-//   /** @label security.authz */
-//   export function checkAccess(user) {...}
-//
-// These are additive to autoInstrument's own naming-convention labels
-// (PascalCase → component, use[A-Z]… → hook), not a replacement —
-// instrument.ts merges the two.
+// Labels (docs/design/08) can be supplied by `@label` comments or inferred
+// from common security/data-access calls in a function body. They are passed
+// to autoInstrument, which merges them with convention labels.
 
 function extractLabels(comments: readonly t.Comment[] | null | undefined): string[] {
   if (!comments) return [];
@@ -44,33 +54,12 @@ function extractLabels(comments: readonly t.Comment[] | null | undefined): strin
   return labels;
 }
 
-// Built-in labels (docs/design/08): recognizes calls to well-known
-// security/data-access APIs *inside* a wrapped function's body and
-// labels the function automatically — no comment, no naming
-// convention needed. This is appmap-java/appmap-dotnet's "built-in
-// hooks" idea (their SQL/crypto/auth labeling of known driver calls),
-// scoped here to the JS/TS/Deno + Supabase stack this project actually
-// targets. Matches on the callee's own source text (a raw slice of
-// the original code, not a resolved import) — deliberately simple
-// pattern matching, not import-graph analysis, so it stays
-// dependency-free and fast; the tradeoff is it can't tell a real
-// Supabase client from a differently-shaped object that happens to
-// have a `.from()` method. Good enough as a first pass; a false
-// positive is a label, not a wrong behavior.
 const BUILTIN_LABEL_PATTERNS: Array<{ label: string; test: RegExp }> = [
-  // Supabase auth vs. data access share one client — split on the
-  // fluent-call path, not the import.
-  // Note: callee.start/.end bounds the callee expression only, never
-  // the call's own parentheses — `supabase.rpc(x)`'s callee text is
-  // "supabase.rpc", not "supabase.rpc(". Patterns below match against
-  // that, anchored with $ where the property name is the last segment.
   { label: 'security.authentication', test: /\.auth\.(signIn\w*|signUp|signOut|verifyOtp|admin\.\w+|getUser|getSession|refreshSession|resetPasswordForEmail)$/ },
   { label: 'io.sql', test: /\.(from|rpc)$/ },
   { label: 'io.sql', test: /\.(select|insert|update|upsert|delete)$/ },
-  // Web Crypto API and the common password-hashing libraries.
   { label: 'security.crypto', test: /crypto\.subtle\./ },
   { label: 'security.crypto', test: /\b(bcrypt|argon2|scrypt)\b/i },
-  // JWTs.
   { label: 'security.authentication', test: /\bjwt\.(sign|verify|decode)$/ },
   { label: 'security.authentication', test: /\bjose\./ },
 ];
@@ -91,6 +80,7 @@ function detectBuiltinLabels(fnPath: NodePath, code: string): string[] {
 }
 
 const RUNTIME_NAME = '__appmap_instrument__';
+const HANDLER_RUNTIME_NAME = '__appmap_instrument_handler__';
 export const DEFAULT_RUNTIME_MODULE = '@funwithappmap/react-recorder';
 
 export interface TransformOptions {
@@ -122,11 +112,12 @@ export async function transformSource(
   return { code: result.code, map: result.map };
 }
 
-export function instrumentBabelPlugin(relPath: string, runtimeModule: string, code: string): PluginObj {
+export function instrumentBabelPlugin(relPath: string, runtimeModule: string, code = ''): PluginObj {
   const definedClass = basename(relPath).replace(/\.[jt]sx?$/, '');
   let wrapped = 0;
+  let handlerWrapped = 0;
 
-  const infoObject = (name: string, lineno: number | undefined, labels: string[]) =>
+  const infoObject = (name: string, lineno: number | undefined, labels: string[] = []) =>
     t.objectExpression([
       t.objectProperty(t.identifier('definedClass'), t.stringLiteral(definedClass)),
       t.objectProperty(t.identifier('methodId'), t.stringLiteral(name)),
@@ -161,6 +152,76 @@ export function instrumentBabelPlugin(relPath: string, runtimeModule: string, co
     ]);
   };
 
+  // The 2-arg shape the hand-written instrumentHandler used: no
+  // argNames, always labeled ['event-handler']. Used for everything
+  // this transform reaches below the top level — nested closures are
+  // overwhelmingly event handlers/callbacks in this domain, matching
+  // what the codebase already did by hand.
+  const wrapHandlerCall = (fn: t.Expression, name: string, lineno?: number) => {
+    handlerWrapped++;
+    return t.callExpression(t.identifier(HANDLER_RUNTIME_NAME), [fn, infoObject(name, lineno)]);
+  };
+
+  // Nested instrumentation (2026 amendment, docs/design/03): walks a
+  // top-level function/component/hook's body for closures below the
+  // top-level visitor's granularity. Run on each top-level function
+  // BEFORE that function itself is wrapped (see below), so this always
+  // sees the pristine, unwrapped tree.
+  const instrumentNested = (fnPath: NodePath<t.Function>) => {
+    fnPath.traverse({
+      FunctionDeclaration(path) {
+        const { id, params, body, generator, async: isAsync, loc } = path.node;
+        if (!id || generator) return;
+        path.replaceWith(
+          t.variableDeclaration('const', [
+            t.variableDeclarator(
+              t.identifier(id.name),
+              wrapHandlerCall(
+                t.functionExpression(id, params, body, generator, isAsync),
+                id.name,
+                loc?.start.line,
+              ),
+            ),
+          ]),
+        );
+        path.skip();
+      },
+      VariableDeclarator(path) {
+        const idPath = path.get('id');
+        const init = path.get('init');
+        if (!idPath.isIdentifier() || !init.node) return;
+
+        // const name = useCallback(fn, deps) / useMemo(fn, deps) — wrap
+        // just the callback argument, leave the hook call itself alone.
+        if (init.isCallExpression()) {
+          const callee = init.node.callee;
+          const calleeName = t.isIdentifier(callee) ? callee.name : undefined;
+          if (calleeName !== 'useCallback' && calleeName !== 'useMemo') return;
+          const first = init.get('arguments')[0];
+          if (!first || (!first.isArrowFunctionExpression() && !first.isFunctionExpression())) return;
+          first.replaceWith(wrapHandlerCall(first.node, idPath.node.name, first.node.loc?.start.line));
+          path.skip();
+          return;
+        }
+
+        if (init.isArrowFunctionExpression() || init.isFunctionExpression()) {
+          init.replaceWith(wrapHandlerCall(init.node, idPath.node.name, init.node.loc?.start.line));
+          path.skip();
+        }
+      },
+      JSXAttribute(path) {
+        const name = path.node.name;
+        if (!t.isJSXIdentifier(name) || !/^on[A-Z]/.test(name.name)) return;
+        const value = path.get('value');
+        if (!value.isJSXExpressionContainer()) return;
+        const expr = value.get('expression');
+        if (!expr.isArrowFunctionExpression() && !expr.isFunctionExpression()) return;
+        expr.replaceWith(wrapHandlerCall(expr.node, name.name, expr.node.loc?.start.line));
+        path.skip();
+      },
+    });
+  };
+
   return {
     visitor: {
       Program: {
@@ -176,6 +237,7 @@ export function instrumentBabelPlugin(relPath: string, runtimeModule: string, co
             if (decl.isFunctionDeclaration() && decl.node.id && !decl.node.generator) {
               const { id, params, loc } = decl.node;
               const labels = [...new Set([...commentLabels, ...detectBuiltinLabels(decl, code)])];
+              instrumentNested(decl);
               // Function declarations are mutable bindings, and ESM
               // exports are live: reassigning after the declaration
               // rebinds the export too.
@@ -195,6 +257,7 @@ export function instrumentBabelPlugin(relPath: string, runtimeModule: string, co
                 if (!idPath.isIdentifier()) continue;
                 if (init.isArrowFunctionExpression() || init.isFunctionExpression()) {
                   const labels = [...new Set([...commentLabels, ...detectBuiltinLabels(init, code)])];
+                  instrumentNested(init);
                   init.replaceWith(
                     wrapCall(
                       init.node,
@@ -210,13 +273,19 @@ export function instrumentBabelPlugin(relPath: string, runtimeModule: string, co
           }
         },
         exit(program) {
-          if (wrapped === 0) return;
-          program.node.body.unshift(
-            t.importDeclaration(
-              [t.importSpecifier(t.identifier(RUNTIME_NAME), t.identifier('autoInstrument'))],
-              t.stringLiteral(runtimeModule),
-            ),
-          );
+          if (wrapped === 0 && handlerWrapped === 0) return;
+          const specifiers: t.ImportSpecifier[] = [];
+          if (wrapped > 0) {
+            specifiers.push(
+              t.importSpecifier(t.identifier(RUNTIME_NAME), t.identifier('autoInstrument')),
+            );
+          }
+          if (handlerWrapped > 0) {
+            specifiers.push(
+              t.importSpecifier(t.identifier(HANDLER_RUNTIME_NAME), t.identifier('instrumentHandler')),
+            );
+          }
+          program.node.body.unshift(t.importDeclaration(specifiers, t.stringLiteral(runtimeModule)));
         },
       },
     },

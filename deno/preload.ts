@@ -21,7 +21,7 @@ import { withAppMap } from './appmap.ts';
 type AnyHandler = (...args: unknown[]) => Response | Promise<Response>;
 
 const appName = Deno.env.get('APPMAP_APP');
-const original = Deno.serve;
+const original = Deno.serve as unknown as (...args: unknown[]) => unknown;
 
 function wrap(handler: AnyHandler): AnyHandler {
   // withAppMap's Handler type is (req: Request) => Response|Promise —
@@ -38,18 +38,18 @@ Deno.serve = ((...args: unknown[]) => {
   const [first, second] = args;
 
   if (typeof first === 'function') {
-    return (original as AnyHandler)(wrap(first as AnyHandler), ...args.slice(1));
+    return original(wrap(first as AnyHandler), ...args.slice(1));
   }
 
   if (first && typeof first === 'object') {
     const options = first as Record<string, unknown>;
     if (typeof second === 'function') {
-      return (original as AnyHandler)(options, wrap(second as AnyHandler), ...args.slice(2));
+      return original(options, wrap(second as AnyHandler), ...args.slice(2));
     }
     if (typeof options.handler === 'function') {
-      return (original as AnyHandler)({ ...options, handler: wrap(options.handler as AnyHandler) });
+      return original({ ...options, handler: wrap(options.handler as AnyHandler) });
     }
   }
 
-  return (original as AnyHandler)(...args);
-}) as typeof Deno.serve;
+  return original(...args);
+}) as unknown as typeof Deno.serve;

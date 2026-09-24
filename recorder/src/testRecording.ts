@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { Metadata } from './types';
-import { Recording } from './recording';
+import { Recording, setValueSizeCap } from './recording';
 import { startRecording, stopRecording } from './session';
 
 // Test recording: one AppMap per test, written to tmp/appmap/tests/.
@@ -10,6 +10,11 @@ import { startRecording, stopRecording } from './session';
 // we just write the file.
 
 const OUTPUT_DIR = join('tmp', 'appmap', 'tests');
+
+// APPMAP_EVENT_VALUESIZE, like the .NET agent: override the default
+// value-size cap for this process.
+const envValueSize = Number(process.env.APPMAP_EVENT_VALUESIZE);
+if (Number.isFinite(envValueSize) && envValueSize > 0) setValueSizeCap(envValueSize);
 
 export interface TestRecordingOptions {
   app?: string;

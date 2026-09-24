@@ -2,12 +2,14 @@
   "name": "appmap-link",
   "private": true,
   "version": "0.0.1",
-  "description": "Joins frontend interaction AppMaps to backend request AppMaps via W3C Trace Context ids, and renders stitched PlantUML sequence diagrams.",
+  "description": "Joins frontend interaction AppMaps to backend request AppMaps via W3C Trace Context ids, renders stitched PlantUML sequence diagrams, and (appmap-trace) renders ASCII call-graphs + GitHub-native mermaid sequence diagrams with an optional behavior diff.",
   "type": "module",
   "bin": {
     "appmap-link": "bin/appmap-link.mjs",
-    "appmap-simulate-backend": "bin/simulate-backend.mjs"
+    "appmap-simulate-backend": "bin/simulate-backend.mjs",
+    "appmap-trace": "bin/appmap-trace.mjs"
   },
+  "files": ["bin", "src"],
   "scripts": {
     "test": "vitest run"
   },

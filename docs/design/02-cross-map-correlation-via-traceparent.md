@@ -55,7 +55,7 @@ makes timestamps unsafe for ordering.
 
 ## The linker: `appmap-link`
 
-AppMap v1.2 has no cross-map link concept, so we don't fight the
+AppMap v1.12 has no cross-map link concept, so we don't fight the
 format. [`linker/`](../../linker) is a small dependency-free Node CLI
 that scans directories of maps (frontend = has `http_client_request`
 events; backend = has `http_server_request` events) and:
