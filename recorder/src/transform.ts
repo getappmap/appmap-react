@@ -119,10 +119,25 @@ export interface TransformOptions {
   relPath: string;
   /** Filename handed to Babel (diagnostics, sourcemap source). */
   filename?: string;
-  /** Parse JSX (for .tsx/.jsx sources). */
+  /** Parse JSX. */
   jsx?: boolean;
+  /** Parse TypeScript syntax. Default true. */
+  typescript?: boolean;
   /** Import specifier for the recorder runtime. */
   runtimeModule?: string;
+}
+
+/** The syntax of a source file, decided by its extension the way Vite
+ * decides it, except that JSX is also accepted in plain JavaScript files
+ * (.js/.mjs/.cjs), the Create React App convention: Babel's JSX parser
+ * reads any JS without JSX exactly as before. TypeScript files (.ts/.mts/
+ * .cts) never get JSX, since `<T>x` is a type assertion there; .tsx gets
+ * both. */
+export function syntaxFor(file: string): { jsx: boolean; typescript: boolean } {
+  const ext = /\.([mc]?[jt]sx?)$/.exec(file.split('?')[0])?.[1] ?? '';
+  const typescript = ext.includes('t');
+  const jsx = ext.endsWith('x') || !typescript;
+  return { jsx, typescript };
 }
 
 export async function transformSource(
@@ -134,7 +149,12 @@ export async function transformSource(
     babelrc: false,
     configFile: false,
     sourceMaps: true,
-    parserOpts: { plugins: options.jsx ? ['typescript', 'jsx'] : ['typescript'] },
+    parserOpts: {
+      plugins: [
+        ...(options.typescript === false ? [] : (['typescript'] as const)),
+        ...(options.jsx ? (['jsx'] as const) : []),
+      ],
+    },
     plugins: [
       instrumentBabelPlugin(options.relPath, options.runtimeModule ?? DEFAULT_RUNTIME_MODULE, code),
     ],
@@ -144,7 +164,7 @@ export async function transformSource(
 }
 
 export function instrumentBabelPlugin(relPath: string, runtimeModule: string, code = ''): PluginObj {
-  const definedClass = basename(relPath).replace(/\.[jt]sx?$/, '');
+  const definedClass = basename(relPath).replace(/\.[mc]?[jt]sx?$/, '');
   let wrapped = 0;
   let handlerWrapped = 0;
 

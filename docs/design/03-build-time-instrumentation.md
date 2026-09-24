@@ -155,3 +155,21 @@ already Deno-compatible (`performance.now`, `crypto.getRandomValues`,
 (`Deno.writeTextFile` or POST to a collector) and a per-request
 session driver that copies the incoming traceparent into metadata,
 i.e. the Deno twin of the PetClinicGo middleware.
+
+## Amendment (2026-09-24): JSX in `.js` files; a file that does not parse is left alone
+
+The Vite plugin enabled Babel's JSX parser only for `.jsx`/`.tsx`, and
+parsed everything with the TypeScript plugin. A Create React App keeps
+its JSX in `.js` files (`acceptance/supabase-edge-functions-app`, bug 1):
+every component failed with `Unexpected token`, Vite served a 500 and the
+app did not render. The syntax now follows the extension
+(`syntaxFor` in `recorder/src/transform.ts`): `.js`/`.mjs`/`.cjs`/`.jsx`
+parse as JavaScript with JSX (Babel reads JSX-free JavaScript exactly as
+before), `.ts`/`.mts`/`.cts` as TypeScript without JSX (so `<T>x` type
+assertions keep working), `.tsx` as both. Emitting the JSX is still the
+app's toolchain's job; the transform only instruments and keeps it.
+
+And a recorder must never break the app: if the transform still cannot
+parse a file, the plugin now serves it uninstrumented and prints
+`appmap: not instrumenting <file>: <reason>` instead of failing the
+request. Tests: `recorder/test/vitePluginSelection.test.ts`.

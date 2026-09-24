@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { relative, join } from 'node:path';
 import type { IndexHtmlTransformContext, Plugin } from 'vite';
-import { transformSource } from './transform.js';
+import { syntaxFor, transformSource } from './transform.js';
 import {
   PROPAGATE_ENV,
   parseOriginPatterns,
@@ -145,11 +145,14 @@ export function appmapVitePlugin(options: AppMapPluginOptions): Plugin {
       const rel = selected(id);
       if (!rel) return null;
 
-      return transformSource(code, {
-        relPath: rel,
-        filename: id,
-        jsx: /\.[jt]sx$/.test(id.split('?')[0]),
-      });
+      try {
+        return await transformSource(code, { relPath: rel, filename: id, ...syntaxFor(id) });
+      } catch (err) {
+        // A recorder must never break the app: a file the transform cannot
+        // parse is served uninstrumented, with a warning.
+        this.warn(`appmap: not instrumenting ${rel}: ${(err as Error).message.split('\n')[0]}`);
+        return null;
+      }
     },
     resolveId(id) {
       if (!enabled || !options.app) return;
