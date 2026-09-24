@@ -10,6 +10,7 @@ import type {
 } from './types.js';
 import { className, functionName, safeStringify } from './stringify.js';
 import { currentCallId } from './session.js';
+import { isSensitiveName, redactHeaders, redactString, REDACTED } from './redact.js';
 
 /** The AppMap version this recorder declares. Checked against the
  * official validator (@appland/appmap-validate) in
@@ -41,13 +42,15 @@ export interface ObjectIdTracker {
 export function formatValue(
   v: unknown,
   tracker?: ObjectIdTracker,
+  name?: string,
 ): { class: string; value: string; size?: number; object_id?: number } {
   // Never JSON.stringify / String() an unknown value: that runs its
   // getters and toJSON and can change what the app does (stringify.ts).
   const cls = v === undefined ? 'undefined' : className(v);
 
   let str: string;
-  if (typeof v === 'string') str = v;
+  if (isSensitiveName(name)) str = REDACTED;
+  else if (typeof v === 'string') str = redactString(v);
   else if (typeof v === 'function') str = `[function ${functionName(v) || 'anonymous'}]`;
   else if (v === undefined) str = 'undefined';
   else if (typeof v === 'symbol') str = v.toString();
@@ -108,7 +111,9 @@ export function splitUrl(raw: string): { url: string; message: ParameterValue[] 
 
 export function queryMessage(params: URLSearchParams): ParameterValue[] {
   const message: ParameterValue[] = [];
-  for (const [name, value] of params) message.push({ name, class: 'String', value: capValue(value) });
+  for (const [name, value] of params) {
+    message.push({ name, class: 'String', value: isSensitiveName(name) ? REDACTED : capValue(redactString(value)) });
+  }
   return message;
 }
 
@@ -255,7 +260,7 @@ export class Recording {
 
     const parameters: ParameterValue[] | undefined = args?.map((a) => ({
       name: a.name,
-      ...formatValue(a.value, this.objectIds),
+      ...formatValue(a.value, this.objectIds, a.name),
     }));
     this.events.push({
       id,
@@ -289,7 +294,7 @@ export class Recording {
         exceptions: [
           {
             class: e instanceof Error ? e.constructor.name : typeof e,
-            message: e instanceof Error ? e.message : String(e),
+            message: redactString(e instanceof Error ? e.message : String(e)),
             object_id: this.objectId(e),
           },
         ],
@@ -339,7 +344,7 @@ export class Recording {
       http_client_request: {
         request_method: method,
         url: split.url,
-        ...(headers && Object.keys(headers).length ? { headers } : {}),
+        ...(headers && Object.keys(headers).length ? { headers: redactHeaders(headers) } : {}),
       },
       message: split.message,
     });
@@ -357,7 +362,7 @@ export class Recording {
       elapsed: (performance.now() - token.startMs) / 1000,
       http_client_response: {
         status_code: statusCode,
-        ...(headers && Object.keys(headers).length ? { headers } : {}),
+        ...(headers && Object.keys(headers).length ? { headers: redactHeaders(headers) } : {}),
       },
     });
   }
@@ -381,7 +386,7 @@ export class Recording {
         request_method: method,
         path_info: pathInfo,
         ...(normalizedPathInfo ? { normalized_path_info: normalizedPathInfo } : {}),
-        ...(headers && Object.keys(headers).length ? { headers } : {}),
+        ...(headers && Object.keys(headers).length ? { headers: redactHeaders(headers) } : {}),
       },
       message: query ? queryMessage(query) : [],
     });

@@ -24,6 +24,8 @@
 // Proxies remain the one thing JavaScript can't detect: reading their
 // keys and descriptors goes through their traps.
 
+import { isSensitiveName, redactString, REDACTED } from './redact.js';
+
 const MAX_DEPTH = 4;
 const MAX_KEYS = 50;
 
@@ -68,7 +70,9 @@ function findDescriptor(obj: object, key: string): PropertyDescriptor | undefine
 
 /**
  * Render a value as a string of at most roughly `budget` characters
- * (callers cut it to their exact cap).
+ * (callers cut it to their exact cap). Properties with a sensitive name
+ * render as "[REDACTED]" and bearer tokens inside strings are removed
+ * (redact.ts).
  */
 export function safeStringify(v: unknown, budget: number): string {
   let out = '';
@@ -76,7 +80,7 @@ export function safeStringify(v: unknown, budget: number): string {
   const ancestors: object[] = [];
 
   const emitString = (s: string) => {
-    out += JSON.stringify(s);
+    out += JSON.stringify(redactString(s));
   };
 
   const walk = (value: unknown, depth: number, inArray: boolean): void => {
@@ -163,7 +167,8 @@ export function safeStringify(v: unknown, budget: number): string {
         }
         n++;
         out += `${JSON.stringify(key)}:`;
-        if ('value' in d) walk(d.value, depth + 1, false);
+        if (isSensitiveName(key)) emitString(REDACTED);
+        else if ('value' in d) walk(d.value, depth + 1, false);
         else emitString('[getter]');
       }
       out += '}';

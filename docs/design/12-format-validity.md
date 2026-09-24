@@ -45,3 +45,22 @@ recorder does not always write). The recorder declares **1.12**:
 
 `APPMAP_VERSION` in `recorder/src/recording.ts` is the single place the
 version lives. If it changes, the validity tests check the new claim.
+
+## Credential redaction
+
+AppMaps get committed, attached to PRs and shared, so credentials must
+not reach them. The acceptance runs found a plaintext password
+(`"password":"secret-pw-1"`) in a React parameter value and a 191-char
+`Authorization: Bearer …` token in a Deno one. `recorder/src/redact.ts`
+now applies to every captured value (parameters, return values,
+exception messages, HTTP headers and query parameters):
+
+- a parameter, object property, query parameter or header whose name
+  matches `password|secret|token|api[_-]?key` (case-insensitive) is
+  recorded as `"[REDACTED]"`;
+- `Authorization`, `Proxy-Authorization`, `Cookie` and `Set-Cookie`
+  headers are always `"[REDACTED]"`;
+- `Bearer <token>` inside any captured string becomes
+  `Bearer [REDACTED]`.
+
+Tested in `recorder/test/redaction.test.ts`.

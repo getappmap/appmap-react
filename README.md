@@ -38,7 +38,8 @@ application-code changes (docs 06 and 07). Interaction-window capture
 is still pending a manual real-browser run (doc 04).
 
 - [`recorder/`](recorder) — the recorder core (Enter/Exit + CallToken
-  contract, value capture with size caps, `fetch` and
+  contract, side-effect-free value capture with size caps and credential
+  redaction, `fetch` and
   `XMLHttpRequest` (axios) → `http_client_request`/`response` events
   with `traceparent` stamping,
   AppMap 1.12 serializer, validated by the official
