@@ -32,6 +32,15 @@ def calls(m):
     return [e for e in m['events'] if e['event'] == 'call' and 'method_id' in e]
 
 
+def full_url(e):
+    """AppMap spec: http_client_request.url is the URL "excluding the query
+    string"; the query parameters are the event's `message`. Rebuild
+    path+query from both, so URL comparisons see what went on the wire."""
+    url = e['http_client_request']['url']
+    q = '&'.join(f"{p['name']}={p['value']}" for p in (e.get('message') or []))
+    return f'{url}?{q}' if q else url
+
+
 def http_pairs(m):
     rets = {e['parent_id']: e for e in m['events'] if e['event'] == 'return'}
     out = []
@@ -224,7 +233,7 @@ def check_item(m, item):
     # http
     pairs = [(e, s) for e, s in http_pairs(m)
              if e['http_client_request']['request_method'] == item['method']
-             and re.search(item['url'], e['http_client_request']['url'])]
+             and re.search(item['url'], full_url(e))]
     want = item.get('count', 1)
     if not pairs:
         return ('missing', None)
@@ -436,7 +445,7 @@ def browser(inter_dir, report_path):
                                   'evidence': quote(hit[0]) if hit else None})
                 for meth, url in BROWSER_EXPECT[name]['http']:
                     hit = [e for e, s in http_pairs(m) if e['http_client_request']['request_method'] == meth
-                           and re.search(url, e['http_client_request']['url'])]
+                           and re.search(url, full_url(e))]
                     items.append({'expect': f'{meth} {url}', 'status': 'found' if hit else 'missing',
                                   'evidence': quote(hit[0]) if hit else None})
             entry['items'] = items
