@@ -220,7 +220,14 @@ def check_item(m, item):
         if item.get('lineno') and hits[0].get('lineno') != item['lineno']:
             problems.append(f"lineno {hits[0].get('lineno')} != {item['lineno']}")
         if item.get('param'):
-            if not any(item['param'] in (p.get('value') or '') for e in hits for p in e.get('parameters', [])):
+            # A parameter "contains" the expected text if its value does, or
+            # (for an expected field name) if the spec's `properties` list
+            # names that field: values are cut to 100 characters (schema
+            # 1.6+), and `properties` is how the spec keeps an object's
+            # fields beyond the cut.
+            if not any(item['param'] in (p.get('value') or '')
+                       or any(q.get('name') == item['param'] for q in (p.get('properties') or []))
+                       for e in hits for p in e.get('parameters', [])):
                 problems.append(f"no call has a parameter containing {item['param']!r}")
         if item.get('label'):
             labels = labels_of(m).get((item['path'], item['method_id']), [])
