@@ -1,0 +1,99 @@
+[acc] baseline (no recorder), twice
+[acc] baseline-1: S1 fe=0 be=0, S2 fe=0 be=0, S3 fe=0 be=0, S4 fe=0 be=0, S5 fe=0 be=0, S6 fe=0 be=0; 0 frontend, 0 backend maps
+[acc] baseline-2: S1 fe=0 be=0, S2 fe=0 be=0, S3 fe=0 be=0, S4 fe=0 be=0, S5 fe=0 be=0, S6 fe=0 be=0; 0 frontend, 0 backend maps
+[acc] Z: zero-touch (recorder plugin exactly as documented) + recorded function
+[acc] Z: S1(err) fe=0 be=0, S2(err) fe=0 be=0, S3(err) fe=0 be=0, S4(err) fe=0 be=0, S5(err) fe=0 be=0, S6(err) fe=0 be=0; 0 frontend, 0 backend maps
+[acc] Z-parallel: I(err) fe=0 be=0; 0 frontend, 0 backend maps
+[acc] W: config-only workaround (diagnostic), twice
+[acc] W1: S1 fe=0 be=0, S2 fe=1 be=0, S3 fe=1 be=0, S4 fe=1 be=0, S5 fe=1 be=0, S6 fe=1 be=0; 5 frontend, 0 backend maps
+[acc] W2: S1 fe=0 be=0, S2 fe=1 be=0, S3 fe=1 be=0, S4 fe=1 be=0, S5 fe=1 be=0, S6 fe=1 be=0; 5 frontend, 0 backend maps
+[acc] P: W + the app patched to allow traceparent in CORS (diagnostic only; an app change)
+[acc] P: S1 fe=0 be=0, S2 fe=1 be=0, S3 fe=1 be=1, S4 fe=1 be=0, S5 fe=1 be=1, S6 fe=1 be=0; 5 frontend, 2 backend maps
+[acc] P-parallel: I fe=3 be=1; 6 frontend, 1 backend maps
+[acc] R-series (direct stamped requests), twice, for C/E/G
+[acc] H: one behaviour change in the function (select * -> select id), re-record R1-R3
+[acc] I(a): 6 concurrent stamped requests to the recorded function
+[acc] J: 20 direct R2 requests, plain vs recorded
+[acc] A: FAIL
+[acc]    setup completed: clean sparse clone at 74a3be9aa8706755e05f7326f3d25472729cd977; npm install --legacy-peer-deps; vite@6.4.3 + recorder added as dev deps; GoTrue v2.177.0, PostgREST v12.2.12
+[acc]    app source edits: none (git status of the app tree: ["M examples/edge-functions/app/package.json","?? examples/edge-functions/app/cra-compat.mjs","?? examples/edge-functions/app/vite.config.appmap-workaround.mjs","?? examples/edge-functions/app/vite.config.appmap.mjs","?? examples/edge-functions/app/vite.config.cra.mjs"] -- package.json/lockfile from the dev-dependency install and the harness's Vite config files only)
+[acc]    toolchain substitution needed: the recorder has no Create React App / webpack integration, so the app is run under Vite (app-config/cra-compat.mjs). Counts against the recorder (EXPECTATIONS.md).
+[acc]    zero-touch config (recorder plugin exactly as documented) BREAKS the app: it does not render
+[acc]      vite: Internal server error: src/index.js: Unexpected token, expected "," (9:8)
+[acc]      browser: Access to script at 'virtual:appmap-interaction-recorder' from origin 'http://127.0.0.1:3300' has been blocked by CORS policy: Cross origin requests are only su
+[acc]      browser: Failed to load resource: net::ERR_FAILED
+[acc]      browser: Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+[acc] B: FAIL
+[acc]    official validator (@appland/appmap-validate): 0/23 maps valid at their declared version (1.12)
+[acc]    7x INVALID: ├─ .: #/anyOf >> /events/0 must match a schema in anyOf | └─ + |    ├─ 0: #/allOf/1/required >> /events/0 must have required property 'defined_class' |    ├─ 1: #/definitions/return/required 
+[acc]    9x INVALID: ├─ .: #/anyOf >> /events/5 must match a schema in anyOf | └─ + |    ├─ 0: #/allOf/1/required >> /events/5 must have required property 'defined_class' |    ├─ 1: #/definitions/return/required 
+[acc]    7x INVALID: #/definitions/metadata/properties/language/required >> /metadata/language must have required property 'version'
+[acc]    zero-touch pass produced 0 map(s)
+[acc] C: FAIL
+[acc]    zero-touch frontend: {"missing":5}; backend: {"found":12,"missing":3}; (diagnostic) workaround frontend: {"found":8,"wrong":2,"missing":1}
+[acc]    S2 missing: one frontend interaction map [skipped: the app did not render (S1 failed)]
+[acc]    S3 missing: one frontend interaction map [skipped: the app did not render (S1 failed)]
+[acc]    S4 missing: one frontend interaction map [skipped: the app did not render (S1 failed)]
+[acc]    S5 missing: one frontend interaction map [skipped: the app did not render (S1 failed)]
+[acc]    S6 missing: one frontend interaction map [skipped: the app did not render (S1 failed)]
+[acc]    R1 missing: call event for the request handler (index.ts:10) [call events: []]
+[acc]    R2 missing: call event for the request handler (index.ts:10) [call events: []]
+[acc]    R3 missing: call event for the request handler (index.ts:10) [call events: []]
+[acc]    (W) S3 wrong: POST /functions/v1/select-from-table-with-auth-rls -> 200 with traceparent [POST http://localhost:54321/functions/v1/select-from-table-with-auth-rls status=0 traceparent=00-798453f05f8063c0cdece0e794795653-98b97b3c51]
+[acc]    (W) S5 wrong: POST /functions/v1/select-from-table-with-auth-rls -> 200 with traceparent [POST http://localhost:54321/functions/v1/select-from-table-with-auth-rls status=0 traceparent=00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5]
+[acc]    (W) S6 missing: call * (src/App.js:86) [App.App@10, App.App@10, App.App@10, App.App@10]
+[acc] D: FAIL
+[acc]    zero-touch + backend: 0 call events by path {}; outside app code: []
+[acc]    (W) 23 call events by path {"src/App.js":23}; outside app code: []
+[acc]    no call events at all in the zero-touch recordings: nothing to judge
+[acc] E: FAIL
+[acc]    backend R3 (TypeError thrown at index.ts:33, caught at :48): status 400, exceptions [], unbalanced 0; response {"error":"Cannot read properties of null (reading 'replace')"}
+[acc]    frontend S2 (fetch rejected): zero-touch no map; (W) status 0
+[acc]    note: the app has no path where an exception escapes an app function (EXPECTATIONS.md, E).
+[acc] F: FAIL (analog)
+[acc]    no test runner is involved, so there is no test status to mark (not applicable as specified)
+[acc]    analog: the failing interaction S2 (error alert) left a zero-touch frontend map: no; (W): yes
+[acc] G: NOT RUN
+[acc]    frontend (zero-touch): NOT RUN, the zero-touch pass produced no recordings to compare
+[acc]    backend R1-R3, run 1 vs run 2: same ["R1","R2","R3"], different [], only in one run []
+[acc]    (W) frontend S2-S6, run 1 vs run 2: same ["S4","S2","S3","S5","S6"], different [], only in one run []
+[acc] H: PASS
+[acc]    patch applied: true; before vs after: same ["R3"], different ["R1","R2"]
+[acc]    R1 outbound after: ["/auth/v1/user","/rest/v1/users?select=id"]; R2 after: ["/auth/v1/user","/rest/v1/users?select=id"]; R3 after: []
+[acc]    official sequence-diagram-diff R1: changed HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=*` to HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=id`
+[acc]    appmap-trace --baseline: traced 2 interaction(s) (diffed against /tmp/acc-fullstack-work/rec/R-run1/backend)
+[acc] I: FAIL
+[acc]    backend: 1/6 maps for 6 concurrent stamped requests; per request: [{"req":0,"status":200,"map":true,"clientsInMap":12,"leaked":10,"ownTraceOnWire":12},{"req":1,"status":200,"map":false,"clientsInMap":null,"leaked":null,"ownTraceOnWire":0},{"req":2,"status":200,"map":false,"clientsInMap":null,"leaked":null,"ownTraceOnWire":0},{"req":3,"status":200,"map":false,"clientsInMap":null,"leaked":null,"ownTraceOnWire":0},{"req":4,"status":200,"map":false,"clientsInMap":null,"leaked":null,"ownTraceOnWire":0},{"req":5,"status":200,"map":false,"clientsInMap":null,"leaked":null,"ownTraceOnWire":0}]
+[acc]       request 0's map holds 12 outbound calls (expected 2): 10 belong to the other concurrent requests, and were stamped with request 0's trace id on the wire (12 gateway hits carry it)
+[acc]       request 1 (00-636f6e63310000000000000000000101-0000010100000011-01) got HTTP 200, NO backend map, and 0 of its outbound calls carried its own trace id
+[acc]       request 2 (00-636f6e63320000000000000000000102-0000010200000012-01) got HTTP 200, NO backend map, and 0 of its outbound calls carried its own trace id
+[acc]       request 3 (00-636f6e63330000000000000000000103-0000010300000013-01) got HTTP 200, NO backend map, and 0 of its outbound calls carried its own trace id
+[acc]       request 4 (00-636f6e63340000000000000000000104-0000010400000014-01) got HTTP 200, NO backend map, and 0 of its outbound calls carried its own trace id
+[acc]       request 5 (00-636f6e63350000000000000000000105-0000010500000015-01) got HTTP 200, NO backend map, and 0 of its outbound calls carried its own trace id
+[acc]    browser (zero-touch), 3 users clicking at once: {"ok":false,"note":"app did not render"}
+[acc]    (P, diagnostic) browser with CORS patched: {"ok":true,"maps":3,"fnReqsPerMap":[1,1,1],"backendMaps":1}
+[acc] J: MEASURED
+[acc]    browser S1-S6 wall time: no recorder 11144 / 11316 ms; recorded (W config) 13271 / 13628 ms; zero-touch 32308 ms (app broken, not comparable)
+[acc]    20 direct R2 requests: plain 258 ms, recorded 276 ms (7%)
+[acc] L: FAIL
+[acc]    zero-touch: S3: L1 FAIL, L2 FAIL, L3 FAIL, L4 FAIL, L5 FAIL; S5: L1 FAIL, L2 FAIL, L3 FAIL, L4 FAIL, L5 FAIL
+[acc]      S5 wire traceparent=none; map trace_id=no map; map request traceparent=none
+[acc]    (W, diagnostic) S3: L1 ok, L2 FAIL, L3 FAIL, L4 FAIL, L5 FAIL; S5: L1 ok, L2 FAIL, L3 FAIL, L4 FAIL, L5 FAIL
+[acc]      W S5: wire traceparent=00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01; map trace_id=b0892b57b7ac2eb2a71fe7bb0d931bf8; map request traceparent=00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01; no backend map with that parent_span_id; response "null" vs no recorder "{ \"user\": { \"id\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\", \"aud\": \"authenticated\", \"role\": \"authentic"
+[acc]      W browser console: Access to fetch at 'http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI' from origin 'http://127.0.0.1:3300' has been blocked by CORS policy: Response to preflight 
+[acc]    (P, diagnostic, app CORS patched) S3: L1 ok, L2 ok, L3 ok, L4 FAIL, L5 ok; S5: L1 ok, L2 ok, L3 ok, L4 FAIL, L5 ok
+[acc]      P S5: POST_select-from-table-with-auth-rls_fd2ddc912741611c_002.appmap.json trace_id=14183e3a2e0b20bf92f9f22881e33b4f parent_span_id=fd2ddc912741611c; link: {"span_id":"fd2ddc912741611c","request":{"method":"POST","url":"http://localhost:54321/functions/v1/select-from-table-with-auth-rls","status":200},"backend":{"path":"/tmp/acc-fullstack-work/rec/; diagram shows {"click":true,"handler":false,"backend":true,"db":false}
+[acc]      appmap-link on P: 7 frontend map(s), 2 backend map(s): 2/9 requests linked, 0 orphan backend map(s)
+
+== summary
+A FAIL
+B FAIL
+C FAIL
+D FAIL
+E FAIL
+F FAIL (analog)
+G NOT RUN
+H PASS
+I FAIL
+J MEASURED
+L FAIL

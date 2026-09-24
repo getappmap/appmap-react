@@ -1,0 +1,25 @@
+{
+  "patchApplied": true,
+  "compare": {
+    "same": [
+      "R3"
+    ],
+    "different": {
+      "R1": {
+        "a": "{\"actors\":[{\"id\":\"http:HTTP server requests\",\"name\":\"HTTP server requests\",\"order\":0},{\"id\":\"external-service:127.0.0.1:54321\",\"name\":\"127.0.0.1:54321\",\"order\":3000}],\"rootActions\":[{\"nodeType\":4,\"callee\":\"http:HTTP server requests\",\"route\":\"POST /select-from-table-with-auth-rls\",\"status\":200,\"children\":[]},{\"nodeType\":5,\"callee\":\"external-service:127.0.0.1:54321\",\"route\":\"GET http://127.0.0.1:54321/auth/v1/user\",\"status\":403,\"children\":[]},{\"nodeType\":5,\"callee\":\"external-service:127.0.0.1:54321\",\"route\":\"GET http://127.0.0.1:54321/rest/v1/users?select=*\",\"status\":200,\"children\":[]}]}",
+        "b": "{\"actors\":[{\"id\":\"http:HTTP server requests\",\"name\":\"HTTP server requests\",\"order\":0},{\"id\":\"external-service:127.0.0.1:54321\",\"name\":\"127.0.0.1:54321\",\"order\":3000}],\"rootActions\":[{\"nodeType\":4,\"callee\":\"http:HTTP server requests\",\"route\":\"POST /select-from-table-with-auth-rls\",\"status\":200,\"children\":[]},{\"nodeType\":5,\"callee\":\"external-service:127.0.0.1:54321\",\"route\":\"GET http://127.0.0.1:54321/auth/v1/user\",\"status\":403,\"children\":[]},{\"nodeType\":5,\"callee\":\"external-service:127.0.0.1:54321\",\"route\":\"GET http://127.0.0.1:54321/rest/v1/users?select=id\",\"status\":200,\"children\":[]}]}"
+      },
+      "R2": {
+        "a": "{\"actors\":[{\"id\":\"http:HTTP server requests\",\"name\":\"HTTP server requests\",\"order\":0},{\"id\":\"external-service:127.0.0.1:54321\",\"name\":\"127.0.0.1:54321\",\"order\":3000}],\"rootActions\":[{\"nodeType\":4,\"callee\":\"http:HTTP server requests\",\"route\":\"POST /select-from-table-with-auth-rls\",\"status\":200,\"children\":[]},{\"nodeType\":5,\"callee\":\"external-service:127.0.0.1:54321\",\"route\":\"GET http://127.0.0.1:54321/auth/v1/user\",\"status\":200,\"children\":[]},{\"nodeType\":5,\"callee\":\"external-service:127.0.0.1:54321\",\"route\":\"GET http://127.0.0.1:54321/rest/v1/users?select=*\",\"status\":200,\"children\":[]}]}",
+        "b": "{\"actors\":[{\"id\":\"http:HTTP server requests\",\"name\":\"HTTP server requests\",\"order\":0},{\"id\":\"external-service:127.0.0.1:54321\",\"name\":\"127.0.0.1:54321\",\"order\":3000}],\"rootActions\":[{\"nodeType\":4,\"callee\":\"http:HTTP server requests\",\"route\":\"POST /select-from-table-with-auth-rls\",\"status\":200,\"children\":[]},{\"nodeType\":5,\"callee\":\"external-service:127.0.0.1:54321\",\"route\":\"GET http://127.0.0.1:54321/auth/v1/user\",\"status\":200,\"children\":[]},{\"nodeType\":5,\"callee\":\"external-service:127.0.0.1:54321\",\"route\":\"GET http://127.0.0.1:54321/rest/v1/users?select=id\",\"status\":200,\"children\":[]}]}"
+      }
+    },
+    "onlyA": [],
+    "onlyB": []
+  },
+  "sequenceDiagramDiff": {
+    "R1": "changed HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=*` to HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=id`",
+    "R2": "changed HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=*` to HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=id`",
+    "R3": "no diff file: /tmp/acc-fullstack-work/seq/h-a/POST_select-from-table-with-auth-rls_0000000300000003_003.sequence.json and /tmp/acc-fullstack-work/seq/h-b/POST_select-from-table-with-auth-rls_0000000300000009_003.sequence.json are identical"
+  }
+}

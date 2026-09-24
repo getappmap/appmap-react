@@ -1,0 +1,10 @@
+diff --git a/examples/edge-functions/supabase/functions/_shared/cors.ts b/examples/edge-functions/supabase/functions/_shared/cors.ts
+index 2ac4d89..8dcb63c 100644
+--- a/examples/edge-functions/supabase/functions/_shared/cors.ts
++++ b/examples/edge-functions/supabase/functions/_shared/cors.ts
+@@ -1,4 +1,4 @@
+ export const corsHeaders = {
+   'Access-Control-Allow-Origin': '*',
+-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
++  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, traceparent',
+ }

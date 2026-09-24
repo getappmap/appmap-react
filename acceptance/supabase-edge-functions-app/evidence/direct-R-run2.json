@@ -1,0 +1,40 @@
+{
+  "R1": {
+    "tp": "00-64697265637400000000000000000001-0000000100000004-01",
+    "status": 200,
+    "body": "{\"user\":null,\"data\":[]}",
+    "file": "/tmp/acc-fullstack-work/rec/R-run2/backend/POST_select-from-table-with-auth-rls_0000000100000004_001.appmap.json",
+    "wire": [
+      "GET /auth/v1/user 403",
+      "GET /rest/v1/users?select=* 200",
+      "POST /functions/v1/select-from-table-with-auth-rls 200"
+    ]
+  },
+  "R2": {
+    "tp": "00-64697265637400000000000000000002-0000000200000005-01",
+    "status": 200,
+    "body": "{\"user\":{\"id\":\"1ab745d9-76d4-41cc-aee6-43555dada4df\",\"aud\":\"authenticated\",\"role\":\"authenticated\",\"email\":\"r-run2-1790265497676@example.com\",\"email_confirmed_at\":\"2026-09-24T15:58:17.754482Z\",\"phone\":\"\",\"confirmed_at\":\"2026-09-24T15:58:17.754482Z\",\"last_sign_in_at\":\"2026-09-24T15:58:17.757981Z\",\"app_metadata\":{\"provider\":\"email\",\"providers\":[\"email\"]},\"user_metadata\":{\"email\":\"r-run2-1790265497676@example.com\",\"email_verified\":true,\"phone_verified\":false,\"sub\":\"1ab745d9-76d4-41cc-aee6-43555dada4df\"},\"identities\":[{\"identity_id\":\"9abfeedf-e773-468b-84e6-134331c58183\",\"id\":\"1ab745d9-76d4-41cc-aee6-43555dada4df\",\"user_id\":\"1ab745d9-76d4-41cc-aee6-43555dada4df\",\"identity_data\":{\"email\":\"r-run2-1790265497676@example.com\",\"email_verified\":false,\"phone_verified\":false,\"sub\":\"1ab745d9-76d4-41cc-aee6-43555dada4df\"},\"provider\":\"email\",\"last_sign_in_at\":\"2026-09-24T15:58:17.751892Z\",\"created_at\":\"2026-09-24T15:58:17.751928Z\",\"updated_at\":\"2026-09-24T15:58:17.751928Z\",\"email\":\"r-run2-1790265497676@example.com\"}],\"created_at\":\"2026-09-24T15:58:17.748097Z\",\"updated_at\":\"2026-09-24T15:58:17.760364Z\",\"is_anonymous\":false},\"data\":[{\"id\":\"1ab745d9-76d4-41cc-aee6-43555dada4df\",\"full_name\":null,\"avatar_url\":null}]}",
+    "file": "/tmp/acc-fullstack-work/rec/R-run2/backend/POST_select-from-table-with-auth-rls_0000000200000005_002.appmap.json",
+    "wire": [
+      "GET /auth/v1/user 200",
+      "GET /rest/v1/users?select=* 200",
+      "POST /functions/v1/select-from-table-with-auth-rls 200"
+    ]
+  },
+  "R3": {
+    "tp": "00-64697265637400000000000000000003-0000000300000006-01",
+    "status": 400,
+    "body": "{\"error\":\"Cannot read properties of null (reading 'replace')\"}",
+    "file": "/tmp/acc-fullstack-work/rec/R-run2/backend/POST_select-from-table-with-auth-rls_0000000300000006_003.appmap.json",
+    "wire": [
+      "POST /functions/v1/select-from-table-with-auth-rls 400"
+    ]
+  },
+  "R4": {
+    "status": 200,
+    "body": "ok",
+    "allowHeaders": "authorization, x-client-info, apikey, content-type",
+    "backendMaps": 3
+  },
+  "userId": "1ab745d9-76d4-41cc-aee6-43555dada4df"
+}

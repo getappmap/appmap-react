@@ -1,0 +1,191 @@
+{
+  "version": "1.12",
+  "metadata": {
+    "name": "click button \"Invoke Function\"",
+    "app": "supabase-edge-functions-app",
+    "client": {
+      "name": "@funwithappmap/react-recorder",
+      "url": "https://github.com/getappmap/appmap-react"
+    },
+    "recorder": {
+      "name": "funwithappmap-react",
+      "type": "requests"
+    },
+    "trace_id": "8f84313a67242159caf9cc5157640274"
+  },
+  "classMap": [
+    {
+      "type": "package",
+      "name": "src",
+      "children": [
+        {
+          "type": "class",
+          "name": "App",
+          "children": [
+            {
+              "type": "function",
+              "name": "invokeFunction",
+              "location": "src/App.js:16",
+              "static": true,
+              "labels": [
+                "event-handler"
+              ]
+            },
+            {
+              "type": "function",
+              "name": "App",
+              "location": "src/App.js:10",
+              "static": true,
+              "labels": [
+                "security.authentication",
+                "component"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "App",
+      "method_id": "invokeFunction",
+      "path": "src/App.js",
+      "lineno": 16,
+      "static": true,
+      "parameters": [
+        {
+          "class": "SyntheticBaseEvent",
+          "value": "[object Object]",
+          "size": 32,
+          "object_id": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 2,
+      "defined_class": "App",
+      "method_id": "App",
+      "path": "src/App.js",
+      "lineno": 10,
+      "static": true
+    },
+    {
+      "id": 3,
+      "event": "return",
+      "thread_id": 2,
+      "parent_id": 2,
+      "elapsed": 0.0002999999998137355,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 2
+      }
+    },
+    {
+      "id": 4,
+      "event": "call",
+      "thread_id": 3,
+      "defined_class": "App",
+      "method_id": "App",
+      "path": "src/App.js",
+      "lineno": 10,
+      "static": true
+    },
+    {
+      "id": 5,
+      "event": "return",
+      "thread_id": 3,
+      "parent_id": 4,
+      "elapsed": 0.00009999999962747097,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 3
+      }
+    },
+    {
+      "id": 6,
+      "event": "call",
+      "thread_id": 4,
+      "http_client_request": {
+        "request_method": "POST",
+        "url": "http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
+        "headers": {
+          "content-type": "text/plain",
+          "traceparent": "00-8f84313a67242159caf9cc5157640274-b06ea2d7a4c7e39f-01"
+        }
+      }
+    },
+    {
+      "id": 7,
+      "event": "return",
+      "thread_id": 4,
+      "parent_id": 6,
+      "elapsed": 0.006099999999627471,
+      "http_client_response": {
+        "status_code": 0
+      }
+    },
+    {
+      "id": 8,
+      "event": "call",
+      "thread_id": 5,
+      "defined_class": "App",
+      "method_id": "App",
+      "path": "src/App.js",
+      "lineno": 10,
+      "static": true
+    },
+    {
+      "id": 9,
+      "event": "return",
+      "thread_id": 5,
+      "parent_id": 8,
+      "elapsed": 0,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 4
+      }
+    },
+    {
+      "id": 10,
+      "event": "call",
+      "thread_id": 6,
+      "defined_class": "App",
+      "method_id": "App",
+      "path": "src/App.js",
+      "lineno": 10,
+      "static": true
+    },
+    {
+      "id": 11,
+      "event": "return",
+      "thread_id": 6,
+      "parent_id": 10,
+      "elapsed": 0,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 5
+      }
+    },
+    {
+      "id": 12,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 1,
+      "elapsed": 0.020399999999906868
+    }
+  ]
+}

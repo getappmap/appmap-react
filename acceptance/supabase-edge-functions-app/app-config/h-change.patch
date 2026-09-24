@@ -1,0 +1,13 @@
+diff --git a/examples/edge-functions/supabase/functions/select-from-table-with-auth-rls/index.ts b/examples/edge-functions/supabase/functions/select-from-table-with-auth-rls/index.ts
+index 04fa80d..08ebd2b 100644
+--- a/examples/edge-functions/supabase/functions/select-from-table-with-auth-rls/index.ts
++++ b/examples/edge-functions/supabase/functions/select-from-table-with-auth-rls/index.ts
+@@ -38,7 +38,7 @@ Deno.serve(async (req: Request) => {
+     } = await supabaseClient.auth.getUser(token)
+ 
+     // And we can run queries in the context of our authenticated user
+-    const { data, error } = await supabaseClient.from('users').select('*')
++    const { data, error } = await supabaseClient.from('users').select('id')
+     if (error) throw error
+ 
+     return new Response(JSON.stringify({ user, data }), {

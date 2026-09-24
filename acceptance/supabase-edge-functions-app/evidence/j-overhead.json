@@ -1,0 +1,19 @@
+{
+  "browserSequence": {
+    "baseline": [
+      11144,
+      11316
+    ],
+    "zeroTouch": [
+      32308
+    ],
+    "workaround": [
+      13271,
+      13628
+    ]
+  },
+  "direct20xR2": {
+    "plain": 258.4919560000126,
+    "recorded": 276.495013000007
+  }
+}

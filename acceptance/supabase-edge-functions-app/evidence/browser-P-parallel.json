@@ -1,0 +1,433 @@
+{
+  "mode": "parallel",
+  "users": [
+    {
+      "tag": "par0",
+      "email": "par0-P-parallel-1790265489069@example.com",
+      "response": "{\n  \"user\": {\n    \"id\": \"2e8476f8-d109-4495-b448-117c059662d7\",\n    \"aud\": \"authenticated\",\n    \"role\": \"authenticated\",\n    \"email\": \"par0-p-parallel-1790265489069@example.com\",\n    \"email_confirmed_at\": \"2026-09-24T15:58:10.524742Z\",\n    \"phone\": \"\",\n    \"confirmed_at\": \"2026-09-24T15:58:10.524742Z\",\n    \"last_sign_in_at\": \"2026-09-24T15:58:10.529163Z\",\n    \"app_metadata\": {\n      \"provider\": \"email\",\n      \"providers\": [\n        \"email\"\n      ]\n    },\n    \"user_metadata\": {\n      \"email\": \"par0-p-parallel-1790265489069@example.com\",\n      \"email_verified\": true,\n      \"phone_verified\": false,\n      \"sub\": \"2e8476f8-d109-4495-b448-117c059662d7\"\n    },\n    \"identities\": [\n      {\n        \"identity_id\": \"823b8b26-7fe2-4e68-a9de-a31457e5e2bf\",\n        \"id\": \"2e8476f8-d109-4495-b448-117c059662d7\",\n        \"user_id\": \"2e8476f8-d109-4495-b448-117c059662d7\",\n        \"identity_data\": {\n          \"email\": \"par0-p-parallel-1790265489069@example.com\",\n          \"email_verified\": false,\n          \"phone_verified\": false,\n          \"sub\": \"2e8476f8-d109-4495-b448-117c059662d7\"\n        },\n        \"provider\": \"email\",\n        \"last_sign_in_at\": \"2026-09-24T15:58:10.521658Z\",\n        \"created_at\": \"2026-09-24T15:58:10.521689Z\",\n        \"updated_at\": \"2026-09-24T15:58:10.521689Z\",\n        \"email\": \"par0-p-parallel-1790265489069@example.com\"\n      }\n    ],\n    \"created_at\": \"2026-09-24T15:58:10.517688Z\",\n    \"updated_at\": \"2026-09-24T15:58:10.591819Z\",\n    \"is_anonymous\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"2e8476f8-d109-4495-b448-117c059662d7\",\n      \"full_name\": null,\n      \"avatar_url\": null\n    }\n  ]\n}"
+    },
+    {
+      "tag": "par1",
+      "email": "par1-P-parallel-1790265489069@example.com",
+      "response": "{\n  \"user\": {\n    \"id\": \"b8f25dfa-b461-4e72-ad57-95a67671f1e2\",\n    \"aud\": \"authenticated\",\n    \"role\": \"authenticated\",\n    \"email\": \"par1-p-parallel-1790265489069@example.com\",\n    \"email_confirmed_at\": \"2026-09-24T15:58:11.241027Z\",\n    \"phone\": \"\",\n    \"confirmed_at\": \"2026-09-24T15:58:11.241027Z\",\n    \"last_sign_in_at\": \"2026-09-24T15:58:11.244502Z\",\n    \"app_metadata\": {\n      \"provider\": \"email\",\n      \"providers\": [\n        \"email\"\n      ]\n    },\n    \"user_metadata\": {\n      \"email\": \"par1-p-parallel-1790265489069@example.com\",\n      \"email_verified\": true,\n      \"phone_verified\": false,\n      \"sub\": \"b8f25dfa-b461-4e72-ad57-95a67671f1e2\"\n    },\n    \"identities\": [\n      {\n        \"identity_id\": \"069189d0-f3f5-49ae-aa69-9c86c3e898cc\",\n        \"id\": \"b8f25dfa-b461-4e72-ad57-95a67671f1e2\",\n        \"user_id\": \"b8f25dfa-b461-4e72-ad57-95a67671f1e2\",\n        \"identity_data\": {\n          \"email\": \"par1-p-parallel-1790265489069@example.com\",\n          \"email_verified\": false,\n          \"phone_verified\": false,\n          \"sub\": \"b8f25dfa-b461-4e72-ad57-95a67671f1e2\"\n        },\n        \"provider\": \"email\",\n        \"last_sign_in_at\": \"2026-09-24T15:58:11.235599Z\",\n        \"created_at\": \"2026-09-24T15:58:11.235636Z\",\n        \"updated_at\": \"2026-09-24T15:58:11.235636Z\",\n        \"email\": \"par1-p-parallel-1790265489069@example.com\"\n      }\n    ],\n    \"created_at\": \"2026-09-24T15:58:11.231769Z\",\n    \"updated_at\": \"2026-09-24T15:58:11.246671Z\",\n    \"is_anonymous\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"b8f25dfa-b461-4e72-ad57-95a67671f1e2\",\n      \"full_name\": null,\n      \"avatar_url\": null\n    }\n  ]\n}"
+    },
+    {
+      "tag": "par2",
+      "email": "par2-P-parallel-1790265489069@example.com",
+      "response": "{\n  \"user\": {\n    \"id\": \"2053f61b-5810-4e1b-88bb-a257e9454498\",\n    \"aud\": \"authenticated\",\n    \"role\": \"authenticated\",\n    \"email\": \"par2-p-parallel-1790265489069@example.com\",\n    \"email_confirmed_at\": \"2026-09-24T15:58:11.863536Z\",\n    \"phone\": \"\",\n    \"confirmed_at\": \"2026-09-24T15:58:11.863536Z\",\n    \"last_sign_in_at\": \"2026-09-24T15:58:11.865861Z\",\n    \"app_metadata\": {\n      \"provider\": \"email\",\n      \"providers\": [\n        \"email\"\n      ]\n    },\n    \"user_metadata\": {\n      \"email\": \"par2-p-parallel-1790265489069@example.com\",\n      \"email_verified\": true,\n      \"phone_verified\": false,\n      \"sub\": \"2053f61b-5810-4e1b-88bb-a257e9454498\"\n    },\n    \"identities\": [\n      {\n        \"identity_id\": \"a2e56e00-8f85-4a64-8084-1ee9b18674c7\",\n        \"id\": \"2053f61b-5810-4e1b-88bb-a257e9454498\",\n        \"user_id\": \"2053f61b-5810-4e1b-88bb-a257e9454498\",\n        \"identity_data\": {\n          \"email\": \"par2-p-parallel-1790265489069@example.com\",\n          \"email_verified\": false,\n          \"phone_verified\": false,\n          \"sub\": \"2053f61b-5810-4e1b-88bb-a257e9454498\"\n        },\n        \"provider\": \"email\",\n        \"last_sign_in_at\": \"2026-09-24T15:58:11.860826Z\",\n        \"created_at\": \"2026-09-24T15:58:11.860871Z\",\n        \"updated_at\": \"2026-09-24T15:58:11.860871Z\",\n        \"email\": \"par2-p-parallel-1790265489069@example.com\"\n      }\n    ],\n    \"created_at\": \"2026-09-24T15:58:11.858018Z\",\n    \"updated_at\": \"2026-09-24T15:58:11.867125Z\",\n    \"is_anonymous\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"2053f61b-5810-4e1b-88bb-a257e9454498\",\n      \"full_name\": null,\n      \"avatar_url\": null\n    }\n  ]\n}"
+    }
+  ],
+  "steps": [
+    {
+      "id": "I",
+      "desc": "3 users invoke concurrently",
+      "newMaps": [
+        "click_button_Invoke_Function_004.appmap.json",
+        "click_button_Invoke_Function_005.appmap.json",
+        "click_button_Invoke_Function_006.appmap.json"
+      ],
+      "wire": [
+        {
+          "tag": "par0",
+          "method": "POST",
+          "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+          "traceparent": "00-92fb6b910365931f28579002ae449971-41e01bf2fd75ea53-01"
+        },
+        {
+          "tag": "par1",
+          "method": "POST",
+          "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+          "traceparent": "00-992a909200085a468f826cc13e0cbfae-d2e80e56d5f0390c-01"
+        },
+        {
+          "tag": "par2",
+          "method": "POST",
+          "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+          "traceparent": "00-dcf186bd283cbb1c765e5932da4eb08e-f18f4fcef78f51ec-01"
+        }
+      ]
+    }
+  ],
+  "wire": [
+    {
+      "tag": "par0",
+      "t": 1790265490438,
+      "method": "POST",
+      "url": "http://localhost:54321/auth/v1/signup",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs",
+        "x-supabase-api-version": "2024-01-01",
+        "referer": "http://127.0.0.1:3300/",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "x-client-info": "supabase-js/2.117.1; runtime=web",
+        "traceparent": "00-860894726d62907ba791f4690d37fccc-47527af378fdc3b6-01",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "content-type": "application/json;charset=UTF-8",
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
+      }
+    },
+    {
+      "tag": "par1",
+      "t": 1790265491156,
+      "method": "POST",
+      "url": "http://localhost:54321/auth/v1/signup",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs",
+        "x-supabase-api-version": "2024-01-01",
+        "referer": "http://127.0.0.1:3300/",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "x-client-info": "supabase-js/2.117.1; runtime=web",
+        "traceparent": "00-5ee054f18d305e488186a161e23cea1b-0861435635fe338e-01",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "content-type": "application/json;charset=UTF-8",
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
+      }
+    },
+    {
+      "tag": "par2",
+      "t": 1790265491784,
+      "method": "POST",
+      "url": "http://localhost:54321/auth/v1/signup",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs",
+        "x-supabase-api-version": "2024-01-01",
+        "referer": "http://127.0.0.1:3300/",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "x-client-info": "supabase-js/2.117.1; runtime=web",
+        "traceparent": "00-0dbea443172a41c18f4a55fafca8023a-94ae5f26ab357ae8-01",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "content-type": "application/json;charset=UTF-8",
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
+      }
+    },
+    {
+      "tag": "par0",
+      "t": 1790265493817,
+      "method": "POST",
+      "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyZTg0NzZmOC1kMTA5LTQ0OTUtYjQ0OC0xMTdjMDU5NjYyZDciLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjY5MDkwLCJpYXQiOjE3OTAyNjU0OTAsImVtYWlsIjoicGFyMC1wLXBhcmFsbGVsLTE3OTAyNjU0ODkwNjlAZXhhbXBsZS5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoicGFyMC1wLXBhcmFsbGVsLTE3OTAyNjU0ODkwNjlAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiIyZTg0NzZmOC1kMTA5LTQ0OTUtYjQ0OC0xMTdjMDU5NjYyZDcifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDI2NTQ5MH1dLCJzZXNzaW9uX2lkIjoiYjdjMjU4ZGMtMTQ0My00YzlhLWFmYWItZmMyNzZiYTFhZTM2IiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.4cvTRQKL0KrAYfH32I4Zpv-nQbu-LSXKuiHJP5T8mpg",
+        "referer": "http://127.0.0.1:3300/",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "x-client-info": "supabase-js/2.117.1; runtime=web",
+        "traceparent": "00-92fb6b910365931f28579002ae449971-41e01bf2fd75ea53-01",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "content-type": "text/plain",
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
+      }
+    },
+    {
+      "tag": "par1",
+      "t": 1790265493820,
+      "method": "POST",
+      "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiOGYyNWRmYS1iNDYxLTRlNzItYWQ1Ny05NWE2NzY3MWYxZTIiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjY5MDkxLCJpYXQiOjE3OTAyNjU0OTEsImVtYWlsIjoicGFyMS1wLXBhcmFsbGVsLTE3OTAyNjU0ODkwNjlAZXhhbXBsZS5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoicGFyMS1wLXBhcmFsbGVsLTE3OTAyNjU0ODkwNjlAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiJiOGYyNWRmYS1iNDYxLTRlNzItYWQ1Ny05NWE2NzY3MWYxZTIifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDI2NTQ5MX1dLCJzZXNzaW9uX2lkIjoiOTU5MzhjM2YtMDJhOS00NDQ4LTlmNjctZWVlNDc1Y2VjZmZhIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.opY4-Yi2IWO8R2nEKt4DuvJDCRPXDppyl1bWSbeIJWc",
+        "referer": "http://127.0.0.1:3300/",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "x-client-info": "supabase-js/2.117.1; runtime=web",
+        "traceparent": "00-992a909200085a468f826cc13e0cbfae-d2e80e56d5f0390c-01",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "content-type": "text/plain",
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
+      }
+    },
+    {
+      "tag": "par2",
+      "t": 1790265493822,
+      "method": "POST",
+      "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMDUzZjYxYi01ODEwLTRlMWItODhiYi1hMjU3ZTk0NTQ0OTgiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjY5MDkxLCJpYXQiOjE3OTAyNjU0OTEsImVtYWlsIjoicGFyMi1wLXBhcmFsbGVsLTE3OTAyNjU0ODkwNjlAZXhhbXBsZS5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoicGFyMi1wLXBhcmFsbGVsLTE3OTAyNjU0ODkwNjlAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiIyMDUzZjYxYi01ODEwLTRlMWItODhiYi1hMjU3ZTk0NTQ0OTgifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDI2NTQ5MX1dLCJzZXNzaW9uX2lkIjoiOGMwNTNkMzUtY2YyNi00MDIyLWI5ODctMGZiMTI3ZDdhMWJlIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.QTzZPQBrwE5odMTMnkc5AG0bzNYC838tOHF4oU6KKRs",
+        "referer": "http://127.0.0.1:3300/",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "x-client-info": "supabase-js/2.117.1; runtime=web",
+        "traceparent": "00-dcf186bd283cbb1c765e5932da4eb08e-f18f4fcef78f51ec-01",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "content-type": "text/plain",
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
+      }
+    }
+  ],
+  "failed": [],
+  "console": [
+    {
+      "tag": "par0",
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "tag": "par0",
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "tag": "par0",
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    },
+    {
+      "tag": "par0",
+      "type": "error",
+      "text": "Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot"
+    },
+    {
+      "tag": "par1",
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "tag": "par1",
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "tag": "par1",
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    },
+    {
+      "tag": "par1",
+      "type": "error",
+      "text": "Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot"
+    },
+    {
+      "tag": "par2",
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "tag": "par2",
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "tag": "par2",
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    },
+    {
+      "tag": "par2",
+      "type": "error",
+      "text": "Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot"
+    }
+  ],
+  "pageErrors": [],
+  "dialogs": [],
+  "blockedExternal": [],
+  "wallMs": 6981,
+  "gateway": [
+    {
+      "t": 1790265490434,
+      "method": "OPTIONS",
+      "url": "/auth/v1/signup",
+      "traceparent": null,
+      "acrh": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version",
+      "origin": "http://127.0.0.1:3300",
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version"
+    },
+    {
+      "t": 1790265490597,
+      "method": "POST",
+      "url": "/auth/v1/signup",
+      "traceparent": "00-860894726d62907ba791f4690d37fccc-47527af378fdc3b6-01",
+      "acrh": null,
+      "origin": "http://127.0.0.1:3300",
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": null
+    },
+    {
+      "t": 1790265491154,
+      "method": "OPTIONS",
+      "url": "/auth/v1/signup",
+      "traceparent": null,
+      "acrh": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version",
+      "origin": "http://127.0.0.1:3300",
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version"
+    },
+    {
+      "t": 1790265491250,
+      "method": "POST",
+      "url": "/auth/v1/signup",
+      "traceparent": "00-5ee054f18d305e488186a161e23cea1b-0861435635fe338e-01",
+      "acrh": null,
+      "origin": "http://127.0.0.1:3300",
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": null
+    },
+    {
+      "t": 1790265491782,
+      "method": "OPTIONS",
+      "url": "/auth/v1/signup",
+      "traceparent": null,
+      "acrh": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version",
+      "origin": "http://127.0.0.1:3300",
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version"
+    },
+    {
+      "t": 1790265491869,
+      "method": "POST",
+      "url": "/auth/v1/signup",
+      "traceparent": "00-0dbea443172a41c18f4a55fafca8023a-94ae5f26ab357ae8-01",
+      "acrh": null,
+      "origin": "http://127.0.0.1:3300",
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": null
+    },
+    {
+      "t": 1790265493821,
+      "method": "OPTIONS",
+      "url": "/functions/v1/select-from-table-with-auth-rls",
+      "traceparent": null,
+      "acrh": "apikey,authorization,traceparent,x-client-info",
+      "origin": "http://127.0.0.1:3300",
+      "route": "functions",
+      "status": 200,
+      "allowHeaders": "authorization, x-client-info, apikey, content-type, traceparent"
+    },
+    {
+      "t": 1790265493824,
+      "method": "OPTIONS",
+      "url": "/functions/v1/select-from-table-with-auth-rls",
+      "traceparent": null,
+      "acrh": "apikey,authorization,traceparent,x-client-info",
+      "origin": "http://127.0.0.1:3300",
+      "route": "functions",
+      "status": 200,
+      "allowHeaders": "authorization, x-client-info, apikey, content-type, traceparent"
+    },
+    {
+      "t": 1790265493830,
+      "method": "OPTIONS",
+      "url": "/functions/v1/select-from-table-with-auth-rls",
+      "traceparent": null,
+      "acrh": "apikey,authorization,traceparent,x-client-info",
+      "origin": "http://127.0.0.1:3300",
+      "route": "functions",
+      "status": 200,
+      "allowHeaders": "authorization, x-client-info, apikey, content-type, traceparent"
+    },
+    {
+      "t": 1790265493851,
+      "method": "GET",
+      "url": "/auth/v1/user",
+      "traceparent": "00-92fb6b910365931f28579002ae449971-8cf489fb101bf71e-01",
+      "acrh": null,
+      "origin": null,
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": null
+    },
+    {
+      "t": 1790265493860,
+      "method": "GET",
+      "url": "/auth/v1/user",
+      "traceparent": "00-92fb6b910365931f28579002ae449971-7fade1103c1164e9-01",
+      "acrh": null,
+      "origin": null,
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": null
+    },
+    {
+      "t": 1790265493861,
+      "method": "GET",
+      "url": "/rest/v1/users?select=*",
+      "traceparent": "00-92fb6b910365931f28579002ae449971-b35d28acda770eff-01",
+      "acrh": null,
+      "origin": null,
+      "route": "rest",
+      "status": 200,
+      "allowHeaders": null
+    },
+    {
+      "t": 1790265493863,
+      "method": "GET",
+      "url": "/auth/v1/user",
+      "traceparent": "00-92fb6b910365931f28579002ae449971-32db68fa28b989a2-01",
+      "acrh": null,
+      "origin": null,
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": null
+    },
+    {
+      "t": 1790265493865,
+      "method": "POST",
+      "url": "/functions/v1/select-from-table-with-auth-rls",
+      "traceparent": "00-92fb6b910365931f28579002ae449971-41e01bf2fd75ea53-01",
+      "acrh": null,
+      "origin": "http://127.0.0.1:3300",
+      "route": "functions",
+      "status": 200,
+      "allowHeaders": "authorization, x-client-info, apikey, content-type, traceparent"
+    },
+    {
+      "t": 1790265493867,
+      "method": "GET",
+      "url": "/rest/v1/users?select=*",
+      "traceparent": "00-92fb6b910365931f28579002ae449971-413705d8640d40e6-01",
+      "acrh": null,
+      "origin": null,
+      "route": "rest",
+      "status": 200,
+      "allowHeaders": null
+    },
+    {
+      "t": 1790265493872,
+      "method": "POST",
+      "url": "/functions/v1/select-from-table-with-auth-rls",
+      "traceparent": "00-992a909200085a468f826cc13e0cbfae-d2e80e56d5f0390c-01",
+      "acrh": null,
+      "origin": "http://127.0.0.1:3300",
+      "route": "functions",
+      "status": 200,
+      "allowHeaders": "authorization, x-client-info, apikey, content-type, traceparent"
+    },
+    {
+      "t": 1790265493873,
+      "method": "GET",
+      "url": "/rest/v1/users?select=*",
+      "traceparent": null,
+      "acrh": null,
+      "origin": null,
+      "route": "rest",
+      "status": 200,
+      "allowHeaders": null
+    },
+    {
+      "t": 1790265493875,
+      "method": "POST",
+      "url": "/functions/v1/select-from-table-with-auth-rls",
+      "traceparent": "00-dcf186bd283cbb1c765e5932da4eb08e-f18f4fcef78f51ec-01",
+      "acrh": null,
+      "origin": "http://127.0.0.1:3300",
+      "route": "functions",
+      "status": 200,
+      "allowHeaders": "authorization, x-client-info, apikey, content-type, traceparent"
+    }
+  ],
+  "viteLog": "\n  VITE v6.4.3  ready in 300 ms\n\n  ➜  Local:   http://127.0.0.1:3300/\nappmap: wrote tmp/appmap/interactions/click_a_Don_t_have_an_account_Sign_up_001.appmap.json\nappmap: wrote tmp/appmap/interactions/click_a_Don_t_have_an_account_Sign_up_002.appmap.json\nappmap: wrote tmp/appmap/interactions/click_a_Don_t_have_an_account_Sign_up_003.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_004.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_005.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_006.appmap.json\n",
+  "fnLog": "Function \"select-from-table-with-auth-rls\" up and running!\nListening on http://127.0.0.1:18100/\n"
+}

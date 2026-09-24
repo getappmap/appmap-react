@@ -1,0 +1,364 @@
+{
+  "mode": "sequence",
+  "steps": [
+    {
+      "id": "S1",
+      "desc": "load the app",
+      "ms": 2010,
+      "newMaps": [],
+      "wire": [],
+      "response": "{}"
+    },
+    {
+      "id": "S2",
+      "desc": "invoke with the default dropdown entry (not served) -> 404",
+      "ms": 2095,
+      "newMaps": [
+        "click_button_Invoke_Function_001.appmap.json"
+      ],
+      "wire": [
+        {
+          "method": "POST",
+          "url": "http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
+          "traceparent": "00-8f84313a67242159caf9cc5157640274-b06ea2d7a4c7e39f-01"
+        }
+      ],
+      "response": "null"
+    },
+    {
+      "id": "S3",
+      "desc": "select select-from-table-with-auth-rls, invoke signed out -> 200, no rows",
+      "ms": 2082,
+      "newMaps": [
+        "click_button_Invoke_Function_002.appmap.json"
+      ],
+      "wire": [
+        {
+          "method": "POST",
+          "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+          "traceparent": "00-798453f05f8063c0cdece0e794795653-98b97b3c51e2cd85-01"
+        }
+      ],
+      "response": "null"
+    },
+    {
+      "id": "S4",
+      "desc": "sign up (auto-confirmed) -> signed in",
+      "ms": 2125,
+      "newMaps": [
+        "click_a_Don_t_have_an_account_Sign_up_003.appmap.json"
+      ],
+      "wire": [
+        {
+          "method": "POST",
+          "url": "http://localhost:54321/auth/v1/signup",
+          "traceparent": "00-0ed3ce7e32b8786507c845f32643dce1-de3c7e8edd9e3654-01"
+        }
+      ],
+      "response": "null"
+    },
+    {
+      "id": "S5",
+      "desc": "invoke signed in -> 200, own row only (RLS)",
+      "ms": 2078,
+      "newMaps": [
+        "click_button_Invoke_Function_004.appmap.json"
+      ],
+      "wire": [
+        {
+          "method": "POST",
+          "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+          "traceparent": "00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01"
+        }
+      ],
+      "response": "null"
+    },
+    {
+      "id": "S6",
+      "desc": "sign out",
+      "ms": 2092,
+      "newMaps": [
+        "click_button_Sign_out_005.appmap.json"
+      ],
+      "wire": [
+        {
+          "method": "POST",
+          "url": "http://localhost:54321/auth/v1/logout?scope=global",
+          "traceparent": "00-a64e2d8989a95589fd87f1ed5aa1da80-a4a93f39dfa844e5-01"
+        }
+      ],
+      "response": "null"
+    }
+  ],
+  "wire": [
+    {
+      "tag": "seq",
+      "t": 1790265447950,
+      "method": "POST",
+      "url": "http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs",
+        "referer": "http://127.0.0.1:3300/",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "x-client-info": "supabase-js/2.117.1; runtime=web",
+        "traceparent": "00-8f84313a67242159caf9cc5157640274-b06ea2d7a4c7e39f-01",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "content-type": "text/plain",
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
+      }
+    },
+    {
+      "tag": "seq",
+      "t": 1790265450052,
+      "method": "POST",
+      "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs",
+        "referer": "http://127.0.0.1:3300/",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "x-client-info": "supabase-js/2.117.1; runtime=web",
+        "traceparent": "00-798453f05f8063c0cdece0e794795653-98b97b3c51e2cd85-01",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "content-type": "text/plain",
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
+      }
+    },
+    {
+      "tag": "seq",
+      "t": 1790265452208,
+      "method": "POST",
+      "url": "http://localhost:54321/auth/v1/signup",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs",
+        "x-supabase-api-version": "2024-01-01",
+        "referer": "http://127.0.0.1:3300/",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "x-client-info": "supabase-js/2.117.1; runtime=web",
+        "traceparent": "00-0ed3ce7e32b8786507c845f32643dce1-de3c7e8edd9e3654-01",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "content-type": "application/json;charset=UTF-8",
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
+      }
+    },
+    {
+      "tag": "seq",
+      "t": 1790265454258,
+      "method": "POST",
+      "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYjVmYjM0MS0zMDIzLTRhZDQtOTE0Mi1iNTE4MjAwYTc5ODgiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjY5MDUyLCJpYXQiOjE3OTAyNjU0NTIsImVtYWlsIjoic2VxLXcxLTE3OTAyNjU0NDUyMzdAZXhhbXBsZS5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoic2VxLXcxLTE3OTAyNjU0NDUyMzdAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiJkYjVmYjM0MS0zMDIzLTRhZDQtOTE0Mi1iNTE4MjAwYTc5ODgifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDI2NTQ1Mn1dLCJzZXNzaW9uX2lkIjoiZmU3MjI4MjktMDFmMC00MTljLWJjYTYtYmE1ZDJiZGQ1NzBhIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.55tDCB1AKD00yhx6AKU3SQeJamsclL8WLHgyoxJLrco",
+        "referer": "http://127.0.0.1:3300/",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "x-client-info": "supabase-js/2.117.1; runtime=web",
+        "traceparent": "00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "content-type": "text/plain",
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
+      }
+    },
+    {
+      "tag": "seq",
+      "t": 1790265456338,
+      "method": "POST",
+      "url": "http://localhost:54321/auth/v1/logout?scope=global",
+      "headers": {
+        "sec-ch-ua-platform": "\"Linux\"",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYjVmYjM0MS0zMDIzLTRhZDQtOTE0Mi1iNTE4MjAwYTc5ODgiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjY5MDUyLCJpYXQiOjE3OTAyNjU0NTIsImVtYWlsIjoic2VxLXcxLTE3OTAyNjU0NDUyMzdAZXhhbXBsZS5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoic2VxLXcxLTE3OTAyNjU0NDUyMzdAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiJkYjVmYjM0MS0zMDIzLTRhZDQtOTE0Mi1iNTE4MjAwYTc5ODgifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDI2NTQ1Mn1dLCJzZXNzaW9uX2lkIjoiZmU3MjI4MjktMDFmMC00MTljLWJjYTYtYmE1ZDJiZGQ1NzBhIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.55tDCB1AKD00yhx6AKU3SQeJamsclL8WLHgyoxJLrco",
+        "x-supabase-api-version": "2024-01-01",
+        "referer": "http://127.0.0.1:3300/",
+        "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
+        "sec-ch-ua-mobile": "?0",
+        "x-client-info": "supabase-js/2.117.1; runtime=web",
+        "traceparent": "00-a64e2d8989a95589fd87f1ed5aa1da80-a4a93f39dfa844e5-01",
+        "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+        "content-type": "application/json;charset=UTF-8",
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
+      }
+    }
+  ],
+  "failed": [
+    {
+      "tag": "seq",
+      "method": "POST",
+      "url": "http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "tag": "seq",
+      "method": "POST",
+      "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "tag": "seq",
+      "method": "POST",
+      "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
+      "error": "net::ERR_FAILED"
+    },
+    {
+      "tag": "seq",
+      "method": "POST",
+      "url": "http://localhost:54321/auth/v1/logout?scope=global",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "console": [
+    {
+      "tag": "seq",
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "tag": "seq",
+      "type": "debug",
+      "text": "[vite] connected."
+    },
+    {
+      "tag": "seq",
+      "type": "info",
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold"
+    },
+    {
+      "tag": "seq",
+      "type": "error",
+      "text": "Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot"
+    },
+    {
+      "tag": "seq",
+      "type": "error",
+      "text": "Access to fetch at 'http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI' from origin 'http://127.0.0.1:3300' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource."
+    },
+    {
+      "tag": "seq",
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "tag": "seq",
+      "type": "error",
+      "text": "Access to fetch at 'http://localhost:54321/functions/v1/select-from-table-with-auth-rls' from origin 'http://127.0.0.1:3300' has been blocked by CORS policy: Request header field traceparent is not allowed by Access-Control-Allow-Headers in preflight response."
+    },
+    {
+      "tag": "seq",
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "tag": "seq",
+      "type": "error",
+      "text": "Access to fetch at 'http://localhost:54321/functions/v1/select-from-table-with-auth-rls' from origin 'http://127.0.0.1:3300' has been blocked by CORS policy: Request header field traceparent is not allowed by Access-Control-Allow-Headers in preflight response."
+    },
+    {
+      "tag": "seq",
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_FAILED"
+    }
+  ],
+  "pageErrors": [],
+  "dialogs": [
+    {
+      "tag": "seq",
+      "message": "FunctionsFetchError: Failed to send a request to the Edge Function"
+    },
+    {
+      "tag": "seq",
+      "message": "FunctionsFetchError: Failed to send a request to the Edge Function"
+    },
+    {
+      "tag": "seq",
+      "message": "FunctionsFetchError: Failed to send a request to the Edge Function"
+    }
+  ],
+  "blockedExternal": [],
+  "email": "seq-W1-1790265445237@example.com",
+  "wallMs": 13271,
+  "gateway": [
+    {
+      "t": 1790265447947,
+      "method": "OPTIONS",
+      "url": "/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
+      "traceparent": null,
+      "acrh": "apikey,authorization,traceparent,x-client-info",
+      "origin": "http://127.0.0.1:3300",
+      "route": "functions",
+      "status": 404,
+      "allowHeaders": null
+    },
+    {
+      "t": 1790265450057,
+      "method": "OPTIONS",
+      "url": "/functions/v1/select-from-table-with-auth-rls",
+      "traceparent": null,
+      "acrh": "apikey,authorization,traceparent,x-client-info",
+      "origin": "http://127.0.0.1:3300",
+      "route": "functions",
+      "status": 200,
+      "allowHeaders": "authorization, x-client-info, apikey, content-type"
+    },
+    {
+      "t": 1790265452205,
+      "method": "OPTIONS",
+      "url": "/auth/v1/signup",
+      "traceparent": null,
+      "acrh": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version",
+      "origin": "http://127.0.0.1:3300",
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version"
+    },
+    {
+      "t": 1790265452309,
+      "method": "POST",
+      "url": "/auth/v1/signup",
+      "traceparent": "00-0ed3ce7e32b8786507c845f32643dce1-de3c7e8edd9e3654-01",
+      "acrh": null,
+      "origin": "http://127.0.0.1:3300",
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": null
+    },
+    {
+      "t": 1790265454260,
+      "method": "OPTIONS",
+      "url": "/functions/v1/select-from-table-with-auth-rls",
+      "traceparent": null,
+      "acrh": "apikey,authorization,traceparent,x-client-info",
+      "origin": "http://127.0.0.1:3300",
+      "route": "functions",
+      "status": 200,
+      "allowHeaders": "authorization, x-client-info, apikey, content-type"
+    },
+    {
+      "t": 1790265456336,
+      "method": "OPTIONS",
+      "url": "/auth/v1/logout?scope=global",
+      "traceparent": null,
+      "acrh": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version",
+      "origin": "http://127.0.0.1:3300",
+      "route": "auth",
+      "status": 200,
+      "allowHeaders": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version"
+    },
+    {
+      "t": 1790265456349,
+      "method": "POST",
+      "url": "/auth/v1/logout?scope=global",
+      "traceparent": "00-a64e2d8989a95589fd87f1ed5aa1da80-a4a93f39dfa844e5-01",
+      "acrh": null,
+      "origin": "http://127.0.0.1:3300",
+      "route": "auth",
+      "status": 204,
+      "allowHeaders": null
+    }
+  ],
+  "viteLog": "\n  VITE v6.4.3  ready in 305 ms\n\n  ➜  Local:   http://127.0.0.1:3300/\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_001.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_002.appmap.json\nappmap: wrote tmp/appmap/interactions/click_a_Don_t_have_an_account_Sign_up_003.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_004.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Sign_out_005.appmap.json\n",
+  "fnLog": "Function \"select-from-table-with-auth-rls\" up and running!\nListening on http://127.0.0.1:18100/\n"
+}

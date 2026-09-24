@@ -1,0 +1,52 @@
+{
+  "mode": "parallel",
+  "users": [],
+  "steps": [
+    {
+      "id": "I",
+      "desc": "app did not render",
+      "error": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Invoke Function' }) to be visible\u001b[22m\n",
+      "newMaps": [],
+      "wire": []
+    }
+  ],
+  "wire": [],
+  "failed": [],
+  "console": [
+    {
+      "tag": "par0",
+      "type": "error",
+      "text": "Access to script at 'virtual:appmap-interaction-recorder' from origin 'http://127.0.0.1:3300' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: chrome, chrome-extension, chrome-untrusted, data, http, https, isolated-app."
+    },
+    {
+      "tag": "par0",
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "tag": "par0",
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    },
+    {
+      "tag": "par0",
+      "type": "debug",
+      "text": "[vite] connecting..."
+    },
+    {
+      "tag": "par0",
+      "type": "debug",
+      "text": "[vite] connected."
+    }
+  ],
+  "pageErrors": [],
+  "dialogs": [],
+  "blockedExternal": [
+    "virtual:appmap-interaction-recorder"
+  ],
+  "appDidNotRender": true,
+  "wallMs": 30817,
+  "gateway": [],
+  "viteLog": "x.js:10817:17)\n      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:12510:17)\n      at TypeScriptParserMixin.parseExprListItem (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:12192:18)\n      at TypeScriptParserMixin.parseCallExpressionArguments (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:11269:22)\n      at TypeScriptParserMixin.parseCoverCallAndAsyncArrowHead (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:11203:29)\n      at TypeScriptParserMixin.parseSubscript (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:11137:19)\n      at TypeScriptParserMixin.parseSubscript (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:9289:18)\n      at TypeScriptParserMixin.parseSubscripts (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:11111:19)\n      at TypeScriptParserMixin.parseExprSubscripts (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:11102:17)\n      at TypeScriptParserMixin.parseUpdate (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:11083:21)\n      at TypeScriptParserMixin.parseMaybeUnary (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:11063:23)\n      at TypeScriptParserMixin.parseMaybeUnary (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:9854:18)\n      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:10916:61)\n      at TypeScriptParserMixin.parseExprOps (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:10921:23)\n      at TypeScriptParserMixin.parseMaybeConditional (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:10898:23)\n      at TypeScriptParserMixin.parseMaybeAssign (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:10848:21)\n      at TypeScriptParserMixin.parseMaybeAssign (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:9803:20)\n      at TypeScriptParserMixin.parseExpressionBase (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:10801:23)\n      at /home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:10797:39\n      at TypeScriptParserMixin.allowInAnd (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:12438:16)\n      at TypeScriptParserMixin.parseExpression (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:10797:17)\n      at TypeScriptParserMixin.parseStatementContent (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:12912:23)\n      at TypeScriptParserMixin.parseStatementContent (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:9525:18)\n      at TypeScriptParserMixin.parseStatementLike (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:12784:17)\n      at TypeScriptParserMixin.parseModuleItem (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:12761:17)\n      at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:13333:36)\n      at TypeScriptParserMixin.parseBlockBody (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:13326:10)\n      at TypeScriptParserMixin.parseProgram (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:12639:10)\n      at TypeScriptParserMixin.parseTopLevel (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:12629:25)\n      at TypeScriptParserMixin.parse (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:14505:25)\n      at TypeScriptParserMixin.parse (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:10143:18)\n      at parse (/home/user/e2e-oss/node_modules/@babel/parser/lib/index.js:14539:38)\n      at parser (/home/user/e2e-oss/node_modules/@babel/core/lib/parser/index.js:41:34)\n      at parser.next (<anonymous>)\n      at normalizeFile (/home/user/e2e-oss/node_modules/@babel/core/lib/transformation/normalize-file.js:51:37)\n      at normalizeFile.next (<anonymous>)\n      at run (/home/user/e2e-oss/node_modules/@babel/core/lib/transformation/index.js:22:50)\n",
+  "fnLog": "Function \"select-from-table-with-auth-rls\" up and running!\nListening on http://127.0.0.1:18100/\n"
+}

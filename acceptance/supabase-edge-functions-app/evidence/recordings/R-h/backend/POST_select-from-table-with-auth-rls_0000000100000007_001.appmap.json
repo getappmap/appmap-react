@@ -1,0 +1,96 @@
+{
+  "version": "1.12",
+  "metadata": {
+    "name": "POST /select-from-table-with-auth-rls",
+    "app": "select-from-table-with-auth-rls",
+    "language": {
+      "name": "typescript",
+      "engine": "deno"
+    },
+    "client": {
+      "name": "@funwithappmap/react-recorder",
+      "url": "https://github.com/getappmap/appmap-react"
+    },
+    "recorder": {
+      "name": "funwithappmap-deno",
+      "type": "requests"
+    },
+    "trace_id": "64697265637400000000000000000001",
+    "parent_span_id": "0000000100000007"
+  },
+  "classMap": [],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "http_server_request": {
+        "request_method": "POST",
+        "path_info": "/select-from-table-with-auth-rls",
+        "headers": {
+          "traceparent": "00-64697265637400000000000000000001-0000000100000007-01"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 2,
+      "http_client_request": {
+        "request_method": "GET",
+        "url": "http://127.0.0.1:54321/auth/v1/user",
+        "headers": {
+          "traceparent": "00-64697265637400000000000000000001-507fc7246d1c3421-01"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "event": "return",
+      "thread_id": 2,
+      "parent_id": 2,
+      "elapsed": 0.009045219000000004,
+      "http_client_response": {
+        "status_code": 403,
+        "headers": {
+          "content-type": "application/json"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "event": "call",
+      "thread_id": 3,
+      "http_client_request": {
+        "request_method": "GET",
+        "url": "http://127.0.0.1:54321/rest/v1/users?select=id",
+        "headers": {
+          "traceparent": "00-64697265637400000000000000000001-075e807aa51a7be6-01"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "event": "return",
+      "thread_id": 3,
+      "parent_id": 4,
+      "elapsed": 0.004346219000000019,
+      "http_client_response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json; charset=utf-8"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 1,
+      "elapsed": 0.023652612000000003,
+      "http_server_response": {
+        "status_code": 200
+      }
+    }
+  ]
+}

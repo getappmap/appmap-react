@@ -1,0 +1,11 @@
+@startuml
+title click button "Invoke Function"
+actor User
+participant "frontend" as FE
+participant "select-from-table-with-auth-rls" as BE0
+User -> FE : click button "Invoke Function"
+FE -> BE0 : POST /functions/v1/select-from-table-with-auth-rls
+activate BE0
+BE0 --> FE : 200
+deactivate BE0
+@enduml

@@ -1,0 +1,160 @@
+{
+  "version": "1.12",
+  "metadata": {
+    "name": "click a \"Don't have an account? Sign up\"",
+    "app": "supabase-edge-functions-app",
+    "client": {
+      "name": "@funwithappmap/react-recorder",
+      "url": "https://github.com/getappmap/appmap-react"
+    },
+    "recorder": {
+      "name": "funwithappmap-react",
+      "type": "requests"
+    },
+    "trace_id": "5ee054f18d305e488186a161e23cea1b"
+  },
+  "classMap": [
+    {
+      "type": "package",
+      "name": "src",
+      "children": [
+        {
+          "type": "class",
+          "name": "App",
+          "children": [
+            {
+              "type": "function",
+              "name": "App",
+              "location": "src/App.js:10",
+              "static": true,
+              "labels": [
+                "security.authentication",
+                "component"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "http_client_request": {
+        "request_method": "POST",
+        "url": "http://localhost:54321/auth/v1/signup",
+        "headers": {
+          "content-type": "application/json;charset=UTF-8",
+          "traceparent": "00-5ee054f18d305e488186a161e23cea1b-0861435635fe338e-01"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 1,
+      "elapsed": 0.10079999999981373,
+      "http_client_response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "App",
+      "method_id": "App",
+      "path": "src/App.js",
+      "lineno": 10,
+      "static": true
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 3,
+      "elapsed": 0.00019999999972060322,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 1
+      }
+    },
+    {
+      "id": 5,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "App",
+      "method_id": "App",
+      "path": "src/App.js",
+      "lineno": 10,
+      "static": true
+    },
+    {
+      "id": 6,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 5,
+      "elapsed": 0.00010000000009313225,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 2
+      }
+    },
+    {
+      "id": 7,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "App",
+      "method_id": "App",
+      "path": "src/App.js",
+      "lineno": 10,
+      "static": true
+    },
+    {
+      "id": 8,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 7,
+      "elapsed": 0.00010000000009313225,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 3
+      }
+    },
+    {
+      "id": 9,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "App",
+      "method_id": "App",
+      "path": "src/App.js",
+      "lineno": 10,
+      "static": true
+    },
+    {
+      "id": 10,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 9,
+      "elapsed": 0.00019999999972060322,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 4
+      }
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "zeroTouchFrontend": [
+    {
+      "id": "S2",
+      "expect": "one frontend interaction map",
+      "status": "missing",
+      "quote": "skipped: the app did not render (S1 failed)"
+    },
+    {
+      "id": "S3",
+      "expect": "one frontend interaction map",
+      "status": "missing",
+      "quote": "skipped: the app did not render (S1 failed)"
+    },
+    {
+      "id": "S4",
+      "expect": "one frontend interaction map",
+      "status": "missing",
+      "quote": "skipped: the app did not render (S1 failed)"
+    },
+    {
+      "id": "S5",
+      "expect": "one frontend interaction map",
+      "status": "missing",
+      "quote": "skipped: the app did not render (S1 failed)"
+    },
+    {
+      "id": "S6",
+      "expect": "one frontend interaction map",
+      "status": "missing",
+      "quote": "skipped: the app did not render (S1 failed)"
+    }
+  ],
+  "workaroundFrontendDiagnostic": [
+    {
+      "id": "S2",
+      "expect": "call invokeFunction (src/App.js:16)",
+      "status": "found",
+      "quote": "App.invokeFunction src/App.js:16"
+    },
+    {
+      "id": "S2",
+      "expect": "call App (src/App.js:10)",
+      "status": "found",
+      "quote": "App.App src/App.js:10"
+    },
+    {
+      "id": "S2",
+      "expect": "POST /functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI -> 0",
+      "status": "found",
+      "quote": "POST http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI status=0 traceparent=00-8f84313a67242159caf9cc5157640274-b06ea2d7a4c7e39f-01"
+    },
+    {
+      "id": "S3",
+      "expect": "call invokeFunction (src/App.js:16)",
+      "status": "found",
+      "quote": "App.invokeFunction src/App.js:16"
+    },
+    {
+      "id": "S3",
+      "expect": "POST /functions/v1/select-from-table-with-auth-rls -> 200 with traceparent",
+      "status": "wrong",
+      "quote": "POST http://localhost:54321/functions/v1/select-from-table-with-auth-rls status=0 traceparent=00-798453f05f8063c0cdece0e794795653-98b97b3c51e2cd85-01"
+    },
+    {
+      "id": "S4",
+      "expect": "POST /auth/v1/signup -> 200",
+      "status": "found",
+      "quote": "POST http://localhost:54321/auth/v1/signup status=200 traceparent=00-0ed3ce7e32b8786507c845f32643dce1-de3c7e8edd9e3654-01"
+    },
+    {
+      "id": "S4",
+      "expect": "call App (src/App.js:10)",
+      "status": "found",
+      "quote": "App.App src/App.js:10"
+    },
+    {
+      "id": "S5",
+      "expect": "call invokeFunction (src/App.js:16)",
+      "status": "found",
+      "quote": "App.invokeFunction src/App.js:16"
+    },
+    {
+      "id": "S5",
+      "expect": "POST /functions/v1/select-from-table-with-auth-rls -> 200 with traceparent",
+      "status": "wrong",
+      "quote": "POST http://localhost:54321/functions/v1/select-from-table-with-auth-rls status=0 traceparent=00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01"
+    },
+    {
+      "id": "S6",
+      "expect": "call * (src/App.js:86)",
+      "status": "missing",
+      "quote": "App.App@10, App.App@10, App.App@10, App.App@10"
+    },
+    {
+      "id": "S6",
+      "expect": "POST /auth/v1/logout?scope=global -> 204",
+      "status": "found",
+      "quote": "POST http://localhost:54321/auth/v1/logout?scope=global status=204 traceparent=00-a64e2d8989a95589fd87f1ed5aa1da80-a4a93f39dfa844e5-01"
+    }
+  ],
+  "backend": [
+    {
+      "id": "R1",
+      "expect": "metadata trace_id/parent_span_id from traceparent",
+      "status": "found",
+      "quote": "trace_id=64697265637400000000000000000001 parent_span_id=0000000100000001"
+    },
+    {
+      "id": "R1",
+      "expect": "http_server_request POST /select-from-table-with-auth-rls -> 200",
+      "status": "found",
+      "quote": "{\"method\":\"POST\",\"path\":\"/select-from-table-with-auth-rls\",\"traceparent\":\"00-64697265637400000000000000000001-0000000100000001-01\",\"status\":200}"
+    },
+    {
+      "id": "R1",
+      "expect": "call event for the request handler (index.ts:10)",
+      "status": "missing",
+      "quote": "call events: []"
+    },
+    {
+      "id": "R1",
+      "expect": "outbound #1: GET /auth/v1/user 403",
+      "status": "found",
+      "quote": "GET /auth/v1/user 403 traceparent=00-64697265637400000000000000000001-fd65b72da09222e1-01"
+    },
+    {
+      "id": "R1",
+      "expect": "outbound #2: GET /rest/v1/users?select=* 200",
+      "status": "found",
+      "quote": "GET /rest/v1/users?select=* 200 traceparent=00-64697265637400000000000000000001-e7926451d42e0446-01"
+    },
+    {
+      "id": "R2",
+      "expect": "metadata trace_id/parent_span_id from traceparent",
+      "status": "found",
+      "quote": "trace_id=64697265637400000000000000000002 parent_span_id=0000000200000002"
+    },
+    {
+      "id": "R2",
+      "expect": "http_server_request POST /select-from-table-with-auth-rls -> 200",
+      "status": "found",
+      "quote": "{\"method\":\"POST\",\"path\":\"/select-from-table-with-auth-rls\",\"traceparent\":\"00-64697265637400000000000000000002-0000000200000002-01\",\"status\":200}"
+    },
+    {
+      "id": "R2",
+      "expect": "call event for the request handler (index.ts:10)",
+      "status": "missing",
+      "quote": "call events: []"
+    },
+    {
+      "id": "R2",
+      "expect": "outbound #1: GET /auth/v1/user 200",
+      "status": "found",
+      "quote": "GET /auth/v1/user 200 traceparent=00-64697265637400000000000000000002-d0ca6e1fc89dd36d-01"
+    },
+    {
+      "id": "R2",
+      "expect": "outbound #2: GET /rest/v1/users?select=* 200",
+      "status": "found",
+      "quote": "GET /rest/v1/users?select=* 200 traceparent=00-64697265637400000000000000000002-308ceae6718f54c7-01"
+    },
+    {
+      "id": "R2",
+      "expect": "response: user + exactly 1 row, their own (RLS)",
+      "status": "found",
+      "quote": "{\"user\":{\"id\":\"5b80ae55-20d7-44e1-be2e-5395a371aa94\",\"aud\":\"authenticated\",\"role\":\"authenticated\",\"email\":\"r-run1-179026"
+    },
+    {
+      "id": "R3",
+      "expect": "metadata trace_id/parent_span_id from traceparent",
+      "status": "found",
+      "quote": "trace_id=64697265637400000000000000000003 parent_span_id=0000000300000003"
+    },
+    {
+      "id": "R3",
+      "expect": "http_server_request POST /select-from-table-with-auth-rls -> 400",
+      "status": "found",
+      "quote": "{\"method\":\"POST\",\"path\":\"/select-from-table-with-auth-rls\",\"traceparent\":\"00-64697265637400000000000000000003-0000000300000003-01\",\"status\":400}"
+    },
+    {
+      "id": "R3",
+      "expect": "call event for the request handler (index.ts:10)",
+      "status": "missing",
+      "quote": "call events: []"
+    },
+    {
+      "id": "R4",
+      "expect": "preflight 200, allow-headers exactly \"authorization, x-client-info, apikey, content-type\"",
+      "status": "found",
+      "quote": "200 authorization, x-client-info, apikey, content-type"
+    }
+  ]
+}
