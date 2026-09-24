@@ -8,6 +8,7 @@ import type {
   PackageEntry,
   ParameterValue,
 } from './types';
+import { className, functionName, safeStringify } from './stringify';
 
 /** Default maximum captured length of any single value string, like
  * APPMAP_EVENT_VALUESIZE in the .NET agent. Overridable at runtime via
@@ -33,22 +34,22 @@ export function formatValue(
   v: unknown,
   tracker?: ObjectIdTracker,
 ): { class: string; value: string; size?: number; object_id?: number } {
-  let cls: string;
-  if (v === null) cls = 'null';
-  else if (v === undefined) cls = 'undefined';
-  else if (typeof v === 'object' || typeof v === 'function') {
-    cls = (v as object).constructor?.name ?? typeof v;
-  } else {
-    cls = typeof v;
-  }
+  // Never JSON.stringify / String() an unknown value: that runs its
+  // getters and toJSON and can change what the app does (stringify.ts).
+  const cls = v === undefined ? 'undefined' : className(v);
 
   let str: string;
-  try {
-    if (typeof v === 'string') str = v;
-    else if (typeof v === 'function') str = `[function ${(v as Function).name || 'anonymous'}]`;
-    else str = JSON.stringify(v) ?? String(v);
-  } catch {
-    str = String(v);
+  if (typeof v === 'string') str = v;
+  else if (typeof v === 'function') str = `[function ${functionName(v) || 'anonymous'}]`;
+  else if (v === undefined) str = 'undefined';
+  else if (typeof v === 'symbol') str = v.toString();
+  else if (typeof v === 'bigint') str = String(v);
+  else {
+    try {
+      str = safeStringify(v, currentValueSizeCap);
+    } catch {
+      str = `[${cls}]`;
+    }
   }
   if (str.length > currentValueSizeCap) str = str.slice(0, currentValueSizeCap) + '…';
 
@@ -58,7 +59,7 @@ export function formatValue(
   };
 
   if (v !== null && typeof v === 'object') {
-    result.size = Array.isArray(v) ? v.length : Object.keys(v as object).length;
+    result.size = Array.isArray(v) ? ownLength(v) : Object.keys(v as object).length;
     if (tracker) {
       let id = tracker.ids.get(v as object);
       if (id === undefined) {
@@ -70,6 +71,11 @@ export function formatValue(
   }
 
   return result;
+}
+
+function ownLength(a: unknown[]): number {
+  const d = Object.getOwnPropertyDescriptor(a, 'length');
+  return d && typeof d.value === 'number' ? d.value : 0;
 }
 
 /** Handle returned by Recording.enter; consumed exactly once by exit.
