@@ -38,7 +38,11 @@ edge-functions example (a React app calling a Deno edge function, with
 real Postgres, GoTrue and PostgREST on localhost) — in
 [`acceptance/supabase-edge-functions-app`](acceptance/supabase-edge-functions-app),
 which CI runs on every PR. Read its `RESULTS.md` for the current state:
-it is expected to fail until the recorder bugs it found are fixed.
+the recorder bugs it found are fixed, and the join works end to end once
+the function's CORS allows `traceparent`; the suite still fails on two
+checks that are not recorder bugs (the app is Create React App, which the
+recorder cannot hook without the app switching to Vite, and at the pinned
+commit the function's CORS refuses the header).
 Both runtimes record with zero application-code changes on this repo's
 own examples (docs 06 and 07). Interaction-window capture in a real
 browser is exercised by the acceptance runs.

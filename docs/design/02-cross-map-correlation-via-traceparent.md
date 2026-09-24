@@ -217,8 +217,9 @@ run by CI on every push and PR:
   shows click → handler → backend → DB.
 
 Its `EXPECTATIONS.md` was written before any recording and its
-`RESULTS.md` records what actually happened. It is expected to fail
-until the recorder bugs it found are fixed; CI does not hide that.
+`RESULTS.md` records what actually happened; its "Update" section says
+what still fails and why (the recorder bugs it found are fixed). CI does
+not hide a failing check.
 `examples/petclinic-react/test/e2e/deno-fullstack.test.ts` (doc 09)
 stays as a fast regression test, but both of its ends are this repo's
 own code, so it is not the proof.

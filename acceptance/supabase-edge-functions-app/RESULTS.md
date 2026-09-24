@@ -19,6 +19,86 @@
 
 `EXPECTATIONS.md` was committed on its own before any recording (commit `3d00c68`).
 
+## Update: `integration/pr1` — the fixes merged (read this first)
+
+Branch `integration/pr1` merges `fix/recorder-worst-bugs` into this branch and adds the fixes below. This
+section records the current result; everything after "The short version" further down is the original run
+against the unfixed recorder, kept as the record of what it found. The files in `evidence/` are still that
+original run's; a current run of `run.sh` rewrites them (CI uploads them as an artifact).
+
+Run: fresh clone of `integration/pr1`, `CI=true`, `npm ci`, then `acceptance/supabase-edge-functions-app/run.sh`
+(the CI job's commands), on 127.0.0.1 in a private network namespace. Same app SHA, stack and tools as below.
+
+| Check | Before (unfixed recorder) | After (`integration/pr1`) | One line |
+|---|---|---|---|
+| A. Setup | FAIL | **FAIL** | The plugin as documented now serves a working app (JSX in `.js` parses; the injected recorder loads). A still fails by design: the recorder has no Create React App/webpack integration, so the app runs under Vite (pre-registered in EXPECTATIONS.md). |
+| B. Validity | FAIL (0/23) | **PASS** | 56/56 maps valid at the declared 1.12 (`@appland/appmap-validate` 2.5.1). |
+| C. Ground truth | FAIL | **PASS** | Zero-touch frontend 11/11 found, backend 15/15 found (the `Deno.serve` handler at index.ts:10 is now recorded). |
+| D. Noise | FAIL | **PASS** | 29 call events: 26 in `src/App.js`, 3 in the function's `index.ts`; none from dependencies. |
+| E. Exception | FAIL | **PASS** | R3: status 400, no exception on the handler's return. S2's rejected fetch: listed in `metadata.unanswered_http_requests` (network error), events balanced. |
+| F. Failing test (analog) | FAIL | **PASS (analog)** | The failing interaction S2 leaves a zero-touch map. |
+| G. Stability | NOT RUN | **PASS** | Backend R1–R3 identical across runs; frontend S1–S6 (W config) identical. |
+| H. Change detection | PASS | **PASS** | appmap-trace, per request: R1 and R2 "1 added, 1 removed" (`- GET /rest/v1/users?select=*`, `+ …?select=id`), nothing else; R3 "No behavior change". Official diff: sees nothing (query is in `message`), reported. |
+| I. Concurrency | FAIL | **PASS** | 6 concurrent stamped requests → 6 maps, each with exactly its own 2 outbound calls, each stamped with its own trace id. Browser: 3 users → 3 maps, 1 request each. |
+| J. Overhead | MEASURED | MEASURED | Browser S1–S6: 11.1 / 11.2 s without, 14.4 s zero-touch. 20 direct requests: 305 ms plain, 278 ms recorded. |
+| L. Cross-map link | FAIL | **FAIL** | Judged with the one linking setting. The app's function refuses the `traceparent` header (CORS, pinned SHA), so the browser blocks the call. With that one CORS line patched (pass P, an app change): L1–L5 all ok for S3 and S5. |
+
+**Remaining failures, and why they are not recorder bugs to fix here:**
+
+- **A** — the app is Create React App; the recorder integrates only with Vite, and CRA cannot be configured
+  without ejecting or adding a tool (an app change). The zero-touch Vite config itself now works.
+- **L** — linking a cross-origin backend needs `propagateTraceHeaderOrigins` (config) *and* a backend that
+  allows the `traceparent` request header. At `74a3be9` the function's `_shared/cors.ts` allows only
+  `authorization, x-client-info, apikey, content-type` (EXPECTATIONS R4), so with the setting on, the
+  browser blocks the call (L2–L5 fail, the app shows an error). Without the setting the recorder no longer
+  sends the header, so the app works (L5 ok) but nothing can link (L1 fails). Upstream Supabase added
+  `traceparent` to that list later (fc5db9bb); with that one line (pass P), every L item passes and the
+  stitched diagram is click → `App.invokeFunction` → `POST /functions/v1/…` → `index.handler` →
+  `GET /auth/v1/user`, `GET /rest/v1/users?select=*` → 200.
+
+**Bugs from the list below, now:**
+
+| # | Bug | Status |
+|---|---|---|
+| 1 | JSX in `.js` breaks the app | Fixed (7225ea2): syntax by extension, as Vite does; a file that still can't be parsed is served uninstrumented with a warning. |
+| 2 | Injected `virtual:` import refused | Fixed on `fix/recorder-worst-bugs` (32157ad); verified here: the page loads `/@id/__x00__virtual:appmap-interaction-recorder` and records every step. Nothing differed for this app. |
+| 3 | `traceparent` breaks cross-origin calls | Fixed (9a7389c): same-origin requests always stamped; cross-origin only for origins listed in `propagateTraceHeaderOrigins` / `APPMAP_PROPAGATE_TRACE_HEADER_ORIGINS` (OpenTelemetry's model). Documented in README and doc 02. |
+| 4 | `Deno.serve` handler not recorded | Fixed on `fix/recorder-worst-bugs` (d4be568). |
+| 5 | Concurrent Deno requests leak / wrong trace ids | Fixed on `fix/recorder-worst-bugs` (6402f0d). |
+| 6 | Declared 1.12 not honest | Fixed on `fix/recorder-worst-bugs` (4893004). |
+| 7 | Stitched diagram lacks handler and DB; backend maps counted as frontend | Fixed (31a8918). |
+| — | appmap-trace diffed same-named requests against the wrong baseline (found by H here) | Fixed (8227fac). |
+| — | Page-load requests had no window | Fixed (0fdc935): the zero-touch injection records the page load as `load <path>`. |
+
+### Check changes
+
+Each is its own commit; the message quotes the old and new rule. EXPECTATIONS.md is unchanged.
+
+1. **URLs are `url` + `message`** (481a510, rule (a), AppMap spec): an outbound call's URL for C, H, I and L
+   is rebuilt from `url` and the event's `message` (the spec keeps the query out of `url`).
+2. **A rejected fetch is recorded as unanswered** (3bb6a22, AppMap spec; *expectation wrong*): C S2 and E
+   used to require a request/response pair with status 0, as EXPECTATIONS.md says ("the recorder's own
+   contract"). Status 0 is not valid AppMap (`status_code` must be 100–599) and B requires validity, so the
+   recorder lists such a request in `metadata.unanswered_http_requests` (reason `network error`); the checks
+   now require exactly that, and no event pair. Not one of the rules (a)–(f): flagged for review.
+3. **Zero-touch must not stamp the cross-origin call; L is judged with the linking setting** (876dc21, the
+   user's requested behaviour): C S3/S5 in the zero-touch pass now require the recorded POST to carry *no*
+   `traceparent` (it did before); a new pass ZL (zero-touch + `propagateTraceHeaderOrigins:
+   ['http://localhost:54321']`) is where L is judged, and where the diagnostic C requires the header. P and
+   P-parallel (the CORS-patched diagnostic) use ZL. The Z config imports the plugin by its documented
+   package entry point.
+4. **H requires the query change in the trace diff** (d097d29, rule (f)): the change is query-only; the query
+   is in `message`, which the official sequence diagram does not render, so the official diff now reports the
+   diagrams as identical. It is kept as reported evidence; H requires appmap-trace to show, per request,
+   exactly `- …select=*` / `+ …select=id` for R1 and R2 and nothing for R3.
+
+Setup only, not check changes: `run.sh` builds the recorder before installing it (2cc967c); shellcheck
+cleanups (0ddada4).
+
+Known gap in the harness (unchanged): G compares frontend maps only for the W config, not for the zero-touch
+config; the zero-touch frontend is recorded once.
+
+
 ## The short version
 
 **The end-to-end proof does not hold today.** With the recorder configured exactly as documented, the React app

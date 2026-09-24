@@ -11,6 +11,72 @@
 - **Raw evidence:** `evidence/`. This includes every recording, the official sequence diagrams,
   diffs, `results.json` and `run.log`. The same verdicts came out on four consecutive full runs.
 
+## Update: `integration/pr1` — the fixes merged (read this first)
+
+Branch `integration/pr1` merges `fix/recorder-worst-bugs` into `ci/oss-e2e` and adds further fixes. This
+section is the current result; the rest of this file is the original run against the unfixed recorder
+(`bef9d18`), kept as the record of what it found. The files in `evidence/` are that original run's; a current
+run of `run.sh` rewrites them (CI uploads them as an artifact).
+
+Run: fresh clone of `integration/pr1`, `CI=true`, `npm ci`, then `acceptance/supabase-restful-tasks/run.sh`,
+on 127.0.0.1 in a private network namespace. Same app SHA, tools and versions as below. "Merged, old checks"
+is the same code run with the checks as they were before the check changes listed below.
+
+| Check | Before (unfixed) | Merged, old checks | After | One line (after) |
+|---|---|---|---|---|
+| A Setup / zero-touch | PASS | PASS | **PASS** | env only, app tree clean. |
+| B Validity + honest version | FAIL (0/49) | PASS | **PASS** | 91/91 valid at 1.12 (and 1.6.0–1.13.1). |
+| C Ground truth | FAIL (7/8) | FAIL | **PASS** | R1–R8 found; each has the `Deno.serve` handler (index.ts:68) as entry call with the app function nested in it; R7's exception now carries the thrown object's message. |
+| C traceparent gate | PASS | PASS | **PASS** | |
+| C call-tree structure | FAIL | PASS | **PASS** | every request is one tree rooted at its HTTP server request. |
+| D Noise | PASS | PASS | **PASS** | only `restful-tasks/index.ts`. |
+| E Exception | FAIL | FAIL | **PASS** | R7: `{class: "Object", message: "invalid input syntax for type bigint: \"not-a-number\""}` on `getTask`'s return. |
+| F Failing test | NOT RUN | NOT RUN | **NOT RUN** | the app has no tests; no Deno test-recording mode. |
+| G Stability | PASS | PASS | **PASS** | 8/8 identical. |
+| H Change detection | PASS | FAIL | **PASS** | only R6 changed; official diff: "added HTTP client request `GET …/rest/v1/tasks`"; appmap-trace: "1 added. New call restful-tasks→network: GET /rest/v1/tasks?select=*&id=eq.2". |
+| I Concurrency | FAIL | FAIL | **PASS** | 3 rounds × (20 stamped + 10 unstamped): 20 maps each, 0 leaks, 0 foreign trace ids on the wire. |
+| W1 waitUntil capture | PASS | FAIL | **PASS** | |
+| W4 waitUntil overlap | FAIL | FAIL | **PASS** | A and B recorded separately, each with only its own calls. |
+| W2 self-heal | PASS | PASS | **PASS** | |
+| W3 crash self-heal | FAIL | PASS | **PASS** | SIGKILL / SIGTERM / SIGINT each leave one truncated map. |
+| J Overhead | PASS (measured) | PASS | **PASS** (measured) | 200 requests: plain 970 ms, unstamped 962 ms (0.99x), stamped 1040 ms (1.07x). |
+
+`run.sh` exits 0: nothing fails (F is NOT RUN, which the harness does not count as a failure).
+
+**Bugs listed below, now:** 1 and 2 (leaks, wrong trace ids) fixed by per-request async context (6402f0d);
+3 (flat call tree) and 6 (declared version) fixed (4893004); 4 (crash loses the recording) fixed (971f16b);
+5 (plain-object throws) fixed (0ad3121); 7 (anonymous `Deno.serve` handler) fixed (d4be568); 8 (tracer
+mislabels Deno maps) fixed (84bae82), and its "1 added, 3 changed" count fixed (8227fac); 9 (credentials)
+fixed (1315646).
+
+### Check changes
+
+Each is its own commit; the message quotes the old and new rule. EXPECTATIONS.md is unchanged.
+
+1. **URLs are `url` + `message`** (c02e032, rule (a), AppMap spec): `summarize()` rebuilds an outbound
+   call's URL from `url` and the event's `message`, for C, H, I and W1.
+2. **The recorded `Deno.serve` handler is the entry call** (ad26266, rule (b)): C accepts
+   `index.handler` (index.ts:68) as the first function call, not nested in another function, and then
+   requires every expected function nested inside it and, compared exactly as before, equal to the
+   expected list. No other extra call.
+3. **The supabase client parameter is identified by its class** (5b5d581; follows the requested
+   observer-effect fix, not one of rules (a)–(f): flagged for review): the old rule dropped the client by
+   its old rendering `[object Object]`; value capture now renders the client's data, so C drops the
+   parameter recorded with class `SupabaseClient` (the first parameter of every app function) and compares
+   the rest as before.
+4. **I counts only other requests' events as leaks** (21900af, rule (e)): the request's own entry handler is
+   not foreign; every other call, a second handler included, is judged as before, and app functions must
+   be nested in the request's handler.
+5. **W4 requires two separate recordings** (09244e1, rule (c)): A and B must each have their own map with
+   their own trace id, exactly their own `probe.ingest(n)` and outbound calls, and none of the other's.
+   Stricter than before (B used to be required to be *un*recorded).
+6. **H reads the query from appmap-trace; the lane is the app's** (081f893, rules (a)/(f) and the requested
+   tracer fix): the official diff must name the added `GET …/rest/v1/tasks` (it cannot show the query, which
+   is in `message`); appmap-trace must say "New call restful-tasks→network: GET
+   /rest/v1/tasks?select=*&id=eq.2" (was "frontend→network", the mislabel of bug 8).
+
+Setup only: shellcheck cleanups (0ddada4).
+
 ## Tool versions
 
 | Tool | Version |

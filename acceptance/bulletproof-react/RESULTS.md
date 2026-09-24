@@ -12,6 +12,94 @@
 
 EXPECTATIONS.md was committed on its own, before any recording (commit `2b897ae`).
 
+## Update: `integration/pr1` — the fixes merged (read this first)
+
+Branch `integration/pr1` merges `fix/recorder-worst-bugs` into `ci/oss-e2e` and adds further fixes. This
+section is the current result; the rest of this file is the original run against the unfixed recorder
+(`bef9d18`), kept as the record of what it found. `evidence/` holds that original run; a current run writes
+its evidence to `WORK_DIR/out` (CI uploads it as an artifact).
+
+Run: fresh clone of `integration/pr1`, `CI=true`, `npm ci`, then `acceptance/bulletproof-react/run.sh`, on
+localhost in a private network namespace (the harness needs ports 3000 and 8080). Same app SHA and tools as
+below. "Merged, old checks" is an earlier run of the merged code (with the harness config change, check
+change 2) before the other check changes.
+
+| Check | Before (unfixed) | Merged, old checks | After | One line (after) |
+|---|---|---|---|---|
+| A. Setup | FAIL | PASS | **PASS** | the documented `@funwithappmap/react-recorder/vite` import loads; no app changes. |
+| B. Validity | FAIL (0/29) | PASS | **PASS** | 30/30 valid at 1.12 (and 1.6.0–1.13.1). |
+| C. Ground truth | FAIL (94 found / 1 wrong / 33 missing) | FAIL (117 / 6 / 5) | **FAIL** (127 found / 1 wrong) | Every HTTP call, `checkAccess`, `toggle`/`open`/`close` and T2's `teamName` are found. The one miss: T6's last `GET /discussions?page=1`, see below. |
+| D. Noise | FAIL | PASS | **PASS** | 1311 call events; none from test files, `src/testing` or `node_modules`. |
+| E. Exception | PASS | PASS | **PASS** | `useAuthorization` return: `Error: User does not exist!` (with `object_id`). |
+| F. Failing test | PASS | PASS | **PASS** | `test_status: "failed"`, `Head` call present. |
+| G. Stability | PASS | FAIL | **PASS** | 21/21 identical (random mock-backend ids normalized, rule (d)). |
+| H. Change detection | FAIL | FAIL | **FAIL** | appmap-trace shows the change in all three comment-loading tests, but also every random id the mock backend generates, see below. |
+| I. Concurrency | FAIL | FAIL | **FAIL** | Vitest isolation: 21/21 identical (PASS). Browser, two clicks 20 ms apart: one window, now marked `ambiguous` and naming both clicks, but still one map (FAIL, known limitation). |
+| J. Overhead | MEASURED (+7%) | MEASURED | MEASURED | 11.3 / 11.3 s without, 11.8 / 11.8 s with (+5%). |
+| Browser | FAIL (0 maps zero-touch) | FAIL | **FAIL** | B1–B4: every expected function and request found, one map each; 6/6 requests on the wire carry `traceparent` (the page load included). B5: see I. |
+
+The recorder no longer changes the app's behaviour: all 21 tests pass with it (before: `discussions.test.tsx`
+failed 3/3 under the recorder).
+
+**Remaining failures, and why:**
+
+- **C, T6** — the test's last step deletes a discussion and ends when "Discussion Deleted" appears. The
+  delete's `onSuccess` starts a refetch (`getDiscussions`, recorded, its return still pending at the end:
+  `truncated: true`) whose `GET /discussions?page=1` answer arrives after the test has finished, so no
+  per-test recording can hold that `→ 200`. The request itself is missing too, which is a recorder
+  limitation: under MSW's XHR interceptor the request is only observable when the mocked response starts
+  (MSW fires `loadstart` then, and intercepts `send()` itself), so a request still waiting when the
+  recording closes leaves nothing. Not fixed: seeing it would mean wrapping the app's XHR object in a
+  proxy, which risks breaking apps. Left failing.
+- **H** — the change (`page` dropped from `GET /comments`) shows in exactly the three expected tests
+  (`- GET /comments?discussionId=…&page=1`, `+ GET /comments?discussionId=…`). But the app's MSW mock
+  backend gives discussions and comments random ids on every run, so the before/after diff also shows
+  `GET /discussions/<id1>` → `<id2>` in four tests. Rule (d) allows normalizing such ids only in G and I,
+  so H counts them and fails.
+- **I (browser) and Browser B5** — the browser has no async context, so two clicks 20 ms apart share one
+  interaction window. The map is now marked `ambiguous: true` with both clicks in
+  `metadata.interactions` instead of being silently named after the first, but the check requires two
+  separate maps. Known limitation.
+- **Page-load requests**: now recorded, in a `load <path>` window opened by the zero-touch injection
+  (0fdc935).
+
+**Bugs listed below, now:** 1 (package entry points) fixed (49fee5c); 2 (zero-touch injection) fixed
+(32157ad); 3 (observer effect) fixed (6c8680c); 4 (XHR invisible) fixed (753a208); 5 (`React.useCallback`)
+fixed (cfcffce); 6 (not valid 1.12) fixed (4893004); 7 (thread nesting) fixed (4893004); 8 (test files
+recorded, `exclude` prefix-only) fixed (aca9d44: globs, test files excluded by default); 9 (function props
+vanish) fixed (6c8680c: `[function name]`); 9b (React dev-mode probe calls recorded as calls throwing
+TypeError): still there, in the E recording only (`Authorization` and `AppProvider` called with no props by
+React's dev-mode component-stack probing, which catches the error). Not changed: those calls really run; the
+recorder records what runs, and telling React's probe apart from app calls would mean guessing.
+
+### Check changes
+
+Each is its own commit; the message quotes the old and new rule. EXPECTATIONS.md is unchanged.
+
+1. **URLs are `url` + `message`** (c658fa2, rule (a), AppMap spec): C and the browser check match URL
+   patterns against `url` plus the event's `message` parameters.
+2. **Config: the documented plugin import, and the API origin listed** (b9ec2bd, the user's requested
+   behaviour): `vite.config.appmap.ts` imports `@funwithappmap/react-recorder/vite` and sets
+   `propagateTraceHeaderOrigins` to the origin of `VITE_APP_API_URL`. The recorder stamps cross-origin
+   requests only for listed origins, and EXPECTATIONS.md requires `traceparent` on every request; this app's
+   API is cross-origin in both modes. No check logic changed.
+3. **A field name may be found in parameter `properties`** (0369b02, AppMap spec): values are capped at 100
+   characters (schema 1.6+), so T2's `teamName` cannot be in the value; the recorder now writes the spec's
+   parameter `properties` for plain objects (f652594), and the check accepts an exact field name there.
+4. **checkAccess's line: expectation wrong** (4e509ac): EXPECTATIONS.md says line 35
+   (`const checkAccess = React.useCallback(`); the function, the arrow, starts on line 36. The check now
+   requires 36 and says "expectation wrong" in its evidence.
+5. **Random mock-backend ids normalized in G and I only** (1c623ba, rule (d)): regex
+   `(https://api\.bulletproofapp\.com/(?:discussions|comments)/)(?:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[A-Za-z0-9_-]{21})(?=$|[/?\s])`
+   → `\1<id>`, and the official tool's `digest`/`subtreeDigest` (hashes over those URLs) left out, in those
+   two comparisons only.
+6. **H requires the query change in the trace diff** (f7c7411, rule (f)): the official diagrams cannot
+   show a query-only change (the query is in `message`); they are reported. H requires appmap-trace to show
+   each `…&page=1` → without `page` in the three comment-loading tests, and nothing else changed anywhere.
+
+Reporting only: B5's evidence shows the `ambiguous` flag (a619051). Setup only: `run.sh` builds the
+recorder before installing it (2cc967c); shellcheck cleanups (0ddada4).
+
 ## Summary table
 
 | Check | Result | Evidence (one line) |

@@ -5,8 +5,9 @@ name: CI
 # (deno, ...) fail instead when CI=true, which GitHub Actions always sets.
 #
 # The three acceptance jobs run real open-source apps end to end
-# (acceptance/*/run.sh). They are expected to FAIL until the recorder bugs
-# they document are fixed; they are deliberately not continue-on-error.
+# (acceptance/*/run.sh). A check that fails fails its job, including the
+# ones each RESULTS.md explains as limitations outside the recorder's
+# bugs; they are deliberately not continue-on-error.
 on:
   push:
   pull_request:
