@@ -156,10 +156,12 @@ for (const o of run1) {
     if (outside.length) problems.push(`functions not nested in the Deno.serve handler: ${j(outside.map((f) => f.fn))}`);
     else found.push(`entry index.handler@68 (anonymous Deno.serve handler)`);
   }
-  const gotFns = appFns.map((f) => `${f.fn}@${f.lineno}(${f.params.slice(1).join(',') || f.params.join(',')})`);
+  // Every app function takes the supabase client first (index.ts:18, 28,
+  // 38, 48, 58); compare the non-client params. The client is the
+  // parameter recorded with class SupabaseClient.
+  const gotFns = appFns.map((f) => `${f.fn}@${f.lineno}(${f.params.filter((_, i) => f.paramClasses[i] !== 'SupabaseClient').join(',')})`);
   const expFns = r.fns.map(([fn, line, params]) => `${fn}@${line}(${params.join(',')})`);
-  // getAllTasks has only the client param; compare the non-client params
-  const norm = (arr) => arr.map((x) => x.replace(/\(\[object Object\]\)$/, '()')).sort();
+  const norm = (arr) => [...arr].sort();
   if (j(norm(gotFns)) !== j(norm(expFns))) problems.push(`functions ${j(gotFns)} != expected ${j(expFns)}`);
   else if (expFns.length) found.push(`functions ${gotFns.join(' ')}`);
   // outbound http

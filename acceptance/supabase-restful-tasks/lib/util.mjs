@@ -214,6 +214,7 @@ export function summarize(appmap) {
         path: e.path,
         lineno: e.lineno,
         params: (e.parameters ?? []).map((p) => p.value),
+        paramClasses: (e.parameters ?? []).map((p) => p.class),
         exceptions: r?.exceptions,
         returnClass: r?.return_value?.class,
         synthetic: r ? r.elapsed === undefined && !r.return_value && !r.exceptions : true,
