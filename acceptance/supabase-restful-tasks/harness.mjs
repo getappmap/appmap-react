@@ -143,7 +143,20 @@ for (const o of run1) {
     problems.push(`server event ${j(srv)} != ${r.method} ${r.path} ${r.status}`);
   else found.push(`http_server_request ${srv.method} ${srv.path} -> http_server_response ${srv.status}`);
   // functions
-  const gotFns = s.functions.map((f) => `${f.fn}@${f.lineno}(${f.params.slice(1).join(',') || f.params.join(',')})`);
+  // The anonymous Deno.serve handler (index.ts:68) is now recorded (the
+  // requested fix; EXPECTATIONS.md lists it as a gap, not an expected
+  // call). It may appear once, as the entry call, and every expected
+  // function must then be nested inside it; the expected functions are
+  // compared exactly as before.
+  const isEntry = (f) => f.fn === 'index.handler' && f.lineno === 68 && f.path === ENTRY_REL && f.ancestors.every((a) => !s.functions.some((g) => g.id === a));
+  const entry = s.functions[0] && isEntry(s.functions[0]) ? s.functions[0] : undefined;
+  const appFns = entry ? s.functions.slice(1) : s.functions;
+  if (entry) {
+    const outside = appFns.filter((f) => !f.ancestors.includes(entry.id));
+    if (outside.length) problems.push(`functions not nested in the Deno.serve handler: ${j(outside.map((f) => f.fn))}`);
+    else found.push(`entry index.handler@68 (anonymous Deno.serve handler)`);
+  }
+  const gotFns = appFns.map((f) => `${f.fn}@${f.lineno}(${f.params.slice(1).join(',') || f.params.join(',')})`);
   const expFns = r.fns.map(([fn, line, params]) => `${fn}@${line}(${params.join(',')})`);
   // getAllTasks has only the client param; compare the non-client params
   const norm = (arr) => arr.map((x) => x.replace(/\(\[object Object\]\)$/, '()')).sort();
@@ -215,7 +228,7 @@ const badStructure = structure.filter((s) => s.rootCount > 1);
 
 verdict('C', cFail ? 'FAIL' : 'PASS', [
   ...cRows.map((r) => `${r.id} ${r.verdict}: ${r.problems?.length ? r.problems.join(' | ') : r.found.join(' | ')}`),
-  'anonymous Deno.serve handler (index.ts:68): absent from every recording (no name to record it under; gap, per EXPECTATIONS)',
+  `anonymous Deno.serve handler (index.ts:68): recorded as the entry call in ${run1.filter((o) => o.map && summarize(o.map.appmap).functions[0]?.fn === 'index.handler').length}/${run1.filter((o) => o.map).length} recordings (EXPECTATIONS listed it as a gap)`,
 ]);
 verdict('C-traceparent-gate', gateProblems.length ? 'FAIL' : 'PASS', gateProblems.length ? gateProblems : [
   `T1 unstamped: HTTP ${gate.t1.status}, ${gate.t1.newFiles} files, outbound traceparent ${j(gate.t1.outboundTraceparents)}`,

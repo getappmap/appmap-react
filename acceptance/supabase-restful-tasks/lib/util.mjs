@@ -167,6 +167,21 @@ export function summarize(appmap) {
     sql: [],
     unbalanced: [],
   };
+  // Calls open around each event, per thread (a call sits between its
+  // parent's call and return): lets checks see nesting.
+  const open = new Map();
+  const ancestorsOf = new Map();
+  for (const e of appmap.events) {
+    const stack = open.get(e.thread_id) ?? [];
+    open.set(e.thread_id, stack);
+    if (e.event === 'call') {
+      ancestorsOf.set(e.id, [...stack]);
+      stack.push(e.id);
+    } else {
+      const i = stack.lastIndexOf(e.parent_id);
+      if (i >= 0) stack.length = i;
+    }
+  }
   for (const e of appmap.events) {
     if (e.event !== 'call') continue;
     const r = returns.get(e.id);
@@ -193,6 +208,8 @@ export function summarize(appmap) {
       out.sql.push(e.sql_query.sql);
     } else if (e.method_id) {
       out.functions.push({
+        id: e.id,
+        ancestors: ancestorsOf.get(e.id) ?? [],
         fn: `${e.defined_class}.${e.method_id}`,
         path: e.path,
         lineno: e.lineno,
