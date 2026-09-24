@@ -22,15 +22,26 @@ describe('Recording.toAppMap', () => {
 describe('formatValue value-size cap', () => {
   afterEach(() => setValueSizeCap(VALUE_SIZE_CAP));
 
-  it('defaults to VALUE_SIZE_CAP', () => {
+  it('defaults to VALUE_SIZE_CAP, the spec\'s 100 characters', () => {
+    expect(VALUE_SIZE_CAP).toBe(100);
     const { value } = formatValue('a'.repeat(VALUE_SIZE_CAP + 50));
-    expect(value.length).toBe(VALUE_SIZE_CAP + 1); // + the truncation ellipsis
+    // The truncation ellipsis counts toward the cap: the spec (and the
+    // official validator) allow 100 characters, not 101.
+    expect(value.length).toBe(VALUE_SIZE_CAP);
+    expect(value.endsWith('…')).toBe(true);
+    expect(formatValue('a'.repeat(VALUE_SIZE_CAP)).value).toBe('a'.repeat(VALUE_SIZE_CAP));
   });
 
   it('honors setValueSizeCap (wired to APPMAP_EVENT_VALUESIZE)', () => {
     setValueSizeCap(10);
     const { value } = formatValue('a'.repeat(50));
-    expect(value.length).toBe(11);
+    expect(value.length).toBe(10);
+  });
+
+  it('never splits a surrogate pair when cutting', () => {
+    setValueSizeCap(10);
+    const { value } = formatValue('aaaaaaaa😀😀😀');
+    expect(value).toBe('aaaaaaaa…');
   });
 });
 
@@ -125,7 +136,10 @@ describe('metadata shape per recording mode', () => {
     const recording = startTestRecording('example test', { sourceLocation: 'test/example.test.ts' });
     const { metadata } = recording.toAppMap();
     expect(metadata.language).toEqual({ name: 'javascript', engine: 'node', version: process.version });
-    expect(metadata.frameworks).toEqual([{ name: 'vitest' }]);
+    // Every framework entry carries the version the spec requires, read
+    // from the installed package.
+    expect(metadata.frameworks).toContainEqual({ name: 'vitest', version: expect.stringMatching(/^\d+\.\d+\.\d+/) });
+    for (const f of metadata.frameworks!) expect(f.version).toMatch(/^\d+\.\d+\.\d+/);
     expect(metadata.source_location).toBe('test/example.test.ts');
   });
 

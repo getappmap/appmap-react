@@ -175,6 +175,20 @@ only when sql_query events exist). That depth is precisely what the Go
 agent's own instrumentation roadmap delivers; when it does, this test
 upgrades for free.
 
+## Amendment (2026-09-24): XMLHttpRequest
+
+Stamping lived only in the `fetch` patch, so an app whose HTTP client is
+axios (XHR under the hood) — bulletproof-react in the acceptance run —
+produced no `http_client_request` events and sent no `traceparent` at
+all: nothing to link. `recorder/src/xhrPatch.ts` now wraps
+`XMLHttpRequest` the same way while a recording is open: `open()`
+stamps the request, and the `loadstart`/`loadend` events record the
+request/response pair. It observes the instance the app holds rather
+than `XMLHttpRequest.prototype`, because request interceptors such as
+MSW answer mocked requests without calling the real `send()`. The
+interaction window's idle check counts these requests too, so a window
+no longer closes before an XHR's response arrives.
+
 ## Amendment 2026-09-24: the Go-backed e2e test is retired; the proof is a real OSS app
 
 `examples/petclinic-react/test/e2e/fullstack.test.tsx` (the 2026-06-12

@@ -67,20 +67,21 @@ pipeline's own instrumented calls and its stamped outbound fetches land
 in the same map — the edge function shows up complete, and as a middle
 tier in the full-stack stitch.
 
-**Event ordering.** The `http_server_response` (202) event is emitted
-before the background `call`/`return` events. That's unusual — a
-request's "response" appears before some of its work — but valid: the
-event list is flat and linked by `parent_id` (doc 01), not by position.
-The server-request event is an async leaf (opened via `openDangling`),
-so nothing is mis-nested under it.
+**Event ordering.** The `http_server_response` (202) is recorded at
+its true time, before the background work. In the serialized map (doc
+12) the background calls nest under the request — they were started by
+its handler — so the `http_server_response` appears after them, closing
+the request's tree; its `elapsed` still says when the response went
+out.
 
-**Cost: the ambient session stays held.** One-at-a-time recording
-(doc 01) now extends across the whole background window, so a second
-stamped request arriving during those 2–4 minutes runs **unrecorded**.
-Accepted: for capturing a specific journey this is fine, and the
-alternative (concurrent recordings) is the doc 01 async-gap problem we
-have deliberately deferred. If overlapping long-running recordings ever
-matter, that's the trigger to revisit mechanisms 2/3 there.
+**Overlap.** Each stamped request records in its own async context
+(doc 01, "Per-request async context" amendment), and `waitUntil`
+promises are collected for the recording of the context that registered
+them. A second stamped request arriving during a long background window
+therefore gets its own map, and its own background work lands there —
+not in the first request's map. (Before that amendment the ambient
+session stayed held for the whole window, the second request ran
+unrecorded, and its background work leaked into the first map.)
 
 **Scope.** No-ops cleanly where `EdgeRuntime.waitUntil` doesn't exist —
 plain `deno run`, the zero-touch runner, the Node/Vitest suite — so
@@ -102,16 +103,49 @@ even for the part it *did* capture.
 serialization gets a synthesized `return` appended, so the event list
 is always balanced, and `metadata.truncated: true` flags that some
 returns are synthetic. This is defense in depth — fix 1 makes clean
-teardown the normal case; fix 2 guarantees that even a genuinely killed
-isolate yields a balanced, sanitizable, committable (if incomplete)
-map instead of an unusable one. The synthesis is a non-mutating
-snapshot: the recording's own event list is untouched, so it composes
-with everything else.
+teardown the normal case; fix 2 makes whatever *is* written balanced,
+sanitizable and committable (if incomplete) instead of unusable. The
+synthesis is a non-mutating snapshot: the recording's own event list is
+untouched, so it composes with everything else.
+
+This section originally claimed that "even a genuinely killed isolate
+yields a balanced, sanitizable, committable (if incomplete) map". It
+did not: a recording was only ever written when it closed, so an
+acceptance run that sent SIGKILL to deno, or SIGTERM/SIGINT to the
+runner, 1.5 s into the background work found **no file at all** — the
+self-heal never got to run. See "Crashes" below for what now makes the
+claim true.
+
+### 3. Crashes (2026-09-24)
+
+`deno/appmap.ts` now makes sure a process that dies with recordings
+open still leaves them behind, self-healed and `truncated: true`:
+
+- **SIGINT / SIGTERM** (sent to deno directly, or to the `appmap-deno`
+  runner, which forwards them): every open recording is written
+  synchronously, then the signal takes its default course — the
+  process ends exactly as it would have without the recorder — unless
+  the app registered its own listener for that signal, in which case
+  the app decides.
+- **An uncaught error or unhandled rejection**, and a normal exit with
+  recordings still open: the same synchronous write.
+- **`kill -9`** can't be caught, so a recording still open after 250 ms
+  is snapshotted to `<file>.appmap.json.part` every 500 ms while it
+  changes (written to a temp file and renamed, so a `.part` is always a
+  whole, valid map). When the runner sees its child die it renames any
+  `.part` to `.appmap.json`; so does the next `withAppMap()` started on
+  that directory. What survives is at most one interval stale.
+
+Collector mode (`APPMAP_COLLECTOR`) has no file to fall back on and is
+not covered. Tests: the SIGTERM, SIGINT, uncaught-error and kill -9
+cases in `deno/appmap_test.ts`, each against a real child process.
 
 ## What the fixes do not solve
 
 - A hard `kill -9` mid-`waitUntil` still loses the un-run tail of the
-  pipeline (nothing client-side can capture that); fix 2 just makes the
-  captured prefix committable, flagged truncated.
+  pipeline (nothing client-side can capture that), plus up to 500 ms
+  of what ran before it (the snapshot interval); the rest survives,
+  flagged truncated.
 - Attribution of concurrent background work to distinct recordings is
-  still the doc 01 async gap.
+  handled by per-request async context (doc 01's 2026-09-24
+  amendment).

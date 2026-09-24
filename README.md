@@ -2,8 +2,11 @@
 
 An [AppMap](https://appmap.io) agent for React (browser) apps and Deno
 edge functions, sharing one recorder core. Together they record
-[AppMap v1.12](https://github.com/getappmap/appmap) JSON from component
-renders, hooks, event handlers, `fetch` calls, and `Deno.serve`
+[AppMap](https://github.com/getappmap/appmap) 1.12 JSON — checked with
+the official validator, see [doc 12](docs/design/12-format-validity.md) —
+from component
+renders, hooks, event handlers, `fetch` and `XMLHttpRequest` calls,
+and `Deno.serve`
 requests — and the headline goal is **full-stack linking**:
 correlating frontend AppMaps with backend AppMaps via W3C Trace
 Context, so a user interaction can be followed from click to SQL. This
@@ -28,7 +31,7 @@ specific to this repo is in `docs/design/`.
 
 ## Status
 
-Eleven design docs, listed below with what each one proved. Highlights:
+Twelve design docs, listed below with what each one proved. Highlights:
 full-stack linking (doc 02) is tested end to end against a **real
 open-source app neither side was built around** — Supabase's
 edge-functions example (a React app calling a Deno edge function, with
@@ -53,9 +56,12 @@ Each has `EXPECTATIONS.md` (written before any recording), `run.sh`
 failure) and `RESULTS.md`.
 
 - [`recorder/`](recorder) — the recorder core (Enter/Exit + CallToken
-  contract, value capture with size caps, `fetch` →
-  `http_client_request`/`response` events with `traceparent` stamping,
-  AppMap v1.12 serializer), Vitest per-test recording hooks
+  contract, side-effect-free value capture with size caps and credential
+  redaction, `fetch` and
+  `XMLHttpRequest` (axios) → `http_client_request`/`response` events
+  with `traceparent` stamping,
+  AppMap 1.12 serializer, validated by the official
+  `@appland/appmap-validate`), Vitest per-test recording hooks
   (`./vitest`), and the Vite plugin (`./vite`) that auto-instruments
   top-level functions in configured paths — dev/test only, with
   components and hooks labeled by naming convention.
@@ -92,8 +98,9 @@ failure) and `RESULTS.md`.
   that gap is named, not silently missing. See
   [doc 06](docs/design/06-zero-touch-deno.md).
   Work a handler hands to `EdgeRuntime.waitUntil` (runs after the
-  response is sent) is recorded too, and a recording cut off mid-write
-  is repaired rather than lost. See
+  response is sent) is recorded too, and a recording cut off by a
+  signal, a crash or even `kill -9` is kept (truncated) rather than
+  lost. See
   [doc 11](docs/design/11-waituntil-background-work.md).
 - [`linker/bin/appmap-trace.mjs`](linker/bin/appmap-trace.mjs) — the
   tracing agent: shows each interaction as an ASCII call tree and a
@@ -123,6 +130,34 @@ acceptance/supabase-edge-functions-app/run.sh
 # tracing agent: ASCII + mermaid per interaction (add --baseline <dir> to diff)
 node linker/bin/appmap-trace.mjs examples/petclinic-react/tmp/appmap
 ```
+
+### Using the recorder in another Vite/Vitest app
+
+The recorder package is built to `recorder/dist` (`npm run build`;
+`npm pack` builds it for you) and imported by these specifiers:
+
+```bash
+npm pack --workspace recorder                   # -> funwithappmap-react-recorder-<ver>.tgz
+cd your-app && npm install -D /path/to/funwithappmap-react-recorder-<ver>.tgz
+```
+
+```ts
+// vite.config.ts
+import { appmapVitePlugin } from '@funwithappmap/react-recorder/vite';
+export default defineConfig({
+  plugins: [appmapVitePlugin({ include: ['src'], app: 'your-app' }), react()],
+  test: { setupFiles: ['./appmap.setup.ts'] },
+});
+
+// appmap.setup.ts (Vitest: one AppMap per test in tmp/appmap/tests)
+import { registerAppMapHooks } from '@funwithappmap/react-recorder/vitest';
+registerAppMapHooks({ app: 'your-app' });
+```
+
+With `app` set, `vite` dev also records one AppMap per user interaction
+into `tmp/appmap/interactions` (doc 07). Installing straight from a
+checkout (`file:…/recorder`) works too, once `npm run build` has run
+there.
 
 To run the example app against a live PetClinicGo backend
 (`FunwithAppMapandClaudeGolang/examples/PetClinicGo` on :8080):
@@ -158,8 +193,9 @@ not history rewrites.
   Edge Runtime gap explicitly rather than leaving it implicit)
 - [07 — zero-touch interaction recording for React](docs/design/07-zero-touch-react.md)
   (the same standard applied to the frontend: `main.tsx` no longer
-  calls `installInteractionRecorder` itself; verified against a real
-  dev server and a real production build, not just a unit test)
+  calls `installInteractionRecorder` itself; the 2026-09-24 amendment
+  fixes the injected import so a real browser actually loads it, proven
+  with a real dev server and headless Chromium)
 - [08 — labels: comment tags and built-in patterns](docs/design/08-labels.md)
   (`@label` comments, no import required; automatic
   `security.authentication` / `io.sql` / `security.crypto` labels for
@@ -174,3 +210,6 @@ not history rewrites.
 - [11 — recording background work (`EdgeRuntime.waitUntil`)](docs/design/11-waituntil-background-work.md)
   (found by the first real edge function the Deno driver met; also
   repairs recordings cut off mid-write)
+- [12 — format validity and the declared version](docs/design/12-format-validity.md)
+  (every recording mode checked with the official validator; calls
+  serialized as a tree; why the declared version is 1.12)

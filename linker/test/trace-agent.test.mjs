@@ -351,3 +351,48 @@ describe('concurrent fetches (1:N, the async-gap case)', () => {
     assertBalancedMermaid(mermaid);
   });
 });
+
+// A Deno edge function's request map traced on its own: an incoming
+// request, a handler, and an outbound PostgREST call whose query string
+// lives in `message` (the spec keeps it out of `url`).
+function edgeRequestMap({ withLookup = false } = {}) {
+  let id = 0;
+  const events = [];
+  const stack = [];
+  const call = (b) => { const e = { id: ++id, event: 'call', thread_id: 1, ...b }; events.push(e); stack.push(e.id); };
+  const ret = (b = {}) => events.push({ id: ++id, event: 'return', thread_id: 1, parent_id: stack.pop(), ...b });
+  call({ http_server_request: { request_method: 'DELETE', path_info: '/restful-tasks/2' }, message: [] });
+  call({ defined_class: 'index', method_id: 'deleteTask', path: 'index.ts', lineno: 38, static: true });
+  if (withLookup) {
+    call({ http_client_request: { request_method: 'GET', url: 'http://127.0.0.1:54321/rest/v1/tasks' }, message: [{ name: 'select', class: 'String', value: '*' }, { name: 'id', class: 'String', value: 'eq.2' }] });
+    ret({ http_client_response: { status_code: 200 } });
+  }
+  call({ http_client_request: { request_method: 'DELETE', url: 'http://127.0.0.1:54321/rest/v1/tasks' }, message: [{ name: 'id', class: 'String', value: 'eq.2' }] });
+  ret({ http_client_response: { status_code: 204 } });
+  ret({ return_value: { class: 'Response', value: '{}' } });
+  ret({ http_server_response: { status_code: 200 } });
+  return { version: '1.12', metadata: { name: 'DELETE /restful-tasks/2', app: 'restful-tasks', parent_span_id: '9'.repeat(16) }, classMap: [], events };
+}
+
+describe('a backend request map traced on its own', () => {
+  it('runs in its own app lane, never "frontend" or undefined.undefined', () => {
+    const model = buildInteractionModel(edgeRequestMap());
+    expect(model).toMatchObject({ actor: 'client', target: 'restful-tasks', label: 'DELETE /restful-tasks/2' });
+    const [handler] = model.children;
+    expect(handler).toMatchObject({ kind: 'call', actor: 'restful-tasks', label: 'index.deleteTask' });
+    expect(handler.children[0]).toMatchObject({
+      kind: 'fetch',
+      actor: 'restful-tasks',
+      target: 'network',
+      label: 'DELETE /rest/v1/tasks?id=eq.2',
+    });
+    const { ascii, mermaid } = renderInteraction(edgeRequestMap());
+    expect(ascii + mermaid).not.toMatch(/undefined|frontend/);
+    expect(mermaid).toContain('Client->>BE0: DELETE /restful-tasks/2');
+  });
+
+  it('names an inserted outbound call, query included, in the diff caption', () => {
+    const { caption } = renderInteraction(edgeRequestMap({ withLookup: true }), { baselineAppmap: edgeRequestMap() });
+    expect(caption).toContain('New call restful-tasks→network: GET /rest/v1/tasks?select=*&id=eq.2.');
+  });
+});

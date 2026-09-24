@@ -79,6 +79,37 @@ function detectBuiltinLabels(fnPath: NodePath, code: string): string[] {
   return [...found];
 }
 
+/** The inline handler of a top-level `Deno.serve(...)` call, in any of
+ * its three shapes: `Deno.serve(handler)`, `Deno.serve(options, handler)`,
+ * `Deno.serve({ ..., handler })`. */
+function denoServeHandler(
+  expr: NodePath<t.Expression>,
+): NodePath<t.ArrowFunctionExpression | t.FunctionExpression> | undefined {
+  if (!expr.isCallExpression()) return undefined;
+  const callee = expr.node.callee;
+  if (
+    !t.isMemberExpression(callee) ||
+    callee.computed ||
+    !t.isIdentifier(callee.object, { name: 'Deno' }) ||
+    !t.isIdentifier(callee.property, { name: 'serve' })
+  ) {
+    return undefined;
+  }
+  const isFn = (p: NodePath | undefined): p is NodePath<t.ArrowFunctionExpression | t.FunctionExpression> =>
+    !!p && (p.isArrowFunctionExpression() || p.isFunctionExpression()) && !(p.node as t.FunctionExpression).generator;
+  const [first, second] = expr.get('arguments');
+  if (isFn(first)) return first;
+  if (isFn(second)) return second;
+  if (first?.isObjectExpression()) {
+    for (const prop of first.get('properties')) {
+      if (!prop.isObjectProperty() || !t.isIdentifier(prop.node.key, { name: 'handler' })) continue;
+      const value = prop.get('value');
+      if (isFn(value)) return value;
+    }
+  }
+  return undefined;
+}
+
 const RUNTIME_NAME = '__appmap_instrument__';
 const HANDLER_RUNTIME_NAME = '__appmap_instrument_handler__';
 export const DEFAULT_RUNTIME_MODULE = '@funwithappmap/react-recorder';
@@ -191,11 +222,16 @@ export function instrumentBabelPlugin(relPath: string, runtimeModule: string, co
         const init = path.get('init');
         if (!idPath.isIdentifier() || !init.node) return;
 
-        // const name = useCallback(fn, deps) / useMemo(fn, deps) — wrap
-        // just the callback argument, leave the hook call itself alone.
+        // const name = useCallback(fn, deps) / useMemo(fn, deps), also
+        // spelled React.useCallback / React.useMemo — wrap just the
+        // callback argument, leave the hook call itself alone.
         if (init.isCallExpression()) {
           const callee = init.node.callee;
-          const calleeName = t.isIdentifier(callee) ? callee.name : undefined;
+          const calleeName = t.isIdentifier(callee)
+            ? callee.name
+            : t.isMemberExpression(callee) && !callee.computed && t.isIdentifier(callee.property)
+              ? callee.property.name
+              : undefined;
           if (calleeName !== 'useCallback' && calleeName !== 'useMemo') return;
           const first = init.get('arguments')[0];
           if (!first || (!first.isArrowFunctionExpression() && !first.isFunctionExpression())) return;
@@ -250,6 +286,18 @@ export function instrumentBabelPlugin(relPath: string, runtimeModule: string, co
                   ),
                 ),
               );
+            } else if (decl.isExpressionStatement()) {
+              // Deno.serve(async (req) => …): the request's real entry
+              // function is an anonymous argument, not a declaration.
+              const handler = denoServeHandler(decl.get('expression'));
+              if (handler) {
+                const name = (t.isFunctionExpression(handler.node) && handler.node.id?.name) || 'handler';
+                const labels = [...new Set([...commentLabels, ...detectBuiltinLabels(handler, code)])];
+                instrumentNested(handler);
+                handler.replaceWith(
+                  wrapCall(handler.node, name, handler.node.params, handler.node.loc?.start.line, labels),
+                );
+              }
             } else if (decl.isVariableDeclaration()) {
               for (const d of decl.get('declarations')) {
                 const init = d.get('init');

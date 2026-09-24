@@ -108,3 +108,30 @@ The backend maps used here are the simulated ones, which share the exact v1.2
 shape the real Go middleware will emit. (The PetClinicGo-backed e2e test this
 paragraph used to point at was retired on 2026-09-24; the full-stack proof is
 now `acceptance/supabase-edge-functions-app`, see doc 02.)
+
+## Amendment (2026-09-24): standalone request maps, XHR apps, query strings
+
+Three things acceptance runs on real apps showed:
+
+- **An edge function's request map was drawn as a frontend.** Any map
+  with an outgoing request counted as a frontend map, so a Deno request
+  map traced on its own (called directly, not from a recorded browser
+  interaction) ran in a lane called "frontend" and its
+  `http_server_request` was drawn as `undefined.undefined`. appmap-trace
+  now traces frontend maps (outgoing requests, no incoming one) plus
+  every backend request map no frontend map links to; the latter run in
+  their own app's lane (`client → restful-tasks → network`), with the
+  server request unwrapped into the interaction's title. A linked middle
+  tier's own outbound calls are drawn as calls to `network`, not `?.?`.
+  (`appmap-link`'s notion of a frontend map is unchanged: a middle tier
+  still links onward.)
+- **An axios app traced 0 interactions** because its maps had no HTTP
+  events. The recorder now records XMLHttpRequest (doc 02 amendment), so
+  those maps are frontend maps like any other.
+- **Query strings.** The recorder now keeps the query out of `url` and
+  in the event's `message`, as the spec says (doc 12). The trace shows
+  it again from `message`, so a request whose only change is a query
+  parameter still shows up in a behavior diff.
+
+Tests: `linker/test/trace-agent.test.mjs` ("a backend request map
+traced on its own") and `linker/test/trace-cli.test.mjs`.

@@ -113,3 +113,18 @@ a request's first argument to the developer's handler. Real
 address); it is silently dropped. Pre-existing, not introduced by this
 doc — noted here because the preload path makes it easier to hit by
 accident (a handler using `info` now "just works" until it doesn't).
+
+## Amendment (2026-09-24): the anonymous `Deno.serve` handler
+
+The transform wrapped only named top-level functions, so the most
+common edge-function shape — `Deno.serve(async (req) => { … })` — never
+recorded its real entry function: routing, body parsing and the error
+path were invisible, and the named functions it called hung directly
+off the request. The transform now also wraps the inline handler of a
+top-level `Deno.serve(...)` call in all three shapes (`Deno.serve(fn)`,
+`Deno.serve(options, fn)`, `Deno.serve({ handler: fn })`), recorded as
+`<module>.handler` (or the function expression's own name) at its line.
+`deno/appmap.ts` also re-exports `instrumentHandler`, which the
+transform imports for closures nested in instrumented functions — an
+entry file with such a closure could not load under `appmap-deno`
+before.

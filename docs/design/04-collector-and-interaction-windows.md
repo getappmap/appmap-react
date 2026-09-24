@@ -73,8 +73,12 @@ tree-shake away.
   refinement path (transform-injected continuation passing).
 - Trigger set is `click`/`submit` only; route navigations and keyboard
   interactions are future units.
-- One window at a time by construction; rapid-fire clicking merges
-  into the open window rather than erroring.
+- One window at a time by construction. A trigger that fires while a
+  window is open joins it, and the map is marked: the name lists every
+  interaction, `metadata.interactions` holds them in order and
+  `metadata.ambiguous` is `true` ("Overlapping interactions" in doc
+  01's per-request async context amendment explains why the window is
+  not split instead).
 
 ## Manual browser validation (the remaining step)
 
