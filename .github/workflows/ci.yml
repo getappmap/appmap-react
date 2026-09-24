@@ -1,43 +1,183 @@
 name: CI
 
+# Every push and every PR runs every test. Nothing is allowed to skip
+# silently: tests that skip themselves locally when a tool is missing
+# (deno, ...) fail instead when CI=true, which GitHub Actions always sets.
+#
+# The three acceptance jobs run real open-source apps end to end
+# (acceptance/*/run.sh). They are expected to FAIL until the recorder bugs
+# they document are fixed; they are deliberately not continue-on-error.
 on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: '22'
+  DENO_VERSION: 'v2.x'
+  # Chromium r1194, the build the acceptance harnesses were written against.
+  PLAYWRIGHT_VERSION: '1.56.1'
+  APPMAP_TELEMETRY_DISABLED: 'true'
+
 jobs:
-  node:
-    runs-on: ubuntu-latest
+  build:
+    name: typecheck + build
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 20
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
-      # `deno` is needed by examples/petclinic-react/test/e2e/deno-fullstack.test.ts,
-      # which otherwise skips itself. Installing it here makes the Deno half of
-      # the full-stack e2e test run on every PR instead of being silently skipped.
-      - uses: denoland/setup-deno@v1
-        with:
-          deno-version: v2.x
       - run: npm ci
       - run: npm run typecheck --workspaces --if-present
       - run: npm run build --workspaces --if-present
-      - run: npm test --workspaces --if-present
+
+  unit:
+    name: unit tests (Vitest)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm test --workspace recorder --workspace linker --workspace deno
+      # The example app's unit tests; its e2e tests run in the e2e-deno job.
+      - run: npx vitest run --exclude 'test/e2e/**'
+        working-directory: examples/petclinic-react
 
   deno:
-    runs-on: ubuntu-latest
+    name: Deno tests (native)
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 20
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
       # Deno resolves the recorder's npm deps (e.g. npm:@types/node during
       # type-checking) from node_modules, so install them first.
       - run: npm ci
-      - uses: denoland/setup-deno@v1
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
         with:
-          deno-version: v2.x
-      # deno/test contains Vitest-hosted unit tests; native Deno smoke tests
-      # live in deno/appmap_test.ts.
+          deno-version: ${{ env.DENO_VERSION }}
       - run: deno test -A --unstable-sloppy-imports deno/appmap_test.ts
+
+  e2e-deno:
+    name: Deno e2e (real deno run + React <-> Deno join)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
+        with:
+          deno-version: ${{ env.DENO_VERSION }}
+      - run: deno --version
+      # examples/deno-edge smoke test: the unmodified function through appmap-deno.
+      - run: npm test --workspace examples/deno-edge
+      # React <-> this repo's own deno-edge example, joined by appmap-link.
+      - run: npx vitest run test/e2e
+        working-directory: examples/petclinic-react
+
+  acceptance-supabase-edge-functions-app:
+    name: acceptance / full-stack e2e (supabase edge-functions app, React + Deno)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
+        with:
+          deno-version: ${{ env.DENO_VERSION }}
+      - name: PostgreSQL server binaries (initdb/pg_ctl; the harness runs its own cluster)
+        run: |
+          ls /usr/lib/postgresql/*/bin/initdb 2>/dev/null ||
+            { sudo apt-get update && sudo apt-get install -y postgresql; }
+          ls /usr/lib/postgresql/*/bin/initdb
+      - name: Chromium (Playwright's build, installed in Actions only)
+        run: |
+          npx -y "playwright@${PLAYWRIGHT_VERSION}" install --with-deps chromium
+          echo "CHROME=$(find ~/.cache/ms-playwright -type f -path '*chromium-*/chrome-linux*/chrome' | head -1)" >> "$GITHUB_ENV"
+      - run: npm ci
+      # Downloads GoTrue + PostgREST release binaries, clones the app at its
+      # pinned SHA, runs everything on 127.0.0.1. Exits 1 on any failed check.
+      - run: acceptance/supabase-edge-functions-app/run.sh
+        env:
+          WORK: ${{ runner.temp }}/acc-fullstack
+      - if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: acceptance-supabase-edge-functions-app
+          path: |
+            acceptance/supabase-edge-functions-app/evidence
+            ${{ runner.temp }}/acc-fullstack/logs
+          if-no-files-found: warn
+
+  acceptance-bulletproof-react:
+    name: acceptance / React recorder (bulletproof-react)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - name: yarn, bc (used by run.sh)
+        run: |
+          command -v yarn || npm install -g yarn@1.22.22
+          command -v bc || { sudo apt-get update && sudo apt-get install -y bc; }
+      - name: Chromium (Playwright's build, installed in Actions only)
+        run: |
+          npx -y "playwright@${PLAYWRIGHT_VERSION}" install --with-deps chromium
+          echo "CHROME=$(find ~/.cache/ms-playwright -type f -path '*chromium-*/chrome-linux*/chrome' | head -1)" >> "$GITHUB_ENV"
+      - run: npm ci
+      - run: acceptance/bulletproof-react/run.sh "$RUNNER_TEMP/acc-bulletproof"
+      - if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: acceptance-bulletproof-react
+          path: ${{ runner.temp }}/acc-bulletproof/out
+          if-no-files-found: warn
+
+  acceptance-supabase-restful-tasks:
+    name: acceptance / Deno recorder (supabase restful-tasks)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
+        with:
+          deno-version: ${{ env.DENO_VERSION }}
+      - name: PostgreSQL server binaries (initdb/pg_ctl; the harness runs its own cluster)
+        run: |
+          ls /usr/lib/postgresql/*/bin/initdb 2>/dev/null ||
+            { sudo apt-get update && sudo apt-get install -y postgresql; }
+          ls /usr/lib/postgresql/*/bin/initdb
+      - run: npm ci
+      # Downloads PostgREST, clones the app at its pinned SHA, runs everything
+      # on 127.0.0.1. Exits 1 on any failed check.
+      - run: acceptance/supabase-restful-tasks/run.sh
+        env:
+          WORK: ${{ runner.temp }}/acc-deno
+      - if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: acceptance-supabase-restful-tasks
+          path: acceptance/supabase-restful-tasks/evidence
+          if-no-files-found: warn
