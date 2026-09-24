@@ -503,20 +503,53 @@ for (const k of ['R1', 'R2', 'R3']) {
   }
 }
 const hTrace = sh(process.execPath, [TRACE_CLI, Hrun.dir, '--baseline', R1run.dir]);
-save('h-change.json', { patchApplied: applied.code === 0, compare: hCmp, sequenceDiagramDiff: hDiffs });
+// The same diff per request, each before/after pair on its own, so the
+// verdict does not depend on how the tool pairs same-named maps.
+const hTraceOf = {};
+for (const k of ['R1', 'R2', 'R3']) {
+  const a = R1run.obs[k]?.file;
+  const b = Hrun.obs[k]?.file;
+  if (!a || !b) continue;
+  const d = path.join(WORK, 'seq', `h-trace-${k}`);
+  fs.rmSync(d, { recursive: true, force: true });
+  fs.mkdirSync(path.join(d, 'before'), { recursive: true });
+  fs.mkdirSync(path.join(d, 'after'), { recursive: true });
+  fs.copyFileSync(a, path.join(d, 'before', path.basename(a)));
+  fs.copyFileSync(b, path.join(d, 'after', path.basename(b)));
+  hTraceOf[k] = sh(process.execPath, [TRACE_CLI, path.join(d, 'after'), '--baseline', path.join(d, 'before'), '--format', 'ascii']).out;
+}
+save('h-change.json', { patchApplied: applied.code === 0, compare: hCmp, sequenceDiagramDiff: hDiffs, appmapTracePerRequest: hTraceOf });
 save('h-appmap-trace.txt', hTrace.out);
 const hClients = (run, k) => (run.obs[k]?.file ? summarize(readMap(run.obs[k].file)).clients.map((c) => c.url.replace('http://127.0.0.1:54321', '')) : null);
+// Lines of an appmap-trace ASCII diff that mark a step added (+) or removed (-).
+const hMarks = (text) => (text ?? '').split('\n').filter((l) => /^[\s│├└─]*[+-] /.test(l)).map((l) => l.replace(/^[\s│├└─]*/, '').replace(/\s+\[.*$/, '').trim());
+// Official tools: the change is a query-only change (select=* -> select=id).
+// By the AppMap spec the query is in the event's `message`, which the
+// official sequence diagram does not render, so it cannot see this change;
+// its result is reported, and the change must show in appmap-trace, which
+// reads `message`: exactly one call removed and one added in R1 and R2,
+// nothing in R3.
+const hTraceOk = (k, want) => {
+  const t = hTraceOf[k];
+  if (!t) return false;
+  if (!want) return /No behavior change/.test(t) && hMarks(t).length === 0;
+  return (
+    /Behavior changed — 1 added, 1 removed\./.test(t) &&
+    j(hMarks(t).sort()) === j(['+ → network: GET /rest/v1/users?select=id', '- → network: GET /rest/v1/users?select=*'])
+  );
+};
 const hOk =
   applied.code === 0 &&
-  j(Object.keys(hCmp.different).sort()) === j(['R1', 'R2']) &&
-  hCmp.same.includes('R3') &&
+  hTraceOk('R1', true) &&
+  hTraceOk('R2', true) &&
+  hTraceOk('R3', false) &&
   ['R1', 'R2'].every((k) => j(hClients(Hrun, k)) === j(['/auth/v1/user', '/rest/v1/users?select=id'])) &&
-  ['R1', 'R2'].every((k) => (hCmp.different[k]?.b ?? '').includes('select=id'));
+  j(hClients(Hrun, 'R3')) === j([]);
 verdict('H', hOk ? 'PASS' : 'FAIL', [
-  `patch applied: ${applied.code === 0}; before vs after: same ${j(hCmp.same)}, different ${j(Object.keys(hCmp.different))}`,
-  `R1 outbound after: ${j(hClients(Hrun, 'R1'))}; R2 after: ${j(hClients(Hrun, 'R2'))}; R3 after: ${j(hClients(Hrun, 'R3'))}`,
-  `official sequence-diagram-diff R1: ${(hDiffs.R1 ?? 'n/a').replace(/\s+/g, ' ').slice(0, 300)}`,
-  `appmap-trace --baseline: ${hTrace.out.trim().split('\n').slice(-1)[0]}`,
+  `patch applied: ${applied.code === 0}; R1 outbound after: ${j(hClients(Hrun, 'R1'))}; R2 after: ${j(hClients(Hrun, 'R2'))}; R3 after: ${j(hClients(Hrun, 'R3'))}`,
+  ...['R1', 'R2', 'R3'].map((k) => `appmap-trace --baseline ${k}: ${hTraceOk(k, k !== 'R3') ? 'ok' : 'NOT AS REQUIRED'}: ${(hTraceOf[k] ?? 'no output').split('\n').slice(1, 2).join('').trim()} marks ${j(hMarks(hTraceOf[k]))}`),
+  `(reported, not required: the query is in \`message\`, which the official sequence diagram does not render) official sequence diagrams before vs after: same ${j(hCmp.same)}, different ${j(Object.keys(hCmp.different))}; sequence-diagram-diff R1: ${(hDiffs.R1 ?? 'n/a').replace(/\s+/g, ' ').slice(0, 200)}`,
+  `appmap-trace --baseline over all three: ${hTrace.out.trim().split('\n').slice(-1)[0]}`,
 ]);
 
 // --- I ---------------------------------------------------------------------
