@@ -93,6 +93,18 @@ async function browserPass(tag, { fe, recorded, mode = 'sequence', corsPatch = f
     }
   }
   log(`${tag}: ${report.steps.map((s) => `${s.id}${s.error ? '(err)' : ''} fe=${s.frontend.length} be=${s.backend.length}`).join(', ')}; ${listMaps(frontendDir).length} frontend, ${listMaps(backendDir).length} backend maps`);
+  // Enough detail in the log to diagnose a failing step without the artifact.
+  for (const s of report.steps.filter((x) => x.error && !x.error.startsWith('skipped'))) {
+    log(`   ${tag} ${s.id} error: ${s.error.split('\n').slice(0, 3).join(' | ').slice(0, 300)}`);
+  }
+  if (report.steps.some((x) => x.error)) {
+    for (const g of report.gateway.filter((l) => l.route !== 'functions' || l.status >= 400).slice(-8)) {
+      log(`   ${tag} gateway: ${g.method} ${g.url.slice(0, 80)} -> ${g.status}`);
+    }
+    for (const c of report.console.filter((c) => c.type === 'error').slice(-4)) log(`   ${tag} console: ${c.text.slice(0, 200)}`);
+    for (const f of report.failed.slice(-4)) log(`   ${tag} failed request: ${f.method} ${f.url.slice(0, 80)} ${f.error}`);
+    for (const d of report.dialogs.slice(-3)) log(`   ${tag} dialog: ${d.message.slice(0, 160)}`);
+  }
   return { tag, report, frontendDir, backendDir };
 }
 

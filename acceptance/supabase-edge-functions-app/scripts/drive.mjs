@@ -170,7 +170,12 @@ async function parallel() {
       return report;
     }
     await page.locator('select').selectOption(FN);
-    await signUp(page, email);
+    try {
+      await signUp(page, email);
+    } catch (e) {
+      report.steps.push({ id: `I-signup-${tag}`, desc: `sign up ${tag}`, error: String(e).slice(0, 300), newMaps: [], wire: [] });
+      continue;
+    }
     pages.push({ tag, page, email });
   }
   await settle();
