@@ -20,7 +20,7 @@
 // (unchanged / added / removed / changed) is defined here, not read from
 // the data. See docs/design/05 and docs/design/10.
 
-import { parseTraceparent } from './link.mjs';
+import { parseTraceparent, isBackendMap } from './link.mjs';
 
 // ---------------------------------------------------------------------------
 // Model building — the honest sequence tree
@@ -99,6 +99,19 @@ export function labelIndex(classMap) {
   return index;
 }
 
+/** The query string of a request: from the url if it still has one,
+ * otherwise rebuilt from the event's `message` (spec-conformant
+ * recorders keep it out of `url`), so a query change stays visible. */
+function queryOf(url, message) {
+  try {
+    if (new URL(url).search) return '';
+  } catch {
+    if (String(url).includes('?')) return '';
+  }
+  if (!Array.isArray(message) || message.length === 0) return '';
+  return '?' + message.map((p) => `${p.name}=${p.value}`).join('&');
+}
+
 function pathOf(url) {
   try {
     const u = new URL(url);
@@ -129,22 +142,34 @@ function previewSql(sql) {
 export function buildInteractionModel(frontendAppmap, opts = {}) {
   const spanToBackend = opts.spanToBackend ?? new Map();
   const labels = labelIndex(frontendAppmap.classMap);
+  // A backend request map traced on its own (no frontend map links to it,
+  // e.g. an edge function called by curl) is its own interaction: its app
+  // is the lane its calls run in, and its caller is "client". Treating it
+  // as a frontend map drew the request as `undefined.undefined` in a
+  // lane named "frontend".
+  const backend = isBackendMap(frontendAppmap);
+  const lane = backend ? (frontendAppmap.metadata?.app ?? 'backend') : 'frontend';
 
+  const nodes = [];
+  for (const n of buildCallTree(frontendAppmap.events)) {
+    // The interaction label already names the request; unwrap it, as
+    // backendChildren does for linked backend maps.
+    if (n.event.http_server_request) nodes.push(...n.children);
+    else nodes.push(n);
+  }
   const root = {
     kind: 'interaction',
-    actor: 'User',
-    target: 'frontend',
+    actor: backend ? 'client' : 'User',
+    target: lane,
     label: frontendAppmap.metadata?.name ?? 'interaction',
     labels: [],
     detail: {},
-    children: buildCallTree(frontendAppmap.events).map((n) =>
-      frontendNodeToModel(n, labels, spanToBackend),
-    ),
+    children: nodes.map((n) => frontendNodeToModel(n, labels, spanToBackend, lane)),
   };
   return root;
 }
 
-function frontendNodeToModel(node, labels, spanToBackend) {
+function frontendNodeToModel(node, labels, spanToBackend, lane = 'frontend') {
   const e = node.event;
 
   if (e.http_client_request) {
@@ -159,12 +184,12 @@ function frontendNodeToModel(node, labels, spanToBackend) {
     // frontend calls it did attribute here rather than discarding them, so a
     // call is never silently dropped no matter how the events interleaved.
     const backendKids = backend ? backendChildren(backend, app) : [];
-    const strayKids = node.children.map((c) => frontendNodeToModel(c, labels, spanToBackend));
+    const strayKids = node.children.map((c) => frontendNodeToModel(c, labels, spanToBackend, lane));
     return {
       kind: 'fetch',
-      actor: 'frontend',
+      actor: lane,
       target: app,
-      label: `${method} ${pathOf(url)}`,
+      label: `${method} ${pathOf(url)}${queryOf(url, e.message)}`,
       labels: ['http'],
       detail: { status: status ?? null, linked: Boolean(backend) },
       children: [...backendKids, ...strayKids],
@@ -176,15 +201,15 @@ function frontendNodeToModel(node, labels, spanToBackend) {
   const fnLabels = labels.get(`${cls}.${method}`) ?? [];
   return {
     kind: 'call',
-    actor: 'frontend',
-    target: 'frontend',
+    actor: lane,
+    target: lane,
     label: `${cls}.${method}`,
     labels: fnLabels,
     detail: {
       exception: node.return?.exceptions?.[0]?.class ?? null,
       returnClass: node.return?.return_value?.class ?? null,
     },
-    children: node.children.map((c) => frontendNodeToModel(c, labels, spanToBackend)),
+    children: node.children.map((c) => frontendNodeToModel(c, labels, spanToBackend, lane)),
   };
 }
 
@@ -216,6 +241,19 @@ function backendNodeToModel(node, app, labels) {
       labels: ['sql'],
       detail: { sql: normalizeSql(e.sql_query.sql) },
       children: [],
+    };
+  }
+  if (e.http_client_request) {
+    // A middle tier's own outbound call (an edge function calling
+    // PostgREST): not linked further here, but never drawn as "?.?".
+    return {
+      kind: 'fetch',
+      actor: app,
+      target: 'network',
+      label: `${e.http_client_request.request_method} ${pathOf(e.http_client_request.url)}${queryOf(e.http_client_request.url, e.message)}`,
+      labels: ['http'],
+      detail: { status: node.return?.http_client_response?.status_code ?? null, linked: false },
+      children: node.children.map((c) => backendNodeToModel(c, app, labels)),
     };
   }
   const cls = e.defined_class ?? '?';
@@ -517,7 +555,7 @@ export function renderMermaid(tree, options = {}) {
   }
 
   // Opening interaction message.
-  lines.push(`  ${alias('User')}->>${alias('frontend')}: ${escapeMsg(tree.label)}`);
+  lines.push(`  ${alias(tree.actor ?? 'User')}->>${alias(tree.target ?? 'frontend')}: ${escapeMsg(tree.label)}`);
 
   const emit = (node, depth) => {
     const band = diff ? bandFor(node.status) : null;
@@ -550,7 +588,7 @@ export function renderMermaid(tree, options = {}) {
 
   const emitItem = (item, depth) => {
     if (item.collapsed) {
-      lines.push(`  Note over ${alias('frontend')}: … ${item.count} unchanged step(s)`);
+      lines.push(`  Note over ${alias(tree.target ?? 'frontend')}: … ${item.count} unchanged step(s)`);
       return;
     }
     emit(item, depth);
@@ -571,8 +609,8 @@ function orderedParticipants(tree) {
   const add = (p) => {
     if (!seen.includes(p)) seen.push(p);
   };
-  add('User');
-  add('frontend');
+  add(tree.actor ?? 'User');
+  add(tree.target ?? 'frontend');
   let hasDb = false;
   const visit = (node) => {
     if (node.kind === 'fetch') add(node.target);
@@ -584,12 +622,13 @@ function orderedParticipants(tree) {
   return seen;
 }
 
-/** A fresh alias resolver per diagram: User/frontend/DB are fixed, each
+/** A fresh alias resolver per diagram: User/client/frontend/DB are fixed, each
  * backend app gets a stable BE<n> in first-seen order. */
 function mkAlias() {
   const cache = new Map();
   return (name) => {
     if (name === 'User') return 'User';
+    if (name === 'client') return 'Client';
     if (name === 'frontend') return 'FE';
     if (name === 'DB') return 'DB';
     if (!cache.has(name)) cache.set(name, 'BE' + cache.size);

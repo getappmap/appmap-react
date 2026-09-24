@@ -22,7 +22,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { scanAppMaps } from '../src/scan.mjs';
-import { isFrontendMap } from '../src/link.mjs';
+import { isFrontendMap, isBackendMap, outgoingRequests } from '../src/link.mjs';
 import { renderInteraction, backendIndex } from '../src/trace-agent.mjs';
 
 const args = process.argv.slice(2);
@@ -49,10 +49,22 @@ if (dirs.length === 0) {
   process.exit(2);
 }
 
+// The interactions to trace: every frontend map (outgoing requests, no
+// incoming one), plus every backend request map no frontend map links to
+// — a request traced on its own (an edge function called directly),
+// drawn in its own app's lane rather than mislabeled "frontend".
 function loadSet(scanDirs) {
   const maps = scanAppMaps(scanDirs);
-  const frontends = maps.filter((m) => isFrontendMap(m.appmap));
-  return { frontends, spanToBackend: backendIndex(maps) };
+  const spanToBackend = backendIndex(maps);
+  const frontends = maps.filter((m) => isFrontendMap(m.appmap) && !isBackendMap(m.appmap));
+  const linked = new Set();
+  for (const f of frontends) {
+    for (const r of outgoingRequests(f.appmap)) if (r.spanId && spanToBackend.has(r.spanId)) linked.add(r.spanId);
+  }
+  const standalone = maps.filter(
+    (m) => isBackendMap(m.appmap) && !linked.has(m.appmap.metadata?.parent_span_id),
+  );
+  return { frontends: [...frontends, ...standalone], spanToBackend };
 }
 
 const current = loadSet(dirs);
