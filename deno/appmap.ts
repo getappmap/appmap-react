@@ -45,7 +45,7 @@ import {
   runUnrecorded,
   type RecordingContext,
 } from '../recorder/src/session';
-import { autoInstrument } from '../recorder/src/instrument';
+import { autoInstrument, instrumentHandler } from '../recorder/src/instrument';
 
 // Per-request async context (docs/design/01, "Per-request async
 // context"): every request runs in its own AsyncLocalStorage context, so
@@ -54,8 +54,10 @@ import { autoInstrument } from '../recorder/src/instrument';
 // another request's recording. node:async_hooks works under Deno.
 installAsyncContext(new AsyncLocalStorage<RecordingContext>());
 
-// Re-export so this file can serve as the transform's `runtimeModule`.
-export { autoInstrument };
+// Re-export so this file can serve as the transform's `runtimeModule`:
+// the transform imports autoInstrument, plus instrumentHandler for
+// closures nested inside instrumented functions.
+export { autoInstrument, instrumentHandler };
 
 declare const Deno: {
   env: { get(key: string): string | undefined };
