@@ -135,8 +135,9 @@ not history rewrites.
   Edge Runtime gap explicitly rather than leaving it implicit)
 - [07 — zero-touch interaction recording for React](docs/design/07-zero-touch-react.md)
   (the same standard applied to the frontend: `main.tsx` no longer
-  calls `installInteractionRecorder` itself; verified against a real
-  dev server and a real production build, not just a unit test)
+  calls `installInteractionRecorder` itself; the 2026-09-24 amendment
+  fixes the injected import so a real browser actually loads it, proven
+  with a real dev server and headless Chromium)
 - [08 — labels: comment tags and built-in patterns](docs/design/08-labels.md)
   (`@label` comments, no import required; automatic
   `security.authentication` / `io.sql` / `security.crypto` labels for

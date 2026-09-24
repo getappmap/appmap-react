@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { relative, join } from 'node:path';
-import type { Plugin } from 'vite';
+import type { IndexHtmlTransformContext, Plugin } from 'vite';
 import { transformSource } from './transform';
 
 const COLLECTOR_PATH = '/__appmap/interactions';
@@ -36,7 +36,9 @@ export interface AppMapPluginOptions {
 
 export function appmapVitePlugin(options: AppMapPluginOptions): Plugin {
   let root = process.cwd();
+  let base = '/';
   let enabled = true;
+  let building = false;
 
   const selected = (id: string): string | undefined => {
     const file = id.split('?')[0];
@@ -65,7 +67,16 @@ export function appmapVitePlugin(options: AppMapPluginOptions): Plugin {
     },
     configResolved(config) {
       root = config.root;
+      base = config.base || '/';
+      building = config.command === 'build' && !config.build?.ssr;
       enabled = options.force || config.mode !== 'production';
+    },
+    buildStart() {
+      // Production build with `force`: bundle the interaction recorder as
+      // its own entry chunk; transformIndexHtml links it below.
+      if (building && enabled && options.app) {
+        this.emitFile({ type: 'chunk', id: INTERACTION_RECORDER_VIRTUAL_ID, name: 'appmap-interaction-recorder' });
+      }
     },
     // The collector (docs/design/04): browsers can't write tmp/appmap/,
     // so the in-page recorder POSTs finished interaction AppMaps here —
@@ -126,13 +137,34 @@ export function appmapVitePlugin(options: AppMapPluginOptions): Plugin {
         `installInteractionRecorder(${JSON.stringify({ app: options.app })});`,
       ].join('\n');
     },
-    transformIndexHtml() {
+    // Zero-touch interaction recording (docs/design/07). A plain-function
+    // transformIndexHtml runs *after* Vite's own dev-HTML import
+    // rewriting, so a bare `import "virtual:…"` injected here would reach
+    // the browser un-rewritten — and the browser refuses the `virtual:`
+    // scheme, so recording never started. Inject the URL Vite itself
+    // serves the virtual module at instead (`<base>@id/__x00__<id>`, the
+    // same thing @vitejs/plugin-react does for its preamble); in a
+    // production build (`force`), link the chunk emitted in buildStart.
+    transformIndexHtml(_html?: string, ctx?: IndexHtmlTransformContext) {
       if (!enabled || !options.app) return;
+      if (ctx?.bundle) {
+        const chunk = Object.values(ctx.bundle).find(
+          (c) => c.type === 'chunk' && c.facadeModuleId === RESOLVED_INTERACTION_RECORDER_VIRTUAL_ID,
+        );
+        if (!chunk) return;
+        return [
+          {
+            tag: 'script',
+            attrs: { type: 'module', src: `${base}${chunk.fileName}` },
+            injectTo: 'head' as const,
+          },
+        ];
+      }
       return [
         {
           tag: 'script',
           attrs: { type: 'module' },
-          children: `import ${JSON.stringify(INTERACTION_RECORDER_VIRTUAL_ID)};`,
+          children: `import ${JSON.stringify(`${base}@id/__x00__${INTERACTION_RECORDER_VIRTUAL_ID}`)};`,
           injectTo: 'head' as const,
         },
       ];
