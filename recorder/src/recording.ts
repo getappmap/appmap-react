@@ -8,7 +8,7 @@ import type {
   PackageEntry,
   ParameterValue,
 } from './types.js';
-import { className, functionName, safeStringify } from './stringify.js';
+import { className, functionName, readDataProperty, safeStringify } from './stringify.js';
 import { currentCallId } from './session.js';
 import { isSensitiveName, redactHeaders, redactString, REDACTED } from './redact.js';
 
@@ -115,6 +115,24 @@ export function queryMessage(params: URLSearchParams): ParameterValue[] {
     message.push({ name, class: 'String', value: isSensitiveName(name) ? REDACTED : capValue(redactString(value)) });
   }
   return message;
+}
+
+/** Class of a thrown value: its constructor's name for objects (a
+ * thrown plain object is an "Object", not "object"), typeof otherwise. */
+function exceptionClass(e: unknown): string {
+  return e !== null && (typeof e === 'object' || typeof e === 'function') ? className(e) : typeof e;
+}
+
+/** Message of a thrown value, read without running app code: an own or
+ * inherited `message` data property if it is a string (Error, and the
+ * plain error objects libraries like supabase-js throw), otherwise the
+ * value itself rendered as a parameter would be — never String(e),
+ * which printed "[object Object]" and runs toString. */
+function exceptionMessage(e: unknown): string {
+  const message = readDataProperty(e, 'message');
+  if (typeof message === 'string') return redactString(message);
+  if (e !== null && typeof e === 'object') return formatValue(e).value;
+  return redactString(String(e));
 }
 
 function ownLength(a: unknown[]): number {
@@ -293,8 +311,8 @@ export class Recording {
         elapsed,
         exceptions: [
           {
-            class: e instanceof Error ? e.constructor.name : typeof e,
-            message: redactString(e instanceof Error ? e.message : String(e)),
+            class: exceptionClass(e),
+            message: exceptionMessage(e),
             object_id: this.objectId(e),
           },
         ],
