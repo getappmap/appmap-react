@@ -1,5 +1,6 @@
 import { Recording } from './recording';
 import { patchFetch, unpatchFetch } from './fetchPatch';
+import { patchXhr, unpatchXhr } from './xhrPatch';
 
 // Session resolution — the doc 01 decision, amended (docs/design/01,
 // "Per-request async context"). Two ways a recording can be "the one
@@ -52,11 +53,17 @@ let openCount = 0;
 const closed = new WeakSet<Recording>();
 
 function retainPatches(): void {
-  if (openCount++ === 0) patchFetch();
+  if (openCount++ === 0) {
+    patchFetch();
+    patchXhr();
+  }
 }
 
 function releasePatches(): void {
-  if (openCount > 0 && --openCount === 0) unpatchFetch();
+  if (openCount > 0 && --openCount === 0) {
+    unpatchFetch();
+    unpatchXhr();
+  }
 }
 
 /** Install the async-context store (an AsyncLocalStorage). Idempotent:

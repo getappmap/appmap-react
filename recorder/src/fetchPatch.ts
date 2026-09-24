@@ -11,12 +11,13 @@ import { randomHex } from './recording';
 // request. The backend agent copies it into its request AppMap's
 // metadata; the linker joins on span-id. Requests are only ever stamped
 // while a recording is active, so production traffic is untouched.
+// XMLHttpRequest (axios) gets the same treatment in xhrPatch.ts.
 
 let originalFetch: typeof globalThis.fetch | undefined;
 
 /** Headers worth capturing on events; everything else is noise at this stage. */
-const CAPTURED_REQUEST_HEADERS = ['content-type', 'accept', 'traceparent'];
-const CAPTURED_RESPONSE_HEADERS = ['content-type'];
+export const CAPTURED_REQUEST_HEADERS = ['content-type', 'accept', 'traceparent'];
+export const CAPTURED_RESPONSE_HEADERS = ['content-type'];
 
 export function patchFetch(): void {
   if (originalFetch) return;

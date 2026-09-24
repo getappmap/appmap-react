@@ -3,7 +3,8 @@
 An [AppMap](https://appmap.io) agent for React (browser) apps and Deno
 edge functions, sharing one recorder core. Together they record
 [AppMap v1.12](https://github.com/getappmap/appmap) JSON from component
-renders, hooks, event handlers, `fetch` calls, and `Deno.serve`
+renders, hooks, event handlers, `fetch` and `XMLHttpRequest` calls,
+and `Deno.serve`
 requests — and the headline goal is **full-stack linking**:
 correlating frontend AppMaps with backend AppMaps via W3C Trace
 Context, so a user interaction can be followed from click to SQL. This
@@ -35,8 +36,9 @@ application-code changes (docs 06 and 07). Interaction-window capture
 is still pending a manual real-browser run (doc 04).
 
 - [`recorder/`](recorder) — the recorder core (Enter/Exit + CallToken
-  contract, value capture with size caps, `fetch` →
-  `http_client_request`/`response` events with `traceparent` stamping,
+  contract, value capture with size caps, `fetch` and
+  `XMLHttpRequest` (axios) → `http_client_request`/`response` events
+  with `traceparent` stamping,
   AppMap v1.12 serializer), Vitest per-test recording hooks
   (`./vitest`), and the Vite plugin (`./vite`) that auto-instruments
   top-level functions in configured paths — dev/test only, with

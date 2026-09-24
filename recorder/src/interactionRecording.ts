@@ -100,7 +100,9 @@ export function installInteractionRecorder(options: InteractionRecorderOptions =
   };
 }
 
-/** http_client_request events whose response has not arrived yet. */
+/** http_client_request events whose response has not arrived yet —
+ * fetch and XMLHttpRequest alike (both patches record into the same
+ * events), so the window stays open until XHR responses land too. */
 function pendingRequests(recording: Recording): number {
   let pending = 0;
   const open = new Set<number>();
@@ -116,8 +118,8 @@ function pendingRequests(recording: Recording): number {
 }
 
 function ship(recording: Recording, collectorUrl: string): void {
-  // stopRecording() has already unpatched fetch, so this request is
-  // never recorded or stamped.
+  // stopRecording() has already unpatched fetch (and XMLHttpRequest),
+  // so this request is never recorded or stamped.
   void fetch(collectorUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
