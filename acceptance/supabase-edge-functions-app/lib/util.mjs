@@ -221,6 +221,15 @@ export function summarize(appmap) {
     sql: [],
     unbalanced: [],
     exceptions: [],
+    // Requests that got no HTTP response (network error, or none before the
+    // recording closed): the AppMap schema only lets an http_client_request
+    // be closed by a response with a 100-599 status, so the recorder lists
+    // them here instead of closing them with status 0 (docs/design/12).
+    unanswered: (appmap.metadata?.unanswered_http_requests ?? []).map((u) => ({
+      method: u.request_method,
+      url: u.url,
+      reason: u.reason,
+    })),
   };
   for (const e of appmap.events) {
     if (e.event === 'return' && e.exceptions?.length) out.exceptions.push(...e.exceptions);

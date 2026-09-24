@@ -297,6 +297,20 @@ function frontendItems(pass) {
   };
   const clientItem = (id, m, method, url, status, needTp) => {
     if (!m) return;
+    if (status === 0) {
+      // A rejected fetch (no HTTP response). EXPECTATIONS.md asked for the
+      // recorder's old contract, a request/response pair with status 0; that
+      // is not valid AppMap (http_client_response.status_code must be
+      // 100-599), so the expectation was wrong per the spec. The spec-valid
+      // recording lists the request in metadata.unanswered_http_requests
+      // with reason "network error", and has no event pair for it.
+      const exp = `${method} ${url.replace('http://localhost:54321', '')} -> no response: listed in metadata.unanswered_http_requests (network error), no event pair`;
+      const u = m.unanswered.find((x) => x.method === method && x.url === url);
+      const paired = m.clients.some((x) => x.method === method && x.url === url);
+      if (!u) add(id, exp, 'missing', `unanswered ${j(m.unanswered)}; clients ${m.clients.map((x) => `${x.method} ${x.url} ${x.status}`).join(', ') || 'none'}`);
+      else add(id, exp, u.reason === 'network error' && !paired ? 'found' : 'wrong', `${j(u)}${paired ? ' (also recorded as an event pair)' : ''}`);
+      return;
+    }
     const c = m.clients.find((x) => x.method === method && x.url === url);
     const exp = `${method} ${url.replace('http://localhost:54321', '')} -> ${status}${needTp ? ' with traceparent' : ''}`;
     if (!c) add(id, exp, 'missing', m.clients.map((x) => `${x.method} ${x.url} ${x.status}`).join(', ') || 'no http_client_request');
@@ -401,13 +415,15 @@ verdict('D', dZ.total > 0 && dZ.foreign.length === 0 ? 'PASS' : 'FAIL', [
 // --- E ---------------------------------------------------------------------
 const r3 = R1run.obs.R3.file ? summarize(readMap(R1run.obs.R3.file)) : undefined;
 const eBackend = !!r3 && r3.servers[0]?.status === 400 && r3.exceptions.length === 0 && r3.unbalanced.length === 0;
+// S2's rejected fetch, in its spec-valid form (see clientItem): listed as
+// unanswered with reason "network error", and the map's events balanced.
 const zS2 = feSummary(Z, 'S2')[0];
-const zS2c = zS2?.clients.find((c) => c.url === S2_URL);
-const eFrontend = !!zS2c && zS2c.status === 0 && zS2.unbalanced.length === 0;
-const wS2 = feSummary(W1, 'S2')[0]?.clients.find((c) => c.url === S2_URL);
+const zS2c = zS2?.unanswered.find((c) => c.method === 'POST' && c.url === S2_URL);
+const eFrontend = !!zS2c && zS2c.reason === 'network error' && zS2.unbalanced.length === 0 && !zS2.clients.some((c) => c.url === S2_URL);
+const wS2 = feSummary(W1, 'S2')[0]?.unanswered.find((c) => c.url === S2_URL);
 verdict('E', eBackend && eFrontend ? 'PASS' : 'FAIL', [
   `backend R3 (TypeError thrown at index.ts:33, caught at :48): ${r3 ? `status ${r3.servers[0]?.status}, exceptions ${j(r3.exceptions)}, unbalanced ${r3.unbalanced.length}` : 'no map'}; response ${R1run.obs.R3.body}`,
-  `frontend S2 (fetch rejected): zero-touch ${zS2c ? `request recorded, response status ${zS2c.status}` : 'no map'}; (W) ${wS2 ? `status ${wS2.status}` : 'no map'}`,
+  `frontend S2 (fetch rejected): zero-touch ${zS2c ? `request recorded as unanswered (${zS2c.reason}), events balanced: ${zS2.unbalanced.length === 0}` : zS2 ? `map present, request not listed as unanswered: ${j(zS2.unanswered)}` : 'no map'}; (W) ${wS2 ? `unanswered (${wS2.reason})` : 'not listed'}`,
   'note: the app has no path where an exception escapes an app function (EXPECTATIONS.md, E).',
 ]);
 
