@@ -1,0 +1,119 @@
+{
+  "version": "1.12",
+  "metadata": {
+    "name": "should define initial state",
+    "app": "bulletproof-react",
+    "language": {
+      "name": "javascript",
+      "engine": "node",
+      "version": "v22.22.2"
+    },
+    "client": {
+      "name": "@funwithappmap/react-recorder",
+      "url": "https://github.com/getappmap/appmap-react"
+    },
+    "recorder": {
+      "name": "funwithappmap-react",
+      "type": "tests"
+    },
+    "frameworks": [
+      {
+        "name": "vitest"
+      }
+    ],
+    "source_location": "src/hooks/__tests__/use-disclosure.test.ts",
+    "trace_id": "dce4d2d4d92fc940be7414bc2290c95b",
+    "test_status": "succeeded"
+  },
+  "classMap": [
+    {
+      "type": "package",
+      "name": "src",
+      "children": [
+        {
+          "type": "package",
+          "name": "hooks",
+          "children": [
+            {
+              "type": "class",
+              "name": "use-disclosure",
+              "children": [
+                {
+                  "type": "function",
+                  "name": "useDisclosure",
+                  "location": "src/hooks/use-disclosure.ts:3",
+                  "static": true,
+                  "labels": [
+                    "hook"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "use-disclosure",
+      "method_id": "useDisclosure",
+      "path": "src/hooks/use-disclosure.ts",
+      "lineno": 3,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "boolean",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 1,
+      "elapsed": 0.00003491399999984424,
+      "return_value": {
+        "class": "Object",
+        "value": "{\"isOpen\":true}",
+        "size": 4,
+        "object_id": 1
+      }
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "use-disclosure",
+      "method_id": "useDisclosure",
+      "path": "src/hooks/use-disclosure.ts",
+      "lineno": 3,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "boolean",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 3,
+      "elapsed": 0.00002577500000006694,
+      "return_value": {
+        "class": "Object",
+        "value": "{\"isOpen\":false}",
+        "size": 4,
+        "object_id": 2
+      }
+    }
+  ]
+}

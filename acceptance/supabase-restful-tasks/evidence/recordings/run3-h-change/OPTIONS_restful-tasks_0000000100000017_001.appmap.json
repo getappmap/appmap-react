@@ -1,0 +1,46 @@
+{
+  "version": "1.12",
+  "metadata": {
+    "name": "OPTIONS /restful-tasks",
+    "app": "restful-tasks",
+    "language": {
+      "name": "typescript",
+      "engine": "deno"
+    },
+    "client": {
+      "name": "@funwithappmap/react-recorder",
+      "url": "https://github.com/getappmap/appmap-react"
+    },
+    "recorder": {
+      "name": "funwithappmap-deno",
+      "type": "requests"
+    },
+    "trace_id": "73657100000000000000000000000001",
+    "parent_span_id": "0000000100000017"
+  },
+  "classMap": [],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "http_server_request": {
+        "request_method": "OPTIONS",
+        "path_info": "/restful-tasks",
+        "headers": {
+          "traceparent": "00-73657100000000000000000000000001-0000000100000017-01"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 1,
+      "elapsed": 0.001123339999999999,
+      "http_server_response": {
+        "status_code": 200
+      }
+    }
+  ]
+}

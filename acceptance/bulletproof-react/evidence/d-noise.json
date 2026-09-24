@@ -1,0 +1,42 @@
+{
+  "recordings": 21,
+  "call_events_total": 1342,
+  "call_events_by_package": {
+    "src/utils": 562,
+    "src/components/ui/form": 211,
+    "src/lib": 97,
+    "src/features/discussions/api": 93,
+    "src/hooks": 61,
+    "src/features/comments/api": 49,
+    "src/features/discussions/components": 35,
+    "src/features/comments/components": 35,
+    "src/components/ui/drawer": 32,
+    "src/components/ui/spinner": 29,
+    "src/components/ui/notifications": 25,
+    "src/components/ui/dialog": 24,
+    "src/components/ui/dialog/confirmation-dialog": 18,
+    "src/components/ui/table": 12,
+    "src/app": 10,
+    "src/app/routes/app/discussions": 9,
+    "src/features/auth/components": 8,
+    "src/components/seo": 7,
+    "src/components/ui/md-preview": 7,
+    "src/components/layouts": 6,
+    "src/components/ui/link": 4,
+    "src/components/ui/dialog/__tests__": 4,
+    "src/app/routes/app/discussions/__tests__": 3,
+    "src/components/ui/drawer/__tests__": 1
+  },
+  "test_code_calls": {
+    "src/app/routes/app/discussions/__tests__/discussion.test.tsx:13 renderDiscussion": 3,
+    "src/components/ui/dialog/__tests__/dialog.test.tsx:20 TestDialog": 3,
+    "src/components/ui/dialog/__tests__/dialog.test.tsx:27 onOpenChange": 1,
+    "src/components/ui/drawer/__tests__/drawer.test.tsx:19 TestDrawer": 1
+  },
+  "excluded_src_testing_calls": {},
+  "node_modules_calls": {},
+  "react_dev_fake_calls_recorded_as_TypeError": 0,
+  "verdict": {
+    "D": "FAIL"
+  }
+}

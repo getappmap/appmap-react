@@ -1,0 +1,154 @@
+{
+  "version": "1.12",
+  "metadata": {
+    "name": "GET /restful-tasks/not-a-number",
+    "app": "restful-tasks",
+    "language": {
+      "name": "typescript",
+      "engine": "deno"
+    },
+    "client": {
+      "name": "@funwithappmap/react-recorder",
+      "url": "https://github.com/getappmap/appmap-react"
+    },
+    "recorder": {
+      "name": "funwithappmap-deno",
+      "type": "requests"
+    },
+    "trace_id": "73657100000000000000000000000007",
+    "parent_span_id": "0000000700000023"
+  },
+  "classMap": [
+    {
+      "type": "package",
+      "name": "examples",
+      "children": [
+        {
+          "type": "package",
+          "name": "edge-functions",
+          "children": [
+            {
+              "type": "package",
+              "name": "supabase",
+              "children": [
+                {
+                  "type": "package",
+                  "name": "functions",
+                  "children": [
+                    {
+                      "type": "package",
+                      "name": "restful-tasks",
+                      "children": [
+                        {
+                          "type": "class",
+                          "name": "index",
+                          "children": [
+                            {
+                              "type": "function",
+                              "name": "getTask",
+                              "location": "examples/edge-functions/supabase/functions/restful-tasks/index.ts:18",
+                              "static": true,
+                              "labels": [
+                                "io.sql"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "http_server_request": {
+        "request_method": "GET",
+        "path_info": "/restful-tasks/not-a-number",
+        "headers": {
+          "traceparent": "00-73657100000000000000000000000007-0000000700000023-01"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 2,
+      "defined_class": "index",
+      "method_id": "getTask",
+      "path": "examples/edge-functions/supabase/functions/restful-tasks/index.ts",
+      "lineno": 18,
+      "static": true,
+      "parameters": [
+        {
+          "name": "supabaseClient",
+          "class": "SupabaseClient",
+          "value": "[object Object]",
+          "size": 17,
+          "object_id": 1
+        },
+        {
+          "name": "id",
+          "class": "string",
+          "value": "not-a-number"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 3,
+      "http_client_request": {
+        "request_method": "GET",
+        "url": "http://127.0.0.1:54321/rest/v1/tasks?select=*&id=eq.not-a-number",
+        "headers": {
+          "traceparent": "00-73657100000000000000000000000007-5345e565d985dc8e-01"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "thread_id": 3,
+      "parent_id": 3,
+      "elapsed": 0.004222449999999981,
+      "http_client_response": {
+        "status_code": 400,
+        "headers": {
+          "content-type": "application/json; charset=utf-8"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "event": "return",
+      "thread_id": 2,
+      "parent_id": 2,
+      "elapsed": 0.00506134899999995,
+      "exceptions": [
+        {
+          "class": "object",
+          "message": "[object Object]"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 1,
+      "elapsed": 0.006303602000000069,
+      "http_server_response": {
+        "status_code": 500
+      }
+    }
+  ]
+}

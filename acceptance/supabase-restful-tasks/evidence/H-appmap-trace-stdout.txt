@@ -1,0 +1,1 @@
+traced 6 interaction(s) (diffed against /tmp/acc-deno-work/rec/run1) → /home/user/acc-deno/acceptance/supabase-restful-tasks/evidence/H-appmap-trace

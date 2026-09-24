@@ -1,0 +1,20 @@
+diff --git a/examples/edge-functions/supabase/functions/restful-tasks/index.ts b/examples/edge-functions/supabase/functions/restful-tasks/index.ts
+index 4b40c11..7de3adb 100644
+--- a/examples/edge-functions/supabase/functions/restful-tasks/index.ts
++++ b/examples/edge-functions/supabase/functions/restful-tasks/index.ts
+@@ -36,6 +36,7 @@ async function getAllTasks(supabaseClient: SupabaseClient) {
+ }
+ 
+ async function deleteTask(supabaseClient: SupabaseClient, id: string) {
++  await supabaseClient.from('tasks').select('*').eq('id', id)
+   const { error } = await supabaseClient.from('tasks').delete().eq('id', id)
+   if (error) throw error
+ 
+@@ -44,7 +45,6 @@ async function deleteTask(supabaseClient: SupabaseClient, id: string) {
+     status: 200,
+   })
+ }
+-
+ async function updateTask(supabaseClient: SupabaseClient, id: string, task: Task) {
+   const { error } = await supabaseClient.from('tasks').update(task).eq('id', id)
+   if (error) throw error

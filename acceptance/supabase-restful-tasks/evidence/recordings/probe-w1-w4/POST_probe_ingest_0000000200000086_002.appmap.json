@@ -1,0 +1,359 @@
+{
+  "version": "1.12",
+  "metadata": {
+    "name": "POST /probe/ingest",
+    "app": "probe",
+    "language": {
+      "name": "typescript",
+      "engine": "deno"
+    },
+    "client": {
+      "name": "@funwithappmap/react-recorder",
+      "url": "https://github.com/getappmap/appmap-react"
+    },
+    "recorder": {
+      "name": "funwithappmap-deno",
+      "type": "requests"
+    },
+    "trace_id": "77340000000000000000000000000002",
+    "parent_span_id": "0000000200000086",
+    "truncated": true
+  },
+  "classMap": [
+    {
+      "type": "package",
+      "name": "acceptance",
+      "children": [
+        {
+          "type": "package",
+          "name": "supabase-restful-tasks",
+          "children": [
+            {
+              "type": "package",
+              "name": "probe",
+              "children": [
+                {
+                  "type": "class",
+                  "name": "probe",
+                  "children": [
+                    {
+                      "type": "function",
+                      "name": "ingest",
+                      "location": "acceptance/supabase-restful-tasks/probe/probe.ts:35",
+                      "static": true
+                    },
+                    {
+                      "type": "function",
+                      "name": "sleep",
+                      "location": "acceptance/supabase-restful-tasks/probe/probe.ts:31",
+                      "static": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "http_server_request": {
+        "request_method": "POST",
+        "path_info": "/probe/ingest",
+        "headers": {
+          "traceparent": "00-77340000000000000000000000000002-0000000200000086-01"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 2,
+      "defined_class": "probe",
+      "method_id": "ingest",
+      "path": "acceptance/supabase-restful-tasks/probe/probe.ts",
+      "lineno": 35,
+      "static": true,
+      "parameters": [
+        {
+          "name": "n",
+          "class": "string",
+          "value": "2"
+        },
+        {
+          "name": "auth",
+          "class": "string",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYXV0aGVudGljYXRlZCIsImlzcyI6ImFjY2VwdGFuY2UiLCJpYXQiOjE3MDAwMDAwMDAsImV4cCI6NDEwMjQ0NDgwMH0.IPMYYq5le65cHiGxi7foieBoFYaUn2_x8yMjb__lIpw"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 2,
+      "http_client_request": {
+        "request_method": "POST",
+        "url": "http://127.0.0.1:54321/rest/v1/tasks",
+        "headers": {
+          "content-type": "application/json",
+          "traceparent": "00-77340000000000000000000000000002-a622db55db5c8ab8-01"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 1,
+      "elapsed": 0.0008341799999998329,
+      "http_server_response": {
+        "status_code": 202
+      }
+    },
+    {
+      "id": 5,
+      "event": "return",
+      "thread_id": 2,
+      "parent_id": 3,
+      "elapsed": 0.0061354550000000925,
+      "http_client_response": {
+        "status_code": 201
+      }
+    },
+    {
+      "id": 6,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "probe",
+      "method_id": "sleep",
+      "path": "acceptance/supabase-restful-tasks/probe/probe.ts",
+      "lineno": 31,
+      "static": true,
+      "parameters": [
+        {
+          "name": "ms",
+          "class": "number",
+          "value": "1500"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "event": "call",
+      "thread_id": 3,
+      "defined_class": "probe",
+      "method_id": "ingest",
+      "path": "acceptance/supabase-restful-tasks/probe/probe.ts",
+      "lineno": 35,
+      "static": true,
+      "parameters": [
+        {
+          "name": "n",
+          "class": "string",
+          "value": "3"
+        },
+        {
+          "name": "auth",
+          "class": "string",
+          "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYXV0aGVudGljYXRlZCIsImlzcyI6ImFjY2VwdGFuY2UiLCJpYXQiOjE3MDAwMDAwMDAsImV4cCI6NDEwMjQ0NDgwMH0.IPMYYq5le65cHiGxi7foieBoFYaUn2_x8yMjb__lIpw"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "event": "call",
+      "thread_id": 3,
+      "http_client_request": {
+        "request_method": "POST",
+        "url": "http://127.0.0.1:54321/rest/v1/tasks",
+        "headers": {
+          "content-type": "application/json",
+          "traceparent": "00-77340000000000000000000000000002-0ae70ead3fb65a72-01"
+        }
+      }
+    },
+    {
+      "id": 9,
+      "event": "return",
+      "thread_id": 3,
+      "parent_id": 8,
+      "elapsed": 0.006019452999999885,
+      "http_client_response": {
+        "status_code": 201
+      }
+    },
+    {
+      "id": 10,
+      "event": "call",
+      "thread_id": 4,
+      "defined_class": "probe",
+      "method_id": "sleep",
+      "path": "acceptance/supabase-restful-tasks/probe/probe.ts",
+      "lineno": 31,
+      "static": true,
+      "parameters": [
+        {
+          "name": "ms",
+          "class": "number",
+          "value": "1500"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 6,
+      "elapsed": 1.5018601320000002
+    },
+    {
+      "id": 12,
+      "event": "call",
+      "thread_id": 1,
+      "http_client_request": {
+        "request_method": "GET",
+        "url": "http://127.0.0.1:54399/enrich?n=2",
+        "headers": {
+          "traceparent": "00-77340000000000000000000000000002-06fbe9878514065c-01"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 12,
+      "elapsed": 0.0018729869999997391,
+      "http_client_response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json"
+        }
+      }
+    },
+    {
+      "id": 14,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "probe",
+      "method_id": "sleep",
+      "path": "acceptance/supabase-restful-tasks/probe/probe.ts",
+      "lineno": 31,
+      "static": true,
+      "parameters": [
+        {
+          "name": "ms",
+          "class": "number",
+          "value": "1500"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "event": "return",
+      "thread_id": 4,
+      "parent_id": 10,
+      "elapsed": 1.5013482990000002
+    },
+    {
+      "id": 16,
+      "event": "call",
+      "thread_id": 5,
+      "http_client_request": {
+        "request_method": "GET",
+        "url": "http://127.0.0.1:54399/enrich?n=3",
+        "headers": {
+          "traceparent": "00-77340000000000000000000000000002-eb6f4f9627ec828a-01"
+        }
+      }
+    },
+    {
+      "id": 17,
+      "event": "return",
+      "thread_id": 5,
+      "parent_id": 16,
+      "elapsed": 0.0018720549999998184,
+      "http_client_response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json"
+        }
+      }
+    },
+    {
+      "id": 18,
+      "event": "call",
+      "thread_id": 6,
+      "defined_class": "probe",
+      "method_id": "sleep",
+      "path": "acceptance/supabase-restful-tasks/probe/probe.ts",
+      "lineno": 31,
+      "static": true,
+      "parameters": [
+        {
+          "name": "ms",
+          "class": "number",
+          "value": "1500"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 14,
+      "elapsed": 1.5009943769999992
+    },
+    {
+      "id": 20,
+      "event": "call",
+      "thread_id": 1,
+      "http_client_request": {
+        "request_method": "PATCH",
+        "url": "http://127.0.0.1:54321/rest/v1/tasks?name=eq.probe-2",
+        "headers": {
+          "content-type": "application/json",
+          "traceparent": "00-77340000000000000000000000000002-ef42ffc923d62923-01"
+        }
+      }
+    },
+    {
+      "id": 21,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 20,
+      "elapsed": 0.012023317000000134,
+      "http_client_response": {
+        "status_code": 204
+      }
+    },
+    {
+      "id": 22,
+      "event": "return",
+      "thread_id": 2,
+      "parent_id": 2,
+      "elapsed": 3.0243361940000004,
+      "return_value": {
+        "class": "number",
+        "value": "42"
+      }
+    },
+    {
+      "id": 23,
+      "event": "return",
+      "thread_id": 6,
+      "parent_id": 18
+    },
+    {
+      "id": 24,
+      "event": "return",
+      "thread_id": 3,
+      "parent_id": 7
+    }
+  ]
+}

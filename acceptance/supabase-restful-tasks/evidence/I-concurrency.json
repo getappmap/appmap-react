@@ -1,0 +1,78 @@
+[
+  {
+    "round": 1,
+    "staggerMs": 0,
+    "wallMs": 216,
+    "stampedSent": 20,
+    "unstampedSent": 10,
+    "files": 1,
+    "recorded": [
+      0
+    ],
+    "statusesOk": true,
+    "leaks": [
+      "req#0 GET /restful-tasks/4: 29 foreign function call(s): [\"index.updateTask(5,{\\\"name\\\":\\\"c-upd-1\\\",\\\"status\\\":1})\",\"index.deleteTask(6)\",\"index.createTask({\\\"name\\\":\\\"c-new-3\\\",\\\"status\\\":3})\",\"index.getTask(8)\"]…",
+      "req#0 GET /restful-tasks/4: 29 foreign outbound call(s): [\"PATCH /rest/v1/tasks?id=eq.5\",\"DELETE /rest/v1/tasks?id=eq.6\",\"POST /rest/v1/tasks\",\"GET /rest/v1/tasks?select=*&id=eq.8\"]…",
+      "req#0 GET /restful-tasks/4: gateway saw 29 OTHER request(s)' outbound calls stamped with this recording's trace id: [\"PATCH /rest/v1/tasks?id=eq.5\",\"DELETE /rest/v1/tasks?id=eq.6\",\"POST /rest/v1/tasks\"]",
+      "req#0 GET /restful-tasks/4: metadata.truncated=true, 58 synthetic return(s): other requests' calls were still open when this recording closed"
+    ],
+    "outboundCallsWithAForeignTraceparent": 29
+  },
+  {
+    "round": 2,
+    "staggerMs": 0,
+    "wallMs": 162,
+    "stampedSent": 20,
+    "unstampedSent": 10,
+    "files": 1,
+    "recorded": [
+      0
+    ],
+    "statusesOk": true,
+    "leaks": [
+      "req#0 GET /restful-tasks/4: 29 foreign function call(s): [\"index.updateTask(5,{\\\"name\\\":\\\"c-upd-1\\\",\\\"status\\\":1})\",\"index.deleteTask(6)\",\"index.createTask({\\\"name\\\":\\\"c-new-3\\\",\\\"status\\\":3})\",\"index.getTask(8)\"]…",
+      "req#0 GET /restful-tasks/4: 29 foreign outbound call(s): [\"PATCH /rest/v1/tasks?id=eq.5\",\"DELETE /rest/v1/tasks?id=eq.6\",\"POST /rest/v1/tasks\",\"GET /rest/v1/tasks?select=*&id=eq.8\"]…",
+      "req#0 GET /restful-tasks/4: gateway saw 29 OTHER request(s)' outbound calls stamped with this recording's trace id: [\"POST /rest/v1/tasks\",\"PATCH /rest/v1/tasks?id=eq.13\",\"DELETE /rest/v1/tasks?id=eq.6\"]",
+      "req#0 GET /restful-tasks/4: metadata.truncated=true, 58 synthetic return(s): other requests' calls were still open when this recording closed"
+    ],
+    "outboundCallsWithAForeignTraceparent": 29
+  },
+  {
+    "round": 3,
+    "staggerMs": 25,
+    "wallMs": 483,
+    "stampedSent": 20,
+    "unstampedSent": 10,
+    "files": 20,
+    "recorded": [
+      6,
+      10,
+      14,
+      18,
+      2,
+      8,
+      12,
+      16,
+      0,
+      4,
+      3,
+      7,
+      11,
+      15,
+      19,
+      9,
+      13,
+      17,
+      1,
+      5
+    ],
+    "statusesOk": true,
+    "leaks": [
+      "req#0 GET /restful-tasks/4: 1 foreign function call(s): [\"index.getTask(24)\"]",
+      "req#0 GET /restful-tasks/4: 1 foreign outbound call(s): [\"GET /rest/v1/tasks?select=*&id=eq.24\"]",
+      "req#0 GET /restful-tasks/4: gateway saw 1 OTHER request(s)' outbound calls stamped with this recording's trace id: [\"GET /rest/v1/tasks?select=*&id=eq.24\"]",
+      "req#0 GET /restful-tasks/4: metadata.truncated=true, 2 synthetic return(s): other requests' calls were still open when this recording closed"
+    ],
+    "outboundCallsWithAForeignTraceparent": 1
+  }
+]

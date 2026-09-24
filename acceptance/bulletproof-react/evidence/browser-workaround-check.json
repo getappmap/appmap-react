@@ -1,0 +1,276 @@
+{
+  "steps": {
+    "B1 register": {
+      "newMaps": [
+        "click_span_Register_001.appmap.json"
+      ],
+      "one_map_per_interaction": true,
+      "metadata_name": "click span \"Register\"",
+      "truncated": true,
+      "items": [
+        {
+          "expect": "src/features/auth/components/register-form.tsx onSubmit",
+          "status": "found",
+          "evidence": {
+            "id": 1,
+            "thread_id": 1,
+            "defined_class": "register-form",
+            "method_id": "onSubmit",
+            "path": "src/features/auth/components/register-form.tsx",
+            "lineno": 30,
+            "parameters": [
+              {
+                "name": null,
+                "value": "{\"email\":\"acc-1790261130289@example.com\",\"firstName\":\"Ada\",\"lastName\":\"Lovelace\",\"password\":\"secret-pw-1\",\"teamName\":\"Ac"
+              },
+              {
+                "name": null,
+                "value": "[object Object]"
+              }
+            ]
+          }
+        },
+        {
+          "expect": "src/lib/auth.tsx registerWithEmailAndPassword",
+          "status": "found",
+          "evidence": {
+            "id": 211,
+            "thread_id": 1,
+            "defined_class": "auth",
+            "method_id": "registerWithEmailAndPassword",
+            "path": "src/lib/auth.tsx",
+            "lineno": 56,
+            "parameters": [
+              {
+                "name": "data",
+                "value": "{\"email\":\"acc-1790261130289@example.com\",\"firstName\":\"Ada\",\"lastName\":\"Lovelace\",\"password\":\"secret-pw-1\",\"teamName\":\"Ac"
+              }
+            ]
+          }
+        },
+        {
+          "expect": "src/app/routes/auth/register.tsx onSuccess",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "POST ^http://localhost:8080/api/auth/register$",
+          "status": "missing",
+          "evidence": null
+        }
+      ]
+    },
+    "B2 list page": {
+      "newMaps": [
+        "click_a_Discussions_002.appmap.json"
+      ],
+      "one_map_per_interaction": true,
+      "metadata_name": "click a \"Discussions\"",
+      "truncated": false,
+      "items": [
+        {
+          "expect": "src/app/routes/app/discussions/discussions.tsx DiscussionsRoute",
+          "status": "found",
+          "evidence": {
+            "id": 203,
+            "thread_id": 1,
+            "defined_class": "discussions",
+            "method_id": "DiscussionsRoute",
+            "path": "src/app/routes/app/discussions/discussions.tsx",
+            "lineno": 25
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/discussions-list.tsx DiscussionsList",
+          "status": "found",
+          "evidence": {
+            "id": 247,
+            "thread_id": 1,
+            "defined_class": "discussions-list",
+            "method_id": "DiscussionsList",
+            "path": "src/features/discussions/components/discussions-list.tsx",
+            "lineno": 19,
+            "parameters": [
+              {
+                "name": "props",
+                "value": "{}"
+              }
+            ]
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussions.ts getDiscussions",
+          "status": "found",
+          "evidence": {
+            "id": 95,
+            "thread_id": 1,
+            "defined_class": "get-discussions",
+            "method_id": "getDiscussions",
+            "path": "src/features/discussions/api/get-discussions.ts",
+            "lineno": 7,
+            "parameters": [
+              {
+                "name": "arg0",
+                "value": "1"
+              }
+            ]
+          }
+        },
+        {
+          "expect": "GET ^http://localhost:8080/api/discussions\\?page=1$",
+          "status": "missing",
+          "evidence": null
+        }
+      ]
+    },
+    "B3 open create drawer": {
+      "newMaps": [
+        "click_span_Create_Discussion_003.appmap.json"
+      ],
+      "one_map_per_interaction": true,
+      "metadata_name": "click span \"Create Discussion\"",
+      "truncated": false,
+      "items": [
+        {
+          "expect": "src/components/ui/form/form-drawer.tsx onOpenChange",
+          "status": "found",
+          "evidence": {
+            "id": 1,
+            "thread_id": 1,
+            "defined_class": "form-drawer",
+            "method_id": "onOpenChange",
+            "path": "src/components/ui/form/form-drawer.tsx",
+            "lineno": 42,
+            "parameters": [
+              {
+                "name": null,
+                "value": "true"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "B4 create item": {
+      "newMaps": [
+        "click_span_Submit_004.appmap.json"
+      ],
+      "one_map_per_interaction": true,
+      "metadata_name": "click span \"Submit\"",
+      "truncated": false,
+      "items": [
+        {
+          "expect": "src/features/discussions/components/create-discussion.tsx onSubmit",
+          "status": "found",
+          "evidence": {
+            "id": 1,
+            "thread_id": 1,
+            "defined_class": "create-discussion",
+            "method_id": "onSubmit",
+            "path": "src/features/discussions/components/create-discussion.tsx",
+            "lineno": 49,
+            "parameters": [
+              {
+                "name": null,
+                "value": "{\"title\":\"Acceptance discussion\",\"body\":\"Created by the acceptance run\"}"
+              },
+              {
+                "name": null,
+                "value": "[object Object]"
+              }
+            ]
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/create-discussion.ts createDiscussion",
+          "status": "found",
+          "evidence": {
+            "id": 43,
+            "thread_id": 1,
+            "defined_class": "create-discussion",
+            "method_id": "createDiscussion",
+            "path": "src/features/discussions/api/create-discussion.ts",
+            "lineno": 17,
+            "parameters": [
+              {
+                "name": "arg0",
+                "value": "{\"data\":{\"title\":\"Acceptance discussion\",\"body\":\"Created by the acceptance run\"}}"
+              }
+            ]
+          }
+        },
+        {
+          "expect": "POST ^http://localhost:8080/api/discussions$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET ^http://localhost:8080/api/discussions\\?page=1$",
+          "status": "missing",
+          "evidence": null
+        }
+      ]
+    },
+    "B5 two clicks 20ms apart": {
+      "newMaps": [
+        "click_a_Users_005.appmap.json"
+      ],
+      "maps": [
+        {
+          "file": "click_a_Users_005.appmap.json",
+          "name": "click a \"Users\"",
+          "has_users_work": true,
+          "has_dashboard_work": true
+        }
+      ],
+      "two_interactions_merged_into_one_map": true
+    }
+  },
+  "wire": [
+    {
+      "step": "load",
+      "method": "GET",
+      "url": "http://localhost:8080/api/auth/me",
+      "traceparent": null
+    },
+    {
+      "step": "B1 register",
+      "method": "POST",
+      "url": "http://localhost:8080/api/auth/register",
+      "traceparent": null
+    },
+    {
+      "step": "B2 list page",
+      "method": "GET",
+      "url": "http://localhost:8080/api/discussions?page=1",
+      "traceparent": null
+    },
+    {
+      "step": "B4 create item",
+      "method": "POST",
+      "url": "http://localhost:8080/api/discussions",
+      "traceparent": null
+    },
+    {
+      "step": "B4 create item",
+      "method": "GET",
+      "url": "http://localhost:8080/api/discussions?page=1",
+      "traceparent": null
+    },
+    {
+      "step": "B5 two clicks 20ms apart",
+      "method": "GET",
+      "url": "http://localhost:8080/api/users",
+      "traceparent": null
+    }
+  ],
+  "blockedExternal": [
+    "https://rsms.me/inter/inter.css"
+  ],
+  "console_errors": [
+    "error: Failed to load resource: net::ERR_FAILED"
+  ],
+  "wire_traceparent_present": 0,
+  "wire_requests": 6,
+  "verdict": "FAIL"
+}

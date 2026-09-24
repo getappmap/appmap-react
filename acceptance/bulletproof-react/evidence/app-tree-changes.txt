@@ -1,0 +1,9 @@
+ M apps/react-vite/package.json
+ M apps/react-vite/yarn.lock
+?? apps/react-vite/appmap.setup.bestconfig.ts
+?? apps/react-vite/appmap.setup.ts
+?? apps/react-vite/vite.config.appmap-bestconfig.ts
+?? apps/react-vite/vite.config.appmap-browserfix.ts
+?? apps/react-vite/vite.config.appmap-extra.ts
+?? apps/react-vite/vite.config.appmap-pkgimport.ts
+?? apps/react-vite/vite.config.appmap.ts

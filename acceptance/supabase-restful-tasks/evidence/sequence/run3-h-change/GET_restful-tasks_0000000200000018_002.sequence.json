@@ -1,0 +1,74 @@
+{
+  "actors": [
+    {
+      "id": "http:HTTP server requests",
+      "name": "HTTP server requests",
+      "order": 0
+    },
+    {
+      "id": "package:examples/edge-functions/supabase/functions/restful-tasks",
+      "name": "restful-tasks",
+      "order": 1000
+    },
+    {
+      "id": "external-service:127.0.0.1:54321",
+      "name": "127.0.0.1:54321",
+      "order": 4000
+    }
+  ],
+  "rootActions": [
+    {
+      "nodeType": 4,
+      "callee": "http:HTTP server requests",
+      "route": "GET /restful-tasks",
+      "status": 200,
+      "digest": "a7119aab67d7675c03893895e49ee24eb2ae41a6b43f246a9cbe173872a3d66f",
+      "subtreeDigest": "d07994d7877ff413df04f0d0d2c10c0a1f2aa5d554207c7cad4d7fc2ffdae484",
+      "children": [],
+      "elapsed": 0.025656894999999992,
+      "eventIds": [
+        1
+      ]
+    },
+    {
+      "nodeType": 5,
+      "callee": "external-service:127.0.0.1:54321",
+      "route": "GET http://127.0.0.1:54321/rest/v1/tasks?select=*",
+      "status": 200,
+      "digest": "341a3b3cadc3e8df53948875f02d485f2763a620100de1545c3e6a3990e2778d",
+      "subtreeDigest": "23e1ad7946605618e19e806b0f0069c773800b94a3712eb23fd1ad6203282821",
+      "children": [],
+      "elapsed": 0.011868817000000007,
+      "eventIds": [
+        3
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:examples/edge-functions/supabase/functions/restful-tasks",
+      "name": "getAllTasks",
+      "static": true,
+      "digest": "b88b6b4c5087be73b20031952e2d35e91fb27ca2dfeb0803f1b5e5f4f61c0de2",
+      "subtreeDigest": "a9eb15d44b0389710b71e84038ca1f5aac16ef19f7b3b5489a406cafc06f205e",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "examples/edge-functions/supabase/functions/restful-tasks/index.getAllTasks",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Response"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.01595410900000002,
+      "eventIds": [
+        2
+      ],
+      "labels": [
+        "io.sql"
+      ]
+    }
+  ]
+}

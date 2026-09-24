@@ -1,0 +1,242 @@
+{
+  "actors": [
+    {
+      "id": "package:src/app",
+      "name": "app",
+      "order": 1000
+    },
+    {
+      "id": "package:src/components/ui/notifications",
+      "name": "notifications",
+      "order": 2000
+    },
+    {
+      "id": "package:src/components/ui/spinner",
+      "name": "spinner",
+      "order": 3000
+    },
+    {
+      "id": "package:src/utils",
+      "name": "utils",
+      "order": 4000
+    },
+    {
+      "id": "package:src/lib",
+      "name": "lib",
+      "order": 5000
+    }
+  ],
+  "rootActions": [
+    {
+      "nodeType": 3,
+      "callee": "package:src/app",
+      "name": "AppProvider",
+      "static": true,
+      "digest": "2a925cf2a5f0491f63d0bf8c33d826197e2d7e60bdbf16f83fa39b7da345a30f",
+      "subtreeDigest": "e28691779ea27260fdcf92793f9cc9f297f5251cee6804f2d1124563cf04ede4",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/app/provider.AppProvider",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00011285399999997025,
+      "eventIds": [
+        1
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/notifications",
+      "name": "Notifications",
+      "static": true,
+      "digest": "8b422d61e00df10e3c130c714f952e61ad50c646fa9d2958f371d03cc6d3c2d9",
+      "subtreeDigest": "0e6d7a131f481a068553deddb81e846efb1049d91ae7d7bc63ae5ec7eb962896",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/notifications/notifications.Notifications",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000033567999999831957,
+      "eventIds": [
+        3
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/spinner",
+      "name": "Spinner",
+      "static": true,
+      "digest": "213e9ebfff546065e7ae4cae013ade06316a75260cb6c942cb2ff6a0ae73b535",
+      "subtreeDigest": "30e3c4fb6e6447091eed8754bb3e93108785d58fa4625ebfdc5233f46cae16ce",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/spinner/spinner.Spinner",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/spinner",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.0000197520000001532,
+          "eventIds": [
+            6
+          ]
+        }
+      ],
+      "elapsed": 0.00005886999999984255,
+      "eventIds": [
+        5
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "getUser",
+      "static": true,
+      "digest": "d659b076215dcecdffac1c9c8bbce25b7dcad91b5d23c24849d65c7e6b1a3f7d",
+      "subtreeDigest": "9fd687050eb8daf29b51385f5bfc953005929503c539ac237f17f48a9b282b42",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/auth.getUser",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.21141974299999994,
+      "eventIds": [
+        9
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "authRequestInterceptor",
+      "static": true,
+      "digest": "b1e19f930206c9a595c571bd2621f1460a76181123b731d2c5733287763a9e0f",
+      "subtreeDigest": "26ddd7e39dd78a299ae85d5dd313d7f11cd19ee40aeea2f045578de8861fcb5c",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/api-client.authRequestInterceptor",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000019549999997252597,
+      "eventIds": [
+        10
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "Authorization",
+      "static": true,
+      "digest": "d909095c7e70481b2159f8523571b25681b522b44452ebb12b11d19fd0dd1c1f",
+      "subtreeDigest": "67afff73fa7f62d6171bc827c5d72a6e62b29255e39657976edba2b2165ad3a7",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/authorization.Authorization",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/lib",
+          "callee": "package:src/lib",
+          "name": "useAuthorization",
+          "static": true,
+          "digest": "b22edcba48e65059bdb26d7a85c3d1b9a238200ae1b78697c594f7728631a881",
+          "subtreeDigest": "073d73c346c97f5fbe5e794c7e34cfcd8aacefb8df07732b40549e5c0ee108b7",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/lib/authorization.useAuthorization",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.0002467650000003232,
+          "eventIds": [
+            14
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.00027836500000012163,
+      "eventIds": [
+        13
+      ],
+      "labels": [
+        "component"
+      ]
+    }
+  ]
+}

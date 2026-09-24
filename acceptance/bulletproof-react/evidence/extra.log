@@ -1,0 +1,62 @@
+
+ RUN  v2.1.4 /home/user/acc-work/run-b/bulletproof-react/apps/react-vite
+
+(node:23004) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:23011) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:23005) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ❯ appmap-extra/observer-effect.test.tsx  (1 test | 1 failed) 190ms
+   × recorder must not change how often a component re-renders 184ms
+     → expected { recorded: 1 } to deeply equal { recorded: +0 }
+ ❯ appmap-extra/failing.test.tsx  (1 test | 1 failed) 43ms
+   × F: deliberately failing copy of the Head title test 41ms
+     → expected 'Hello World | Bulletproof React' to deeply equal 'this is not the title'
+ ✓ appmap-extra/exception.test.tsx  (1 test) 302ms
+   ✓ E: Authorization without a user throws in useAuthorization 300ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  appmap-extra/failing.test.tsx > F: deliberately failing copy of the Head title test
+AssertionError: expected 'Hello World | Bulletproof React' to deeply equal 'this is not the title'
+
+Expected: "this is not the title"
+Received: "Hello World | Bulletproof React"
+
+ ❯ appmap-extra/failing.test.tsx:10:26
+      8|   render(<Head title="Hello World" description="This is a description"…
+      9|   await waitFor(() => expect(document.title).toEqual('Hello World | Bu…
+     10|   expect(document.title).toEqual('this is not the title');
+       |                          ^
+     11| });
+     12| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  appmap-extra/observer-effect.test.tsx > recorder must not change how often a component re-renders
+AssertionError: expected { recorded: 1 } to deeply equal { recorded: +0 }
+
+- Expected
++ Received
+
+  Object {
+-   "recorded": 0,
++   "recorded": 1,
+  }
+
+ ❯ appmap-extra/observer-effect.test.tsx:51:24
+     49|   const plain = await countRenders(useThingPlain);
+     50|   const recorded = await countRenders(useThingRecorded);
+     51|   expect({ recorded }).toEqual({ recorded: plain });
+       |                        ^
+     52| });
+     53| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  2 failed | 1 passed (3)
+   Start at  14:44:56
+   Duration  2.54s (transform 684ms, setup 2.37s, collect 1.42s, tests 535ms, environment 1.07s, prepare 234ms)
+

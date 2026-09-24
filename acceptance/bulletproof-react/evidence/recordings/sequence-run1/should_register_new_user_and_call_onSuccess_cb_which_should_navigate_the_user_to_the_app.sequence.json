@@ -1,0 +1,3700 @@
+{
+  "actors": [
+    {
+      "id": "package:src/app",
+      "name": "app",
+      "order": 1000
+    },
+    {
+      "id": "package:src/components/ui/notifications",
+      "name": "notifications",
+      "order": 2000
+    },
+    {
+      "id": "package:src/components/ui/spinner",
+      "name": "spinner",
+      "order": 3000
+    },
+    {
+      "id": "package:src/utils",
+      "name": "utils",
+      "order": 4000
+    },
+    {
+      "id": "package:src/lib",
+      "name": "lib",
+      "order": 5000
+    },
+    {
+      "id": "package:src/features/auth/components",
+      "name": "components",
+      "order": 6000
+    },
+    {
+      "id": "package:src/components/ui/form",
+      "name": "form",
+      "order": 7000
+    }
+  ],
+  "rootActions": [
+    {
+      "nodeType": 3,
+      "callee": "package:src/app",
+      "name": "AppProvider",
+      "static": true,
+      "digest": "2a925cf2a5f0491f63d0bf8c33d826197e2d7e60bdbf16f83fa39b7da345a30f",
+      "subtreeDigest": "e28691779ea27260fdcf92793f9cc9f297f5251cee6804f2d1124563cf04ede4",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/app/provider.AppProvider",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0007778829999999744,
+      "eventIds": [
+        1
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/notifications",
+      "name": "Notifications",
+      "static": true,
+      "digest": "8b422d61e00df10e3c130c714f952e61ad50c646fa9d2958f371d03cc6d3c2d9",
+      "subtreeDigest": "0e6d7a131f481a068553deddb81e846efb1049d91ae7d7bc63ae5ec7eb962896",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/notifications/notifications.Notifications",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00040431899999998676,
+      "eventIds": [
+        3
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/spinner",
+      "name": "Spinner",
+      "static": true,
+      "digest": "213e9ebfff546065e7ae4cae013ade06316a75260cb6c942cb2ff6a0ae73b535",
+      "subtreeDigest": "30e3c4fb6e6447091eed8754bb3e93108785d58fa4625ebfdc5233f46cae16ce",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/spinner/spinner.Spinner",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/spinner",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.0036621509999999946,
+          "eventIds": [
+            6
+          ]
+        }
+      ],
+      "elapsed": 0.0039046639999999115,
+      "eventIds": [
+        5
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "getUser",
+      "static": true,
+      "digest": "d659b076215dcecdffac1c9c8bbce25b7dcad91b5d23c24849d65c7e6b1a3f7d",
+      "subtreeDigest": "9fd687050eb8daf29b51385f5bfc953005929503c539ac237f17f48a9b282b42",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/auth.getUser",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.24104104699999993,
+      "eventIds": [
+        9
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "authRequestInterceptor",
+      "static": true,
+      "digest": "b1e19f930206c9a595c571bd2621f1460a76181123b731d2c5733287763a9e0f",
+      "subtreeDigest": "26ddd7e39dd78a299ae85d5dd313d7f11cd19ee40aeea2f045578de8861fcb5c",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/api-client.authRequestInterceptor",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000027948000000151298,
+      "eventIds": [
+        10
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/auth/components",
+      "name": "RegisterForm",
+      "static": true,
+      "digest": "f4182c3df992db242ebe4865b5cef2d51300c2e3e3f0d4c75a7fc3a3397e1efe",
+      "subtreeDigest": "0e4461a8c093f53391abb2a85b31887dc42f006777b56b16b04f095d54be5c32",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/auth/components/register-form.RegisterForm",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.005515457999999853,
+      "eventIds": [
+        13
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Form",
+      "static": true,
+      "digest": "ae4ac90076cee355ef72218bdc94482a5097380a44d231b9244bc76900bd8cf5",
+      "subtreeDigest": "8520dfa41cdb92f68e569a74b412b5ca14ed10c6d56f6c7ec8060035962b8f60",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/form.Form",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/form",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.00006969600000002174,
+          "eventIds": [
+            16
+          ]
+        }
+      ],
+      "elapsed": 0.002269312999999784,
+      "eventIds": [
+        15
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0004578180000003158,
+      "eventIds": [
+        19
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00012124599999970087,
+      "eventIds": [
+        21
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00005978400000003603,
+      "eventIds": [
+        23
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00003381099999978687,
+      "eventIds": [
+        25
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000013113999999859516,
+      "eventIds": [
+        27
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000031664000000091615,
+      "eventIds": [
+        29
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000068620000001828885,
+      "eventIds": [
+        31
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000013679999997293635,
+      "eventIds": [
+        33
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00000779499999998734,
+      "eventIds": [
+        35
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000027615999999852648,
+      "eventIds": [
+        37
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000037790000001223236,
+      "eventIds": [
+        39
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000017559999996592524,
+      "eventIds": [
+        41
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000007737999999790191,
+      "eventIds": [
+        43
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000022555000000011205,
+      "eventIds": [
+        45
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00000432600000021921,
+      "eventIds": [
+        47
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000002211999999872205,
+      "eventIds": [
+        49
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00029602999999997335,
+      "eventIds": [
+        51
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00015699499999982436,
+      "eventIds": [
+        53
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000007501999999931286,
+      "eventIds": [
+        55
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000062509999997928386,
+      "eventIds": [
+        57
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000023526999999830878,
+      "eventIds": [
+        59
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000008691999999882682,
+      "eventIds": [
+        61
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000001408999999966909,
+      "eventIds": [
+        63
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00012650099999973464,
+      "eventIds": [
+        65
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/auth/components",
+      "name": "onSubmit",
+      "static": true,
+      "digest": "6930c94c7da0facd16ba3f51b28ec1db6fd3eed0624cd5194382340027fcdae7",
+      "subtreeDigest": "13a2bf15e3ea853480bb5f93c505edb143e99f9947f17d99a65d0dea17023bfa",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/auth/components/register-form.onSubmit",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "void"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0006482700000001387,
+      "eventIds": [
+        67
+      ],
+      "labels": [
+        "event-handler"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Form",
+      "static": true,
+      "digest": "ae4ac90076cee355ef72218bdc94482a5097380a44d231b9244bc76900bd8cf5",
+      "subtreeDigest": "8520dfa41cdb92f68e569a74b412b5ca14ed10c6d56f6c7ec8060035962b8f60",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/form.Form",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/form",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.000009359000000131346,
+          "eventIds": [
+            70
+          ]
+        }
+      ],
+      "elapsed": 0.00038495000000011715,
+      "eventIds": [
+        69
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000064409999999952564,
+      "eventIds": [
+        73
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000023654999999962456,
+      "eventIds": [
+        75
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000018790000003718887,
+      "eventIds": [
+        77
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000012889999998151324,
+      "eventIds": [
+        79
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000018600000003061723,
+      "eventIds": [
+        81
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000019201000000066415,
+      "eventIds": [
+        83
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000016849999997248233,
+      "eventIds": [
+        85
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 6.459999999606225e-7,
+      "eventIds": [
+        87
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000014030000002094312,
+      "eventIds": [
+        89
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000012834999999995489,
+      "eventIds": [
+        91
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 8.769999999458378e-7,
+      "eventIds": [
+        93
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 4.20000000303844e-7,
+      "eventIds": [
+        95
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000014289999999164137,
+      "eventIds": [
+        97
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00005194000000028609,
+      "eventIds": [
+        99
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000011810000000878062,
+      "eventIds": [
+        101
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 5.020000003241876e-7,
+      "eventIds": [
+        103
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00000307699999984834,
+      "eventIds": [
+        105
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000012019999999210996,
+      "eventIds": [
+        107
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000033379999999851863,
+      "eventIds": [
+        109
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000013779999999314896,
+      "eventIds": [
+        111
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000024844000000030064,
+      "eventIds": [
+        113
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000001081999999769323,
+      "eventIds": [
+        115
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 5.470000000968866e-7,
+      "eventIds": [
+        117
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000027689999997164706,
+      "eventIds": [
+        119
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Form",
+      "static": true,
+      "digest": "ae4ac90076cee355ef72218bdc94482a5097380a44d231b9244bc76900bd8cf5",
+      "subtreeDigest": "8520dfa41cdb92f68e569a74b412b5ca14ed10c6d56f6c7ec8060035962b8f60",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/form.Form",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/form",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.0000056330000002162705,
+          "eventIds": [
+            122
+          ]
+        }
+      ],
+      "elapsed": 0.00015601199999991876,
+      "eventIds": [
+        121
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000002292000000124972,
+      "eventIds": [
+        125
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000015587000000323314,
+      "eventIds": [
+        127
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000011500000000523869,
+      "eventIds": [
+        129
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 8.309999998346029e-7,
+      "eventIds": [
+        131
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000011479999998300628,
+      "eventIds": [
+        133
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000010277000000314729,
+      "eventIds": [
+        135
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 9.890000001178123e-7,
+      "eventIds": [
+        137
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 3.999999998995918e-7,
+      "eventIds": [
+        139
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 9.430000000065774e-7,
+      "eventIds": [
+        141
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000008238999999775843,
+      "eventIds": [
+        143
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 7.279999999809661e-7,
+      "eventIds": [
+        145
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 3.9199999991978986e-7,
+      "eventIds": [
+        147
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 8.659999998599232e-7,
+      "eventIds": [
+        149
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000007462000000032276,
+      "eventIds": [
+        151
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 7.739999996374536e-7,
+      "eventIds": [
+        153
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 7.84999999723368e-7,
+      "eventIds": [
+        155
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000003619000000071537,
+      "eventIds": [
+        157
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 8.899999997993291e-7,
+      "eventIds": [
+        159
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000018709999999373394,
+      "eventIds": [
+        161
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 9.650000001784064e-7,
+      "eventIds": [
+        163
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000011125999999876513,
+      "eventIds": [
+        165
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000010119999997186824,
+      "eventIds": [
+        167
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 5.750000000261934e-7,
+      "eventIds": [
+        169
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000029549999999289865,
+      "eventIds": [
+        171
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "registerWithEmailAndPassword",
+      "static": true,
+      "digest": "d46eca6ef93b6c62021dbdc884af4a691f304c9438dacd01dec936038df722a5",
+      "subtreeDigest": "e615e1d72017902254df8c7e1ec69fc96a8b2dc9fb6c9ce917faa0f5ea9081cf",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/auth.registerWithEmailAndPassword",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.217440247,
+      "eventIds": [
+        173
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "authRequestInterceptor",
+      "static": true,
+      "digest": "b1e19f930206c9a595c571bd2621f1460a76181123b731d2c5733287763a9e0f",
+      "subtreeDigest": "26ddd7e39dd78a299ae85d5dd313d7f11cd19ee40aeea2f045578de8861fcb5c",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/api-client.authRequestInterceptor",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000003389999999853899,
+      "eventIds": [
+        174
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/auth/components",
+      "name": "RegisterForm",
+      "static": true,
+      "digest": "f4182c3df992db242ebe4865b5cef2d51300c2e3e3f0d4c75a7fc3a3397e1efe",
+      "subtreeDigest": "0e4461a8c093f53391abb2a85b31887dc42f006777b56b16b04f095d54be5c32",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/auth/components/register-form.RegisterForm",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0005041150000001835,
+      "eventIds": [
+        176
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Form",
+      "static": true,
+      "digest": "ae4ac90076cee355ef72218bdc94482a5097380a44d231b9244bc76900bd8cf5",
+      "subtreeDigest": "8520dfa41cdb92f68e569a74b412b5ca14ed10c6d56f6c7ec8060035962b8f60",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/form.Form",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/form",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.0000064059999999699356,
+          "eventIds": [
+            179
+          ]
+        }
+      ],
+      "elapsed": 0.00014994900000010603,
+      "eventIds": [
+        178
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000018289999998160056,
+      "eventIds": [
+        182
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000012872000000243134,
+      "eventIds": [
+        184
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000012480000000323344,
+      "eventIds": [
+        186
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 7.539999996879487e-7,
+      "eventIds": [
+        188
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000013450000001284935,
+      "eventIds": [
+        190
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000009504000000106317,
+      "eventIds": [
+        192
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 9.169999998448475e-7,
+      "eventIds": [
+        194
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 4.590000003190653e-7,
+      "eventIds": [
+        196
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000004038000000036845,
+      "eventIds": [
+        198
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000014345000000048458,
+      "eventIds": [
+        200
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000001882000000023254,
+      "eventIds": [
+        202
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 7.339999997384438e-7,
+      "eventIds": [
+        204
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000013109999999869614,
+      "eventIds": [
+        206
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000009082999999918684,
+      "eventIds": [
+        208
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 9.50000000102591e-7,
+      "eventIds": [
+        210
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 4.290000001674343e-7,
+      "eventIds": [
+        212
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000030489999999190333,
+      "eventIds": [
+        214
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000012469999996937985,
+      "eventIds": [
+        216
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000001318000000082975,
+      "eventIds": [
+        218
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000010199999996984844,
+      "eventIds": [
+        220
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00001159300000017538,
+      "eventIds": [
+        222
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000010689999999158317,
+      "eventIds": [
+        224
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 4.779999999300344e-7,
+      "eventIds": [
+        226
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000028109999998378045,
+      "eventIds": [
+        228
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/spinner",
+      "name": "Spinner",
+      "static": true,
+      "digest": "213e9ebfff546065e7ae4cae013ade06316a75260cb6c942cb2ff6a0ae73b535",
+      "subtreeDigest": "30e3c4fb6e6447091eed8754bb3e93108785d58fa4625ebfdc5233f46cae16ce",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/spinner/spinner.Spinner",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/spinner",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.00005935299999964627,
+          "eventIds": [
+            231
+          ]
+        }
+      ],
+      "elapsed": 0.00009232900000006339,
+      "eventIds": [
+        230
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/auth/components",
+      "name": "RegisterForm",
+      "static": true,
+      "digest": "f4182c3df992db242ebe4865b5cef2d51300c2e3e3f0d4c75a7fc3a3397e1efe",
+      "subtreeDigest": "0e4461a8c093f53391abb2a85b31887dc42f006777b56b16b04f095d54be5c32",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/auth/components/register-form.RegisterForm",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0002858719999999266,
+      "eventIds": [
+        235
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Form",
+      "static": true,
+      "digest": "ae4ac90076cee355ef72218bdc94482a5097380a44d231b9244bc76900bd8cf5",
+      "subtreeDigest": "8520dfa41cdb92f68e569a74b412b5ca14ed10c6d56f6c7ec8060035962b8f60",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/form.Form",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/form",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.000011402999999972962,
+          "eventIds": [
+            238
+          ]
+        }
+      ],
+      "elapsed": 0.00021485400000028677,
+      "eventIds": [
+        237
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000002717999999731546,
+      "eventIds": [
+        241
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000015425999999933993,
+      "eventIds": [
+        243
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000015310000003410096,
+      "eventIds": [
+        245
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 8.060000000114087e-7,
+      "eventIds": [
+        247
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000001427000000148837,
+      "eventIds": [
+        249
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000009727000000111729,
+      "eventIds": [
+        251
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000013479999997798587,
+      "eventIds": [
+        253
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000004873000000316096,
+      "eventIds": [
+        255
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000010769999999865832,
+      "eventIds": [
+        257
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000025218000000222673,
+      "eventIds": [
+        259
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000022389999999177235,
+      "eventIds": [
+        261
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000005036999999902037,
+      "eventIds": [
+        263
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000011414000000058877,
+      "eventIds": [
+        265
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000024844999999913854,
+      "eventIds": [
+        267
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000001809000000321248,
+      "eventIds": [
+        269
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 5.939999996371626e-7,
+      "eventIds": [
+        271
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000035430000002634186,
+      "eventIds": [
+        273
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000004935999999815977,
+      "eventIds": [
+        275
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000005159999999705178,
+      "eventIds": [
+        277
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000014809999997851265,
+      "eventIds": [
+        279
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FieldWrapper",
+      "static": true,
+      "digest": "17d635610ad33f26f484a9ba607556f6fde1e78221a1649f923493d85c77c235",
+      "subtreeDigest": "e81535c44a8c9f836bc2c5ead4cb8a5fc46cb0c1d91c5b8406388a694d502235",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/field-wrapper.FieldWrapper",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000014650000000074214,
+      "eventIds": [
+        281
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000012799999999515421,
+      "eventIds": [
+        283
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "Error",
+      "static": true,
+      "digest": "cd8c709fdf62e00965a45c07739fb84caea498806e49f7bbe72e16d11c862359",
+      "subtreeDigest": "8a79e6fba95648eb04c2e0f52032adb46d3d0d869cc60a2cb037372c64d856a9",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/error.Error",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "null"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 6.08999999712978e-7,
+      "eventIds": [
+        285
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000009058999999979277,
+      "eventIds": [
+        287
+      ]
+    }
+  ]
+}

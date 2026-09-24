@@ -1,0 +1,88 @@
+[
+  {
+    "id": "R1",
+    "file": "OPTIONS_restful-tasks_0000000100000001_001.appmap.json",
+    "verdict": "FOUND",
+    "found": [
+      "http_server_request OPTIONS /restful-tasks -> http_server_response 200"
+    ],
+    "problems": []
+  },
+  {
+    "id": "R2",
+    "file": "GET_restful-tasks_0000000200000002_002.appmap.json",
+    "verdict": "FOUND",
+    "found": [
+      "http_server_request GET /restful-tasks -> http_server_response 200",
+      "functions index.getAllTasks@28([object Object])",
+      "http_client GET http://127.0.0.1:54321/rest/v1/tasks?select=* 200"
+    ],
+    "problems": []
+  },
+  {
+    "id": "R3",
+    "file": "GET_restful-tasks_1_0000000300000003_003.appmap.json",
+    "verdict": "FOUND",
+    "found": [
+      "http_server_request GET /restful-tasks/1 -> http_server_response 200",
+      "functions index.getTask@18(1)",
+      "http_client GET http://127.0.0.1:54321/rest/v1/tasks?select=*&id=eq.1 200"
+    ],
+    "problems": []
+  },
+  {
+    "id": "R4",
+    "file": "POST_restful-tasks_0000000400000004_004.appmap.json",
+    "verdict": "FOUND",
+    "found": [
+      "http_server_request POST /restful-tasks -> http_server_response 200",
+      "functions index.createTask@58({\"name\":\"acc-new\",\"status\":0})",
+      "http_client POST http://127.0.0.1:54321/rest/v1/tasks 201"
+    ],
+    "problems": []
+  },
+  {
+    "id": "R5",
+    "file": "PUT_restful-tasks_1_0000000500000005_005.appmap.json",
+    "verdict": "FOUND",
+    "found": [
+      "http_server_request PUT /restful-tasks/1 -> http_server_response 200",
+      "functions index.updateTask@48(1,{\"name\":\"renamed\",\"status\":1})",
+      "http_client PATCH http://127.0.0.1:54321/rest/v1/tasks?id=eq.1 204"
+    ],
+    "problems": []
+  },
+  {
+    "id": "R6",
+    "file": "DELETE_restful-tasks_2_0000000600000006_006.appmap.json",
+    "verdict": "FOUND",
+    "found": [
+      "http_server_request DELETE /restful-tasks/2 -> http_server_response 200",
+      "functions index.deleteTask@38(2)",
+      "http_client DELETE http://127.0.0.1:54321/rest/v1/tasks?id=eq.2 204"
+    ],
+    "problems": []
+  },
+  {
+    "id": "R7",
+    "file": "GET_restful-tasks_not-a-number_0000000700000007_007.appmap.json",
+    "verdict": "WRONG",
+    "found": [
+      "http_server_request GET /restful-tasks/not-a-number -> http_server_response 500",
+      "functions index.getTask@18(not-a-number)",
+      "http_client GET http://127.0.0.1:54321/rest/v1/tasks?select=*&id=eq.not-a-number 400"
+    ],
+    "problems": [
+      "thrown value's message \"invalid input syntax for type bigint\" not in recorded exception [{\"class\":\"object\",\"message\":\"[object Object]\"}] (the app threw {code:'22P02', message:'invalid input syntax for type bigint: \"not-a-number\"', ...})"
+    ]
+  },
+  {
+    "id": "R8",
+    "file": "POST_restful-tasks_0000000800000008_008.appmap.json",
+    "verdict": "FOUND",
+    "found": [
+      "http_server_request POST /restful-tasks -> http_server_response 400"
+    ],
+    "problems": []
+  }
+]

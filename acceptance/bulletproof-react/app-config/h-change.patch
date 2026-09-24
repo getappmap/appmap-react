@@ -1,0 +1,12 @@
+diff --git a/apps/react-vite/src/features/comments/api/get-comments.ts b/apps/react-vite/src/features/comments/api/get-comments.ts
+index 84c07ee..4dfbff3 100644
+--- a/apps/react-vite/src/features/comments/api/get-comments.ts
++++ b/apps/react-vite/src/features/comments/api/get-comments.ts
+@@ -14,7 +14,6 @@ export const getComments = ({
+   return api.get(`/comments`, {
+     params: {
+       discussionId,
+-      page,
+     },
+   });
+ };

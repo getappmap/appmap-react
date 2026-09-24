@@ -1,0 +1,1440 @@
+{
+  "actors": [
+    {
+      "id": "package:src/app/routes/app/discussions/__tests__",
+      "name": "__tests__",
+      "order": 1000
+    },
+    {
+      "id": "package:src/app",
+      "name": "app",
+      "order": 2000
+    },
+    {
+      "id": "package:src/app/routes/app/discussions",
+      "name": "discussions",
+      "order": 2000
+    },
+    {
+      "id": "package:src/components/ui/notifications",
+      "name": "notifications",
+      "order": 3000
+    },
+    {
+      "id": "package:src/components/ui/spinner",
+      "name": "spinner",
+      "order": 4000
+    },
+    {
+      "id": "package:src/utils",
+      "name": "utils",
+      "order": 5000
+    },
+    {
+      "id": "package:src/lib",
+      "name": "lib",
+      "order": 6000
+    },
+    {
+      "id": "package:src/features/discussions/api",
+      "name": "api",
+      "order": 7000
+    },
+    {
+      "id": "package:src/components/layouts",
+      "name": "layouts",
+      "order": 8000
+    },
+    {
+      "id": "package:src/components/seo",
+      "name": "seo",
+      "order": 9000
+    },
+    {
+      "id": "package:src/features/discussions/components",
+      "name": "components",
+      "order": 10000
+    },
+    {
+      "id": "package:src/components/ui/form",
+      "name": "form",
+      "order": 11000
+    },
+    {
+      "id": "package:src/hooks",
+      "name": "hooks",
+      "order": 12000
+    },
+    {
+      "id": "package:src/components/ui/md-preview",
+      "name": "md-preview",
+      "order": 13000
+    },
+    {
+      "id": "package:src/features/comments/components",
+      "name": "components",
+      "order": 14000
+    },
+    {
+      "id": "package:src/features/comments/api",
+      "name": "api",
+      "order": 15000
+    }
+  ],
+  "rootActions": [
+    {
+      "nodeType": 3,
+      "callee": "package:src/app/routes/app/discussions/__tests__",
+      "name": "renderDiscussion",
+      "static": true,
+      "digest": "c724f208568003951b7b753469a356e5a8bce9686cdd4c88f694d5044c2db909",
+      "subtreeDigest": "9f37a3fa7c284405b8b4c9583a9d0b24fea007c3d3ce36abee9b38603706ed70",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/app/routes/app/discussions/__tests__/discussion.test.renderDiscussion",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.7705056300000002,
+      "eventIds": [
+        1
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/app",
+      "name": "AppProvider",
+      "static": true,
+      "digest": "2a925cf2a5f0491f63d0bf8c33d826197e2d7e60bdbf16f83fa39b7da345a30f",
+      "subtreeDigest": "e28691779ea27260fdcf92793f9cc9f297f5251cee6804f2d1124563cf04ede4",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/app/provider.AppProvider",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0008151130000001104,
+      "eventIds": [
+        2
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/notifications",
+      "name": "Notifications",
+      "static": true,
+      "digest": "8b422d61e00df10e3c130c714f952e61ad50c646fa9d2958f371d03cc6d3c2d9",
+      "subtreeDigest": "0e6d7a131f481a068553deddb81e846efb1049d91ae7d7bc63ae5ec7eb962896",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/notifications/notifications.Notifications",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00048380599999973126,
+      "eventIds": [
+        4
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/spinner",
+      "name": "Spinner",
+      "static": true,
+      "digest": "213e9ebfff546065e7ae4cae013ade06316a75260cb6c942cb2ff6a0ae73b535",
+      "subtreeDigest": "30e3c4fb6e6447091eed8754bb3e93108785d58fa4625ebfdc5233f46cae16ce",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/spinner/spinner.Spinner",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/spinner",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.0035496720000001004,
+          "eventIds": [
+            7
+          ]
+        }
+      ],
+      "elapsed": 0.0037479040000002895,
+      "eventIds": [
+        6
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "authRequestInterceptor",
+      "static": true,
+      "digest": "b1e19f930206c9a595c571bd2621f1460a76181123b731d2c5733287763a9e0f",
+      "subtreeDigest": "26ddd7e39dd78a299ae85d5dd313d7f11cd19ee40aeea2f045578de8861fcb5c",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/api-client.authRequestInterceptor",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00002993400000013935,
+      "eventIds": [
+        11
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "getUser",
+      "static": true,
+      "digest": "d659b076215dcecdffac1c9c8bbce25b7dcad91b5d23c24849d65c7e6b1a3f7d",
+      "subtreeDigest": "9fd687050eb8daf29b51385f5bfc953005929503c539ac237f17f48a9b282b42",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/auth.getUser",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.23680099699999982,
+      "eventIds": [
+        10
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/app/routes/app/discussions",
+      "name": "DiscussionRoute",
+      "static": true,
+      "digest": "a94131f63e058de30056c8d438b24044474aace50277d0bb87932a1f6df7bc80",
+      "subtreeDigest": "02f5904a00b695345b70b293691c4c8091010c706ba6d2dd26a51b10fe8a7aa1",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/app/routes/app/discussions/discussion.DiscussionRoute",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/app/routes/app/discussions",
+          "callee": "package:src/features/discussions/api",
+          "name": "useDiscussion",
+          "static": true,
+          "digest": "c283063d2a2009f379e2ca581d15e245f45473d969b40f24b230b804bb5deee6",
+          "subtreeDigest": "0ce8ccfc755d3b7405e0d95bbeb168a72309b51aa9bac7ca6adc23da27402952",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/features/discussions/api/get-discussion.useDiscussion",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [
+            {
+              "nodeType": 3,
+              "caller": "package:src/features/discussions/api",
+              "callee": "package:src/features/discussions/api",
+              "name": "getDiscussionQueryOptions",
+              "static": true,
+              "digest": "15a46b64206ca9e935750812b66e1cc10a32c75ce96d33f0354f8161d3d76fce",
+              "subtreeDigest": "9d7e4eba9f8fcfc3fe0062dbe98ad18db2e0281c2080597e8171fc49e2d9e50f",
+              "stableProperties": {
+                "event_type": "function",
+                "id": "src/features/discussions/api/get-discussion.getDiscussionQueryOptions",
+                "raises_exception": false
+              },
+              "returnValue": {
+                "returnValueType": {
+                  "name": "Object"
+                },
+                "raisesException": false
+              },
+              "children": [],
+              "elapsed": 0.00004409700000041994,
+              "eventIds": [
+                16
+              ]
+            }
+          ],
+          "elapsed": 0.0006520259999997506,
+          "eventIds": [
+            15
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.0009731080000001384,
+      "eventIds": [
+        14
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/spinner",
+      "name": "Spinner",
+      "static": true,
+      "digest": "213e9ebfff546065e7ae4cae013ade06316a75260cb6c942cb2ff6a0ae73b535",
+      "subtreeDigest": "30e3c4fb6e6447091eed8754bb3e93108785d58fa4625ebfdc5233f46cae16ce",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/spinner/spinner.Spinner",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/spinner",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.00023668799999995827,
+          "eventIds": [
+            21
+          ]
+        }
+      ],
+      "elapsed": 0.00033372300000019094,
+      "eventIds": [
+        20
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "authRequestInterceptor",
+      "static": true,
+      "digest": "b1e19f930206c9a595c571bd2621f1460a76181123b731d2c5733287763a9e0f",
+      "subtreeDigest": "26ddd7e39dd78a299ae85d5dd313d7f11cd19ee40aeea2f045578de8861fcb5c",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/api-client.authRequestInterceptor",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000035330000000612925,
+      "eventIds": [
+        25
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/discussions/api",
+      "name": "getDiscussion",
+      "static": true,
+      "digest": "a1e33297bd6689155036b26f4d30c4686b01a211cbf7f42b43727e0315f6d6e6",
+      "subtreeDigest": "143e501d14a037ea6ccd0f136305a58d7744c849099a417253b1d916272ae5af",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/discussions/api/get-discussion.getDiscussion",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.22116312000000016,
+      "eventIds": [
+        24
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/app/routes/app/discussions",
+      "name": "DiscussionRoute",
+      "static": true,
+      "digest": "a94131f63e058de30056c8d438b24044474aace50277d0bb87932a1f6df7bc80",
+      "subtreeDigest": "02f5904a00b695345b70b293691c4c8091010c706ba6d2dd26a51b10fe8a7aa1",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/app/routes/app/discussions/discussion.DiscussionRoute",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/app/routes/app/discussions",
+          "callee": "package:src/features/discussions/api",
+          "name": "useDiscussion",
+          "static": true,
+          "digest": "c283063d2a2009f379e2ca581d15e245f45473d969b40f24b230b804bb5deee6",
+          "subtreeDigest": "0ce8ccfc755d3b7405e0d95bbeb168a72309b51aa9bac7ca6adc23da27402952",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/features/discussions/api/get-discussion.useDiscussion",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [
+            {
+              "nodeType": 3,
+              "caller": "package:src/features/discussions/api",
+              "callee": "package:src/features/discussions/api",
+              "name": "getDiscussionQueryOptions",
+              "static": true,
+              "digest": "15a46b64206ca9e935750812b66e1cc10a32c75ce96d33f0354f8161d3d76fce",
+              "subtreeDigest": "9d7e4eba9f8fcfc3fe0062dbe98ad18db2e0281c2080597e8171fc49e2d9e50f",
+              "stableProperties": {
+                "event_type": "function",
+                "id": "src/features/discussions/api/get-discussion.getDiscussionQueryOptions",
+                "raises_exception": false
+              },
+              "returnValue": {
+                "returnValueType": {
+                  "name": "Object"
+                },
+                "raisesException": false
+              },
+              "children": [],
+              "elapsed": 0.000008413000000018656,
+              "eventIds": [
+                30
+              ]
+            }
+          ],
+          "elapsed": 0.00025341900000012176,
+          "eventIds": [
+            29
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.0005378980000000411,
+      "eventIds": [
+        28
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/layouts",
+      "name": "ContentLayout",
+      "static": true,
+      "digest": "3a0fb690f87766d83a1cd18d37c182180d31d393ffc0f577b43b4f8540e7ac3d",
+      "subtreeDigest": "4fb5beabf5d69987faa0c287fab237bf4d58a5afc45b7a47ef562e4846237a51",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/layouts/content-layout.ContentLayout",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0002618680000000495,
+      "eventIds": [
+        34
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/seo",
+      "name": "Head",
+      "static": true,
+      "digest": "10da9bb83de561b517c81a07b02cc8c78ca77d6d234d81f1deb87f282bf1d4c8",
+      "subtreeDigest": "2e1c49ba484166d3d430f16085fd452dcb242f08eef1c3f3f9df9506b35d4262",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/seo/head.Head",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00009225599999990663,
+      "eventIds": [
+        36
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/discussions/components",
+      "name": "DiscussionView",
+      "static": true,
+      "digest": "bc026e973bb6b9ee0cdcbbd11ed2a4211f9af188eb1ddc7b76f7b66c140c10e9",
+      "subtreeDigest": "4e3aa0a37aa822eb8df212226fcda63e56200f88dfb34142c15083473ffec03b",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/discussions/components/discussion-view.DiscussionView",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/features/discussions/components",
+          "callee": "package:src/features/discussions/api",
+          "name": "useDiscussion",
+          "static": true,
+          "digest": "c283063d2a2009f379e2ca581d15e245f45473d969b40f24b230b804bb5deee6",
+          "subtreeDigest": "0ce8ccfc755d3b7405e0d95bbeb168a72309b51aa9bac7ca6adc23da27402952",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/features/discussions/api/get-discussion.useDiscussion",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [
+            {
+              "nodeType": 3,
+              "caller": "package:src/features/discussions/api",
+              "callee": "package:src/features/discussions/api",
+              "name": "getDiscussionQueryOptions",
+              "static": true,
+              "digest": "15a46b64206ca9e935750812b66e1cc10a32c75ce96d33f0354f8161d3d76fce",
+              "subtreeDigest": "9d7e4eba9f8fcfc3fe0062dbe98ad18db2e0281c2080597e8171fc49e2d9e50f",
+              "stableProperties": {
+                "event_type": "function",
+                "id": "src/features/discussions/api/get-discussion.getDiscussionQueryOptions",
+                "raises_exception": false
+              },
+              "returnValue": {
+                "returnValueType": {
+                  "name": "Object"
+                },
+                "raisesException": false
+              },
+              "children": [],
+              "elapsed": 0.000006868999999824155,
+              "eventIds": [
+                40
+              ]
+            }
+          ],
+          "elapsed": 0.00029800900000009277,
+          "eventIds": [
+            39
+          ],
+          "labels": [
+            "hook"
+          ]
+        },
+        {
+          "nodeType": 3,
+          "caller": "package:src/features/discussions/components",
+          "callee": "package:src/utils",
+          "name": "formatDate",
+          "static": true,
+          "digest": "f4ccc19a1f63b92fe58ee911c31fec12c20ba0582b3041d22fc9e05a7bd3eecb",
+          "subtreeDigest": "b077406fc0185bc6d8c6df9b582139c5910337b560f91e38c32874b40a78c823",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/format.formatDate",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.0009666640000000371,
+          "eventIds": [
+            43
+          ]
+        }
+      ],
+      "elapsed": 0.0015813100000000304,
+      "eventIds": [
+        38
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/discussions/components",
+      "name": "UpdateDiscussion",
+      "static": true,
+      "digest": "ffaee5bd13ae0ed7136f6f09aecd09126263cddd8cbb014fcdae6bf133712a1d",
+      "subtreeDigest": "471dd02a8cc3a490a1f2daa559347932de6727b3bd91d154aff2a67e8bc0dcd2",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/discussions/components/update-discussion.UpdateDiscussion",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/features/discussions/components",
+          "callee": "package:src/features/discussions/api",
+          "name": "useDiscussion",
+          "static": true,
+          "digest": "c283063d2a2009f379e2ca581d15e245f45473d969b40f24b230b804bb5deee6",
+          "subtreeDigest": "0ce8ccfc755d3b7405e0d95bbeb168a72309b51aa9bac7ca6adc23da27402952",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/features/discussions/api/get-discussion.useDiscussion",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [
+            {
+              "nodeType": 3,
+              "caller": "package:src/features/discussions/api",
+              "callee": "package:src/features/discussions/api",
+              "name": "getDiscussionQueryOptions",
+              "static": true,
+              "digest": "15a46b64206ca9e935750812b66e1cc10a32c75ce96d33f0354f8161d3d76fce",
+              "subtreeDigest": "9d7e4eba9f8fcfc3fe0062dbe98ad18db2e0281c2080597e8171fc49e2d9e50f",
+              "stableProperties": {
+                "event_type": "function",
+                "id": "src/features/discussions/api/get-discussion.getDiscussionQueryOptions",
+                "raises_exception": false
+              },
+              "returnValue": {
+                "returnValueType": {
+                  "name": "Object"
+                },
+                "raisesException": false
+              },
+              "children": [],
+              "elapsed": 0.000005979999999908614,
+              "eventIds": [
+                48
+              ]
+            }
+          ],
+          "elapsed": 0.0001503419999999096,
+          "eventIds": [
+            47
+          ],
+          "labels": [
+            "hook"
+          ]
+        },
+        {
+          "nodeType": 3,
+          "caller": "package:src/features/discussions/components",
+          "callee": "package:src/features/discussions/api",
+          "name": "useUpdateDiscussion",
+          "static": true,
+          "digest": "e92e57f478974426dec7364fe0ea9cbe8c6e9e8017926182af4c0f57929724ef",
+          "subtreeDigest": "733f4e1190d5639606c35c25b9485d9211bd45d92564a1b94ff7541a25e78e91",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/features/discussions/api/update-discussion.useUpdateDiscussion",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.0003424019999997654,
+          "eventIds": [
+            51
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.0009942229999996925,
+      "eventIds": [
+        46
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "Authorization",
+      "static": true,
+      "digest": "d909095c7e70481b2159f8523571b25681b522b44452ebb12b11d19fd0dd1c1f",
+      "subtreeDigest": "67afff73fa7f62d6171bc827c5d72a6e62b29255e39657976edba2b2165ad3a7",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/authorization.Authorization",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/lib",
+          "callee": "package:src/lib",
+          "name": "useAuthorization",
+          "static": true,
+          "digest": "b22edcba48e65059bdb26d7a85c3d1b9a238200ae1b78697c594f7728631a881",
+          "subtreeDigest": "073d73c346c97f5fbe5e794c7e34cfcd8aacefb8df07732b40549e5c0ee108b7",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/lib/authorization.useAuthorization",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.00016903499999989434,
+          "eventIds": [
+            55
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.00031371199999966846,
+      "eventIds": [
+        54
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FormDrawer",
+      "static": true,
+      "digest": "592dfbbeb8f4ba8fcc01ccc45e1d58cc80333573803a8e9ba58f8e1b104546a6",
+      "subtreeDigest": "c495c7d942bd1248c746b6354589dd8048f267284f3982ee1a4bfe40ab32be98",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/form-drawer.FormDrawer",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/form",
+          "callee": "package:src/hooks",
+          "name": "useDisclosure",
+          "static": true,
+          "digest": "b7aa963e497f5bd1de644ff0e9d21aadc5066e2929cfd973d81bc22f24e53803",
+          "subtreeDigest": "5084e1ff4acb17302c82a5c97a43b87e676b7a15ce221305734fce0eb7a21fa5",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/hooks/use-disclosure.useDisclosure",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.000059537999999975,
+          "eventIds": [
+            59
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.00027196700000013153,
+      "eventIds": [
+        58
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00029924500000015543,
+      "eventIds": [
+        62
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0003505830000003698,
+      "eventIds": [
+        64
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/md-preview",
+      "name": "MDPreview",
+      "static": true,
+      "digest": "5f6a2356e44f35e66c5fa62c2dcf39771befd06d8ecc7c8f8c4ed8b73f895f5e",
+      "subtreeDigest": "c5d50e6681c1437908a327b13b2470fdbca62568ad067da0a88d924b44e3143d",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/md-preview/md-preview.MDPreview",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.014127063999999792,
+      "eventIds": [
+        66
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/comments/components",
+      "name": "Comments",
+      "static": true,
+      "digest": "be563e13a32167a4681b83b14280683c593d4d53857e5e7adbf70a2ba6735e5a",
+      "subtreeDigest": "aa8bcc39f46d5daffd6527d68acfafd78b098270d33eed25b4d715de1e233aaa",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/comments/components/comments.Comments",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00018401899999980742,
+      "eventIds": [
+        68
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/comments/components",
+      "name": "CreateComment",
+      "static": true,
+      "digest": "82c9a2428bafcd64a5f59039bb7dd18e58bbfaf284b004649175b34b9e0d0929",
+      "subtreeDigest": "df53b61faeca4a2ea58deadf13fae6d9a0ed0dff10fd8cb0bc14bcde3a65feb7",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/comments/components/create-comment.CreateComment",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/features/comments/components",
+          "callee": "package:src/features/comments/api",
+          "name": "useCreateComment",
+          "static": true,
+          "digest": "adafcca3bfc0ca898829c84e840a3be3512a4b4ef31c03225c9f7e11a1346f35",
+          "subtreeDigest": "50245501e4e67b212efd71f3c95741c4d1e8648a6aa5a9f23a33fba3debfa733",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/features/comments/api/create-comment.useCreateComment",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.00011025199999994583,
+          "eventIds": [
+            71
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.00045031700000026833,
+      "eventIds": [
+        70
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/form",
+      "name": "FormDrawer",
+      "static": true,
+      "digest": "592dfbbeb8f4ba8fcc01ccc45e1d58cc80333573803a8e9ba58f8e1b104546a6",
+      "subtreeDigest": "c495c7d942bd1248c746b6354589dd8048f267284f3982ee1a4bfe40ab32be98",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/form/form-drawer.FormDrawer",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/form",
+          "callee": "package:src/hooks",
+          "name": "useDisclosure",
+          "static": true,
+          "digest": "b7aa963e497f5bd1de644ff0e9d21aadc5066e2929cfd973d81bc22f24e53803",
+          "subtreeDigest": "5084e1ff4acb17302c82a5c97a43b87e676b7a15ce221305734fce0eb7a21fa5",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/hooks/use-disclosure.useDisclosure",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.000008737999999993917,
+          "eventIds": [
+            75
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.00006586999999990439,
+      "eventIds": [
+        74
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00007006499999988592,
+      "eventIds": [
+        78
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000138200000001234,
+      "eventIds": [
+        80
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/comments/components",
+      "name": "CommentsList",
+      "static": true,
+      "digest": "1c959665251ddc6c36162740918d7067a470e728ba78b9f5f270158d9f3e92bc",
+      "subtreeDigest": "7439fa08bee1b1b7baa15e58945edae81490e9c44c75875db61b1650a0ec7fce",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/comments/components/comments-list.CommentsList",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/features/comments/components",
+          "callee": "package:src/features/comments/api",
+          "name": "useInfiniteComments",
+          "static": true,
+          "digest": "4c7a9140630f76a7e687ca32b2b670d293a05cb972d361dda4ff9f1651a77617",
+          "subtreeDigest": "c1bca3e4b89e4af5c7ffaf826b4a0ed6a4d9e0ca7c2c5abeebaa8e2405cd65db",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/features/comments/api/get-comments.useInfiniteComments",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [
+            {
+              "nodeType": 3,
+              "caller": "package:src/features/comments/api",
+              "callee": "package:src/features/comments/api",
+              "name": "getInfiniteCommentsQueryOptions",
+              "static": true,
+              "digest": "c24286e027d80234772e431b8cecc815c7ddcb6f2c43a274b9fd0ff660cf769e",
+              "subtreeDigest": "57f402002fc0bb2a953a8ab82a16241581cf9b60933f08c81ccbefbe0a9dafc3",
+              "stableProperties": {
+                "event_type": "function",
+                "id": "src/features/comments/api/get-comments.getInfiniteCommentsQueryOptions",
+                "raises_exception": false
+              },
+              "returnValue": {
+                "returnValueType": {
+                  "name": "Object"
+                },
+                "raisesException": false
+              },
+              "children": [],
+              "elapsed": 0.00006609800000023824,
+              "eventIds": [
+                84
+              ]
+            }
+          ],
+          "elapsed": 0.000738325000000259,
+          "eventIds": [
+            83
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.0013450210000000879,
+      "eventIds": [
+        82
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/spinner",
+      "name": "Spinner",
+      "static": true,
+      "digest": "213e9ebfff546065e7ae4cae013ade06316a75260cb6c942cb2ff6a0ae73b535",
+      "subtreeDigest": "30e3c4fb6e6447091eed8754bb3e93108785d58fa4625ebfdc5233f46cae16ce",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/spinner/spinner.Spinner",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/spinner",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.00000907900000038353,
+          "eventIds": [
+            89
+          ]
+        }
+      ],
+      "elapsed": 0.000046066999999766264,
+      "eventIds": [
+        88
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/lib",
+      "name": "authRequestInterceptor",
+      "static": true,
+      "digest": "b1e19f930206c9a595c571bd2621f1460a76181123b731d2c5733287763a9e0f",
+      "subtreeDigest": "26ddd7e39dd78a299ae85d5dd313d7f11cd19ee40aeea2f045578de8861fcb5c",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/lib/api-client.authRequestInterceptor",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000007548000000042521,
+      "eventIds": [
+        93
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/comments/api",
+      "name": "getComments",
+      "static": true,
+      "digest": "33b087c50805b1129846590da7e3ce022f7a3a9d1f51acdb670503754412c906",
+      "subtreeDigest": "6fef9fc40971fadde28f98fa81a70e9a24205e2be25573a80adbc26d8daf6872",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/comments/api/get-comments.getComments",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.2128009070000003,
+      "eventIds": [
+        92
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/features/comments/components",
+      "name": "CommentsList",
+      "static": true,
+      "digest": "1c959665251ddc6c36162740918d7067a470e728ba78b9f5f270158d9f3e92bc",
+      "subtreeDigest": "7439fa08bee1b1b7baa15e58945edae81490e9c44c75875db61b1650a0ec7fce",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/features/comments/components/comments-list.CommentsList",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/features/comments/components",
+          "callee": "package:src/features/comments/api",
+          "name": "useInfiniteComments",
+          "static": true,
+          "digest": "4c7a9140630f76a7e687ca32b2b670d293a05cb972d361dda4ff9f1651a77617",
+          "subtreeDigest": "c1bca3e4b89e4af5c7ffaf826b4a0ed6a4d9e0ca7c2c5abeebaa8e2405cd65db",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/features/comments/api/get-comments.useInfiniteComments",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [
+            {
+              "nodeType": 3,
+              "caller": "package:src/features/comments/api",
+              "callee": "package:src/features/comments/api",
+              "name": "getInfiniteCommentsQueryOptions",
+              "static": true,
+              "digest": "c24286e027d80234772e431b8cecc815c7ddcb6f2c43a274b9fd0ff660cf769e",
+              "subtreeDigest": "57f402002fc0bb2a953a8ab82a16241581cf9b60933f08c81ccbefbe0a9dafc3",
+              "stableProperties": {
+                "event_type": "function",
+                "id": "src/features/comments/api/get-comments.getInfiniteCommentsQueryOptions",
+                "raises_exception": false
+              },
+              "returnValue": {
+                "returnValueType": {
+                  "name": "Object"
+                },
+                "raisesException": false
+              },
+              "children": [],
+              "elapsed": 0.000005929999999807478,
+              "eventIds": [
+                98
+              ]
+            }
+          ],
+          "elapsed": 0.00007012600000007297,
+          "eventIds": [
+            97
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.0003619619999999486,
+      "eventIds": [
+        96
+      ],
+      "labels": [
+        "component"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "steps": [
+    {
+      "name": "B1 register",
+      "newMaps": [],
+      "ms": 2487
+    },
+    {
+      "name": "B2 list page",
+      "newMaps": [],
+      "ms": 2872
+    },
+    {
+      "name": "B3 open create drawer",
+      "newMaps": [],
+      "ms": 1597
+    },
+    {
+      "name": "B4 create item",
+      "newMaps": [],
+      "ms": 2897
+    },
+    {
+      "name": "B5 two clicks 20ms apart",
+      "newMaps": [],
+      "ms": 1635
+    }
+  ],
+  "wire": [
+    {
+      "step": "load",
+      "method": "GET",
+      "url": "http://localhost:8080/api/auth/me",
+      "traceparent": null
+    },
+    {
+      "step": "B1 register",
+      "method": "POST",
+      "url": "http://localhost:8080/api/auth/register",
+      "traceparent": null
+    },
+    {
+      "step": "B2 list page",
+      "method": "GET",
+      "url": "http://localhost:8080/api/discussions?page=1",
+      "traceparent": null
+    },
+    {
+      "step": "B4 create item",
+      "method": "POST",
+      "url": "http://localhost:8080/api/discussions",
+      "traceparent": null
+    },
+    {
+      "step": "B4 create item",
+      "method": "GET",
+      "url": "http://localhost:8080/api/discussions?page=1",
+      "traceparent": null
+    },
+    {
+      "step": "B5 two clicks 20ms apart",
+      "method": "GET",
+      "url": "http://localhost:8080/api/users",
+      "traceparent": null
+    }
+  ],
+  "console": [
+    "error: Access to script at 'virtual:appmap-interaction-recorder' from origin 'http://localhost:3000' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: chrome, chrome-extension, chrome-untrusted, data, http, https, isolated-app.",
+    "error: Failed to load resource: net::ERR_FAILED",
+    "error: Failed to load resource: net::ERR_FAILED",
+    "debug: [vite] connecting...",
+    "debug: [vite] connected.",
+    "info: %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+    "warning: No `HydrateFallback` element provided to render during initial hydration",
+    "verbose: [DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o"
+  ],
+  "pageErrors": [],
+  "blockedExternal": [
+    "https://rsms.me/inter/inter.css"
+  ],
+  "preexistingMaps": [],
+  "allMaps": []
+}

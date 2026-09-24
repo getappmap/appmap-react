@@ -1,0 +1,111 @@
+
+=== A. setup: clone app at 9506629ed003a561c6627735480cce4994244bb4, install, add recorder
+app HEAD: 9506629ed003a561c6627735480cce4994244bb4
+appmap CLI 3.204.0, validator 2.5.1
+documented package import: ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING
+A: FAIL
+
+=== J. suite without the recorder (x2)
+plain-1:  Test Files  12 passed (12)
+plain-1:       Tests  21 passed (21)
+plain-2:  Test Files  12 passed (12)
+plain-2:       Tests  21 passed (21)
+
+=== Recorded suite, run 1 and run 2
+recorded-1:  Test Files  1 failed | 11 passed (12)
+recorded-1:       Tests  1 failed | 20 passed (21)
+recorded-2:  Test Files  1 failed | 11 passed (12)
+recorded-2:       Tests  1 failed | 20 passed (21)
+
+=== Extra tests (E exception, F failing, recorder side-effect repro)
+   × recorder must not change how often a component re-renders 184ms
+   × F: deliberately failing copy of the Head title test 41ms
+ ✓ appmap-extra/exception.test.tsx  (1 test) 302ms
+   ✓ E: Authorization without a user throws in useAuthorization 300ms
+
+=== Browser pass 1: zero-touch plugin exactly as documented
+zerotouch served: <script type="module">import "virtual:appmap-interaction-recorder"
+zerotouch maps per step: {'B1 register': 0, 'B2 list page': 0, 'B3 open create drawer': 0, 'B4 create item': 0, 'B5 two clicks 20ms apart': 0} verdict FAIL
+
+=== Browser pass 2: same, plus a config-only workaround for bug 2
+workaround served: <script type="module">import "/@id/virtual:appmap-interaction-recorder"
+workaround maps per step: {'B1 register': 1, 'B2 list page': 1, 'B3 open create drawer': 1, 'B4 create item': 1, 'B5 two clicks 20ms apart': 1} verdict FAIL
+BROWSER: FAIL (zero-touch: FAIL, with workaround: FAIL)
+
+=== B. official validator on every recording (declared version + each spec version)
+summary {"files": 29, "declaredValid": 0, "perVersionAllValid": {"1.2.0": 0, "1.3.0": 0, "1.4.0": 0, "1.5.0": 0, "1.5.1": 0, "1.6.0": 0, "1.7.0": 0, "1.8.0": 0, "1.9.0": 0, "1.10.0": 0, "1.11.0": 0, "1.12.0": 0, "1.13.0": 0, "1.13.1": 0}, "diagnosticIfFrameworksVersionPatched": {"1.2.0": 1, "1.3.0": 1, "1.4.0": 1, "1.5.0": 1, "1.5.1": 1, "1.6.0": 7, "1.7.0": 7, "1.8.0": 7, "1.9.0": 7, "1.10.0": 7, "1.11.0": 7, "1.12.0": 7, "1.13.0": 7, "1.13.1": 7}}
+  24x INVALID: #/definitions/metadata/properties/frameworks/items/required >> /metadata/frameworks/0 must have required property 'version'
+  2x INVALID: ├─ .: #/anyOf >> /events/55 must match a schema in anyOf | └─ + |    ├─ 0: #/definitions/call/properties/event/const >> /events/55/event must be equal 
+  1x INVALID: ├─ .: #/anyOf >> /events/10 must match a schema in anyOf | └─ + |    ├─ 0: #/properties/value/maxLength >> /events/10/parameters/0/value must NOT have 
+  1x INVALID: ├─ .: #/anyOf >> /events/0 must match a schema in anyOf | └─ + |    ├─ 0: #/properties/value/maxLength >> /events/0/parameters/0/value must NOT have mo
+  1x INVALID: ├─ .: #/anyOf >> /events/2 must match a schema in anyOf | └─ + |    ├─ 0: #/properties/value/maxLength >> /events/2/parameters/0/value must NOT have mo
+B: FAIL
+
+=== B (diagnostic only, not a verdict): recorder options set as well as they can be
+bestconfig summary {"1.2.0": 1, "1.3.0": 1, "1.4.0": 1, "1.5.0": 1, "1.5.1": 1, "1.6.0": 21, "1.7.0": 21, "1.8.0": 21, "1.9.0": 21, "1.10.0": 21, "1.11.0": 21, "1.12.0": 21, "1.13.0": 21, "1.13.1": 21} of 22
+  1x INVALID: ├─ .: #/anyOf >> /events/14 must match a schema in anyOf | └─ + |    ├─ 0: #/definitions/call/properties/event/const >> /events/14/event must be equal to constant |    ├─ 1: #/definitions/exception/required >> /
+
+=== C/E/F. ground truth from EXPECTATIONS.md
+totals {'found': 94, 'wrong': 1, 'missing': 33}
+  T1 should login new user and call onSuccess cb which should  5/8 found  | wrong: src/features/auth/components/login-form.tsx:12 LoginForm; missing: GET https://api\.bulletproofapp\.com/auth/me$; missing: POST https://api\.bulletproofapp\.com/auth/login$
+  T2 should register new user and call onSuccess cb which shou 5/7 found  | missing: GET https://api\.bulletproofapp\.com/auth/me$; missing: POST https://api\.bulletproofapp\.com/auth/register$
+  T3 should render discussion                                  17/21 found  | missing: src/lib/authorization.tsx:35 checkAccess; missing: GET https://api\.bulletproofapp\.com/auth/me$; missing: GET https://api\.bulletproofapp\.com/discussions/[A-Za-z0-9_-]+$; missing: GET https://api\.bulletproofapp\.com/comments\?discussionId=[A-Za-z0-9_-]+&page=1$
+  T4 should update discussion                                  21/27 found  | missing: src/lib/authorization.tsx:35 checkAccess; missing: GET https://api\.bulletproofapp\.com/auth/me$; missing: GET https://api\.bulletproofapp\.com/discussions/[A-Za-z0-9_-]+$; missing: GET https://api\.bulletproofapp\.com/comments\?discussionId=[A-Za-z0-9_-]+&page=1$; missing: PATCH https://api\.bulletproofapp\.com/discussions/[A-Za-z0-9_-]+$; missing: GET https://api\.bulletproofapp\.com/di
+  T5 should create and delete a comment on the discussion      23/30 found  | missing: src/lib/authorization.tsx:35 checkAccess; missing: GET https://api\.bulletproofapp\.com/auth/me$; missing: GET https://api\.bulletproofapp\.com/discussions/[A-Za-z0-9_-]+$; missing: GET https://api\.bulletproofapp\.com/comments\?discussionId=[A-Za-z0-9_-]+&page=1$; missing: POST https://api\.bulletproofapp\.com/comments$; missing: DELETE https://api\.bulletproofapp\.com/comments/[A-Za-z0-
+  T6 should create, render and delete discussions              12/16 found  | missing: GET https://api\.bulletproofapp\.com/auth/me$; missing: GET https://api\.bulletproofapp\.com/discussions\?page=1$; missing: POST https://api\.bulletproofapp\.com/discussions$; missing: DELETE https://api\.bulletproofapp\.com/discussions/[A-Za-z0-9_-]+$
+  T7a should view protected resource if user role is matching  2/4 found  | missing: src/lib/authorization.tsx:35 checkAccess; missing: GET https://api\.bulletproofapp\.com/auth/me$
+  T7b should not view protected resource if user role does not 2/4 found  | missing: src/lib/authorization.tsx:35 checkAccess; missing: GET https://api\.bulletproofapp\.com/auth/me$
+  T7c should view protected resource if policy check passes    3/4 found  | missing: GET https://api\.bulletproofapp\.com/auth/me$
+  T8a should toggle the state                                  1/2 found  | missing: src/hooks/use-disclosure.ts:8 toggle
+  T8b should open the state                                    1/2 found  | missing: src/hooks/use-disclosure.ts:6 open
+  T8c should close the state                                   1/2 found  | missing: src/hooks/use-disclosure.ts:7 close
+  T9 should add proper page title and meta description         1/1 found
+E {"recording": "E_Authorization_without_a_user_throws_in_useAuthorization.appmap.json", "useAuthorization_throws_recorded": 4, "example": {"id": 15, "event": "return", "thread_id": 1, "parent_id": 14, "elapsed": 0.0003247479999999996, "exceptions": [{"class": "Error", "message": "User does not exist!
+F {'recording': 'F_deliberately_failing_copy_of_the_Head_title_test.appmap.json', 'test_status': 'failed', 'test_failure': None, 'has_Head_call': True}
+C: FAIL
+E: PASS
+F: PASS
+
+=== D. noise
+{
+ "call_events_total": 1342,
+ "test_code_calls": {
+  "src/app/routes/app/discussions/__tests__/discussion.test.tsx:13 renderDiscussion": 3,
+  "src/components/ui/dialog/__tests__/dialog.test.tsx:20 TestDialog": 3,
+  "src/components/ui/dialog/__tests__/dialog.test.tsx:27 onOpenChange": 1,
+  "src/components/ui/drawer/__tests__/drawer.test.tsx:19 TestDrawer": 1
+ },
+ "excluded_src_testing_calls": {},
+ "node_modules_calls": {},
+ "react_dev_fake_calls_recorded_as_TypeError": 0
+}
+D: FAIL
+
+=== G. stability: sequence diagrams of run 1 vs run 2
+same 21 different 0 only_in_a [] only_in_b []
+G: PASS
+
+=== I. concurrency: each test alone vs. inside the parallel suite (run 1)
+isolated vs parallel: same 21 different 0 missing isolated []
+test-file functions recorded in another test file's map: none
+I: FAIL (vitest isolation: PASS, browser two clicks: FAIL)
+
+=== H. change detection: getComments drops the page query param
+ apps/react-vite/src/features/comments/api/get-comments.ts | 1 -
+ 1 file changed, 1 deletion(-)
+recorded-h:  Test Files  1 failed | 11 passed (12)
+recorded-h:       Tests  1 failed | 20 passed (21)
+appmap-trace --baseline: traced 0 interaction(s) (diffed against /home/user/acc-work/run-b/out/run1)
+before vs after: same 21 different []
+H: FAIL
+
+=== J. overhead
+plain-1 12.048938522 rc=0
+plain-2 11.186873649 rc=0
+recorded-1 12.423003977 rc=1
+recorded-2 12.241686852 rc=1
+recorded-h 12.648862266 rc=1
+median plain 11.6s, recorded 12.4s, overhead 7%
+J: MEASURED
+
+=== Summary

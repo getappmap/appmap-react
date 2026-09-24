@@ -1,0 +1,410 @@
+{
+  "version": "1.12",
+  "metadata": {
+    "name": "should view protected resource if user role is matching",
+    "app": "bulletproof-react",
+    "language": {
+      "name": "javascript",
+      "engine": "node",
+      "version": "v22.22.2"
+    },
+    "client": {
+      "name": "@funwithappmap/react-recorder",
+      "url": "https://github.com/getappmap/appmap-react"
+    },
+    "recorder": {
+      "name": "funwithappmap-react",
+      "type": "tests"
+    },
+    "frameworks": [
+      {
+        "name": "vitest"
+      }
+    ],
+    "source_location": "src/lib/__tests__/authorization.test.tsx",
+    "trace_id": "bbc8b73b36b3cf4ed37ffc61bfecf4a3",
+    "test_status": "succeeded"
+  },
+  "classMap": [
+    {
+      "type": "package",
+      "name": "src",
+      "children": [
+        {
+          "type": "package",
+          "name": "app",
+          "children": [
+            {
+              "type": "class",
+              "name": "provider",
+              "children": [
+                {
+                  "type": "function",
+                  "name": "AppProvider",
+                  "location": "src/app/provider.tsx:17",
+                  "static": true,
+                  "labels": [
+                    "component"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "name": "components",
+          "children": [
+            {
+              "type": "package",
+              "name": "ui",
+              "children": [
+                {
+                  "type": "package",
+                  "name": "notifications",
+                  "children": [
+                    {
+                      "type": "class",
+                      "name": "notifications",
+                      "children": [
+                        {
+                          "type": "function",
+                          "name": "Notifications",
+                          "location": "src/components/ui/notifications/notifications.tsx:4",
+                          "static": true,
+                          "labels": [
+                            "component"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "package",
+                  "name": "spinner",
+                  "children": [
+                    {
+                      "type": "class",
+                      "name": "spinner",
+                      "children": [
+                        {
+                          "type": "function",
+                          "name": "Spinner",
+                          "location": "src/components/ui/spinner/spinner.tsx:21",
+                          "static": true,
+                          "labels": [
+                            "component"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "name": "utils",
+          "children": [
+            {
+              "type": "class",
+              "name": "cn",
+              "children": [
+                {
+                  "type": "function",
+                  "name": "cn",
+                  "location": "src/utils/cn.ts:4",
+                  "static": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "name": "lib",
+          "children": [
+            {
+              "type": "class",
+              "name": "auth",
+              "children": [
+                {
+                  "type": "function",
+                  "name": "getUser",
+                  "location": "src/lib/auth.tsx:13",
+                  "static": true
+                }
+              ]
+            },
+            {
+              "type": "class",
+              "name": "api-client",
+              "children": [
+                {
+                  "type": "function",
+                  "name": "authRequestInterceptor",
+                  "location": "src/lib/api-client.ts:7",
+                  "static": true
+                }
+              ]
+            },
+            {
+              "type": "class",
+              "name": "authorization",
+              "children": [
+                {
+                  "type": "function",
+                  "name": "Authorization",
+                  "location": "src/lib/authorization.tsx:63",
+                  "static": true,
+                  "labels": [
+                    "component"
+                  ]
+                },
+                {
+                  "type": "function",
+                  "name": "useAuthorization",
+                  "location": "src/lib/authorization.tsx:28",
+                  "static": true,
+                  "labels": [
+                    "hook"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "provider",
+      "method_id": "AppProvider",
+      "path": "src/app/provider.tsx",
+      "lineno": 17,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "[object Object]",
+          "size": 1,
+          "object_id": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 1,
+      "elapsed": 0.0007913080000002992,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 2
+      }
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "notifications",
+      "method_id": "Notifications",
+      "path": "src/components/ui/notifications/notifications.tsx",
+      "lineno": 4,
+      "static": true
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 3,
+      "elapsed": 0.00042307799999980486,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 3
+      }
+    },
+    {
+      "id": 5,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "spinner",
+      "method_id": "Spinner",
+      "path": "src/components/ui/spinner/spinner.tsx",
+      "lineno": 21,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "{\"size\":\"xl\"}",
+          "size": 1,
+          "object_id": 4
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "animate-spin"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 6,
+      "elapsed": 0.004427412999999888,
+      "return_value": {
+        "class": "string",
+        "value": "animate-spin h-24 w-24 text-slate-600"
+      }
+    },
+    {
+      "id": 8,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 5,
+      "elapsed": 0.004845581999999922,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 5
+      }
+    },
+    {
+      "id": 9,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "auth",
+      "method_id": "getUser",
+      "path": "src/lib/auth.tsx",
+      "lineno": 13,
+      "static": true
+    },
+    {
+      "id": 10,
+      "event": "call",
+      "thread_id": 2,
+      "defined_class": "api-client",
+      "method_id": "authRequestInterceptor",
+      "path": "src/lib/api-client.ts",
+      "lineno": 7,
+      "static": true,
+      "parameters": [
+        {
+          "name": "config",
+          "class": "Object",
+          "value": "{\"transitional\":{\"silentJSONParsing\":true,\"forcedJSONParsing\":true,\"clarifyTimeoutError\":false},\"adapter\":[\"xhr\",\"http\"],\"transformRequest\":[null],\"transformResponse\":[null],\"timeout\":0,\"xsrfCookieName\":\"XSRF-TOKEN\",\"xsrfHeaderName\":\"X-XSRF-TOKEN\",\"maxContentLength\":-1,\"maxBodyLength\":-1,\"env\":{},\"headers\":{\"Accept\":\"application/json, text/plain, */*\"},\"baseURL\":\"https://api.bulletproofapp.com\",\"method\":\"get\",\"url\":\"/auth/me\"}",
+          "size": 15,
+          "object_id": 6
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "event": "return",
+      "thread_id": 2,
+      "parent_id": 10,
+      "elapsed": 0.000028840999999829364,
+      "return_value": {
+        "class": "Object",
+        "value": "{\"transitional\":{\"silentJSONParsing\":true,\"forcedJSONParsing\":true,\"clarifyTimeoutError\":false},\"adapter\":[\"xhr\",\"http\"],\"transformRequest\":[null],\"transformResponse\":[null],\"timeout\":0,\"xsrfCookieName\":\"XSRF-TOKEN\",\"xsrfHeaderName\":\"X-XSRF-TOKEN\",\"maxContentLength\":-1,\"maxBodyLength\":-1,\"env\":{},\"headers\":{\"Accept\":\"application/json\"},\"baseURL\":\"https://api.bulletproofapp.com\",\"method\":\"get\",\"url\":\"/auth/me\",\"withCredentials\":true}",
+        "size": 16,
+        "object_id": 6
+      }
+    },
+    {
+      "id": 12,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 9,
+      "elapsed": 0.25242978900000024,
+      "return_value": {
+        "class": "Object",
+        "value": "{\"id\":\"7dc64a2d-d40c-4dfd-ae02-e95f7e1a539b0.4749824879456188\",\"firstName\":\"Sombun_Michalak26\",\"lastName\":\"Ravi.Andreeva14\",\"email\":\"yuko_okoth@bol.biz\",\"teamId\":\"04aa1bcd-05ee-469b-8c4c-c29a3cb1f488\",\"role\":\"ADMIN\",\"bio\":\"Quo nihil assumenda corrupti nobis provident tenetur et. Molestiae unde explicabo nihil maxime. Quidem molestiae velit laborum amet rerum tenetur. Error non aspernatur suscipit asperiores voluptas ipsa dolor. Similique itaque omnis.\",\"createdAt\":1790261073738}",
+        "size": 8,
+        "object_id": 7
+      }
+    },
+    {
+      "id": 13,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "authorization",
+      "method_id": "Authorization",
+      "path": "src/lib/authorization.tsx",
+      "lineno": 63,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "{\"allowedRoles\":[\"ADMIN\"],\"children\":\"This is very confidential data\"}",
+          "size": 2,
+          "object_id": 8
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "authorization",
+      "method_id": "useAuthorization",
+      "path": "src/lib/authorization.tsx",
+      "lineno": 28,
+      "static": true
+    },
+    {
+      "id": 15,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 14,
+      "elapsed": 0.00031516300000021145,
+      "return_value": {
+        "class": "Object",
+        "value": "{\"role\":\"ADMIN\"}",
+        "size": 2,
+        "object_id": 9
+      }
+    },
+    {
+      "id": 16,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 13,
+      "elapsed": 0.0004166709999999512,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 10
+      }
+    }
+  ]
+}

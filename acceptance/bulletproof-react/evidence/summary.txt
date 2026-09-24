@@ -1,0 +1,11 @@
+A FAIL
+B FAIL
+C FAIL
+D FAIL
+E PASS
+F PASS
+G PASS
+H FAIL
+I FAIL (vitest isolation: PASS, browser two clicks: FAIL)
+J MEASURED
+BROWSER FAIL (zero-touch: FAIL, with workaround: FAIL)

@@ -1,0 +1,737 @@
+{
+  "version": "1.12",
+  "metadata": {
+    "name": "should render and submit a basic Form component",
+    "app": "bulletproof-react",
+    "language": {
+      "name": "javascript",
+      "engine": "node",
+      "version": "v22.22.2"
+    },
+    "client": {
+      "name": "@funwithappmap/react-recorder",
+      "url": "https://github.com/getappmap/appmap-react"
+    },
+    "recorder": {
+      "name": "funwithappmap-react",
+      "type": "tests"
+    },
+    "frameworks": [
+      {
+        "name": "vitest"
+      }
+    ],
+    "source_location": "src/components/ui/form/__tests__/form.test.tsx",
+    "trace_id": "e74c1af0aa831693a74ac7cffbe37e20",
+    "test_status": "succeeded"
+  },
+  "classMap": [
+    {
+      "type": "package",
+      "name": "src",
+      "children": [
+        {
+          "type": "package",
+          "name": "components",
+          "children": [
+            {
+              "type": "package",
+              "name": "ui",
+              "children": [
+                {
+                  "type": "package",
+                  "name": "form",
+                  "children": [
+                    {
+                      "type": "class",
+                      "name": "form",
+                      "children": [
+                        {
+                          "type": "function",
+                          "name": "Form",
+                          "location": "src/components/ui/form/form.tsx:182",
+                          "static": true,
+                          "labels": [
+                            "component"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "class",
+                      "name": "field-wrapper",
+                      "children": [
+                        {
+                          "type": "function",
+                          "name": "FieldWrapper",
+                          "location": "src/components/ui/form/field-wrapper.tsx:19",
+                          "static": true,
+                          "labels": [
+                            "component"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "class",
+                      "name": "error",
+                      "children": [
+                        {
+                          "type": "function",
+                          "name": "Error",
+                          "location": "src/components/ui/form/error.tsx:5",
+                          "static": true,
+                          "labels": [
+                            "component"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "package",
+          "name": "utils",
+          "children": [
+            {
+              "type": "class",
+              "name": "cn",
+              "children": [
+                {
+                  "type": "function",
+                  "name": "cn",
+                  "location": "src/utils/cn.ts:4",
+                  "static": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "form",
+      "method_id": "Form",
+      "path": "src/components/ui/form/form.tsx",
+      "lineno": 182,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "{\"schema\":{\"_def\":{\"unknownKeys\":\"strip\",\"catchall\":{\"_def\":{\"typeName\":\"ZodNever\"}},\"typeName\":\"ZodObject\"},\"_cached\":null},\"id\":\"my-form\"}",
+          "size": 4,
+          "object_id": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "space-y-6"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 2,
+      "elapsed": 0.003600424999999859,
+      "return_value": {
+        "class": "string",
+        "value": "space-y-6"
+      }
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 1,
+      "elapsed": 0.006424166000000014,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 2
+      }
+    },
+    {
+      "id": 5,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 5,
+      "elapsed": 0.0006865410000000339,
+      "return_value": {
+        "class": "string",
+        "value": "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+      }
+    },
+    {
+      "id": 7,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "field-wrapper",
+      "method_id": "FieldWrapper",
+      "path": "src/components/ui/form/field-wrapper.tsx",
+      "lineno": 19,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "[object Object]",
+          "size": 3,
+          "object_id": 3
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 7,
+      "elapsed": 0.00012227400000006127,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 4
+      }
+    },
+    {
+      "id": 9,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 9,
+      "elapsed": 0.00009816099999989091,
+      "return_value": {
+        "class": "string",
+        "value": "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      }
+    },
+    {
+      "id": 11,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "error",
+      "method_id": "Error",
+      "path": "src/components/ui/form/error.tsx",
+      "lineno": 5,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "{}",
+          "size": 1,
+          "object_id": 5
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 11,
+      "elapsed": 0.00004988499999990381,
+      "return_value": {
+        "class": "null",
+        "value": "null"
+      }
+    },
+    {
+      "id": 13,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 13,
+      "elapsed": 0.0001482379999999921,
+      "return_value": {
+        "class": "string",
+        "value": "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full"
+      }
+    },
+    {
+      "id": 15,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "form",
+      "method_id": "Form",
+      "path": "src/components/ui/form/form.tsx",
+      "lineno": 182,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "{\"schema\":{\"_def\":{\"unknownKeys\":\"strip\",\"catchall\":{\"_def\":{\"typeName\":\"ZodNever\"}},\"typeName\":\"ZodObject\"},\"_cached\":{\"shape\":{\"title\":{\"_def\":{\"checks\":[{\"kind\":\"min\",\"value\":1,\"message\":\"Required\"}],\"typeName\":\"ZodString\",\"coerce\":false}}},\"keys\":[\"title\"]}},\"id\":\"my-form\"}",
+          "size": 4,
+          "object_id": 1
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "space-y-6"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 16,
+      "elapsed": 0.00005543899999997848,
+      "return_value": {
+        "class": "string",
+        "value": "space-y-6"
+      }
+    },
+    {
+      "id": 18,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 15,
+      "elapsed": 0.0006481539999999768,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 6
+      }
+    },
+    {
+      "id": 19,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 19,
+      "elapsed": 0.000008901000000150816,
+      "return_value": {
+        "class": "string",
+        "value": "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+      }
+    },
+    {
+      "id": 21,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "field-wrapper",
+      "method_id": "FieldWrapper",
+      "path": "src/components/ui/form/field-wrapper.tsx",
+      "lineno": 19,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "[object Object]",
+          "size": 3,
+          "object_id": 7
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 21,
+      "elapsed": 0.00002843400000006113,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 8
+      }
+    },
+    {
+      "id": 23,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 23,
+      "elapsed": 0.000004674000000022715,
+      "return_value": {
+        "class": "string",
+        "value": "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      }
+    },
+    {
+      "id": 25,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "error",
+      "method_id": "Error",
+      "path": "src/components/ui/form/error.tsx",
+      "lineno": 5,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "{}",
+          "size": 1,
+          "object_id": 9
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 25,
+      "elapsed": 0.000001936999999998079,
+      "return_value": {
+        "class": "null",
+        "value": "null"
+      }
+    },
+    {
+      "id": 27,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 27,
+      "elapsed": 0.0000066259999998692365,
+      "return_value": {
+        "class": "string",
+        "value": "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full"
+      }
+    },
+    {
+      "id": 29,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "form",
+      "method_id": "Form",
+      "path": "src/components/ui/form/form.tsx",
+      "lineno": 182,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "{\"schema\":{\"_def\":{\"unknownKeys\":\"strip\",\"catchall\":{\"_def\":{\"typeName\":\"ZodNever\"}},\"typeName\":\"ZodObject\"},\"_cached\":{\"shape\":{\"title\":{\"_def\":{\"checks\":[{\"kind\":\"min\",\"value\":1,\"message\":\"Required\"}],\"typeName\":\"ZodString\",\"coerce\":false}}},\"keys\":[\"title\"]}},\"id\":\"my-form\"}",
+          "size": 4,
+          "object_id": 1
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "space-y-6"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 30,
+      "elapsed": 0.00000709499999993568,
+      "return_value": {
+        "class": "string",
+        "value": "space-y-6"
+      }
+    },
+    {
+      "id": 32,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 29,
+      "elapsed": 0.00017065400000001318,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 10
+      }
+    },
+    {
+      "id": 33,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 33,
+      "elapsed": 0.0000044230000000879955,
+      "return_value": {
+        "class": "string",
+        "value": "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+      }
+    },
+    {
+      "id": 35,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "field-wrapper",
+      "method_id": "FieldWrapper",
+      "path": "src/components/ui/form/field-wrapper.tsx",
+      "lineno": 19,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "[object Object]",
+          "size": 3,
+          "object_id": 11
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 35,
+      "elapsed": 0.000017518999999992956,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 12
+      }
+    },
+    {
+      "id": 37,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 37,
+      "elapsed": 0.0000032549999998536803,
+      "return_value": {
+        "class": "string",
+        "value": "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      }
+    },
+    {
+      "id": 39,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "error",
+      "method_id": "Error",
+      "path": "src/components/ui/form/error.tsx",
+      "lineno": 5,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "{}",
+          "size": 1,
+          "object_id": 13
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 39,
+      "elapsed": 0.0000016229999998813582,
+      "return_value": {
+        "class": "null",
+        "value": "null"
+      }
+    },
+    {
+      "id": 41,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "cn",
+      "method_id": "cn",
+      "path": "src/utils/cn.ts",
+      "lineno": 4,
+      "static": true,
+      "parameters": [
+        {
+          "name": "arg0",
+          "class": "string",
+          "value": "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full"
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 41,
+      "elapsed": 0.000006042000000206827,
+      "return_value": {
+        "class": "string",
+        "value": "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full"
+      }
+    }
+  ]
+}

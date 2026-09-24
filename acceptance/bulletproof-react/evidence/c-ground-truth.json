@@ -1,0 +1,2313 @@
+{
+  "tests": {
+    "T1 should login new user and call onSuccess cb which should navigate the user to the app": {
+      "recording": "should_login_new_user_and_call_onSuccess_cb_which_should_navigate_the_user_to_the_app.appmap.json",
+      "items": [
+        {
+          "expect": "src/app/provider.tsx:17 AppProvider",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 1,
+              "thread_id": 1,
+              "defined_class": "provider",
+              "method_id": "AppProvider",
+              "path": "src/app/provider.tsx",
+              "lineno": 17,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/auth.tsx:13 getUser",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 9,
+              "thread_id": 1,
+              "defined_class": "auth",
+              "method_id": "getUser",
+              "path": "src/lib/auth.tsx",
+              "lineno": 13
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/auth/components/login-form.tsx:12 LoginForm",
+          "status": "wrong",
+          "evidence": {
+            "event": {
+              "id": 13,
+              "thread_id": 1,
+              "defined_class": "login-form",
+              "method_id": "LoginForm",
+              "path": "src/features/auth/components/login-form.tsx",
+              "lineno": 12,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{}"
+                }
+              ]
+            },
+            "calls": 3,
+            "problems": [
+              "no call has a parameter containing 'onSuccess'"
+            ]
+          }
+        },
+        {
+          "expect": "src/components/ui/form/form.tsx:182 Form",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 15,
+              "thread_id": 1,
+              "defined_class": "form",
+              "method_id": "Form",
+              "path": "src/components/ui/form/form.tsx",
+              "lineno": 182,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"schema\":{\"_def\":{\"unknownKeys\":\"strip\",\"catchall\":{\"_def\":{\"typeName\":\"ZodNever\"}},\"typeName\":\"ZodObject\"},\"_cached\":n"
+                }
+              ]
+            },
+            "calls": 5,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/auth/components/login-form.tsx:22 onSubmit",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 37,
+              "thread_id": 1,
+              "defined_class": "login-form",
+              "method_id": "onSubmit",
+              "path": "src/features/auth/components/login-form.tsx",
+              "lineno": 22,
+              "parameters": [
+                {
+                  "name": null,
+                  "value": "{\"email\":\"karl-heinzfu852@mail.info\",\"password\":\"SKkLBTzLnEhaJ4W\"}"
+                },
+                {
+                  "name": null,
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/auth.tsx:29 loginWithEmailAndPassword",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 61,
+              "thread_id": 1,
+              "defined_class": "auth",
+              "method_id": "loginWithEmailAndPassword",
+              "path": "src/lib/auth.tsx",
+              "lineno": 29,
+              "parameters": [
+                {
+                  "name": "data",
+                  "value": "{\"email\":\"karl-heinzfu852@mail.info\",\"password\":\"SKkLBTzLnEhaJ4W\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/auth/me$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "POST https://api\\.bulletproofapp\\.com/auth/login$",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    },
+    "T2 should register new user and call onSuccess cb which should navigate the user to the app": {
+      "recording": "should_register_new_user_and_call_onSuccess_cb_which_should_navigate_the_user_to_the_app.appmap.json",
+      "items": [
+        {
+          "expect": "src/lib/auth.tsx:13 getUser",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 9,
+              "thread_id": 1,
+              "defined_class": "auth",
+              "method_id": "getUser",
+              "path": "src/lib/auth.tsx",
+              "lineno": 13
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/auth/components/register-form.tsx:17 RegisterForm",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 13,
+              "thread_id": 1,
+              "defined_class": "register-form",
+              "method_id": "RegisterForm",
+              "path": "src/features/auth/components/register-form.tsx",
+              "lineno": 17,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"chooseTeam\":false,\"teams\":[]}"
+                }
+              ]
+            },
+            "calls": 3,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/components/ui/form/form.tsx:182 Form",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 15,
+              "thread_id": 1,
+              "defined_class": "form",
+              "method_id": "Form",
+              "path": "src/components/ui/form/form.tsx",
+              "lineno": 182,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"schema\":{\"_def\":{\"left\":{\"_def\":{\"unknownKeys\":\"strip\",\"catchall\":{\"_def\":{\"typeName\":\"ZodNever\"}},\"typeName\":\"ZodObje"
+                }
+              ]
+            },
+            "calls": 5,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/auth/components/register-form.tsx:30 onSubmit",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 67,
+              "thread_id": 1,
+              "defined_class": "register-form",
+              "method_id": "onSubmit",
+              "path": "src/features/auth/components/register-form.tsx",
+              "lineno": 30,
+              "parameters": [
+                {
+                  "name": null,
+                  "value": "{\"email\":\"jose-antonio+meyer203@orange.com\",\"firstName\":\"Matt.Omer\",\"lastName\":\"Inga.Yuan13\",\"password\":\"lqpqLQtFlm9lIWx"
+                },
+                {
+                  "name": null,
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/auth.tsx:56 registerWithEmailAndPassword",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 173,
+              "thread_id": 1,
+              "defined_class": "auth",
+              "method_id": "registerWithEmailAndPassword",
+              "path": "src/lib/auth.tsx",
+              "lineno": 56,
+              "parameters": [
+                {
+                  "name": "data",
+                  "value": "{\"email\":\"jose-antonio+meyer203@orange.com\",\"firstName\":\"Matt.Omer\",\"lastName\":\"Inga.Yuan13\",\"password\":\"lqpqLQtFlm9lIWx"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/auth/me$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "POST https://api\\.bulletproofapp\\.com/auth/register$",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    },
+    "T3 should render discussion": {
+      "recording": "should_render_discussion.appmap.json",
+      "items": [
+        {
+          "expect": "src/app/routes/app/discussions/discussion.tsx:38 DiscussionRoute",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 14,
+              "thread_id": 7,
+              "defined_class": "discussion",
+              "method_id": "DiscussionRoute",
+              "path": "src/app/routes/app/discussions/discussion.tsx",
+              "lineno": 38
+            },
+            "calls": 2,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussion.ts:27 useDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 15,
+              "thread_id": 7,
+              "defined_class": "get-discussion",
+              "method_id": "useDiscussion",
+              "path": "src/features/discussions/api/get-discussion.ts",
+              "lineno": 27,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"e76cc568-f873-403f-97f2-c32ed28d1a26\"}"
+                }
+              ]
+            },
+            "calls": 4,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussion.ts:15 getDiscussionQueryOptions",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 16,
+              "thread_id": 7,
+              "defined_class": "get-discussion",
+              "method_id": "getDiscussionQueryOptions",
+              "path": "src/features/discussions/api/get-discussion.ts",
+              "lineno": 15,
+              "parameters": [
+                {
+                  "name": "discussionId",
+                  "value": "e76cc568-f873-403f-97f2-c32ed28d1a26"
+                }
+              ]
+            },
+            "calls": 4,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussion.ts:7 getDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 24,
+              "thread_id": 9,
+              "defined_class": "get-discussion",
+              "method_id": "getDiscussion",
+              "path": "src/features/discussions/api/get-discussion.ts",
+              "lineno": 7,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"e76cc568-f873-403f-97f2-c32ed28d1a26\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/components/layouts/content-layout.tsx:10 ContentLayout",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 34,
+              "thread_id": 12,
+              "defined_class": "content-layout",
+              "method_id": "ContentLayout",
+              "path": "src/components/layouts/content-layout.tsx",
+              "lineno": 10,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/discussion-view.tsx:8 DiscussionView",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 38,
+              "thread_id": 14,
+              "defined_class": "discussion-view",
+              "method_id": "DiscussionView",
+              "path": "src/features/discussions/components/discussion-view.tsx",
+              "lineno": 8,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"e76cc568-f873-403f-97f2-c32ed28d1a26\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/update-discussion.tsx:18 UpdateDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 46,
+              "thread_id": 15,
+              "defined_class": "update-discussion",
+              "method_id": "UpdateDiscussion",
+              "path": "src/features/discussions/components/update-discussion.tsx",
+              "lineno": 18,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"e76cc568-f873-403f-97f2-c32ed28d1a26\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:63 Authorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 54,
+              "thread_id": 16,
+              "defined_class": "authorization",
+              "method_id": "Authorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 63,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:28 useAuthorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 55,
+              "thread_id": 16,
+              "defined_class": "authorization",
+              "method_id": "useAuthorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 28
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:35 checkAccess",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "src/features/comments/components/comments.tsx:8 Comments",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 68,
+              "thread_id": 21,
+              "defined_class": "comments",
+              "method_id": "Comments",
+              "path": "src/features/comments/components/comments.tsx",
+              "lineno": 8,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"e76cc568-f873-403f-97f2-c32ed28d1a26\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/components/create-comment.tsx:16 CreateComment",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 70,
+              "thread_id": 22,
+              "defined_class": "create-comment",
+              "method_id": "CreateComment",
+              "path": "src/features/comments/components/create-comment.tsx",
+              "lineno": 16,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"e76cc568-f873-403f-97f2-c32ed28d1a26\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/components/comments-list.tsx:19 CommentsList",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 82,
+              "thread_id": 26,
+              "defined_class": "comments-list",
+              "method_id": "CommentsList",
+              "path": "src/features/comments/components/comments-list.tsx",
+              "lineno": 19,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"e76cc568-f873-403f-97f2-c32ed28d1a26\"}"
+                }
+              ]
+            },
+            "calls": 2,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/api/get-comments.ts:43 useInfiniteComments",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 83,
+              "thread_id": 26,
+              "defined_class": "get-comments",
+              "method_id": "useInfiniteComments",
+              "path": "src/features/comments/api/get-comments.ts",
+              "lineno": 43,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"e76cc568-f873-403f-97f2-c32ed28d1a26\"}"
+                }
+              ]
+            },
+            "calls": 2,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/api/get-comments.ts:22 getInfiniteCommentsQueryOptions",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 84,
+              "thread_id": 26,
+              "defined_class": "get-comments",
+              "method_id": "getInfiniteCommentsQueryOptions",
+              "path": "src/features/comments/api/get-comments.ts",
+              "lineno": 22,
+              "parameters": [
+                {
+                  "name": "discussionId",
+                  "value": "e76cc568-f873-403f-97f2-c32ed28d1a26"
+                }
+              ]
+            },
+            "calls": 2,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/api/get-comments.ts:7 getComments",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 92,
+              "thread_id": 28,
+              "defined_class": "get-comments",
+              "method_id": "getComments",
+              "path": "src/features/comments/api/get-comments.ts",
+              "lineno": 7,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"e76cc568-f873-403f-97f2-c32ed28d1a26\",\"page\":1}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/components/ui/md-preview/md-preview.tsx:10 MDPreview",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 66,
+              "thread_id": 20,
+              "defined_class": "md-preview",
+              "method_id": "MDPreview",
+              "path": "src/components/ui/md-preview/md-preview.tsx",
+              "lineno": 10,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"value\":\"Dolor officia a fuga omnis sit. Ut atque est nostrum. Quos aut quo eos vel velit autem et aspernatur.\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/utils/format.ts:3 formatDate",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 43,
+              "thread_id": 14,
+              "defined_class": "format",
+              "method_id": "formatDate",
+              "path": "src/utils/format.ts",
+              "lineno": 3,
+              "parameters": [
+                {
+                  "name": "date",
+                  "value": "1790261074404"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/auth/me$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/discussions/[A-Za-z0-9_-]+$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/comments\\?discussionId=[A-Za-z0-9_-]+&page=1$",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    },
+    "T4 should update discussion": {
+      "recording": "should_update_discussion.appmap.json",
+      "items": [
+        {
+          "expect": "src/app/routes/app/discussions/discussion.tsx:38 DiscussionRoute",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 14,
+              "thread_id": 7,
+              "defined_class": "discussion",
+              "method_id": "DiscussionRoute",
+              "path": "src/app/routes/app/discussions/discussion.tsx",
+              "lineno": 38
+            },
+            "calls": 4,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussion.ts:27 useDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 15,
+              "thread_id": 7,
+              "defined_class": "get-discussion",
+              "method_id": "useDiscussion",
+              "path": "src/features/discussions/api/get-discussion.ts",
+              "lineno": 27,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"71f54aa6-9908-4df0-aa22-fa85ebefd8a5\"}"
+                }
+              ]
+            },
+            "calls": 13,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussion.ts:15 getDiscussionQueryOptions",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 16,
+              "thread_id": 7,
+              "defined_class": "get-discussion",
+              "method_id": "getDiscussionQueryOptions",
+              "path": "src/features/discussions/api/get-discussion.ts",
+              "lineno": 15,
+              "parameters": [
+                {
+                  "name": "discussionId",
+                  "value": "71f54aa6-9908-4df0-aa22-fa85ebefd8a5"
+                }
+              ]
+            },
+            "calls": 14,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussion.ts:7 getDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 24,
+              "thread_id": 9,
+              "defined_class": "get-discussion",
+              "method_id": "getDiscussion",
+              "path": "src/features/discussions/api/get-discussion.ts",
+              "lineno": 7,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"71f54aa6-9908-4df0-aa22-fa85ebefd8a5\"}"
+                }
+              ]
+            },
+            "calls": 2,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/components/layouts/content-layout.tsx:10 ContentLayout",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 34,
+              "thread_id": 12,
+              "defined_class": "content-layout",
+              "method_id": "ContentLayout",
+              "path": "src/components/layouts/content-layout.tsx",
+              "lineno": 10,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 3,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/discussion-view.tsx:8 DiscussionView",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 38,
+              "thread_id": 14,
+              "defined_class": "discussion-view",
+              "method_id": "DiscussionView",
+              "path": "src/features/discussions/components/discussion-view.tsx",
+              "lineno": 8,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"71f54aa6-9908-4df0-aa22-fa85ebefd8a5\"}"
+                }
+              ]
+            },
+            "calls": 3,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/update-discussion.tsx:18 UpdateDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 46,
+              "thread_id": 15,
+              "defined_class": "update-discussion",
+              "method_id": "UpdateDiscussion",
+              "path": "src/features/discussions/components/update-discussion.tsx",
+              "lineno": 18,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"71f54aa6-9908-4df0-aa22-fa85ebefd8a5\"}"
+                }
+              ]
+            },
+            "calls": 6,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:63 Authorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 54,
+              "thread_id": 16,
+              "defined_class": "authorization",
+              "method_id": "Authorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 63,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 6,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:28 useAuthorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 55,
+              "thread_id": 16,
+              "defined_class": "authorization",
+              "method_id": "useAuthorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 28
+            },
+            "calls": 6,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:35 checkAccess",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "src/features/comments/components/comments.tsx:8 Comments",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 68,
+              "thread_id": 21,
+              "defined_class": "comments",
+              "method_id": "Comments",
+              "path": "src/features/comments/components/comments.tsx",
+              "lineno": 8,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"71f54aa6-9908-4df0-aa22-fa85ebefd8a5\"}"
+                }
+              ]
+            },
+            "calls": 3,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/components/create-comment.tsx:16 CreateComment",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 70,
+              "thread_id": 22,
+              "defined_class": "create-comment",
+              "method_id": "CreateComment",
+              "path": "src/features/comments/components/create-comment.tsx",
+              "lineno": 16,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"71f54aa6-9908-4df0-aa22-fa85ebefd8a5\"}"
+                }
+              ]
+            },
+            "calls": 5,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/components/comments-list.tsx:19 CommentsList",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 82,
+              "thread_id": 26,
+              "defined_class": "comments-list",
+              "method_id": "CommentsList",
+              "path": "src/features/comments/components/comments-list.tsx",
+              "lineno": 19,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"71f54aa6-9908-4df0-aa22-fa85ebefd8a5\"}"
+                }
+              ]
+            },
+            "calls": 4,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/api/get-comments.ts:43 useInfiniteComments",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 83,
+              "thread_id": 26,
+              "defined_class": "get-comments",
+              "method_id": "useInfiniteComments",
+              "path": "src/features/comments/api/get-comments.ts",
+              "lineno": 43,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"71f54aa6-9908-4df0-aa22-fa85ebefd8a5\"}"
+                }
+              ]
+            },
+            "calls": 4,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/api/get-comments.ts:22 getInfiniteCommentsQueryOptions",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 84,
+              "thread_id": 26,
+              "defined_class": "get-comments",
+              "method_id": "getInfiniteCommentsQueryOptions",
+              "path": "src/features/comments/api/get-comments.ts",
+              "lineno": 22,
+              "parameters": [
+                {
+                  "name": "discussionId",
+                  "value": "71f54aa6-9908-4df0-aa22-fa85ebefd8a5"
+                }
+              ]
+            },
+            "calls": 4,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/api/get-comments.ts:7 getComments",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 92,
+              "thread_id": 28,
+              "defined_class": "get-comments",
+              "method_id": "getComments",
+              "path": "src/features/comments/api/get-comments.ts",
+              "lineno": 7,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"71f54aa6-9908-4df0-aa22-fa85ebefd8a5\",\"page\":1}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/components/ui/md-preview/md-preview.tsx:10 MDPreview",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 66,
+              "thread_id": 20,
+              "defined_class": "md-preview",
+              "method_id": "MDPreview",
+              "path": "src/components/ui/md-preview/md-preview.tsx",
+              "lineno": 10,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"value\":\"Aliquid rerum tenetur exercitationem enim nihil laboriosam. Ut sequi sit dicta sequi non voluptatibus molestia"
+                }
+              ]
+            },
+            "calls": 3,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/utils/format.ts:3 formatDate",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 43,
+              "thread_id": 14,
+              "defined_class": "format",
+              "method_id": "formatDate",
+              "path": "src/utils/format.ts",
+              "lineno": 3,
+              "parameters": [
+                {
+                  "name": "date",
+                  "value": "1790261075182"
+                }
+              ]
+            },
+            "calls": 3,
+            "problems": []
+          }
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/auth/me$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/discussions/[A-Za-z0-9_-]+$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/comments\\?discussionId=[A-Za-z0-9_-]+&page=1$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "src/components/ui/form/form-drawer.tsx:24 FormDrawer",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 58,
+              "thread_id": 17,
+              "defined_class": "form-drawer",
+              "method_id": "FormDrawer",
+              "path": "src/components/ui/form/form-drawer.tsx",
+              "lineno": 24,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 13,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/components/ui/form/form-drawer.tsx:42 onOpenChange",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 103,
+              "thread_id": 1,
+              "defined_class": "form-drawer",
+              "method_id": "onOpenChange",
+              "path": "src/components/ui/form/form-drawer.tsx",
+              "lineno": 42,
+              "parameters": [
+                {
+                  "name": null,
+                  "value": "true"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/update-discussion.tsx:57 onSubmit",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 151,
+              "thread_id": 1,
+              "defined_class": "update-discussion",
+              "method_id": "onSubmit",
+              "path": "src/features/discussions/components/update-discussion.tsx",
+              "lineno": 57,
+              "parameters": [
+                {
+                  "name": null,
+                  "value": "{\"title\":\"Cloned human-resource knowledge base-Updated\",\"body\":\"Aliquid rerum tenetur exercitationem enim nihil laborios"
+                },
+                {
+                  "name": null,
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/update-discussion.ts:17 updateDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 173,
+              "thread_id": 1,
+              "defined_class": "update-discussion",
+              "method_id": "updateDiscussion",
+              "path": "src/features/discussions/api/update-discussion.ts",
+              "lineno": 17,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"data\":{\"title\":\"Cloned human-resource knowledge base-Updated\",\"body\":\"Aliquid rerum tenetur exercitationem enim nihil "
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "PATCH https://api\\.bulletproofapp\\.com/discussions/[A-Za-z0-9_-]+$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/discussions/[A-Za-z0-9_-]+$",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    },
+    "T5 should create and delete a comment on the discussion": {
+      "recording": "should_create_and_delete_a_comment_on_the_discussion.appmap.json",
+      "items": [
+        {
+          "expect": "src/app/routes/app/discussions/discussion.tsx:38 DiscussionRoute",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 14,
+              "thread_id": 7,
+              "defined_class": "discussion",
+              "method_id": "DiscussionRoute",
+              "path": "src/app/routes/app/discussions/discussion.tsx",
+              "lineno": 38
+            },
+            "calls": 2,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussion.ts:27 useDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 15,
+              "thread_id": 7,
+              "defined_class": "get-discussion",
+              "method_id": "useDiscussion",
+              "path": "src/features/discussions/api/get-discussion.ts",
+              "lineno": 27,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\"}"
+                }
+              ]
+            },
+            "calls": 7,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussion.ts:15 getDiscussionQueryOptions",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 16,
+              "thread_id": 7,
+              "defined_class": "get-discussion",
+              "method_id": "getDiscussionQueryOptions",
+              "path": "src/features/discussions/api/get-discussion.ts",
+              "lineno": 15,
+              "parameters": [
+                {
+                  "name": "discussionId",
+                  "value": "212c9fcc-39c1-4224-a211-d00d5f8cd0fe"
+                }
+              ]
+            },
+            "calls": 7,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussion.ts:7 getDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 24,
+              "thread_id": 9,
+              "defined_class": "get-discussion",
+              "method_id": "getDiscussion",
+              "path": "src/features/discussions/api/get-discussion.ts",
+              "lineno": 7,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/components/layouts/content-layout.tsx:10 ContentLayout",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 34,
+              "thread_id": 12,
+              "defined_class": "content-layout",
+              "method_id": "ContentLayout",
+              "path": "src/components/layouts/content-layout.tsx",
+              "lineno": 10,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/discussion-view.tsx:8 DiscussionView",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 38,
+              "thread_id": 14,
+              "defined_class": "discussion-view",
+              "method_id": "DiscussionView",
+              "path": "src/features/discussions/components/discussion-view.tsx",
+              "lineno": 8,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/update-discussion.tsx:18 UpdateDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 46,
+              "thread_id": 15,
+              "defined_class": "update-discussion",
+              "method_id": "UpdateDiscussion",
+              "path": "src/features/discussions/components/update-discussion.tsx",
+              "lineno": 18,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\"}"
+                }
+              ]
+            },
+            "calls": 4,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:63 Authorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 54,
+              "thread_id": 16,
+              "defined_class": "authorization",
+              "method_id": "Authorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 63,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 6,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:28 useAuthorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 55,
+              "thread_id": 16,
+              "defined_class": "authorization",
+              "method_id": "useAuthorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 28
+            },
+            "calls": 6,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:35 checkAccess",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "src/features/comments/components/comments.tsx:8 Comments",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 68,
+              "thread_id": 21,
+              "defined_class": "comments",
+              "method_id": "Comments",
+              "path": "src/features/comments/components/comments.tsx",
+              "lineno": 8,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/components/create-comment.tsx:16 CreateComment",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 70,
+              "thread_id": 22,
+              "defined_class": "create-comment",
+              "method_id": "CreateComment",
+              "path": "src/features/comments/components/create-comment.tsx",
+              "lineno": 16,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\"}"
+                }
+              ]
+            },
+            "calls": 6,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/components/comments-list.tsx:19 CommentsList",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 82,
+              "thread_id": 26,
+              "defined_class": "comments-list",
+              "method_id": "CommentsList",
+              "path": "src/features/comments/components/comments-list.tsx",
+              "lineno": 19,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\"}"
+                }
+              ]
+            },
+            "calls": 6,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/api/get-comments.ts:43 useInfiniteComments",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 83,
+              "thread_id": 26,
+              "defined_class": "get-comments",
+              "method_id": "useInfiniteComments",
+              "path": "src/features/comments/api/get-comments.ts",
+              "lineno": 43,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\"}"
+                }
+              ]
+            },
+            "calls": 6,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/api/get-comments.ts:22 getInfiniteCommentsQueryOptions",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 84,
+              "thread_id": 26,
+              "defined_class": "get-comments",
+              "method_id": "getInfiniteCommentsQueryOptions",
+              "path": "src/features/comments/api/get-comments.ts",
+              "lineno": 22,
+              "parameters": [
+                {
+                  "name": "discussionId",
+                  "value": "212c9fcc-39c1-4224-a211-d00d5f8cd0fe"
+                }
+              ]
+            },
+            "calls": 8,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/api/get-comments.ts:7 getComments",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 92,
+              "thread_id": 28,
+              "defined_class": "get-comments",
+              "method_id": "getComments",
+              "path": "src/features/comments/api/get-comments.ts",
+              "lineno": 7,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\",\"page\":1}"
+                }
+              ]
+            },
+            "calls": 3,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/components/ui/md-preview/md-preview.tsx:10 MDPreview",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 66,
+              "thread_id": 20,
+              "defined_class": "md-preview",
+              "method_id": "MDPreview",
+              "path": "src/components/ui/md-preview/md-preview.tsx",
+              "lineno": 10,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"value\":\"Quisquam at dolorem cupiditate enim ut recusandae porro aut quae. In nostrum et velit maiores dolores in archi"
+                }
+              ]
+            },
+            "calls": 3,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/utils/format.ts:3 formatDate",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 43,
+              "thread_id": 14,
+              "defined_class": "format",
+              "method_id": "formatDate",
+              "path": "src/utils/format.ts",
+              "lineno": 3,
+              "parameters": [
+                {
+                  "name": "date",
+                  "value": "1790261076662"
+                }
+              ]
+            },
+            "calls": 3,
+            "problems": []
+          }
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/auth/me$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/discussions/[A-Za-z0-9_-]+$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/comments\\?discussionId=[A-Za-z0-9_-]+&page=1$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "src/features/comments/components/create-comment.tsx:53 onSubmit",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 143,
+              "thread_id": 1,
+              "defined_class": "create-comment",
+              "method_id": "onSubmit",
+              "path": "src/features/comments/components/create-comment.tsx",
+              "lineno": 53,
+              "parameters": [
+                {
+                  "name": null,
+                  "value": "{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\",\"body\":\"Hello World\"}"
+                },
+                {
+                  "name": null,
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/api/create-comment.ts:17 createComment",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 157,
+              "thread_id": 1,
+              "defined_class": "create-comment",
+              "method_id": "createComment",
+              "path": "src/features/comments/api/create-comment.ts",
+              "lineno": 17,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"data\":{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\",\"body\":\"Hello World\"}}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/components/delete-comment.tsx:14 DeleteComment",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 371,
+              "thread_id": 1,
+              "defined_class": "delete-comment",
+              "method_id": "DeleteComment",
+              "path": "src/features/comments/components/delete-comment.tsx",
+              "lineno": 14,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"discussionId\":\"212c9fcc-39c1-4224-a211-d00d5f8cd0fe\",\"id\":\"jxyUoSpzRIbAoWaKKl6AQ\"}"
+                }
+              ]
+            },
+            "calls": 4,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/components/ui/dialog/confirmation-dialog/confirmation-dialog.tsx:27 ConfirmationDialog",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 375,
+              "thread_id": 1,
+              "defined_class": "confirmation-dialog",
+              "method_id": "ConfirmationDialog",
+              "path": "src/components/ui/dialog/confirmation-dialog/confirmation-dialog.tsx",
+              "lineno": 27,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 6,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/components/delete-comment.tsx:48 onClick",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 413,
+              "thread_id": 1,
+              "defined_class": "delete-comment",
+              "method_id": "onClick",
+              "path": "src/features/comments/components/delete-comment.tsx",
+              "lineno": 48,
+              "parameters": [
+                {
+                  "name": null,
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/comments/api/delete-comment.ts:8 deleteComment",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 415,
+              "thread_id": 1,
+              "defined_class": "delete-comment",
+              "method_id": "deleteComment",
+              "path": "src/features/comments/api/delete-comment.ts",
+              "lineno": 8,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"commentId\":\"jxyUoSpzRIbAoWaKKl6AQ\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "POST https://api\\.bulletproofapp\\.com/comments$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "DELETE https://api\\.bulletproofapp\\.com/comments/[A-Za-z0-9_-]+$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/comments\\?discussionId=[A-Za-z0-9_-]+&page=1$",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    },
+    "T6 should create, render and delete discussions": {
+      "recording": "should_create_render_and_delete_discussions.appmap.json",
+      "items": [
+        {
+          "expect": "src/app/routes/app/discussions/discussions.tsx:25 DiscussionsRoute",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 13,
+              "thread_id": 1,
+              "defined_class": "discussions",
+              "method_id": "DiscussionsRoute",
+              "path": "src/app/routes/app/discussions/discussions.tsx",
+              "lineno": 25
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/discussions-list.tsx:19 DiscussionsList",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 35,
+              "thread_id": 1,
+              "defined_class": "discussions-list",
+              "method_id": "DiscussionsList",
+              "path": "src/features/discussions/components/discussions-list.tsx",
+              "lineno": 19,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{}"
+                }
+              ]
+            },
+            "calls": 5,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussions.ts:34 useDiscussions",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 36,
+              "thread_id": 1,
+              "defined_class": "get-discussions",
+              "method_id": "useDiscussions",
+              "path": "src/features/discussions/api/get-discussions.ts",
+              "lineno": 34,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"page\":1}"
+                }
+              ]
+            },
+            "calls": 5,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussions.ts:20 getDiscussionsQueryOptions",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 37,
+              "thread_id": 1,
+              "defined_class": "get-discussions",
+              "method_id": "getDiscussionsQueryOptions",
+              "path": "src/features/discussions/api/get-discussions.ts",
+              "lineno": 20,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"page\":1}"
+                }
+              ]
+            },
+            "calls": 7,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/get-discussions.ts:7 getDiscussions",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 45,
+              "thread_id": 1,
+              "defined_class": "get-discussions",
+              "method_id": "getDiscussions",
+              "path": "src/features/discussions/api/get-discussions.ts",
+              "lineno": 7,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "1"
+                }
+              ]
+            },
+            "calls": 3,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/create-discussion.tsx:13 CreateDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 19,
+              "thread_id": 1,
+              "defined_class": "create-discussion",
+              "method_id": "CreateDiscussion",
+              "path": "src/features/discussions/components/create-discussion.tsx",
+              "lineno": 13
+            },
+            "calls": 6,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/create-discussion.tsx:49 onSubmit",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 105,
+              "thread_id": 1,
+              "defined_class": "create-discussion",
+              "method_id": "onSubmit",
+              "path": "src/features/discussions/components/create-discussion.tsx",
+              "lineno": 49,
+              "parameters": [
+                {
+                  "name": null,
+                  "value": "{\"title\":\"Versatile national time-frame\",\"body\":\"Repellat illo sunt cum. Maiores et iure. Accusantium eum quo ullam minu"
+                },
+                {
+                  "name": null,
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/create-discussion.ts:17 createDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 127,
+              "thread_id": 1,
+              "defined_class": "create-discussion",
+              "method_id": "createDiscussion",
+              "path": "src/features/discussions/api/create-discussion.ts",
+              "lineno": 17,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"data\":{\"title\":\"Versatile national time-frame\",\"body\":\"Repellat illo sunt cum. Maiores et iure. Accusantium eum quo ul"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/components/ui/table/table.tsx:138 Table",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 55,
+              "thread_id": 1,
+              "defined_class": "table",
+              "method_id": "Table",
+              "path": "src/components/ui/table/table.tsx",
+              "lineno": 138,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"data\":[],\"columns\":[{\"title\":\"Title\",\"field\":\"title\"},{\"title\":\"Created At\",\"field\":\"createdAt\"},{\"title\":\"\",\"field\":\""
+                }
+              ]
+            },
+            "calls": 4,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/delete-discussion.tsx:14 DeleteDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 397,
+              "thread_id": 1,
+              "defined_class": "delete-discussion",
+              "method_id": "DeleteDiscussion",
+              "path": "src/features/discussions/components/delete-discussion.tsx",
+              "lineno": 14,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"id\":\"q_jZjGbt3foNOBqrgAhb9\"}"
+                }
+              ]
+            },
+            "calls": 5,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/components/delete-discussion.tsx:43 onClick",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 461,
+              "thread_id": 1,
+              "defined_class": "delete-discussion",
+              "method_id": "onClick",
+              "path": "src/features/discussions/components/delete-discussion.tsx",
+              "lineno": 43,
+              "parameters": [
+                {
+                  "name": null,
+                  "value": "[object Object]"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/features/discussions/api/delete-discussion.ts:8 deleteDiscussion",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 463,
+              "thread_id": 1,
+              "defined_class": "delete-discussion",
+              "method_id": "deleteDiscussion",
+              "path": "src/features/discussions/api/delete-discussion.ts",
+              "lineno": 8,
+              "parameters": [
+                {
+                  "name": "arg0",
+                  "value": "{\"discussionId\":\"q_jZjGbt3foNOBqrgAhb9\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/auth/me$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/discussions\\?page=1$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "POST https://api\\.bulletproofapp\\.com/discussions$",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "DELETE https://api\\.bulletproofapp\\.com/discussions/[A-Za-z0-9_-]+$",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "failed",
+      "exceptions_in_recording": 0
+    },
+    "T7a should view protected resource if user role is matching": {
+      "recording": "should_view_protected_resource_if_user_role_is_matching.appmap.json",
+      "items": [
+        {
+          "expect": "src/lib/authorization.tsx:63 Authorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 13,
+              "thread_id": 1,
+              "defined_class": "authorization",
+              "method_id": "Authorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 63,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"allowedRoles\":[\"ADMIN\"],\"children\":\"This is very confidential data\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:28 useAuthorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 14,
+              "thread_id": 1,
+              "defined_class": "authorization",
+              "method_id": "useAuthorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 28
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:35 checkAccess",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/auth/me$",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    },
+    "T7b should not view protected resource if user role does not match and show fallback message instead": {
+      "recording": "should_not_view_protected_resource_if_user_role_does_not_match_and_show_fallback_message_instead.appmap.json",
+      "items": [
+        {
+          "expect": "src/lib/authorization.tsx:63 Authorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 13,
+              "thread_id": 1,
+              "defined_class": "authorization",
+              "method_id": "Authorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 63,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"forbiddenFallback\":{\"type\":\"div\",\"key\":null,\"ref\":null,\"props\":{\"children\":\"You are unauthorized to view this resource"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:28 useAuthorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 14,
+              "thread_id": 1,
+              "defined_class": "authorization",
+              "method_id": "useAuthorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 28
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:35 checkAccess",
+          "status": "missing",
+          "evidence": null
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/auth/me$",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    },
+    "T7c should view protected resource if policy check passes": {
+      "recording": "should_view_protected_resource_if_policy_check_passes.appmap.json",
+      "items": [
+        {
+          "expect": "src/lib/authorization.tsx:63 Authorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 13,
+              "thread_id": 1,
+              "defined_class": "authorization",
+              "method_id": "Authorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 63,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"policyCheck\":true,\"children\":\"This is very confidential data\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx:28 useAuthorization",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 14,
+              "thread_id": 1,
+              "defined_class": "authorization",
+              "method_id": "useAuthorization",
+              "path": "src/lib/authorization.tsx",
+              "lineno": 28
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/lib/authorization.tsx: checkAccess (must NOT be called)",
+          "status": "found",
+          "evidence": "not called (correct)"
+        },
+        {
+          "expect": "GET https://api\\.bulletproofapp\\.com/auth/me$",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    },
+    "T8a should toggle the state": {
+      "recording": "should_toggle_the_state.appmap.json",
+      "items": [
+        {
+          "expect": "src/hooks/use-disclosure.ts:3 useDisclosure",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 1,
+              "thread_id": 1,
+              "defined_class": "use-disclosure",
+              "method_id": "useDisclosure",
+              "path": "src/hooks/use-disclosure.ts",
+              "lineno": 3
+            },
+            "calls": 3,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/hooks/use-disclosure.ts:8 toggle",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    },
+    "T8b should open the state": {
+      "recording": "should_open_the_state.appmap.json",
+      "items": [
+        {
+          "expect": "src/hooks/use-disclosure.ts:3 useDisclosure",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 1,
+              "thread_id": 1,
+              "defined_class": "use-disclosure",
+              "method_id": "useDisclosure",
+              "path": "src/hooks/use-disclosure.ts",
+              "lineno": 3
+            },
+            "calls": 2,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/hooks/use-disclosure.ts:6 open",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    },
+    "T8c should close the state": {
+      "recording": "should_close_the_state.appmap.json",
+      "items": [
+        {
+          "expect": "src/hooks/use-disclosure.ts:3 useDisclosure",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 1,
+              "thread_id": 1,
+              "defined_class": "use-disclosure",
+              "method_id": "useDisclosure",
+              "path": "src/hooks/use-disclosure.ts",
+              "lineno": 3
+            },
+            "calls": 1,
+            "problems": []
+          }
+        },
+        {
+          "expect": "src/hooks/use-disclosure.ts:7 close",
+          "status": "missing",
+          "evidence": null
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    },
+    "T9 should add proper page title and meta description": {
+      "recording": "should_add_proper_page_title_and_meta_description.appmap.json",
+      "items": [
+        {
+          "expect": "src/components/seo/head.tsx:10 Head",
+          "status": "found",
+          "evidence": {
+            "event": {
+              "id": 1,
+              "thread_id": 1,
+              "defined_class": "head",
+              "method_id": "Head",
+              "path": "src/components/seo/head.tsx",
+              "lineno": 10,
+              "parameters": [
+                {
+                  "name": "props",
+                  "value": "{\"title\":\"Hello World\",\"description\":\"This is a description\"}"
+                }
+              ]
+            },
+            "calls": 1,
+            "problems": []
+          }
+        }
+      ],
+      "test_status": "succeeded",
+      "exceptions_in_recording": 0
+    }
+  },
+  "totals": {
+    "found": 94,
+    "wrong": 1,
+    "missing": 33
+  },
+  "E": {
+    "recording": "E_Authorization_without_a_user_throws_in_useAuthorization.appmap.json",
+    "useAuthorization_throws_recorded": 4,
+    "example": {
+      "id": 15,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 14,
+      "elapsed": 0.0003247479999999996,
+      "exceptions": [
+        {
+          "class": "Error",
+          "message": "User does not exist!"
+        }
+      ]
+    },
+    "other_exception_returns": [
+      {
+        "method_id": "Authorization",
+        "exceptions": [
+          {
+            "class": "TypeError",
+            "message": "Cannot destructure property 'policyCheck' of 'undefined' as it is undefined."
+          }
+        ]
+      },
+      {
+        "method_id": "AppProvider",
+        "exceptions": [
+          {
+            "class": "TypeError",
+            "message": "Cannot destructure property 'children' of 'undefined' as it is undefined."
+          }
+        ]
+      }
+    ],
+    "object_id_on_exceptions": false
+  },
+  "F": {
+    "recording": "F_deliberately_failing_copy_of_the_Head_title_test.appmap.json",
+    "test_status": "failed",
+    "test_failure": null,
+    "has_Head_call": true
+  },
+  "verdict": {
+    "C": "FAIL",
+    "E": "PASS",
+    "F": "PASS"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "label": "H",
+  "a": "/home/user/acc-work/run-b/out/seq-run1",
+  "b": "/home/user/acc-work/run-b/out/seq-run-h",
+  "only_in_a": [],
+  "only_in_b": [],
+  "same": [
+    "should_add_and_remove_notifications.sequence.json",
+    "should_add_proper_page_title_and_meta_description.sequence.json",
+    "should_close_the_state.sequence.json",
+    "should_create_and_delete_a_comment_on_the_discussion.sequence.json",
+    "should_create_render_and_delete_discussions.sequence.json",
+    "should_define_initial_state.sequence.json",
+    "should_fail_submission_if_validation_fails.sequence.json",
+    "should_handle_basic_dialog_flow.sequence.json",
+    "should_handle_basic_drawer_flow.sequence.json",
+    "should_handle_confirmation_flow.sequence.json",
+    "should_login_new_user_and_call_onSuccess_cb_which_should_navigate_the_user_to_the_app.sequence.json",
+    "should_not_view_protected_resource_if_policy_check_fails_and_show_fallback_message_instead.sequence.json",
+    "should_not_view_protected_resource_if_user_role_does_not_match_and_show_fallback_message_instead.sequence.json",
+    "should_open_the_state.sequence.json",
+    "should_register_new_user_and_call_onSuccess_cb_which_should_navigate_the_user_to_the_app.sequence.json",
+    "should_render_and_submit_a_basic_Form_component.sequence.json",
+    "should_render_discussion.sequence.json",
+    "should_toggle_the_state.sequence.json",
+    "should_update_discussion.sequence.json",
+    "should_view_protected_resource_if_policy_check_passes.sequence.json",
+    "should_view_protected_resource_if_user_role_is_matching.sequence.json"
+  ],
+  "different": {},
+  "verdict": "PASS"
+}

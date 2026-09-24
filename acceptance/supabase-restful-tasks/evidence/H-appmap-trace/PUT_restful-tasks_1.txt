@@ -1,0 +1,4 @@
+PUT /restful-tasks/1
+  No behavior change: every step matched the baseline.
+
+└─ … (1 unchanged)

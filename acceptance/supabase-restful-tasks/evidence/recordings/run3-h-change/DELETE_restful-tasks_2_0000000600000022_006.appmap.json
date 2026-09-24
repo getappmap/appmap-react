@@ -1,0 +1,177 @@
+{
+  "version": "1.12",
+  "metadata": {
+    "name": "DELETE /restful-tasks/2",
+    "app": "restful-tasks",
+    "language": {
+      "name": "typescript",
+      "engine": "deno"
+    },
+    "client": {
+      "name": "@funwithappmap/react-recorder",
+      "url": "https://github.com/getappmap/appmap-react"
+    },
+    "recorder": {
+      "name": "funwithappmap-deno",
+      "type": "requests"
+    },
+    "trace_id": "73657100000000000000000000000006",
+    "parent_span_id": "0000000600000022"
+  },
+  "classMap": [
+    {
+      "type": "package",
+      "name": "examples",
+      "children": [
+        {
+          "type": "package",
+          "name": "edge-functions",
+          "children": [
+            {
+              "type": "package",
+              "name": "supabase",
+              "children": [
+                {
+                  "type": "package",
+                  "name": "functions",
+                  "children": [
+                    {
+                      "type": "package",
+                      "name": "restful-tasks",
+                      "children": [
+                        {
+                          "type": "class",
+                          "name": "index",
+                          "children": [
+                            {
+                              "type": "function",
+                              "name": "deleteTask",
+                              "location": "examples/edge-functions/supabase/functions/restful-tasks/index.ts:38",
+                              "static": true,
+                              "labels": [
+                                "io.sql"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "http_server_request": {
+        "request_method": "DELETE",
+        "path_info": "/restful-tasks/2",
+        "headers": {
+          "traceparent": "00-73657100000000000000000000000006-0000000600000022-01"
+        }
+      }
+    },
+    {
+      "id": 2,
+      "event": "call",
+      "thread_id": 2,
+      "defined_class": "index",
+      "method_id": "deleteTask",
+      "path": "examples/edge-functions/supabase/functions/restful-tasks/index.ts",
+      "lineno": 38,
+      "static": true,
+      "parameters": [
+        {
+          "name": "supabaseClient",
+          "class": "SupabaseClient",
+          "value": "[object Object]",
+          "size": 17,
+          "object_id": 1
+        },
+        {
+          "name": "id",
+          "class": "string",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "event": "call",
+      "thread_id": 3,
+      "http_client_request": {
+        "request_method": "GET",
+        "url": "http://127.0.0.1:54321/rest/v1/tasks?select=*&id=eq.2",
+        "headers": {
+          "traceparent": "00-73657100000000000000000000000006-6c54fb1a5c4f9d7e-01"
+        }
+      }
+    },
+    {
+      "id": 4,
+      "event": "return",
+      "thread_id": 3,
+      "parent_id": 3,
+      "elapsed": 0.005156814999999938,
+      "http_client_response": {
+        "status_code": 200,
+        "headers": {
+          "content-type": "application/json; charset=utf-8"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "event": "call",
+      "thread_id": 4,
+      "http_client_request": {
+        "request_method": "DELETE",
+        "url": "http://127.0.0.1:54321/rest/v1/tasks?id=eq.2",
+        "headers": {
+          "content-type": "application/json",
+          "traceparent": "00-73657100000000000000000000000006-bbd9e364c1b9c269-01"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "event": "return",
+      "thread_id": 4,
+      "parent_id": 5,
+      "elapsed": 0.005077267000000006,
+      "http_client_response": {
+        "status_code": 204
+      }
+    },
+    {
+      "id": 7,
+      "event": "return",
+      "thread_id": 2,
+      "parent_id": 2,
+      "elapsed": 0.012153357000000028,
+      "return_value": {
+        "class": "Response",
+        "value": "{}",
+        "size": 0,
+        "object_id": 2
+      }
+    },
+    {
+      "id": 8,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 1,
+      "elapsed": 0.013422374999999988,
+      "http_server_response": {
+        "status_code": 200
+      }
+    }
+  ]
+}

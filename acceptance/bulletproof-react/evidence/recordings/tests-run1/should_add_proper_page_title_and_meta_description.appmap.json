@@ -1,0 +1,97 @@
+{
+  "version": "1.12",
+  "metadata": {
+    "name": "should add proper page title and meta description",
+    "app": "bulletproof-react",
+    "language": {
+      "name": "javascript",
+      "engine": "node",
+      "version": "v22.22.2"
+    },
+    "client": {
+      "name": "@funwithappmap/react-recorder",
+      "url": "https://github.com/getappmap/appmap-react"
+    },
+    "recorder": {
+      "name": "funwithappmap-react",
+      "type": "tests"
+    },
+    "frameworks": [
+      {
+        "name": "vitest"
+      }
+    ],
+    "source_location": "src/components/seo/__tests__/head.test.tsx",
+    "trace_id": "97ab2b1a54ee3c9dd8ebb7ad2d64ad29",
+    "test_status": "succeeded"
+  },
+  "classMap": [
+    {
+      "type": "package",
+      "name": "src",
+      "children": [
+        {
+          "type": "package",
+          "name": "components",
+          "children": [
+            {
+              "type": "package",
+              "name": "seo",
+              "children": [
+                {
+                  "type": "class",
+                  "name": "head",
+                  "children": [
+                    {
+                      "type": "function",
+                      "name": "Head",
+                      "location": "src/components/seo/head.tsx:10",
+                      "static": true,
+                      "labels": [
+                        "component"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "event": "call",
+      "thread_id": 1,
+      "defined_class": "head",
+      "method_id": "Head",
+      "path": "src/components/seo/head.tsx",
+      "lineno": 10,
+      "static": true,
+      "parameters": [
+        {
+          "name": "props",
+          "class": "Object",
+          "value": "{\"title\":\"Hello World\",\"description\":\"This is a description\"}",
+          "size": 2,
+          "object_id": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "event": "return",
+      "thread_id": 1,
+      "parent_id": 1,
+      "elapsed": 0.0002153249999998934,
+      "return_value": {
+        "class": "Object",
+        "value": "[object Object]",
+        "size": 7,
+        "object_id": 2
+      }
+    }
+  ]
+}

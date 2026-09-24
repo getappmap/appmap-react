@@ -1,0 +1,4 @@
+GET /restful-tasks
+  No behavior change: every step matched the baseline.
+
+└─ … (1 unchanged)

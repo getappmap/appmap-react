@@ -1,0 +1,86 @@
+[
+  {
+    "id": "R1",
+    "rootCount": 1,
+    "roots": [
+      "OPTIONS /restful-tasks"
+    ],
+    "serverChildren": 0,
+    "nested": true
+  },
+  {
+    "id": "R2",
+    "rootCount": 3,
+    "roots": [
+      "GET /restful-tasks",
+      "GET http://127.0.0.1:54321/rest/v1/tasks?select=*",
+      "getAllTasks"
+    ],
+    "serverChildren": 0,
+    "nested": false
+  },
+  {
+    "id": "R3",
+    "rootCount": 3,
+    "roots": [
+      "GET /restful-tasks/1",
+      "GET http://127.0.0.1:54321/rest/v1/tasks?select=*&id=eq.1",
+      "getTask"
+    ],
+    "serverChildren": 0,
+    "nested": false
+  },
+  {
+    "id": "R4",
+    "rootCount": 3,
+    "roots": [
+      "POST /restful-tasks",
+      "POST http://127.0.0.1:54321/rest/v1/tasks",
+      "createTask"
+    ],
+    "serverChildren": 0,
+    "nested": false
+  },
+  {
+    "id": "R5",
+    "rootCount": 3,
+    "roots": [
+      "PUT /restful-tasks/1",
+      "PATCH http://127.0.0.1:54321/rest/v1/tasks?id=eq.1",
+      "updateTask"
+    ],
+    "serverChildren": 0,
+    "nested": false
+  },
+  {
+    "id": "R6",
+    "rootCount": 3,
+    "roots": [
+      "DELETE /restful-tasks/2",
+      "DELETE http://127.0.0.1:54321/rest/v1/tasks?id=eq.2",
+      "deleteTask"
+    ],
+    "serverChildren": 0,
+    "nested": false
+  },
+  {
+    "id": "R7",
+    "rootCount": 3,
+    "roots": [
+      "GET /restful-tasks/not-a-number",
+      "GET http://127.0.0.1:54321/rest/v1/tasks?select=*&id=eq.not-a-number",
+      "getTask"
+    ],
+    "serverChildren": 0,
+    "nested": false
+  },
+  {
+    "id": "R8",
+    "rootCount": 1,
+    "roots": [
+      "POST /restful-tasks"
+    ],
+    "serverChildren": 0,
+    "nested": true
+  }
+]

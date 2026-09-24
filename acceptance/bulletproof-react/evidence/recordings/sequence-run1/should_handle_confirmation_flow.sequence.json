@@ -1,0 +1,769 @@
+{
+  "actors": [
+    {
+      "id": "package:src/components/ui/dialog/confirmation-dialog",
+      "name": "confirmation-dialog",
+      "order": 1000
+    },
+    {
+      "id": "package:src/hooks",
+      "name": "hooks",
+      "order": 2000
+    },
+    {
+      "id": "package:src/utils",
+      "name": "utils",
+      "order": 3000
+    },
+    {
+      "id": "package:src/components/ui/dialog",
+      "name": "dialog",
+      "order": 4000
+    }
+  ],
+  "rootActions": [
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/dialog/confirmation-dialog",
+      "name": "ConfirmationDialog",
+      "static": true,
+      "digest": "65d3632695a09c3c4a01dd187c5ca648a241fd7a263205f621931fb958063b87",
+      "subtreeDigest": "77212b8fe8474d5873079de18b1180f96f4533789706cdd4be624308b8121872",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/dialog/confirmation-dialog/confirmation-dialog.ConfirmationDialog",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/dialog/confirmation-dialog",
+          "callee": "package:src/hooks",
+          "name": "useDisclosure",
+          "static": true,
+          "digest": "b7aa963e497f5bd1de644ff0e9d21aadc5066e2929cfd973d81bc22f24e53803",
+          "subtreeDigest": "5084e1ff4acb17302c82a5c97a43b87e676b7a15ce221305734fce0eb7a21fa5",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/hooks/use-disclosure.useDisclosure",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.00028401299999995897,
+          "eventIds": [
+            2
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.001085937000000058,
+      "eventIds": [
+        1
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0037340120000001207,
+      "eventIds": [
+        5
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00032378400000015973,
+      "eventIds": [
+        7
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/dialog/confirmation-dialog",
+      "name": "onOpenChange",
+      "static": true,
+      "digest": "aa3d5324da14d51d1f88c84c062d5408220fea26046c8df7f6795b8ef0a0fd54",
+      "subtreeDigest": "8bb7daff906a533cb97ec52299a1c5bce4aef948f6ecbf3397c000ed79259442",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/dialog/confirmation-dialog/confirmation-dialog.onOpenChange",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "void"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000745759999999791,
+      "eventIds": [
+        9
+      ],
+      "labels": [
+        "event-handler"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/dialog/confirmation-dialog",
+      "name": "ConfirmationDialog",
+      "static": true,
+      "digest": "65d3632695a09c3c4a01dd187c5ca648a241fd7a263205f621931fb958063b87",
+      "subtreeDigest": "77212b8fe8474d5873079de18b1180f96f4533789706cdd4be624308b8121872",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/dialog/confirmation-dialog/confirmation-dialog.ConfirmationDialog",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/dialog/confirmation-dialog",
+          "callee": "package:src/hooks",
+          "name": "useDisclosure",
+          "static": true,
+          "digest": "b7aa963e497f5bd1de644ff0e9d21aadc5066e2929cfd973d81bc22f24e53803",
+          "subtreeDigest": "5084e1ff4acb17302c82a5c97a43b87e676b7a15ce221305734fce0eb7a21fa5",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/hooks/use-disclosure.useDisclosure",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.00005190399999992223,
+          "eventIds": [
+            12
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.00020813799999996264,
+      "eventIds": [
+        11
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000016380000000026484,
+      "eventIds": [
+        15
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000017338999999992666,
+      "eventIds": [
+        17
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00020357199999989462,
+      "eventIds": [
+        19
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/dialog",
+      "name": "DialogHeader",
+      "static": true,
+      "digest": "03c1eb18d4cfd63e8d09fad102bd96222eda96ef6d0cd5055c316518a254b4ab",
+      "subtreeDigest": "a283d5e13863163ed3861f55f8f308045282871209989a07b7844b5b29ed2313",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/dialog/dialog.DialogHeader",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/dialog",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.00007052599999997255,
+          "eventIds": [
+            22
+          ]
+        }
+      ],
+      "elapsed": 0.00013822700000014264,
+      "eventIds": [
+        21
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.00003658399999994799,
+      "eventIds": [
+        25
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/dialog",
+      "name": "DialogFooter",
+      "static": true,
+      "digest": "af34cdd29655dadb82531c773f87f0d8f72cb3c96f9bec83085d0634d9cd5eb9",
+      "subtreeDigest": "34a3c31e1b496fa3674e049868aeaf9b2d770f04bd34f49014899927f1f622a5",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/dialog/dialog.DialogFooter",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/dialog",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.0000639690000000428,
+          "eventIds": [
+            28
+          ]
+        }
+      ],
+      "elapsed": 0.00014449300000001132,
+      "eventIds": [
+        27
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000008096000000023195,
+      "eventIds": [
+        31
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000138007000000016,
+      "eventIds": [
+        33
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000016568000000006578,
+      "eventIds": [
+        35
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/dialog/confirmation-dialog",
+      "name": "ConfirmationDialog",
+      "static": true,
+      "digest": "65d3632695a09c3c4a01dd187c5ca648a241fd7a263205f621931fb958063b87",
+      "subtreeDigest": "77212b8fe8474d5873079de18b1180f96f4533789706cdd4be624308b8121872",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/dialog/confirmation-dialog/confirmation-dialog.ConfirmationDialog",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/dialog/confirmation-dialog",
+          "callee": "package:src/hooks",
+          "name": "useDisclosure",
+          "static": true,
+          "digest": "b7aa963e497f5bd1de644ff0e9d21aadc5066e2929cfd973d81bc22f24e53803",
+          "subtreeDigest": "5084e1ff4acb17302c82a5c97a43b87e676b7a15ce221305734fce0eb7a21fa5",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/hooks/use-disclosure.useDisclosure",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "Object"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.000032408000000032186,
+          "eventIds": [
+            38
+          ],
+          "labels": [
+            "hook"
+          ]
+        }
+      ],
+      "elapsed": 0.0002001989999998841,
+      "eventIds": [
+        37
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000019760000000133005,
+      "eventIds": [
+        41
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000004198000000087632,
+      "eventIds": [
+        43
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000029340000000956933,
+      "eventIds": [
+        45
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/dialog",
+      "name": "DialogHeader",
+      "static": true,
+      "digest": "03c1eb18d4cfd63e8d09fad102bd96222eda96ef6d0cd5055c316518a254b4ab",
+      "subtreeDigest": "a283d5e13863163ed3861f55f8f308045282871209989a07b7844b5b29ed2313",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/dialog/dialog.DialogHeader",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/dialog",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.000007681999999931577,
+          "eventIds": [
+            48
+          ]
+        }
+      ],
+      "elapsed": 0.00003314399999999296,
+      "eventIds": [
+        47
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.0000023309999999128193,
+      "eventIds": [
+        51
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/components/ui/dialog",
+      "name": "DialogFooter",
+      "static": true,
+      "digest": "af34cdd29655dadb82531c773f87f0d8f72cb3c96f9bec83085d0634d9cd5eb9",
+      "subtreeDigest": "34a3c31e1b496fa3674e049868aeaf9b2d770f04bd34f49014899927f1f622a5",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/components/ui/dialog/dialog.DialogFooter",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "Object"
+        },
+        "raisesException": false
+      },
+      "children": [
+        {
+          "nodeType": 3,
+          "caller": "package:src/components/ui/dialog",
+          "callee": "package:src/utils",
+          "name": "cn",
+          "static": true,
+          "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+          "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+          "stableProperties": {
+            "event_type": "function",
+            "id": "src/utils/cn.cn",
+            "raises_exception": false
+          },
+          "returnValue": {
+            "returnValueType": {
+              "name": "string"
+            },
+            "raisesException": false
+          },
+          "children": [],
+          "elapsed": 0.0000026629999999840946,
+          "eventIds": [
+            54
+          ]
+        }
+      ],
+      "elapsed": 0.00001695800000015879,
+      "eventIds": [
+        53
+      ],
+      "labels": [
+        "component"
+      ]
+    },
+    {
+      "nodeType": 3,
+      "callee": "package:src/utils",
+      "name": "cn",
+      "static": true,
+      "digest": "7e22ee658c1eca6825a74f96cf8d6e38c7a785c2eed87cc1ca56f51daf8927d5",
+      "subtreeDigest": "b0e048fbabfd24b3dc3c8d51ae30a2c46b89a4383cbdbe81826d17bfe44b28fd",
+      "stableProperties": {
+        "event_type": "function",
+        "id": "src/utils/cn.cn",
+        "raises_exception": false
+      },
+      "returnValue": {
+        "returnValueType": {
+          "name": "string"
+        },
+        "raisesException": false
+      },
+      "children": [],
+      "elapsed": 0.000003044999999929132,
+      "eventIds": [
+        57
+      ]
+    }
+  ]
+}
