@@ -3,7 +3,7 @@
 # usage: db.sh start|stop|reset   (WORK dir from env, default /tmp/acc-deno-work)
 set -euo pipefail
 WORK=${WORK:-/tmp/acc-deno-work}
-PGBIN=${PGBIN:-$(ls -d /usr/lib/postgresql/*/bin 2>/dev/null | sort -V | tail -1)}
+PGBIN=${PGBIN:-$(printf '%s\n' /usr/lib/postgresql/*/bin | sort -V | tail -1)}
 PGPORT=${PGPORT:-54329}
 PGRST_PORT=${PGRST_PORT:-54330}
 POSTGREST=${POSTGREST:-/root/tools/postgrest}
@@ -48,7 +48,7 @@ server-port = $PGRST_PORT
 CONF
     nohup "$POSTGREST" "$WORK/postgrest.conf" > "$WORK/postgrest.log" 2>&1 &
     echo $! > "$WORK/postgrest.pid"
-    for i in $(seq 1 50); do curl -sf "http://127.0.0.1:$PGRST_PORT/" >/dev/null && break; sleep 0.2; done
+    for _ in $(seq 1 50); do curl -sf "http://127.0.0.1:$PGRST_PORT/" >/dev/null && break; sleep 0.2; done
     curl -sf "http://127.0.0.1:$PGRST_PORT/" >/dev/null || { echo "postgrest did not start"; cat "$WORK/postgrest.log"; exit 1; }
     ;;
   reset)

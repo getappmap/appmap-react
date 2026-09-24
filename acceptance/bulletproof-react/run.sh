@@ -36,6 +36,7 @@ log() { printf '\n=== %s\n' "$*" | tee -a "$OUT/run.log"; }
 verdict() { VERDICT[$1]=$2; echo "$1: $2" | tee -a "$OUT/run.log"; }
 now() { date +%s.%N; }
 PIDS=()
+# shellcheck disable=SC2329 # invoked by the EXIT trap below
 cleanup() { for p in "${PIDS[@]:-}"; do [ -n "$p" ] && kill -- -"$p" 2>/dev/null; done; }
 trap cleanup EXIT
 
@@ -113,6 +114,7 @@ grep -E '✓|×' "$OUT/extra.log" | tee -a "$OUT/run.log"
 start_bg() { # $1 = name, rest = command (run in app dir, own process group)
   local name=$1; shift
   # setsid may fork, so let the new session leader write its own pid.
+  # shellcheck disable=SC2016 # $$/$0/$@ expand in the inner shell
   ( cd "$APP" && setsid bash -c 'echo $$ > "$0"; exec env "$@"' "$OUT/$name.pid" "$@" >"$OUT/$name.log" 2>&1 & )
   for _ in $(seq 1 50); do [ -s "$OUT/$name.pid" ] && break; sleep 0.1; done
   PIDS+=("$(cat "$OUT/$name.pid")")
@@ -125,6 +127,7 @@ browser_pass() { # $1 = label, $2 = vite config
   wait_port_free http://localhost:3000/; wait_port_free http://localhost:8080/api/healthcheck
   start_bg "mock-$1" "${BROWSER_ENV[@]}" npx vite-node mock-server.ts
   start_bg "vite-$1" "${BROWSER_ENV[@]}" npx vite --config "$2" --port 3000 --strictPort
+  # shellcheck disable=SC2015 # report if either server did not start
   wait_url http://localhost:8080/api/healthcheck && wait_url http://localhost:3000/ || echo "servers did not start" | tee -a "$OUT/run.log"
   curl -s http://localhost:3000/ | grep -o '<script type="module">import "[^"]*appmap[^"]*"' | sed "s/^/$1 served: /" | tee -a "$OUT/run.log"
   ( cd "$APP" && APP_DIR="$APP" APP_URL=http://localhost:3000 CHROME="$CHROME" OUT="$OUT/browser-$1.json" \

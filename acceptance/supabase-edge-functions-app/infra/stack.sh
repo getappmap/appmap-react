@@ -14,7 +14,7 @@
 set -euo pipefail
 WORK=${WORK:?WORK must be set}
 APPDIR=${APPDIR:-$WORK/supabase}
-PGBIN=${PGBIN:-$(ls -d /usr/lib/postgresql/*/bin 2>/dev/null | sort -V | tail -1)}
+PGBIN=${PGBIN:-$(printf '%s\n' /usr/lib/postgresql/*/bin | sort -V | tail -1)}
 PGPORT=${PGPORT:-54339}
 PGRST_PORT=${PGRST_PORT:-54340}
 GOTRUE_PORT=${GOTRUE_PORT:-54341}
@@ -91,7 +91,7 @@ CONF
 apply_migrations() {
   # Every migration the example project ships, in order, unmodified --
   # what `supabase db reset` would apply.
-  for f in $(ls "$MIGRATIONS"/*.sql | sort); do "${PSQL[@]}" -f "$f" >/dev/null; done
+  for f in "$MIGRATIONS"/*.sql; do "${PSQL[@]}" -f "$f" >/dev/null; done
 }
 
 case "${1:-}" in

@@ -29,7 +29,8 @@ if ! command -v deno >/dev/null; then
   python3 -c "import zipfile;zipfile.ZipFile('$WORK/deno.zip').extractall('$WORK/bin')"
   chmod +x "$WORK/bin/deno"
 fi
-export DENO=$(command -v deno)
+DENO=$(command -v deno)
+export DENO
 
 if [ -z "${POSTGREST:-}" ]; then
   if [ ! -x "$WORK/bin/postgrest" ]; then
@@ -72,7 +73,7 @@ echo "== versions"
 deno --version | head -1
 node --version
 "$POSTGREST" --version
-"$(ls -d /usr/lib/postgresql/*/bin | sort -V | tail -1)/postgres" --version
+"$(printf '%s\n' /usr/lib/postgresql/*/bin | sort -V | tail -1)/postgres" --version
 "$APPMAP_TOOLS/node_modules/.bin/appmap" --version
 echo "repo HEAD $(git -C "$ROOT" rev-parse HEAD); recorder code last changed in $(git -C "$ROOT" log -1 --format=%H -- deno recorder); app $APP_SHA"
 
@@ -80,4 +81,4 @@ set +e
 node "$ACC/harness.mjs" 2>&1 | tee "$WORK/harness.log"
 rc=${PIPESTATUS[0]}
 cp "$WORK/harness.log" "$ACC/evidence/run.log"
-exit $rc
+exit "$rc"

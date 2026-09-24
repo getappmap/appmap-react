@@ -44,6 +44,7 @@ done
 
 # --- tools -------------------------------------------------------------------
 if [ -n "${DENO:-}" ]; then ln -sf "$DENO" "$WORK/bin/deno"; fi
+# shellcheck disable=SC2015 # "download && unpack || fail_setup" is meant
 if ! command -v deno >/dev/null; then
   echo "== installing deno (latest 2.x release binary)"
   curl -fsSL -o "$WORK/deno.zip" https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip &&
@@ -102,6 +103,7 @@ examples/edge-functions/supabase/functions/_shared/
 examples/edge-functions/supabase/migrations/
 examples/edge-functions/supabase/config.toml
 EOF
+# shellcheck disable=SC2015 # "fetch && checkout || fail_setup" is meant
 git -C "$WORK/supabase" fetch -q --depth 1 --filter=blob:none origin "$APP_SHA" &&
   git -C "$WORK/supabase" -c advice.detachedHead=false checkout -q FETCH_HEAD || fail_setup "clone"
 [ "$(git -C "$WORK/supabase" rev-parse HEAD 2>/dev/null)" = "$APP_SHA" ] || fail_setup "app HEAD is not $APP_SHA"
@@ -140,4 +142,4 @@ fi
 node "$ACC/harness.mjs" 2>&1 | tee "$WORK/harness.log"
 rc=${PIPESTATUS[0]}
 cp "$WORK/harness.log" "$ACC/evidence/run.log" 2>/dev/null
-exit $rc
+exit "$rc"
