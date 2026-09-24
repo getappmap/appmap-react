@@ -462,7 +462,18 @@ resetDb();
   const sum = map && summarize(map.appmap);
   W.w1 = { status: res.status, responseMs: tResp - t0, fileAfterResponseMs: tFile - tResp, summary: sum, file: map?.file };
   const sA = mapA && summarize(mapA.appmap);
-  W.w4 = { statusA: resA.status, statusB: resB.status, aSummary: sA, bFile: mapB ?? null };
+  const bAppmap = mapB ? JSON.parse(fs.readFileSync(mapB, 'utf8')) : undefined;
+  W.w4 = {
+    statusA: resA.status,
+    statusB: resB.status,
+    aSummary: sA,
+    aTrace: mapA?.appmap.metadata.trace_id ?? null,
+    bFile: mapB ?? null,
+    bSummary: bAppmap ? summarize(bAppmap) : null,
+    bTrace: bAppmap?.metadata.trace_id ?? null,
+    tpA: tpA.header,
+    tpB: tpB.header,
+  };
   fs.cpSync(dir, path.join(EVID, 'recordings', 'probe-w1-w4'), { recursive: true });
 }
 {
@@ -511,14 +522,31 @@ else {
 verdict('W1-waitUntil-capture', w1p.length ? 'FAIL' : 'PASS', w1p.length ? w1p : [
   `202 in ${W.w1.responseMs}ms; file written ${W.w1.fileAfterResponseMs}ms after the response; clients ${j(s1.clients.map((c) => `${c.method} ${c.url.replace(/^http:\/\/127\.0\.0\.1:\d+/, '')} ${c.status}`))}; fns ${j(s1.functions.map((f) => f.fn))}; not truncated`,
 ]);
+// Overlapping stamped requests each get their own recording (the
+// requested fix): A and B must be two separate recordings, each holding
+// exactly its own request's work and none of the other's.
 const w4p = [];
-if (W.w4.bFile) w4p.push(`B (arrived during A's background window) was recorded: ${path.basename(W.w4.bFile)}`);
-const aCl = W.w4.aSummary?.clients.map((c) => c.url.replace(/^http:\/\/127\.0\.0\.1:\d+/, '')) ?? [];
-const foreignA = aCl.filter((u) => /probe-3|n=3/.test(u));
-if (foreignA.length) w4p.push(`A's recording contains B's background calls: ${j(foreignA)}`);
-const aFns = W.w4.aSummary?.functions.map((f) => `${f.fn}(${f.params[0]})`) ?? [];
-if (aFns.filter((x) => x.startsWith('probe.ingest')).length !== 1) w4p.push(`A's recording has ingest calls ${j(aFns)}`);
-verdict('W4-waitUntil-overlap', w4p.length ? 'FAIL' : 'PASS', w4p.length ? w4p : [`B unrecorded as documented; A contains only its own calls ${j(aCl)}`]);
+const w4own = {};
+for (const [who, n, other, sum, trace, tp] of [
+  ['A', 2, 3, W.w4.aSummary, W.w4.aTrace, W.w4.tpA],
+  ['B', 3, 2, W.w4.bSummary, W.w4.bTrace, W.w4.tpB],
+]) {
+  if (!sum) {
+    w4p.push(`${who} (n=${n}) has no recording${who === 'B' ? ' (B arrived during A\'s background window)' : ''}`);
+    continue;
+  }
+  if (trace !== tp.split('-')[1]) w4p.push(`${who}'s recording has trace_id ${trace}, not its own request's`);
+  const cl = sum.clients.map((c) => `${c.method} ${c.url.replace(/^http:\/\/127\.0\.0\.1:\d+/, '')}`);
+  const fns = sum.functions.map((f) => `${f.fn}(${f.params[0]})`);
+  w4own[who] = { clients: cl, functions: fns };
+  const foreign = cl.filter((u) => new RegExp(`probe-${other}\\b|n=${other}\\b`).test(u));
+  if (foreign.length) w4p.push(`${who}'s recording contains the other request's background calls: ${j(foreign)}`);
+  const ingests = fns.filter((x) => x.startsWith('probe.ingest'));
+  if (j(ingests) !== j([`probe.ingest(${n})`])) w4p.push(`${who}'s recording has ingest calls ${j(ingests)}, expected only probe.ingest(${n})`);
+  const exp = ['POST /rest/v1/tasks', `GET /enrich?n=${n}`, `PATCH /rest/v1/tasks?name=eq.probe-${n}`];
+  if (j(cl) !== j(exp)) w4p.push(`${who}'s outbound calls ${j(cl)} != ${j(exp)}`);
+}
+verdict('W4-waitUntil-overlap', w4p.length ? 'FAIL' : 'PASS', w4p.length ? w4p : [`A and B (overlapping) recorded separately, each with only its own calls: A ${j(w4own.A.clients)}; B ${j(w4own.B.clients)}`]);
 const w2s = W.w2.summary;
 const w2ok = w2s && w2s.truncated && w2s.unbalanced.length === 0 && w2s.functions.some((f) => f.fn === 'probe.ingest' && f.synthetic);
 verdict('W2-self-heal-fire-and-forget', w2ok ? 'PASS' : 'FAIL', [
