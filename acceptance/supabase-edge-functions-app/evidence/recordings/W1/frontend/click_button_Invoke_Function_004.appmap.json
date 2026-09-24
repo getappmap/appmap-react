@@ -11,7 +11,7 @@
       "name": "funwithappmap-react",
       "type": "requests"
     },
-    "trace_id": "b0892b57b7ac2eb2a71fe7bb0d931bf8"
+    "trace_id": "4fa734e173aa35f2e00d5946337d8dd2"
   },
   "classMap": [
     {
@@ -80,7 +80,7 @@
       "event": "return",
       "thread_id": 2,
       "parent_id": 2,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0.0002000000001862645,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -103,7 +103,7 @@
       "event": "return",
       "thread_id": 3,
       "parent_id": 4,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -120,7 +120,7 @@
         "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
         "headers": {
           "content-type": "text/plain",
-          "traceparent": "00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01"
+          "traceparent": "00-4fa734e173aa35f2e00d5946337d8dd2-f5760c32ab13e6ac-01"
         }
       }
     },
@@ -129,7 +129,7 @@
       "event": "return",
       "thread_id": 4,
       "parent_id": 6,
-      "elapsed": 0.009700000000186264,
+      "elapsed": 0.013799999999813736,
       "http_client_response": {
         "status_code": 0
       }
@@ -149,7 +149,7 @@
       "event": "return",
       "thread_id": 5,
       "parent_id": 8,
-      "elapsed": 0.0002000000001862645,
+      "elapsed": 0.00010000000055879355,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -172,7 +172,7 @@
       "event": "return",
       "thread_id": 6,
       "parent_id": 10,
-      "elapsed": 0.00009999999962747097,
+      "elapsed": 0,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -185,7 +185,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 1,
-      "elapsed": 0.0166999999997206
+      "elapsed": 0.025
     }
   ]
 }

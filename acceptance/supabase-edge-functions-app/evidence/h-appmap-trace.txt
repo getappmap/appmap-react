@@ -67,4 +67,4 @@ sequenceDiagram
   end
 ```
 
-traced 2 interaction(s) (diffed against /tmp/acc-fullstack-work/rec/R-run1/backend)
+traced 2 interaction(s) (diffed against /tmp/ci-sim/acc-fullstack/rec/R-run1/backend)

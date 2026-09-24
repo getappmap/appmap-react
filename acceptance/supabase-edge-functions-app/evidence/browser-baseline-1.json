@@ -4,7 +4,7 @@
     {
       "id": "S1",
       "desc": "load the app",
-      "ms": 1966,
+      "ms": 1988,
       "newMaps": [],
       "wire": [],
       "response": "{}"
@@ -12,7 +12,7 @@
     {
       "id": "S2",
       "desc": "invoke with the default dropdown entry (not served) -> 404",
-      "ms": 1621,
+      "ms": 1586,
       "newMaps": [],
       "wire": [
         {
@@ -26,7 +26,7 @@
     {
       "id": "S3",
       "desc": "select select-from-table-with-auth-rls, invoke signed out -> 200, no rows",
-      "ms": 1725,
+      "ms": 1636,
       "newMaps": [],
       "wire": [
         {
@@ -40,7 +40,7 @@
     {
       "id": "S4",
       "desc": "sign up (auto-confirmed) -> signed in",
-      "ms": 1820,
+      "ms": 1824,
       "newMaps": [],
       "wire": [
         {
@@ -54,7 +54,7 @@
     {
       "id": "S5",
       "desc": "invoke signed in -> 200, own row only (RLS)",
-      "ms": 1566,
+      "ms": 1577,
       "newMaps": [],
       "wire": [
         {
@@ -63,12 +63,12 @@
           "traceparent": null
         }
       ],
-      "response": "{\n  \"user\": {\n    \"id\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\",\n    \"aud\": \"authenticated\",\n    \"role\": \"authenticated\",\n    \"email\": \"seq-baseline-1-1790265355363@example.com\",\n    \"email_confirmed_at\": \"2026-09-24T15:56:01.667727Z\",\n    \"phone\": \"\",\n    \"confirmed_at\": \"2026-09-24T15:56:01.667727Z\",\n    \"last_sign_in_at\": \"2026-09-24T15:56:01.671552Z\",\n    \"app_metadata\": {\n      \"provider\": \"email\",\n      \"providers\": [\n        \"email\"\n      ]\n    },\n    \"user_metadata\": {\n      \"email\": \"seq-baseline-1-1790265355363@example.com\",\n      \"email_verified\": true,\n      \"phone_verified\": false,\n      \"sub\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\"\n    },\n    \"identities\": [\n      {\n        \"identity_id\": \"9fed08cd-dfb6-46f9-ac23-8d62ce54bb2c\",\n        \"id\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\",\n        \"user_id\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\",\n        \"identity_data\": {\n          \"email\": \"seq-baseline-1-1790265355363@example.com\",\n          \"email_verified\": false,\n          \"phone_verified\": false,\n          \"sub\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\"\n        },\n        \"provider\": \"email\",\n        \"last_sign_in_at\": \"2026-09-24T15:56:01.661414Z\",\n        \"created_at\": \"2026-09-24T15:56:01.661459Z\",\n        \"updated_at\": \"2026-09-24T15:56:01.661459Z\",\n        \"email\": \"seq-baseline-1-1790265355363@example.com\"\n      }\n    ],\n    \"created_at\": \"2026-09-24T15:56:01.655388Z\",\n    \"updated_at\": \"2026-09-24T15:56:01.675102Z\",\n    \"is_anonymous\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\",\n      \"full_name\": null,\n      \"avatar_url\": null\n    }\n  ]\n}"
+      "response": "{\n  \"user\": {\n    \"id\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\",\n    \"aud\": \"authenticated\",\n    \"role\": \"authenticated\",\n    \"email\": \"seq-baseline-1-1790267718820@example.com\",\n    \"email_confirmed_at\": \"2026-09-24T16:35:24.883079Z\",\n    \"phone\": \"\",\n    \"confirmed_at\": \"2026-09-24T16:35:24.883079Z\",\n    \"last_sign_in_at\": \"2026-09-24T16:35:24.88663Z\",\n    \"app_metadata\": {\n      \"provider\": \"email\",\n      \"providers\": [\n        \"email\"\n      ]\n    },\n    \"user_metadata\": {\n      \"email\": \"seq-baseline-1-1790267718820@example.com\",\n      \"email_verified\": true,\n      \"phone_verified\": false,\n      \"sub\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\"\n    },\n    \"identities\": [\n      {\n        \"identity_id\": \"e87a41c6-e9f5-4aed-a8b5-12f6bc6bfe34\",\n        \"id\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\",\n        \"user_id\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\",\n        \"identity_data\": {\n          \"email\": \"seq-baseline-1-1790267718820@example.com\",\n          \"email_verified\": false,\n          \"phone_verified\": false,\n          \"sub\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\"\n        },\n        \"provider\": \"email\",\n        \"last_sign_in_at\": \"2026-09-24T16:35:24.87875Z\",\n        \"created_at\": \"2026-09-24T16:35:24.878811Z\",\n        \"updated_at\": \"2026-09-24T16:35:24.878811Z\",\n        \"email\": \"seq-baseline-1-1790267718820@example.com\"\n      }\n    ],\n    \"created_at\": \"2026-09-24T16:35:24.872229Z\",\n    \"updated_at\": \"2026-09-24T16:35:24.889638Z\",\n    \"is_anonymous\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\",\n      \"full_name\": null,\n      \"avatar_url\": null\n    }\n  ]\n}"
     },
     {
       "id": "S6",
       "desc": "sign out",
-      "ms": 1571,
+      "ms": 1577,
       "newMaps": [],
       "wire": [
         {
@@ -77,13 +77,13 @@
           "traceparent": null
         }
       ],
-      "response": "{\n  \"user\": {\n    \"id\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\",\n    \"aud\": \"authenticated\",\n    \"role\": \"authenticated\",\n    \"email\": \"seq-baseline-1-1790265355363@example.com\",\n    \"email_confirmed_at\": \"2026-09-24T15:56:01.667727Z\",\n    \"phone\": \"\",\n    \"confirmed_at\": \"2026-09-24T15:56:01.667727Z\",\n    \"last_sign_in_at\": \"2026-09-24T15:56:01.671552Z\",\n    \"app_metadata\": {\n      \"provider\": \"email\",\n      \"providers\": [\n        \"email\"\n      ]\n    },\n    \"user_metadata\": {\n      \"email\": \"seq-baseline-1-1790265355363@example.com\",\n      \"email_verified\": true,\n      \"phone_verified\": false,\n      \"sub\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\"\n    },\n    \"identities\": [\n      {\n        \"identity_id\": \"9fed08cd-dfb6-46f9-ac23-8d62ce54bb2c\",\n        \"id\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\",\n        \"user_id\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\",\n        \"identity_data\": {\n          \"email\": \"seq-baseline-1-1790265355363@example.com\",\n          \"email_verified\": false,\n          \"phone_verified\": false,\n          \"sub\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\"\n        },\n        \"provider\": \"email\",\n        \"last_sign_in_at\": \"2026-09-24T15:56:01.661414Z\",\n        \"created_at\": \"2026-09-24T15:56:01.661459Z\",\n        \"updated_at\": \"2026-09-24T15:56:01.661459Z\",\n        \"email\": \"seq-baseline-1-1790265355363@example.com\"\n      }\n    ],\n    \"created_at\": \"2026-09-24T15:56:01.655388Z\",\n    \"updated_at\": \"2026-09-24T15:56:01.675102Z\",\n    \"is_anonymous\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"a9698aaa-861f-4604-860b-0541bdb45ec9\",\n      \"full_name\": null,\n      \"avatar_url\": null\n    }\n  ]\n}"
+      "response": "{\n  \"user\": {\n    \"id\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\",\n    \"aud\": \"authenticated\",\n    \"role\": \"authenticated\",\n    \"email\": \"seq-baseline-1-1790267718820@example.com\",\n    \"email_confirmed_at\": \"2026-09-24T16:35:24.883079Z\",\n    \"phone\": \"\",\n    \"confirmed_at\": \"2026-09-24T16:35:24.883079Z\",\n    \"last_sign_in_at\": \"2026-09-24T16:35:24.88663Z\",\n    \"app_metadata\": {\n      \"provider\": \"email\",\n      \"providers\": [\n        \"email\"\n      ]\n    },\n    \"user_metadata\": {\n      \"email\": \"seq-baseline-1-1790267718820@example.com\",\n      \"email_verified\": true,\n      \"phone_verified\": false,\n      \"sub\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\"\n    },\n    \"identities\": [\n      {\n        \"identity_id\": \"e87a41c6-e9f5-4aed-a8b5-12f6bc6bfe34\",\n        \"id\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\",\n        \"user_id\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\",\n        \"identity_data\": {\n          \"email\": \"seq-baseline-1-1790267718820@example.com\",\n          \"email_verified\": false,\n          \"phone_verified\": false,\n          \"sub\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\"\n        },\n        \"provider\": \"email\",\n        \"last_sign_in_at\": \"2026-09-24T16:35:24.87875Z\",\n        \"created_at\": \"2026-09-24T16:35:24.878811Z\",\n        \"updated_at\": \"2026-09-24T16:35:24.878811Z\",\n        \"email\": \"seq-baseline-1-1790267718820@example.com\"\n      }\n    ],\n    \"created_at\": \"2026-09-24T16:35:24.872229Z\",\n    \"updated_at\": \"2026-09-24T16:35:24.889638Z\",\n    \"is_anonymous\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\",\n      \"full_name\": null,\n      \"avatar_url\": null\n    }\n  ]\n}"
     }
   ],
   "wire": [
     {
       "tag": "seq",
-      "t": 1790265358128,
+      "t": 1790267721485,
       "method": "POST",
       "url": "http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
       "headers": {
@@ -100,7 +100,7 @@
     },
     {
       "tag": "seq",
-      "t": 1790265359779,
+      "t": 1790267723077,
       "method": "POST",
       "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
       "headers": {
@@ -117,7 +117,7 @@
     },
     {
       "tag": "seq",
-      "t": 1790265361543,
+      "t": 1790267724794,
       "method": "POST",
       "url": "http://localhost:54321/auth/v1/signup",
       "headers": {
@@ -135,12 +135,12 @@
     },
     {
       "tag": "seq",
-      "t": 1790265363283,
+      "t": 1790267726528,
       "method": "POST",
       "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
       "headers": {
         "sec-ch-ua-platform": "\"Linux\"",
-        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOTY5OGFhYS04NjFmLTQ2MDQtODYwYi0wNTQxYmRiNDVlYzkiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjY4OTYxLCJpYXQiOjE3OTAyNjUzNjEsImVtYWlsIjoic2VxLWJhc2VsaW5lLTEtMTc5MDI2NTM1NTM2M0BleGFtcGxlLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJzZXEtYmFzZWxpbmUtMS0xNzkwMjY1MzU1MzYzQGV4YW1wbGUuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiYTk2OThhYWEtODYxZi00NjA0LTg2MGItMDU0MWJkYjQ1ZWM5In0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3OTAyNjUzNjF9XSwic2Vzc2lvbl9pZCI6IjM3MmFkMTdjLTI4MjQtNGIyMS1hODkzLTBkOTNmOWE5ZmM1MyIsImlzX2Fub255bW91cyI6ZmFsc2V9.OqB0MF3O81UKkzgbrYDbeyMiJGK-PyfgeDxq0fG6y7M",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NDI4NWYxYS0yYWYzLTRkZDAtYTdiOC1mOGIwMjc3YzgyMTMiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjcxMzI0LCJpYXQiOjE3OTAyNjc3MjQsImVtYWlsIjoic2VxLWJhc2VsaW5lLTEtMTc5MDI2NzcxODgyMEBleGFtcGxlLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJzZXEtYmFzZWxpbmUtMS0xNzkwMjY3NzE4ODIwQGV4YW1wbGUuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiNDQyODVmMWEtMmFmMy00ZGQwLWE3YjgtZjhiMDI3N2M4MjEzIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3OTAyNjc3MjR9XSwic2Vzc2lvbl9pZCI6IjIwNjJjZjY2LTgwMDctNDBlZC04YzkyLTc1NjkwYjMzN2E4MCIsImlzX2Fub255bW91cyI6ZmFsc2V9.2GRs6vd9wZMFQC9NWP05UNiunuCWl89DmwdMJCjc3gE",
         "referer": "http://127.0.0.1:3300/",
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
         "sec-ch-ua-mobile": "?0",
@@ -152,12 +152,12 @@
     },
     {
       "tag": "seq",
-      "t": 1790265364835,
+      "t": 1790267728109,
       "method": "POST",
       "url": "http://localhost:54321/auth/v1/logout?scope=global",
       "headers": {
         "sec-ch-ua-platform": "\"Linux\"",
-        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhOTY5OGFhYS04NjFmLTQ2MDQtODYwYi0wNTQxYmRiNDVlYzkiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjY4OTYxLCJpYXQiOjE3OTAyNjUzNjEsImVtYWlsIjoic2VxLWJhc2VsaW5lLTEtMTc5MDI2NTM1NTM2M0BleGFtcGxlLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJzZXEtYmFzZWxpbmUtMS0xNzkwMjY1MzU1MzYzQGV4YW1wbGUuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiYTk2OThhYWEtODYxZi00NjA0LTg2MGItMDU0MWJkYjQ1ZWM5In0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3OTAyNjUzNjF9XSwic2Vzc2lvbl9pZCI6IjM3MmFkMTdjLTI4MjQtNGIyMS1hODkzLTBkOTNmOWE5ZmM1MyIsImlzX2Fub255bW91cyI6ZmFsc2V9.OqB0MF3O81UKkzgbrYDbeyMiJGK-PyfgeDxq0fG6y7M",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0NDI4NWYxYS0yYWYzLTRkZDAtYTdiOC1mOGIwMjc3YzgyMTMiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjcxMzI0LCJpYXQiOjE3OTAyNjc3MjQsImVtYWlsIjoic2VxLWJhc2VsaW5lLTEtMTc5MDI2NzcxODgyMEBleGFtcGxlLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJzZXEtYmFzZWxpbmUtMS0xNzkwMjY3NzE4ODIwQGV4YW1wbGUuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiNDQyODVmMWEtMmFmMy00ZGQwLWE3YjgtZjhiMDI3N2M4MjEzIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3OTAyNjc3MjR9XSwic2Vzc2lvbl9pZCI6IjIwNjJjZjY2LTgwMDctNDBlZC04YzkyLTc1NjkwYjMzN2E4MCIsImlzX2Fub255bW91cyI6ZmFsc2V9.2GRs6vd9wZMFQC9NWP05UNiunuCWl89DmwdMJCjc3gE",
         "x-supabase-api-version": "2024-01-01",
         "referer": "http://127.0.0.1:3300/",
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
@@ -223,11 +223,11 @@
     }
   ],
   "blockedExternal": [],
-  "email": "seq-baseline-1-1790265355363@example.com",
-  "wallMs": 11144,
+  "email": "seq-baseline-1-1790267718820@example.com",
+  "wallMs": 10931,
   "gateway": [
     {
-      "t": 1790265358124,
+      "t": 1790267721491,
       "method": "OPTIONS",
       "url": "/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
       "traceparent": null,
@@ -238,7 +238,7 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265359813,
+      "t": 1790267723097,
       "method": "OPTIONS",
       "url": "/functions/v1/select-from-table-with-auth-rls",
       "traceparent": null,
@@ -249,7 +249,7 @@
       "allowHeaders": "authorization, x-client-info, apikey, content-type"
     },
     {
-      "t": 1790265359852,
+      "t": 1790267723118,
       "method": "GET",
       "url": "/auth/v1/user",
       "traceparent": null,
@@ -260,7 +260,7 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265359875,
+      "t": 1790267723130,
       "method": "GET",
       "url": "/rest/v1/users?select=*",
       "traceparent": null,
@@ -271,7 +271,7 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265359880,
+      "t": 1790267723133,
       "method": "POST",
       "url": "/functions/v1/select-from-table-with-auth-rls",
       "traceparent": null,
@@ -282,7 +282,7 @@
       "allowHeaders": "authorization, x-client-info, apikey, content-type"
     },
     {
-      "t": 1790265361543,
+      "t": 1790267724792,
       "method": "OPTIONS",
       "url": "/auth/v1/signup",
       "traceparent": null,
@@ -293,7 +293,7 @@
       "allowHeaders": "apikey,authorization,content-type,x-client-info,x-supabase-api-version"
     },
     {
-      "t": 1790265361682,
+      "t": 1790267724895,
       "method": "POST",
       "url": "/auth/v1/signup",
       "traceparent": null,
@@ -304,7 +304,7 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265363289,
+      "t": 1790267726542,
       "method": "GET",
       "url": "/auth/v1/user",
       "traceparent": null,
@@ -315,7 +315,7 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265363296,
+      "t": 1790267726549,
       "method": "GET",
       "url": "/rest/v1/users?select=*",
       "traceparent": null,
@@ -326,7 +326,7 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265363306,
+      "t": 1790267726551,
       "method": "POST",
       "url": "/functions/v1/select-from-table-with-auth-rls",
       "traceparent": null,
@@ -337,7 +337,7 @@
       "allowHeaders": "authorization, x-client-info, apikey, content-type"
     },
     {
-      "t": 1790265364844,
+      "t": 1790267728109,
       "method": "OPTIONS",
       "url": "/auth/v1/logout?scope=global",
       "traceparent": null,
@@ -348,7 +348,7 @@
       "allowHeaders": "apikey,authorization,content-type,x-client-info,x-supabase-api-version"
     },
     {
-      "t": 1790265364859,
+      "t": 1790267728123,
       "method": "POST",
       "url": "/auth/v1/logout?scope=global",
       "traceparent": null,
@@ -359,6 +359,6 @@
       "allowHeaders": null
     }
   ],
-  "viteLog": "\n  VITE v6.4.3  ready in 202 ms\n\n  ➜  Local:   http://127.0.0.1:3300/\n",
+  "viteLog": "\n  \u001b[32m\u001b[1mVITE\u001b[22m v6.4.3\u001b[39m  \u001b[2mready in \u001b[0m\u001b[1m248\u001b[22m\u001b[2m\u001b[0m ms\u001b[22m\n\n  \u001b[32m➜\u001b[39m  \u001b[1mLocal\u001b[22m:   \u001b[36mhttp://127.0.0.1:\u001b[1m3300\u001b[22m/\u001b[39m\n",
   "fnLog": "Function \"select-from-table-with-auth-rls\" up and running!\nListening on http://127.0.0.1:18100/\n"
 }

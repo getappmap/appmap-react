@@ -11,7 +11,7 @@
       "name": "funwithappmap-react",
       "type": "requests"
     },
-    "trace_id": "dcf186bd283cbb1c765e5932da4eb08e"
+    "trace_id": "a719f1d6675ceb333b2cd1ceb61cebc9"
   },
   "classMap": [
     {
@@ -80,7 +80,7 @@
       "event": "return",
       "thread_id": 2,
       "parent_id": 2,
-      "elapsed": 0.00009999999962747097,
+      "elapsed": 0.0002000000001862645,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -103,7 +103,7 @@
       "event": "return",
       "thread_id": 3,
       "parent_id": 4,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0.00009999999962747097,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -120,7 +120,7 @@
         "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
         "headers": {
           "content-type": "text/plain",
-          "traceparent": "00-dcf186bd283cbb1c765e5932da4eb08e-f18f4fcef78f51ec-01"
+          "traceparent": "00-a719f1d6675ceb333b2cd1ceb61cebc9-b88238e5bbdac806-01"
         }
       }
     },
@@ -129,7 +129,7 @@
       "event": "return",
       "thread_id": 4,
       "parent_id": 6,
-      "elapsed": 0.0591999999997206,
+      "elapsed": 0.05770000000018626,
       "http_client_response": {
         "status_code": 200,
         "headers": {
@@ -152,7 +152,7 @@
       "event": "return",
       "thread_id": 5,
       "parent_id": 8,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0.00009999999962747097,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -175,7 +175,7 @@
       "event": "return",
       "thread_id": 6,
       "parent_id": 10,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0.0002000000001862645,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -188,7 +188,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 1,
-      "elapsed": 0.06429999999981374
+      "elapsed": 0.06329999999981374
     }
   ]
 }

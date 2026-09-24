@@ -11,7 +11,7 @@
       "name": "funwithappmap-react",
       "type": "requests"
     },
-    "trace_id": "5b54522f2a0b5275da7e8e260e946d3c"
+    "trace_id": "ec28cbfe34c3b6b316ce3daaa81e43e5"
   },
   "classMap": [
     {
@@ -80,7 +80,7 @@
       "event": "return",
       "thread_id": 2,
       "parent_id": 2,
-      "elapsed": 0.0002999999998137355,
+      "elapsed": 0.0002000000001862645,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -103,7 +103,7 @@
       "event": "return",
       "thread_id": 3,
       "parent_id": 4,
-      "elapsed": 0,
+      "elapsed": 0.00009999999962747097,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -120,7 +120,7 @@
         "url": "http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
         "headers": {
           "content-type": "text/plain",
-          "traceparent": "00-5b54522f2a0b5275da7e8e260e946d3c-dec23f1c61e1f23b-01"
+          "traceparent": "00-ec28cbfe34c3b6b316ce3daaa81e43e5-804752557aa819c1-01"
         }
       }
     },
@@ -129,7 +129,7 @@
       "event": "return",
       "thread_id": 4,
       "parent_id": 6,
-      "elapsed": 0.006,
+      "elapsed": 0.006599999999627471,
       "http_client_response": {
         "status_code": 0
       }
@@ -149,7 +149,7 @@
       "event": "return",
       "thread_id": 5,
       "parent_id": 8,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0.00009999999962747097,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -172,7 +172,7 @@
       "event": "return",
       "thread_id": 6,
       "parent_id": 10,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0.00010000000055879355,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -185,7 +185,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 1,
-      "elapsed": 0.018299999999813736
+      "elapsed": 0.030200000000186265
     }
   ]
 }

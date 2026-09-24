@@ -41,7 +41,7 @@
         "request_method": "GET",
         "url": "http://127.0.0.1:54321/auth/v1/user",
         "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-ea8420f29dfdae87-01"
+          "traceparent": "00-636f6e63300000000000000000000100-78a7abbca44468d6-01"
         }
       }
     },
@@ -53,7 +53,7 @@
         "request_method": "GET",
         "url": "http://127.0.0.1:54321/auth/v1/user",
         "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-1553cb9f580a2938-01"
+          "traceparent": "00-636f6e63300000000000000000000100-a8277a34f7a2e680-01"
         }
       }
     },
@@ -65,7 +65,7 @@
         "request_method": "GET",
         "url": "http://127.0.0.1:54321/auth/v1/user",
         "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-9675793aac7b185e-01"
+          "traceparent": "00-636f6e63300000000000000000000100-b403e4d4d7d57eb5-01"
         }
       }
     },
@@ -77,7 +77,7 @@
         "request_method": "GET",
         "url": "http://127.0.0.1:54321/auth/v1/user",
         "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-e9ccae9948caebe2-01"
+          "traceparent": "00-636f6e63300000000000000000000100-8452866f41f35aa8-01"
         }
       }
     },
@@ -89,7 +89,7 @@
         "request_method": "GET",
         "url": "http://127.0.0.1:54321/auth/v1/user",
         "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-a1274e23ea132c00-01"
+          "traceparent": "00-636f6e63300000000000000000000100-15221554326c1bf0-01"
         }
       }
     },
@@ -101,7 +101,7 @@
         "request_method": "GET",
         "url": "http://127.0.0.1:54321/auth/v1/user",
         "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-0e4bb311bb668f27-01"
+          "traceparent": "00-636f6e63300000000000000000000100-25be4776b1456bd3-01"
         }
       }
     },
@@ -110,7 +110,7 @@
       "event": "return",
       "thread_id": 2,
       "parent_id": 2,
-      "elapsed": 0.012149688000000027,
+      "elapsed": 0.013090238999999997,
       "http_client_response": {
         "status_code": 403,
         "headers": {
@@ -126,7 +126,7 @@
         "request_method": "GET",
         "url": "http://127.0.0.1:54321/rest/v1/users?select=*",
         "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-875ca716cd0afc8a-01"
+          "traceparent": "00-636f6e63300000000000000000000100-ed30683fb2f72af9-01"
         }
       }
     },
@@ -135,7 +135,7 @@
       "event": "return",
       "thread_id": 3,
       "parent_id": 3,
-      "elapsed": 0.011436410999999964,
+      "elapsed": 0.010917658999999958,
       "http_client_response": {
         "status_code": 403,
         "headers": {
@@ -151,7 +151,7 @@
         "request_method": "GET",
         "url": "http://127.0.0.1:54321/rest/v1/users?select=*",
         "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-88efc3486911a870-01"
+          "traceparent": "00-636f6e63300000000000000000000100-2c2a51002f48713a-01"
         }
       }
     },
@@ -160,7 +160,7 @@
       "event": "return",
       "thread_id": 4,
       "parent_id": 4,
-      "elapsed": 0.012638555999999994,
+      "elapsed": 0.014428495999999996,
       "http_client_response": {
         "status_code": 403,
         "headers": {
@@ -176,158 +176,62 @@
         "request_method": "GET",
         "url": "http://127.0.0.1:54321/rest/v1/users?select=*",
         "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-0b4d8ce183572ed3-01"
+          "traceparent": "00-636f6e63300000000000000000000100-dddb27abe1e9e70f-01"
         }
       }
     },
     {
       "id": 14,
       "event": "return",
-      "thread_id": 5,
-      "parent_id": 5,
-      "elapsed": 0.01700500500000004,
+      "thread_id": 8,
+      "parent_id": 9,
+      "elapsed": 0.008845054000000005,
       "http_client_response": {
         "status_code": 200,
         "headers": {
-          "content-type": "application/json"
+          "content-type": "application/json; charset=utf-8"
         }
       }
     },
     {
       "id": 15,
-      "event": "call",
-      "thread_id": 11,
-      "http_client_request": {
-        "request_method": "GET",
-        "url": "http://127.0.0.1:54321/rest/v1/users?select=*",
-        "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-427c1f444b84bff6-01"
-        }
-      }
-    },
-    {
-      "id": 16,
-      "event": "return",
-      "thread_id": 6,
-      "parent_id": 6,
-      "elapsed": 0.019634241999999972,
-      "http_client_response": {
-        "status_code": 200,
-        "headers": {
-          "content-type": "application/json"
-        }
-      }
-    },
-    {
-      "id": 17,
-      "event": "call",
-      "thread_id": 12,
-      "http_client_request": {
-        "request_method": "GET",
-        "url": "http://127.0.0.1:54321/rest/v1/users?select=*",
-        "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-8a735cd613e23829-01"
-        }
-      }
-    },
-    {
-      "id": 18,
-      "event": "return",
-      "thread_id": 9,
-      "parent_id": 11,
-      "elapsed": 0.013337474999999984,
-      "http_client_response": {
-        "status_code": 200,
-        "headers": {
-          "content-type": "application/json; charset=utf-8"
-        }
-      }
-    },
-    {
-      "id": 19,
-      "event": "return",
-      "thread_id": 7,
-      "parent_id": 7,
-      "elapsed": 0.02737882000000002,
-      "http_client_response": {
-        "status_code": 200,
-        "headers": {
-          "content-type": "application/json"
-        }
-      }
-    },
-    {
-      "id": 20,
-      "event": "return",
-      "thread_id": 11,
-      "parent_id": 15,
-      "elapsed": 0.009904085000000009,
-      "http_client_response": {
-        "status_code": 200,
-        "headers": {
-          "content-type": "application/json; charset=utf-8"
-        }
-      }
-    },
-    {
-      "id": 21,
-      "event": "return",
-      "thread_id": 8,
-      "parent_id": 9,
-      "elapsed": 0.021851223000000003,
-      "http_client_response": {
-        "status_code": 200,
-        "headers": {
-          "content-type": "application/json; charset=utf-8"
-        }
-      }
-    },
-    {
-      "id": 22,
-      "event": "return",
-      "thread_id": 10,
-      "parent_id": 13,
-      "elapsed": 0.01615526900000003,
-      "http_client_response": {
-        "status_code": 200,
-        "headers": {
-          "content-type": "application/json; charset=utf-8"
-        }
-      }
-    },
-    {
-      "id": 23,
-      "event": "call",
-      "thread_id": 13,
-      "http_client_request": {
-        "request_method": "GET",
-        "url": "http://127.0.0.1:54321/rest/v1/users?select=*",
-        "headers": {
-          "traceparent": "00-636f6e63300000000000000000000100-f3f51b7a6ba476dc-01"
-        }
-      }
-    },
-    {
-      "id": 24,
       "event": "return",
       "thread_id": 1,
       "parent_id": 1,
-      "elapsed": 0.04577746100000002,
+      "elapsed": 0.03209889600000002,
       "http_server_response": {
         "status_code": 200
       }
     },
     {
-      "id": 25,
+      "id": 16,
       "event": "return",
-      "thread_id": 13,
-      "parent_id": 23
+      "thread_id": 10,
+      "parent_id": 13
     },
     {
-      "id": 26,
+      "id": 17,
       "event": "return",
-      "thread_id": 12,
-      "parent_id": 17
+      "thread_id": 9,
+      "parent_id": 11
+    },
+    {
+      "id": 18,
+      "event": "return",
+      "thread_id": 7,
+      "parent_id": 7
+    },
+    {
+      "id": 19,
+      "event": "return",
+      "thread_id": 6,
+      "parent_id": 6
+    },
+    {
+      "id": 20,
+      "event": "return",
+      "thread_id": 5,
+      "parent_id": 5
     }
   ]
 }

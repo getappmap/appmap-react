@@ -4,7 +4,7 @@
     {
       "id": "S1",
       "desc": "load the app",
-      "ms": 2138,
+      "ms": 2088,
       "newMaps": [],
       "wire": [],
       "response": "{}"
@@ -12,7 +12,7 @@
     {
       "id": "S2",
       "desc": "invoke with the default dropdown entry (not served) -> 404",
-      "ms": 2091,
+      "ms": 2093,
       "newMaps": [
         "click_button_Invoke_Function_001.appmap.json"
       ],
@@ -20,7 +20,7 @@
         {
           "method": "POST",
           "url": "http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
-          "traceparent": "00-5b54522f2a0b5275da7e8e260e946d3c-dec23f1c61e1f23b-01"
+          "traceparent": "00-ec28cbfe34c3b6b316ce3daaa81e43e5-804752557aa819c1-01"
         }
       ],
       "response": "null"
@@ -28,7 +28,7 @@
     {
       "id": "S3",
       "desc": "select select-from-table-with-auth-rls, invoke signed out -> 200, no rows",
-      "ms": 2121,
+      "ms": 2118,
       "newMaps": [
         "click_button_Invoke_Function_002.appmap.json"
       ],
@@ -36,7 +36,7 @@
         {
           "method": "POST",
           "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
-          "traceparent": "00-94e174ae5ec8f77e14d1cd5cff2c8f9b-139170be7d9166c0-01"
+          "traceparent": "00-bf8dbf777e6c4134397ad0bd3b085794-d8c301a1e47e2646-01"
         }
       ],
       "response": "{\n  \"user\": null,\n  \"data\": []\n}"
@@ -44,7 +44,7 @@
     {
       "id": "S4",
       "desc": "sign up (auto-confirmed) -> signed in",
-      "ms": 2102,
+      "ms": 2124,
       "newMaps": [
         "click_a_Don_t_have_an_account_Sign_up_003.appmap.json"
       ],
@@ -52,7 +52,7 @@
         {
           "method": "POST",
           "url": "http://localhost:54321/auth/v1/signup",
-          "traceparent": "00-78b68209e5549f92e7f942e6ab900b7e-64899fb0217b0c5a-01"
+          "traceparent": "00-9bc8a3a7208f0d3df36ad152363d597a-d95d3b2bea5ffa21-01"
         }
       ],
       "response": "{\n  \"user\": null,\n  \"data\": []\n}"
@@ -60,7 +60,7 @@
     {
       "id": "S5",
       "desc": "invoke signed in -> 200, own row only (RLS)",
-      "ms": 2056,
+      "ms": 2070,
       "newMaps": [
         "click_button_Invoke_Function_004.appmap.json"
       ],
@@ -68,15 +68,15 @@
         {
           "method": "POST",
           "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
-          "traceparent": "00-14183e3a2e0b20bf92f9f22881e33b4f-fd2ddc912741611c-01"
+          "traceparent": "00-b55e784ccedf2f5d39f34e3fe56bfe72-b00785532833ead8-01"
         }
       ],
-      "response": "{\n  \"user\": {\n    \"id\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\",\n    \"aud\": \"authenticated\",\n    \"role\": \"authenticated\",\n    \"email\": \"seq-p-1790265474537@example.com\",\n    \"email_confirmed_at\": \"2026-09-24T15:58:01.702586Z\",\n    \"phone\": \"\",\n    \"confirmed_at\": \"2026-09-24T15:58:01.702586Z\",\n    \"last_sign_in_at\": \"2026-09-24T15:58:01.709487Z\",\n    \"app_metadata\": {\n      \"provider\": \"email\",\n      \"providers\": [\n        \"email\"\n      ]\n    },\n    \"user_metadata\": {\n      \"email\": \"seq-p-1790265474537@example.com\",\n      \"email_verified\": true,\n      \"phone_verified\": false,\n      \"sub\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\"\n    },\n    \"identities\": [\n      {\n        \"identity_id\": \"6a6b97fb-9ce8-40fc-aebf-95572909e149\",\n        \"id\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\",\n        \"user_id\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\",\n        \"identity_data\": {\n          \"email\": \"seq-p-1790265474537@example.com\",\n          \"email_verified\": false,\n          \"phone_verified\": false,\n          \"sub\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\"\n        },\n        \"provider\": \"email\",\n        \"last_sign_in_at\": \"2026-09-24T15:58:01.698673Z\",\n        \"created_at\": \"2026-09-24T15:58:01.698725Z\",\n        \"updated_at\": \"2026-09-24T15:58:01.698725Z\",\n        \"email\": \"seq-p-1790265474537@example.com\"\n      }\n    ],\n    \"created_at\": \"2026-09-24T15:58:01.693853Z\",\n    \"updated_at\": \"2026-09-24T15:58:01.712858Z\",\n    \"is_anonymous\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\",\n      \"full_name\": null,\n      \"avatar_url\": null\n    }\n  ]\n}"
+      "response": "{\n  \"user\": {\n    \"id\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\",\n    \"aud\": \"authenticated\",\n    \"role\": \"authenticated\",\n    \"email\": \"seq-p-1790267837283@example.com\",\n    \"email_confirmed_at\": \"2026-09-24T16:37:24.430293Z\",\n    \"phone\": \"\",\n    \"confirmed_at\": \"2026-09-24T16:37:24.430293Z\",\n    \"last_sign_in_at\": \"2026-09-24T16:37:24.433184Z\",\n    \"app_metadata\": {\n      \"provider\": \"email\",\n      \"providers\": [\n        \"email\"\n      ]\n    },\n    \"user_metadata\": {\n      \"email\": \"seq-p-1790267837283@example.com\",\n      \"email_verified\": true,\n      \"phone_verified\": false,\n      \"sub\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\"\n    },\n    \"identities\": [\n      {\n        \"identity_id\": \"52a42b95-5722-46e6-997d-171915b2dd7c\",\n        \"id\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\",\n        \"user_id\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\",\n        \"identity_data\": {\n          \"email\": \"seq-p-1790267837283@example.com\",\n          \"email_verified\": false,\n          \"phone_verified\": false,\n          \"sub\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\"\n        },\n        \"provider\": \"email\",\n        \"last_sign_in_at\": \"2026-09-24T16:37:24.427129Z\",\n        \"created_at\": \"2026-09-24T16:37:24.427175Z\",\n        \"updated_at\": \"2026-09-24T16:37:24.427175Z\",\n        \"email\": \"seq-p-1790267837283@example.com\"\n      }\n    ],\n    \"created_at\": \"2026-09-24T16:37:24.422835Z\",\n    \"updated_at\": \"2026-09-24T16:37:24.436013Z\",\n    \"is_anonymous\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\",\n      \"full_name\": null,\n      \"avatar_url\": null\n    }\n  ]\n}"
     },
     {
       "id": "S6",
       "desc": "sign out",
-      "ms": 2083,
+      "ms": 2063,
       "newMaps": [
         "click_button_Sign_out_005.appmap.json"
       ],
@@ -84,16 +84,16 @@
         {
           "method": "POST",
           "url": "http://localhost:54321/auth/v1/logout?scope=global",
-          "traceparent": "00-2b13112aedeb2eaa8887005f96ee7ada-8248b5ce375de0fe-01"
+          "traceparent": "00-0217ae015c0288114acc244f74d24396-21cac32bbb364c62-01"
         }
       ],
-      "response": "{\n  \"user\": {\n    \"id\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\",\n    \"aud\": \"authenticated\",\n    \"role\": \"authenticated\",\n    \"email\": \"seq-p-1790265474537@example.com\",\n    \"email_confirmed_at\": \"2026-09-24T15:58:01.702586Z\",\n    \"phone\": \"\",\n    \"confirmed_at\": \"2026-09-24T15:58:01.702586Z\",\n    \"last_sign_in_at\": \"2026-09-24T15:58:01.709487Z\",\n    \"app_metadata\": {\n      \"provider\": \"email\",\n      \"providers\": [\n        \"email\"\n      ]\n    },\n    \"user_metadata\": {\n      \"email\": \"seq-p-1790265474537@example.com\",\n      \"email_verified\": true,\n      \"phone_verified\": false,\n      \"sub\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\"\n    },\n    \"identities\": [\n      {\n        \"identity_id\": \"6a6b97fb-9ce8-40fc-aebf-95572909e149\",\n        \"id\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\",\n        \"user_id\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\",\n        \"identity_data\": {\n          \"email\": \"seq-p-1790265474537@example.com\",\n          \"email_verified\": false,\n          \"phone_verified\": false,\n          \"sub\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\"\n        },\n        \"provider\": \"email\",\n        \"last_sign_in_at\": \"2026-09-24T15:58:01.698673Z\",\n        \"created_at\": \"2026-09-24T15:58:01.698725Z\",\n        \"updated_at\": \"2026-09-24T15:58:01.698725Z\",\n        \"email\": \"seq-p-1790265474537@example.com\"\n      }\n    ],\n    \"created_at\": \"2026-09-24T15:58:01.693853Z\",\n    \"updated_at\": \"2026-09-24T15:58:01.712858Z\",\n    \"is_anonymous\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\",\n      \"full_name\": null,\n      \"avatar_url\": null\n    }\n  ]\n}"
+      "response": "{\n  \"user\": {\n    \"id\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\",\n    \"aud\": \"authenticated\",\n    \"role\": \"authenticated\",\n    \"email\": \"seq-p-1790267837283@example.com\",\n    \"email_confirmed_at\": \"2026-09-24T16:37:24.430293Z\",\n    \"phone\": \"\",\n    \"confirmed_at\": \"2026-09-24T16:37:24.430293Z\",\n    \"last_sign_in_at\": \"2026-09-24T16:37:24.433184Z\",\n    \"app_metadata\": {\n      \"provider\": \"email\",\n      \"providers\": [\n        \"email\"\n      ]\n    },\n    \"user_metadata\": {\n      \"email\": \"seq-p-1790267837283@example.com\",\n      \"email_verified\": true,\n      \"phone_verified\": false,\n      \"sub\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\"\n    },\n    \"identities\": [\n      {\n        \"identity_id\": \"52a42b95-5722-46e6-997d-171915b2dd7c\",\n        \"id\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\",\n        \"user_id\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\",\n        \"identity_data\": {\n          \"email\": \"seq-p-1790267837283@example.com\",\n          \"email_verified\": false,\n          \"phone_verified\": false,\n          \"sub\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\"\n        },\n        \"provider\": \"email\",\n        \"last_sign_in_at\": \"2026-09-24T16:37:24.427129Z\",\n        \"created_at\": \"2026-09-24T16:37:24.427175Z\",\n        \"updated_at\": \"2026-09-24T16:37:24.427175Z\",\n        \"email\": \"seq-p-1790267837283@example.com\"\n      }\n    ],\n    \"created_at\": \"2026-09-24T16:37:24.422835Z\",\n    \"updated_at\": \"2026-09-24T16:37:24.436013Z\",\n    \"is_anonymous\": false\n  },\n  \"data\": [\n    {\n      \"id\": \"b8bb86c3-ad92-45b7-8aca-2506b698371b\",\n      \"full_name\": null,\n      \"avatar_url\": null\n    }\n  ]\n}"
     }
   ],
   "wire": [
     {
       "tag": "seq",
-      "t": 1790265477345,
+      "t": 1790267840054,
       "method": "POST",
       "url": "http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
       "headers": {
@@ -103,7 +103,7 @@
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
         "sec-ch-ua-mobile": "?0",
         "x-client-info": "supabase-js/2.117.1; runtime=web",
-        "traceparent": "00-5b54522f2a0b5275da7e8e260e946d3c-dec23f1c61e1f23b-01",
+        "traceparent": "00-ec28cbfe34c3b6b316ce3daaa81e43e5-804752557aa819c1-01",
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
         "content-type": "text/plain",
         "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
@@ -111,7 +111,7 @@
     },
     {
       "tag": "seq",
-      "t": 1790265479451,
+      "t": 1790267842159,
       "method": "POST",
       "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
       "headers": {
@@ -121,7 +121,7 @@
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
         "sec-ch-ua-mobile": "?0",
         "x-client-info": "supabase-js/2.117.1; runtime=web",
-        "traceparent": "00-94e174ae5ec8f77e14d1cd5cff2c8f9b-139170be7d9166c0-01",
+        "traceparent": "00-bf8dbf777e6c4134397ad0bd3b085794-d8c301a1e47e2646-01",
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
         "content-type": "text/plain",
         "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
@@ -129,7 +129,7 @@
     },
     {
       "tag": "seq",
-      "t": 1790265481619,
+      "t": 1790267844344,
       "method": "POST",
       "url": "http://localhost:54321/auth/v1/signup",
       "headers": {
@@ -140,7 +140,7 @@
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
         "sec-ch-ua-mobile": "?0",
         "x-client-info": "supabase-js/2.117.1; runtime=web",
-        "traceparent": "00-78b68209e5549f92e7f942e6ab900b7e-64899fb0217b0c5a-01",
+        "traceparent": "00-9bc8a3a7208f0d3df36ad152363d597a-d95d3b2bea5ffa21-01",
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
         "content-type": "application/json;charset=UTF-8",
         "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
@@ -148,17 +148,17 @@
     },
     {
       "tag": "seq",
-      "t": 1790265483651,
+      "t": 1790267846388,
       "method": "POST",
       "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
       "headers": {
         "sec-ch-ua-platform": "\"Linux\"",
-        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiM2MwZmRkOS00OTUyLTQwYTctOWU4NS01MmI1YWE4YTkwMzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjY5MDgxLCJpYXQiOjE3OTAyNjU0ODEsImVtYWlsIjoic2VxLXAtMTc5MDI2NTQ3NDUzN0BleGFtcGxlLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJzZXEtcC0xNzkwMjY1NDc0NTM3QGV4YW1wbGUuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiYjNjMGZkZDktNDk1Mi00MGE3LTllODUtNTJiNWFhOGE5MDM0In0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3OTAyNjU0ODF9XSwic2Vzc2lvbl9pZCI6ImQxNzBmYjAzLTBhZmQtNDY2Zi1hNmIwLTAxMTYzYTUwNTU4MyIsImlzX2Fub255bW91cyI6ZmFsc2V9.aFHXloZR7niZjTo2h1q8vWx18mtPJOIB1kzp2Anz7Fs",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiOGJiODZjMy1hZDkyLTQ1YjctOGFjYS0yNTA2YjY5ODM3MWIiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjcxNDQ0LCJpYXQiOjE3OTAyNjc4NDQsImVtYWlsIjoic2VxLXAtMTc5MDI2NzgzNzI4M0BleGFtcGxlLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJzZXEtcC0xNzkwMjY3ODM3MjgzQGV4YW1wbGUuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiYjhiYjg2YzMtYWQ5Mi00NWI3LThhY2EtMjUwNmI2OTgzNzFiIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3OTAyNjc4NDR9XSwic2Vzc2lvbl9pZCI6IjExZWIxZDJjLThkMGYtNGViYS05NGRkLTQ2ODNjZjEyMGVjMCIsImlzX2Fub255bW91cyI6ZmFsc2V9.zqke19kqWMIbOB7xwkjMU7yut0BOpTbGPIkVut140PQ",
         "referer": "http://127.0.0.1:3300/",
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
         "sec-ch-ua-mobile": "?0",
         "x-client-info": "supabase-js/2.117.1; runtime=web",
-        "traceparent": "00-14183e3a2e0b20bf92f9f22881e33b4f-fd2ddc912741611c-01",
+        "traceparent": "00-b55e784ccedf2f5d39f34e3fe56bfe72-b00785532833ead8-01",
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
         "content-type": "text/plain",
         "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
@@ -166,18 +166,18 @@
     },
     {
       "tag": "seq",
-      "t": 1790265485715,
+      "t": 1790267848454,
       "method": "POST",
       "url": "http://localhost:54321/auth/v1/logout?scope=global",
       "headers": {
         "sec-ch-ua-platform": "\"Linux\"",
-        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiM2MwZmRkOS00OTUyLTQwYTctOWU4NS01MmI1YWE4YTkwMzQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjY5MDgxLCJpYXQiOjE3OTAyNjU0ODEsImVtYWlsIjoic2VxLXAtMTc5MDI2NTQ3NDUzN0BleGFtcGxlLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJzZXEtcC0xNzkwMjY1NDc0NTM3QGV4YW1wbGUuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiYjNjMGZkZDktNDk1Mi00MGE3LTllODUtNTJiNWFhOGE5MDM0In0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3OTAyNjU0ODF9XSwic2Vzc2lvbl9pZCI6ImQxNzBmYjAzLTBhZmQtNDY2Zi1hNmIwLTAxMTYzYTUwNTU4MyIsImlzX2Fub255bW91cyI6ZmFsc2V9.aFHXloZR7niZjTo2h1q8vWx18mtPJOIB1kzp2Anz7Fs",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiOGJiODZjMy1hZDkyLTQ1YjctOGFjYS0yNTA2YjY5ODM3MWIiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjcxNDQ0LCJpYXQiOjE3OTAyNjc4NDQsImVtYWlsIjoic2VxLXAtMTc5MDI2NzgzNzI4M0BleGFtcGxlLmNvbSIsInBob25lIjoiIiwiYXBwX21ldGFkYXRhIjp7InByb3ZpZGVyIjoiZW1haWwiLCJwcm92aWRlcnMiOlsiZW1haWwiXX0sInVzZXJfbWV0YWRhdGEiOnsiZW1haWwiOiJzZXEtcC0xNzkwMjY3ODM3MjgzQGV4YW1wbGUuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBob25lX3ZlcmlmaWVkIjpmYWxzZSwic3ViIjoiYjhiYjg2YzMtYWQ5Mi00NWI3LThhY2EtMjUwNmI2OTgzNzFiIn0sInJvbGUiOiJhdXRoZW50aWNhdGVkIiwiYWFsIjoiYWFsMSIsImFtciI6W3sibWV0aG9kIjoicGFzc3dvcmQiLCJ0aW1lc3RhbXAiOjE3OTAyNjc4NDR9XSwic2Vzc2lvbl9pZCI6IjExZWIxZDJjLThkMGYtNGViYS05NGRkLTQ2ODNjZjEyMGVjMCIsImlzX2Fub255bW91cyI6ZmFsc2V9.zqke19kqWMIbOB7xwkjMU7yut0BOpTbGPIkVut140PQ",
         "x-supabase-api-version": "2024-01-01",
         "referer": "http://127.0.0.1:3300/",
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
         "sec-ch-ua-mobile": "?0",
         "x-client-info": "supabase-js/2.117.1; runtime=web",
-        "traceparent": "00-2b13112aedeb2eaa8887005f96ee7ada-8248b5ce375de0fe-01",
+        "traceparent": "00-0217ae015c0288114acc244f74d24396-21cac32bbb364c62-01",
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
         "content-type": "application/json;charset=UTF-8",
         "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
@@ -238,11 +238,11 @@
     }
   ],
   "blockedExternal": [],
-  "email": "seq-P-1790265474537@example.com",
-  "wallMs": 13323,
+  "email": "seq-P-1790267837283@example.com",
+  "wallMs": 13319,
   "gateway": [
     {
-      "t": 1790265477342,
+      "t": 1790267840053,
       "method": "OPTIONS",
       "url": "/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
       "traceparent": null,
@@ -253,7 +253,7 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265479455,
+      "t": 1790267842164,
       "method": "OPTIONS",
       "url": "/functions/v1/select-from-table-with-auth-rls",
       "traceparent": null,
@@ -264,10 +264,10 @@
       "allowHeaders": "authorization, x-client-info, apikey, content-type, traceparent"
     },
     {
-      "t": 1790265479478,
+      "t": 1790267842181,
       "method": "GET",
       "url": "/auth/v1/user",
-      "traceparent": "00-94e174ae5ec8f77e14d1cd5cff2c8f9b-162f8c87526e5986-01",
+      "traceparent": "00-bf8dbf777e6c4134397ad0bd3b085794-3868331f4446e6e3-01",
       "acrh": null,
       "origin": null,
       "route": "auth",
@@ -275,10 +275,10 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265479494,
+      "t": 1790267842195,
       "method": "GET",
       "url": "/rest/v1/users?select=*",
-      "traceparent": "00-94e174ae5ec8f77e14d1cd5cff2c8f9b-b65f7506c7c1b1d4-01",
+      "traceparent": "00-bf8dbf777e6c4134397ad0bd3b085794-2372c6570fb2b89c-01",
       "acrh": null,
       "origin": null,
       "route": "rest",
@@ -286,10 +286,10 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265479497,
+      "t": 1790267842198,
       "method": "POST",
       "url": "/functions/v1/select-from-table-with-auth-rls",
-      "traceparent": "00-94e174ae5ec8f77e14d1cd5cff2c8f9b-139170be7d9166c0-01",
+      "traceparent": "00-bf8dbf777e6c4134397ad0bd3b085794-d8c301a1e47e2646-01",
       "acrh": null,
       "origin": "http://127.0.0.1:3300",
       "route": "functions",
@@ -297,7 +297,7 @@
       "allowHeaders": "authorization, x-client-info, apikey, content-type, traceparent"
     },
     {
-      "t": 1790265481617,
+      "t": 1790267844342,
       "method": "OPTIONS",
       "url": "/auth/v1/signup",
       "traceparent": null,
@@ -308,10 +308,10 @@
       "allowHeaders": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version"
     },
     {
-      "t": 1790265481717,
+      "t": 1790267844439,
       "method": "POST",
       "url": "/auth/v1/signup",
-      "traceparent": "00-78b68209e5549f92e7f942e6ab900b7e-64899fb0217b0c5a-01",
+      "traceparent": "00-9bc8a3a7208f0d3df36ad152363d597a-d95d3b2bea5ffa21-01",
       "acrh": null,
       "origin": "http://127.0.0.1:3300",
       "route": "auth",
@@ -319,10 +319,10 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265483657,
+      "t": 1790267846397,
       "method": "GET",
       "url": "/auth/v1/user",
-      "traceparent": "00-14183e3a2e0b20bf92f9f22881e33b4f-31ebeb46be41127d-01",
+      "traceparent": "00-b55e784ccedf2f5d39f34e3fe56bfe72-a2d39fd6d25902ee-01",
       "acrh": null,
       "origin": null,
       "route": "auth",
@@ -330,10 +330,10 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265483664,
+      "t": 1790267846403,
       "method": "GET",
       "url": "/rest/v1/users?select=*",
-      "traceparent": "00-14183e3a2e0b20bf92f9f22881e33b4f-607038c29110ad4f-01",
+      "traceparent": "00-b55e784ccedf2f5d39f34e3fe56bfe72-1af3aef3d9f3a4fb-01",
       "acrh": null,
       "origin": null,
       "route": "rest",
@@ -341,10 +341,10 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265483665,
+      "t": 1790267846405,
       "method": "POST",
       "url": "/functions/v1/select-from-table-with-auth-rls",
-      "traceparent": "00-14183e3a2e0b20bf92f9f22881e33b4f-fd2ddc912741611c-01",
+      "traceparent": "00-b55e784ccedf2f5d39f34e3fe56bfe72-b00785532833ead8-01",
       "acrh": null,
       "origin": "http://127.0.0.1:3300",
       "route": "functions",
@@ -352,7 +352,7 @@
       "allowHeaders": "authorization, x-client-info, apikey, content-type, traceparent"
     },
     {
-      "t": 1790265485715,
+      "t": 1790267848454,
       "method": "OPTIONS",
       "url": "/auth/v1/logout?scope=global",
       "traceparent": null,
@@ -363,10 +363,10 @@
       "allowHeaders": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version"
     },
     {
-      "t": 1790265485725,
+      "t": 1790267848464,
       "method": "POST",
       "url": "/auth/v1/logout?scope=global",
-      "traceparent": "00-2b13112aedeb2eaa8887005f96ee7ada-8248b5ce375de0fe-01",
+      "traceparent": "00-0217ae015c0288114acc244f74d24396-21cac32bbb364c62-01",
       "acrh": null,
       "origin": "http://127.0.0.1:3300",
       "route": "auth",
@@ -374,6 +374,6 @@
       "allowHeaders": null
     }
   ],
-  "viteLog": "\n  VITE v6.4.3  ready in 365 ms\n\n  ➜  Local:   http://127.0.0.1:3300/\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_001.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_002.appmap.json\nappmap: wrote tmp/appmap/interactions/click_a_Don_t_have_an_account_Sign_up_003.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_004.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Sign_out_005.appmap.json\n",
+  "viteLog": "\n  \u001b[32m\u001b[1mVITE\u001b[22m v6.4.3\u001b[39m  \u001b[2mready in \u001b[0m\u001b[1m318\u001b[22m\u001b[2m\u001b[0m ms\u001b[22m\n\n  \u001b[32m➜\u001b[39m  \u001b[1mLocal\u001b[22m:   \u001b[36mhttp://127.0.0.1:\u001b[1m3300\u001b[22m/\u001b[39m\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_001.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_002.appmap.json\nappmap: wrote tmp/appmap/interactions/click_a_Don_t_have_an_account_Sign_up_003.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_004.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Sign_out_005.appmap.json\n",
   "fnLog": "Function \"select-from-table-with-auth-rls\" up and running!\nListening on http://127.0.0.1:18100/\n"
 }

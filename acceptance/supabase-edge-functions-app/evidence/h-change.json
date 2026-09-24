@@ -20,6 +20,6 @@
   "sequenceDiagramDiff": {
     "R1": "changed HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=*` to HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=id`",
     "R2": "changed HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=*` to HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=id`",
-    "R3": "no diff file: /tmp/acc-fullstack-work/seq/h-a/POST_select-from-table-with-auth-rls_0000000300000003_003.sequence.json and /tmp/acc-fullstack-work/seq/h-b/POST_select-from-table-with-auth-rls_0000000300000009_003.sequence.json are identical"
+    "R3": "no diff file: /tmp/ci-sim/acc-fullstack/seq/h-a/POST_select-from-table-with-auth-rls_0000000300000003_003.sequence.json and /tmp/ci-sim/acc-fullstack/seq/h-b/POST_select-from-table-with-auth-rls_0000000300000009_003.sequence.json are identical"
   }
 }

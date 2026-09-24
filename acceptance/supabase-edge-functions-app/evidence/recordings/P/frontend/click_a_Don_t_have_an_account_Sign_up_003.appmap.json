@@ -11,7 +11,7 @@
       "name": "funwithappmap-react",
       "type": "requests"
     },
-    "trace_id": "78b68209e5549f92e7f942e6ab900b7e"
+    "trace_id": "9bc8a3a7208f0d3df36ad152363d597a"
   },
   "classMap": [
     {
@@ -47,7 +47,7 @@
         "url": "http://localhost:54321/auth/v1/signup",
         "headers": {
           "content-type": "application/json;charset=UTF-8",
-          "traceparent": "00-78b68209e5549f92e7f942e6ab900b7e-64899fb0217b0c5a-01"
+          "traceparent": "00-9bc8a3a7208f0d3df36ad152363d597a-d95d3b2bea5ffa21-01"
         }
       }
     },
@@ -56,7 +56,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 1,
-      "elapsed": 0.104,
+      "elapsed": 0.10390000000037253,
       "http_client_response": {
         "status_code": 200,
         "headers": {
@@ -79,7 +79,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 3,
-      "elapsed": 0.00009999999962747097,
+      "elapsed": 0.00010000000055879355,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -125,7 +125,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 7,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0.00010000000055879355,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",

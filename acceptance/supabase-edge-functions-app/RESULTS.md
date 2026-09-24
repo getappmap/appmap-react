@@ -13,8 +13,9 @@
   3.204.0, official validator `@appland/appmap-validate` 2.5.1, playwright-core 1.56.1 driving Chromium r1194.
 - **One command:** `acceptance/supabase-edge-functions-app/run.sh`. It clones the app at the pinned SHA, installs
   it, starts the stack, runs every pass and check, and exits 1 if any check is not PASS. CI runs it on every push
-  and PR (job `acceptance-supabase-edge-functions-app`). Evidence from the last clean run is in `evidence/`
-  (`run.log`, one JSON per check, every recording).
+  and PR (job `acceptance-supabase-edge-functions-app`). Evidence from the last run is in `evidence/`
+  (`run.log`, one JSON per check, every recording): a fresh clone of this branch, `CI=true`, the same commands as
+  the CI job, run locally.
 
 `EXPECTATIONS.md` was committed on its own before any recording (commit `3d00c68`).
 
@@ -45,8 +46,8 @@ calls with that one request's trace id**.
 | F. Failing test | **FAIL (analog)** | Not applicable as specified (no test runner). Analog: the failing interaction S2 left no zero-touch map (it does in the workaround pass). |
 | G. Stability | **NOT RUN** | Frontend zero-touch: nothing to compare. Backend R1–R3 run 1 vs run 2: 3/3 identical. Diagnostic workaround frontend S2–S6: 5/5 identical. |
 | H. Change detection | **PASS** | `.select('*')` → `.select('id')` in the function. Before/after sequence diagrams differ in R1 and R2 only; R3 identical. Official `sequence-diagram-diff`: "changed HTTP client request `GET …/rest/v1/users?select=*` to … `select=id`", nothing else. |
-| I. Concurrency | **FAIL** | 6 concurrent stamped requests → **1** backend map. That map holds 12 outbound calls (expected 2): 10 belong to the other 5 requests, and those calls went out **stamped with the first request's trace id** (bug 5). Browser zero-touch: app did not render. |
-| J. Overhead | MEASURED | Browser S1–S6: 11.1 / 11.3 s without the recorders, 13.3 / 13.6 s with them (workaround config, +20%). 20 direct requests: 258 ms plain, 276 ms recorded (+7%). |
+| I. Concurrency | **FAIL** | 6 concurrent stamped requests → **1** backend map. That map holds 9 outbound calls (expected 2): 7 belong to the other 5 requests, and those calls went out **stamped with the first request's trace id** (bug 5). Browser zero-touch: app did not render. |
+| J. Overhead | MEASURED | Browser S1–S6: 10.9 / 11.0 s without the recorders, 13.3 / 13.3 s with them (workaround config, +21%). 20 direct requests: 287 ms plain, 278 ms recorded (no measurable overhead; earlier runs +3% to +8%). |
 | **L. The cross-map link (headline)** | **FAIL** | Zero-touch: L1–L5 all fail (no app). Workaround: L1 ok (browser sends `traceparent`), L2–L5 fail — the browser blocks the call: "Request header field traceparent is not allowed by Access-Control-Allow-Headers in preflight response." With the app's CORS also patched (diagnostic): L1, L2, L3, L5 ok; L4 fails — the stitched diagram shows the click and the backend call, but not the handler and not the DB call (bug 7). |
 
 ## Details per check
@@ -128,8 +129,8 @@ envelopes and outbound calls but no app code at all.
   attribute it wraps (`recorder/src/transform.ts:212-221`).
 - Line numbers match the source (the workaround compiles JSX with Babel `retainLines`).
 - Interaction scoping: S4 is one map named `click a "Don't have an account? Sign up"` that also contains the sign-up
-  `POST` of the later "Sign up" button click, because Playwright filled the form and clicked within the window's
-  250 ms idle period. That is the documented interaction-window behaviour, but the map's name is misleading.
+  `POST` of the "Sign up" button click that followed within the window's 250 ms idle period. That is the documented
+  interaction-window behaviour, but the map's name is misleading.
 
 ### D. Noise (`evidence/d-noise.json`)
 
@@ -170,9 +171,9 @@ Scratch change (`app-config/h-change.patch`): index.ts:41 `.select('*')` → `.s
 ### I. Concurrency (`evidence/i-concurrency.json`, `evidence/i-backend.json`)
 
 - **Backend:** 6 stamped requests sent at once (3 anonymous, 3 signed-in users). All 6 got HTTP 200. **1 map** was
-  written. It holds **12** outbound calls instead of 2: 10 belong to the other five requests. On the wire, all 12
-  outbound calls carried the first request's trace id, and 0 carried their own request's trace id. (The exact
-  split varies with timing: an earlier run had 11 of 12.) The Deno
+  written. It holds **9** outbound calls instead of 2: 7 belong to the other five requests. On the wire, those 9
+  outbound calls all carried the recorded request's trace id, and 0 of the other requests' calls carried their own
+  trace id. (The exact split varies with timing: other runs had 11 and 12 calls in the one map.) The Deno
   driver records one request at a time (`deno/appmap.ts:111`, documented in doc 05), but the patched `fetch`
   records and stamps against whatever recording is active (`recorder/src/fetchPatch.ts:30-34`), so a request that
   is not being recorded has its outbound calls attributed to, and propagated as, a different request (bug 5).
@@ -185,8 +186,8 @@ Scratch change (`app-config/h-change.patch`): index.ts:41 `.select('*')` → `.s
 
 | | without recorders | with recorders |
 |---|---|---|
-| Browser S1–S6 wall time | 11.14 s, 11.32 s | 13.27 s, 13.63 s (workaround config; zero-touch broke the app) |
-| 20 sequential direct R2 requests | 258 ms | 276 ms |
+| Browser S1–S6 wall time | 10.93 s, 10.99 s | 13.26 s, 13.34 s (workaround config; zero-touch broke the app) |
+| 20 sequential direct R2 requests | 287 ms | 278 ms (within noise; other runs +3% to +8%) |
 
 ### L. The cross-map link (`evidence/l-link.json`)
 
@@ -240,8 +241,8 @@ Each reproduces with `acceptance/supabase-edge-functions-app/run.sh`; evidence f
    attributes are wrapped (`recorder/src/transform.ts:172-221`). Backend maps contain no app code. [`c-ground-truth.json`]
 5. **Concurrent requests on the Deno side: lost recordings and wrong trace propagation.** One recording at a time
    (`deno/appmap.ts:111`), but the global `fetch` patch records and stamps every outbound call against the active
-   recording (`recorder/src/fetchPatch.ts:30-34`). 6 concurrent requests → 1 map containing 12 outbound calls, 10 of
-   them from other requests, sent on the wire with the wrong trace id. [`i-backend.json`]
+   recording (`recorder/src/fetchPatch.ts:30-34`). 6 concurrent requests → 1 map containing 9–12 outbound calls
+   (varies by run), most of them from other requests, sent on the wire with the wrong trace id. [`i-backend.json`]
 6. **Declared version 1.12 is not honest.** Frontend `http_client_request` has no `message`
    (`recorder/src/recording.ts:236-251`); backend `metadata.language` has no `version` (`deno/appmap.ts:119`).
    [`b-validate.json`]
@@ -260,6 +261,16 @@ Not counted against the recorder: the missing S6 `onClick` in the workaround pas
 - Install flag: `npm install --legacy-peer-deps` (the app's own dependency tree, not the recorder).
 - Diagnostic passes only, never used for a verdict: the workaround Vite config (`vite.config.appmap-workaround.mjs`,
   config only) and the CORS patch (`app-config/p-cors-traceparent.patch`, an app change).
+
+## Harness notes
+
+- The first two Actions runs failed S4 (sign-up) in most passes, including the no-recorder baseline: GoTrue
+  answered 422 "Anonymous sign-ins are disabled", i.e. the app sent an empty email. That was a race in the
+  harness's driver, not the recorder: auth-ui-react's inputs are uncontrolled and a `useEffect` resets the form's
+  state when the view switches, so typing right after switching to the sign-up view could be lost on a slower
+  machine. Reproduced locally by delaying React's scheduler (old driver: 422; new driver: 200). The driver now
+  types in the sign-in view and then switches, which the app carries over. The fixed driver has not been run in
+  Actions yet.
 
 ## What could not be run or checked
 

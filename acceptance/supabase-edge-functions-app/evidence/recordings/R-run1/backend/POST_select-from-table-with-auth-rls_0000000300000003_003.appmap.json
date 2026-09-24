@@ -37,7 +37,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 1,
-      "elapsed": 0.0010002110000000358,
+      "elapsed": 0.0009580119999999966,
       "http_server_response": {
         "status_code": 400
       }

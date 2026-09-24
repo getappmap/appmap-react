@@ -4,7 +4,7 @@
     {
       "id": "S1",
       "desc": "load the app",
-      "ms": 2010,
+      "ms": 2099,
       "newMaps": [],
       "wire": [],
       "response": "{}"
@@ -12,7 +12,7 @@
     {
       "id": "S2",
       "desc": "invoke with the default dropdown entry (not served) -> 404",
-      "ms": 2095,
+      "ms": 2085,
       "newMaps": [
         "click_button_Invoke_Function_001.appmap.json"
       ],
@@ -20,7 +20,7 @@
         {
           "method": "POST",
           "url": "http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
-          "traceparent": "00-8f84313a67242159caf9cc5157640274-b06ea2d7a4c7e39f-01"
+          "traceparent": "00-78da94cce185b32f0a3946014257fc57-c0f25d969aa93528-01"
         }
       ],
       "response": "null"
@@ -28,7 +28,7 @@
     {
       "id": "S3",
       "desc": "select select-from-table-with-auth-rls, invoke signed out -> 200, no rows",
-      "ms": 2082,
+      "ms": 2086,
       "newMaps": [
         "click_button_Invoke_Function_002.appmap.json"
       ],
@@ -36,7 +36,7 @@
         {
           "method": "POST",
           "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
-          "traceparent": "00-798453f05f8063c0cdece0e794795653-98b97b3c51e2cd85-01"
+          "traceparent": "00-2ff122f2655075bdd332b350e19f882b-97ae0fa8bf5c7d6a-01"
         }
       ],
       "response": "null"
@@ -44,7 +44,7 @@
     {
       "id": "S4",
       "desc": "sign up (auto-confirmed) -> signed in",
-      "ms": 2125,
+      "ms": 2119,
       "newMaps": [
         "click_a_Don_t_have_an_account_Sign_up_003.appmap.json"
       ],
@@ -52,7 +52,7 @@
         {
           "method": "POST",
           "url": "http://localhost:54321/auth/v1/signup",
-          "traceparent": "00-0ed3ce7e32b8786507c845f32643dce1-de3c7e8edd9e3654-01"
+          "traceparent": "00-a2f0cec4d61dcb143953e0bd43a9c6fc-c332fc87b8fa1330-01"
         }
       ],
       "response": "null"
@@ -60,7 +60,7 @@
     {
       "id": "S5",
       "desc": "invoke signed in -> 200, own row only (RLS)",
-      "ms": 2078,
+      "ms": 2056,
       "newMaps": [
         "click_button_Invoke_Function_004.appmap.json"
       ],
@@ -68,7 +68,7 @@
         {
           "method": "POST",
           "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
-          "traceparent": "00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01"
+          "traceparent": "00-4fa734e173aa35f2e00d5946337d8dd2-f5760c32ab13e6ac-01"
         }
       ],
       "response": "null"
@@ -76,7 +76,7 @@
     {
       "id": "S6",
       "desc": "sign out",
-      "ms": 2092,
+      "ms": 2077,
       "newMaps": [
         "click_button_Sign_out_005.appmap.json"
       ],
@@ -84,7 +84,7 @@
         {
           "method": "POST",
           "url": "http://localhost:54321/auth/v1/logout?scope=global",
-          "traceparent": "00-a64e2d8989a95589fd87f1ed5aa1da80-a4a93f39dfa844e5-01"
+          "traceparent": "00-094e322477f80ac31d15566f34d7a6f3-d9185ae2155f9195-01"
         }
       ],
       "response": "null"
@@ -93,7 +93,7 @@
   "wire": [
     {
       "tag": "seq",
-      "t": 1790265447950,
+      "t": 1790267810966,
       "method": "POST",
       "url": "http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
       "headers": {
@@ -103,7 +103,7 @@
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
         "sec-ch-ua-mobile": "?0",
         "x-client-info": "supabase-js/2.117.1; runtime=web",
-        "traceparent": "00-8f84313a67242159caf9cc5157640274-b06ea2d7a4c7e39f-01",
+        "traceparent": "00-78da94cce185b32f0a3946014257fc57-c0f25d969aa93528-01",
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
         "content-type": "text/plain",
         "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
@@ -111,7 +111,7 @@
     },
     {
       "tag": "seq",
-      "t": 1790265450052,
+      "t": 1790267813074,
       "method": "POST",
       "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
       "headers": {
@@ -121,7 +121,7 @@
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
         "sec-ch-ua-mobile": "?0",
         "x-client-info": "supabase-js/2.117.1; runtime=web",
-        "traceparent": "00-798453f05f8063c0cdece0e794795653-98b97b3c51e2cd85-01",
+        "traceparent": "00-2ff122f2655075bdd332b350e19f882b-97ae0fa8bf5c7d6a-01",
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
         "content-type": "text/plain",
         "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
@@ -129,7 +129,7 @@
     },
     {
       "tag": "seq",
-      "t": 1790265452208,
+      "t": 1790267815225,
       "method": "POST",
       "url": "http://localhost:54321/auth/v1/signup",
       "headers": {
@@ -140,7 +140,7 @@
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
         "sec-ch-ua-mobile": "?0",
         "x-client-info": "supabase-js/2.117.1; runtime=web",
-        "traceparent": "00-0ed3ce7e32b8786507c845f32643dce1-de3c7e8edd9e3654-01",
+        "traceparent": "00-a2f0cec4d61dcb143953e0bd43a9c6fc-c332fc87b8fa1330-01",
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
         "content-type": "application/json;charset=UTF-8",
         "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
@@ -148,17 +148,17 @@
     },
     {
       "tag": "seq",
-      "t": 1790265454258,
+      "t": 1790267817256,
       "method": "POST",
       "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
       "headers": {
         "sec-ch-ua-platform": "\"Linux\"",
-        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYjVmYjM0MS0zMDIzLTRhZDQtOTE0Mi1iNTE4MjAwYTc5ODgiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjY5MDUyLCJpYXQiOjE3OTAyNjU0NTIsImVtYWlsIjoic2VxLXcxLTE3OTAyNjU0NDUyMzdAZXhhbXBsZS5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoic2VxLXcxLTE3OTAyNjU0NDUyMzdAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiJkYjVmYjM0MS0zMDIzLTRhZDQtOTE0Mi1iNTE4MjAwYTc5ODgifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDI2NTQ1Mn1dLCJzZXNzaW9uX2lkIjoiZmU3MjI4MjktMDFmMC00MTljLWJjYTYtYmE1ZDJiZGQ1NzBhIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.55tDCB1AKD00yhx6AKU3SQeJamsclL8WLHgyoxJLrco",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhYjNhNmIzNi0wYWVkLTRmNzgtYjdjZC02NTlhMDEyNzE0NjQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjcxNDE1LCJpYXQiOjE3OTAyNjc4MTUsImVtYWlsIjoic2VxLXcxLTE3OTAyNjc4MDgyNDFAZXhhbXBsZS5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoic2VxLXcxLTE3OTAyNjc4MDgyNDFAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiJhYjNhNmIzNi0wYWVkLTRmNzgtYjdjZC02NTlhMDEyNzE0NjQifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDI2NzgxNX1dLCJzZXNzaW9uX2lkIjoiNjQyMzUxN2QtYjdjNS00Y2FlLWI1NDctMjlmZDg1ZjVlOTNjIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.U6ikNlfM3ZQ4Q1oGZej3s-T2iQ535Hlo2h73OVGaUU8",
         "referer": "http://127.0.0.1:3300/",
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
         "sec-ch-ua-mobile": "?0",
         "x-client-info": "supabase-js/2.117.1; runtime=web",
-        "traceparent": "00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01",
+        "traceparent": "00-4fa734e173aa35f2e00d5946337d8dd2-f5760c32ab13e6ac-01",
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
         "content-type": "text/plain",
         "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
@@ -166,18 +166,18 @@
     },
     {
       "tag": "seq",
-      "t": 1790265456338,
+      "t": 1790267819323,
       "method": "POST",
       "url": "http://localhost:54321/auth/v1/logout?scope=global",
       "headers": {
         "sec-ch-ua-platform": "\"Linux\"",
-        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYjVmYjM0MS0zMDIzLTRhZDQtOTE0Mi1iNTE4MjAwYTc5ODgiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjY5MDUyLCJpYXQiOjE3OTAyNjU0NTIsImVtYWlsIjoic2VxLXcxLTE3OTAyNjU0NDUyMzdAZXhhbXBsZS5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoic2VxLXcxLTE3OTAyNjU0NDUyMzdAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiJkYjVmYjM0MS0zMDIzLTRhZDQtOTE0Mi1iNTE4MjAwYTc5ODgifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDI2NTQ1Mn1dLCJzZXNzaW9uX2lkIjoiZmU3MjI4MjktMDFmMC00MTljLWJjYTYtYmE1ZDJiZGQ1NzBhIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.55tDCB1AKD00yhx6AKU3SQeJamsclL8WLHgyoxJLrco",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhYjNhNmIzNi0wYWVkLTRmNzgtYjdjZC02NTlhMDEyNzE0NjQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzkwMjcxNDE1LCJpYXQiOjE3OTAyNjc4MTUsImVtYWlsIjoic2VxLXcxLTE3OTAyNjc4MDgyNDFAZXhhbXBsZS5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsIjoic2VxLXcxLTE3OTAyNjc4MDgyNDFAZXhhbXBsZS5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJzdWIiOiJhYjNhNmIzNi0wYWVkLTRmNzgtYjdjZC02NTlhMDEyNzE0NjQifSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc5MDI2NzgxNX1dLCJzZXNzaW9uX2lkIjoiNjQyMzUxN2QtYjdjNS00Y2FlLWI1NDctMjlmZDg1ZjVlOTNjIiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.U6ikNlfM3ZQ4Q1oGZej3s-T2iQ535Hlo2h73OVGaUU8",
         "x-supabase-api-version": "2024-01-01",
         "referer": "http://127.0.0.1:3300/",
         "sec-ch-ua": "\"Chromium\";v=\"141\", \"Not?A_Brand\";v=\"8\"",
         "sec-ch-ua-mobile": "?0",
         "x-client-info": "supabase-js/2.117.1; runtime=web",
-        "traceparent": "00-a64e2d8989a95589fd87f1ed5aa1da80-a4a93f39dfa844e5-01",
+        "traceparent": "00-094e322477f80ac31d15566f34d7a6f3-d9185ae2155f9195-01",
         "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
         "content-type": "application/json;charset=UTF-8",
         "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs"
@@ -278,11 +278,11 @@
     }
   ],
   "blockedExternal": [],
-  "email": "seq-W1-1790265445237@example.com",
-  "wallMs": 13271,
+  "email": "seq-W1-1790267808241@example.com",
+  "wallMs": 13259,
   "gateway": [
     {
-      "t": 1790265447947,
+      "t": 1790267810965,
       "method": "OPTIONS",
       "url": "/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI",
       "traceparent": null,
@@ -293,7 +293,7 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265450057,
+      "t": 1790267813079,
       "method": "OPTIONS",
       "url": "/functions/v1/select-from-table-with-auth-rls",
       "traceparent": null,
@@ -304,7 +304,7 @@
       "allowHeaders": "authorization, x-client-info, apikey, content-type"
     },
     {
-      "t": 1790265452205,
+      "t": 1790267815223,
       "method": "OPTIONS",
       "url": "/auth/v1/signup",
       "traceparent": null,
@@ -315,10 +315,10 @@
       "allowHeaders": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version"
     },
     {
-      "t": 1790265452309,
+      "t": 1790267815316,
       "method": "POST",
       "url": "/auth/v1/signup",
-      "traceparent": "00-0ed3ce7e32b8786507c845f32643dce1-de3c7e8edd9e3654-01",
+      "traceparent": "00-a2f0cec4d61dcb143953e0bd43a9c6fc-c332fc87b8fa1330-01",
       "acrh": null,
       "origin": "http://127.0.0.1:3300",
       "route": "auth",
@@ -326,7 +326,7 @@
       "allowHeaders": null
     },
     {
-      "t": 1790265454260,
+      "t": 1790267817258,
       "method": "OPTIONS",
       "url": "/functions/v1/select-from-table-with-auth-rls",
       "traceparent": null,
@@ -337,7 +337,7 @@
       "allowHeaders": "authorization, x-client-info, apikey, content-type"
     },
     {
-      "t": 1790265456336,
+      "t": 1790267819322,
       "method": "OPTIONS",
       "url": "/auth/v1/logout?scope=global",
       "traceparent": null,
@@ -348,10 +348,10 @@
       "allowHeaders": "apikey,authorization,content-type,traceparent,x-client-info,x-supabase-api-version"
     },
     {
-      "t": 1790265456349,
+      "t": 1790267819334,
       "method": "POST",
       "url": "/auth/v1/logout?scope=global",
-      "traceparent": "00-a64e2d8989a95589fd87f1ed5aa1da80-a4a93f39dfa844e5-01",
+      "traceparent": "00-094e322477f80ac31d15566f34d7a6f3-d9185ae2155f9195-01",
       "acrh": null,
       "origin": "http://127.0.0.1:3300",
       "route": "auth",
@@ -359,6 +359,6 @@
       "allowHeaders": null
     }
   ],
-  "viteLog": "\n  VITE v6.4.3  ready in 305 ms\n\n  ➜  Local:   http://127.0.0.1:3300/\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_001.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_002.appmap.json\nappmap: wrote tmp/appmap/interactions/click_a_Don_t_have_an_account_Sign_up_003.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_004.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Sign_out_005.appmap.json\n",
+  "viteLog": "\n  \u001b[32m\u001b[1mVITE\u001b[22m v6.4.3\u001b[39m  \u001b[2mready in \u001b[0m\u001b[1m343\u001b[22m\u001b[2m\u001b[0m ms\u001b[22m\n\n  \u001b[32m➜\u001b[39m  \u001b[1mLocal\u001b[22m:   \u001b[36mhttp://127.0.0.1:\u001b[1m3300\u001b[22m/\u001b[39m\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_001.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_002.appmap.json\nappmap: wrote tmp/appmap/interactions/click_a_Don_t_have_an_account_Sign_up_003.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Invoke_Function_004.appmap.json\nappmap: wrote tmp/appmap/interactions/click_button_Sign_out_005.appmap.json\n",
   "fnLog": "Function \"select-from-table-with-auth-rls\" up and running!\nListening on http://127.0.0.1:18100/\n"
 }

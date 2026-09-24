@@ -11,7 +11,7 @@
       "name": "funwithappmap-react",
       "type": "requests"
     },
-    "trace_id": "92fb6b910365931f28579002ae449971"
+    "trace_id": "1dece69124eb3c61f9e3685576b29554"
   },
   "classMap": [
     {
@@ -80,7 +80,7 @@
       "event": "return",
       "thread_id": 2,
       "parent_id": 2,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0.0002000000001862645,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -103,7 +103,7 @@
       "event": "return",
       "thread_id": 3,
       "parent_id": 4,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -120,7 +120,7 @@
         "url": "http://localhost:54321/functions/v1/select-from-table-with-auth-rls",
         "headers": {
           "content-type": "text/plain",
-          "traceparent": "00-92fb6b910365931f28579002ae449971-41e01bf2fd75ea53-01"
+          "traceparent": "00-1dece69124eb3c61f9e3685576b29554-4f22fd40d0e17720-01"
         }
       }
     },
@@ -129,7 +129,7 @@
       "event": "return",
       "thread_id": 4,
       "parent_id": 6,
-      "elapsed": 0.05240000000037253,
+      "elapsed": 0.06329999999981374,
       "http_client_response": {
         "status_code": 200,
         "headers": {
@@ -152,7 +152,7 @@
       "event": "return",
       "thread_id": 5,
       "parent_id": 8,
-      "elapsed": 0.0002000000001862645,
+      "elapsed": 0.00010000000055879355,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -175,7 +175,7 @@
       "event": "return",
       "thread_id": 6,
       "parent_id": 10,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0.00009999999962747097,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -188,7 +188,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 1,
-      "elapsed": 0.0611999999997206
+      "elapsed": 0.06979999999981373
     }
   ]
 }

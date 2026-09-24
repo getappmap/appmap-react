@@ -40,7 +40,7 @@
         "request_method": "GET",
         "url": "http://127.0.0.1:54321/auth/v1/user",
         "headers": {
-          "traceparent": "00-64697265637400000000000000000002-d0ca6e1fc89dd36d-01"
+          "traceparent": "00-64697265637400000000000000000002-4d332cde1a262e8f-01"
         }
       }
     },
@@ -49,7 +49,7 @@
       "event": "return",
       "thread_id": 2,
       "parent_id": 2,
-      "elapsed": 0.006509575000000041,
+      "elapsed": 0.00762960499999997,
       "http_client_response": {
         "status_code": 200,
         "headers": {
@@ -65,7 +65,7 @@
         "request_method": "GET",
         "url": "http://127.0.0.1:54321/rest/v1/users?select=*",
         "headers": {
-          "traceparent": "00-64697265637400000000000000000002-308ceae6718f54c7-01"
+          "traceparent": "00-64697265637400000000000000000002-14f3e9dd2b9d42c2-01"
         }
       }
     },
@@ -74,7 +74,7 @@
       "event": "return",
       "thread_id": 3,
       "parent_id": 4,
-      "elapsed": 0.004251474999999971,
+      "elapsed": 0.005050325999999984,
       "http_client_response": {
         "status_code": 200,
         "headers": {
@@ -87,7 +87,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 1,
-      "elapsed": 0.01322805100000005,
+      "elapsed": 0.01496206699999999,
       "http_server_response": {
         "status_code": 200
       }

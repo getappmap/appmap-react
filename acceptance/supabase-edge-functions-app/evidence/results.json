@@ -35,8 +35,8 @@
         "R1 missing: call event for the request handler (index.ts:10) [call events: []]",
         "R2 missing: call event for the request handler (index.ts:10) [call events: []]",
         "R3 missing: call event for the request handler (index.ts:10) [call events: []]",
-        "(W) S3 wrong: POST /functions/v1/select-from-table-with-auth-rls -> 200 with traceparent [POST http://localhost:54321/functions/v1/select-from-table-with-auth-rls status=0 traceparent=00-798453f05f8063c0cdece0e794795653-98b97b3c51]",
-        "(W) S5 wrong: POST /functions/v1/select-from-table-with-auth-rls -> 200 with traceparent [POST http://localhost:54321/functions/v1/select-from-table-with-auth-rls status=0 traceparent=00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5]",
+        "(W) S3 wrong: POST /functions/v1/select-from-table-with-auth-rls -> 200 with traceparent [POST http://localhost:54321/functions/v1/select-from-table-with-auth-rls status=0 traceparent=00-2ff122f2655075bdd332b350e19f882b-97ae0fa8bf]",
+        "(W) S5 wrong: POST /functions/v1/select-from-table-with-auth-rls -> 200 with traceparent [POST http://localhost:54321/functions/v1/select-from-table-with-auth-rls status=0 traceparent=00-4fa734e173aa35f2e00d5946337d8dd2-f5760c32ab]",
         "(W) S6 missing: call * (src/App.js:86) [App.App@10, App.App@10, App.App@10, App.App@10]"
       ]
     },
@@ -77,14 +77,14 @@
         "patch applied: true; before vs after: same [\"R3\"], different [\"R1\",\"R2\"]",
         "R1 outbound after: [\"/auth/v1/user\",\"/rest/v1/users?select=id\"]; R2 after: [\"/auth/v1/user\",\"/rest/v1/users?select=id\"]; R3 after: []",
         "official sequence-diagram-diff R1: changed HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=*` to HTTP client request `GET http://127.0.0.1:54321/rest/v1/users?select=id`",
-        "appmap-trace --baseline: traced 2 interaction(s) (diffed against /tmp/acc-fullstack-work/rec/R-run1/backend)"
+        "appmap-trace --baseline: traced 2 interaction(s) (diffed against /tmp/ci-sim/acc-fullstack/rec/R-run1/backend)"
       ]
     },
     "I": {
       "status": "FAIL",
       "evidence": [
-        "backend: 1/6 maps for 6 concurrent stamped requests; per request: [{\"req\":0,\"status\":200,\"map\":true,\"clientsInMap\":12,\"leaked\":10,\"ownTraceOnWire\":12},{\"req\":1,\"status\":200,\"map\":false,\"clientsInMap\":null,\"leaked\":null,\"ownTraceOnWire\":0},{\"req\":2,\"status\":200,\"map\":false,\"clientsInMap\":null,\"leaked\":null,\"ownTraceOnWire\":0},{\"req\":3,\"status\":200,\"map\":false,\"clientsInMap\":null,\"leaked\":null,\"ownTraceOnWire\":0},{\"req\":4,\"status\":200,\"map\":false,\"clientsInMap\":null,\"leaked\":null,\"ownTraceOnWire\":0},{\"req\":5,\"status\":200,\"map\":false,\"clientsInMap\":null,\"leaked\":null,\"ownTraceOnWire\":0}]",
-        "   request 0's map holds 12 outbound calls (expected 2): 10 belong to the other concurrent requests, and were stamped with request 0's trace id on the wire (12 gateway hits carry it)",
+        "backend: 1/6 maps for 6 concurrent stamped requests; per request: [{\"req\":0,\"status\":200,\"map\":true,\"clientsInMap\":9,\"leaked\":7,\"ownTraceOnWire\":9},{\"req\":1,\"status\":200,\"map\":false,\"clientsInMap\":null,\"leaked\":null,\"ownTraceOnWire\":0},{\"req\":2,\"status\":200,\"map\":false,\"clientsInMap\":null,\"leaked\":null,\"ownTraceOnWire\":0},{\"req\":3,\"status\":200,\"map\":false,\"clientsInMap\":null,\"leaked\":null,\"ownTraceOnWire\":0},{\"req\":4,\"status\":200,\"map\":false,\"clientsInMap\":null,\"leaked\":null,\"ownTraceOnWire\":0},{\"req\":5,\"status\":200,\"map\":false,\"clientsInMap\":null,\"leaked\":null,\"ownTraceOnWire\":0}]",
+        "   request 0's map holds 9 outbound calls (expected 2): 7 belong to the other concurrent requests, and were stamped with request 0's trace id on the wire (9 gateway hits carry it)",
         "   request 1 (00-636f6e63310000000000000000000101-0000010100000011-01) got HTTP 200, NO backend map, and 0 of its outbound calls carried its own trace id",
         "   request 2 (00-636f6e63320000000000000000000102-0000010200000012-01) got HTTP 200, NO backend map, and 0 of its outbound calls carried its own trace id",
         "   request 3 (00-636f6e63330000000000000000000103-0000010300000013-01) got HTTP 200, NO backend map, and 0 of its outbound calls carried its own trace id",
@@ -97,8 +97,8 @@
     "J": {
       "status": "MEASURED",
       "evidence": [
-        "browser S1-S6 wall time: no recorder 11144 / 11316 ms; recorded (W config) 13271 / 13628 ms; zero-touch 32308 ms (app broken, not comparable)",
-        "20 direct R2 requests: plain 258 ms, recorded 276 ms (7%)"
+        "browser S1-S6 wall time: no recorder 10931 / 10992 ms; recorded (W config) 13259 / 13343 ms; zero-touch 32271 ms (app broken, not comparable)",
+        "20 direct R2 requests: plain 287 ms, recorded 278 ms (-3%)"
       ]
     },
     "L": {
@@ -107,10 +107,10 @@
         "zero-touch: S3: L1 FAIL, L2 FAIL, L3 FAIL, L4 FAIL, L5 FAIL; S5: L1 FAIL, L2 FAIL, L3 FAIL, L4 FAIL, L5 FAIL",
         "  S5 wire traceparent=none; map trace_id=no map; map request traceparent=none",
         "(W, diagnostic) S3: L1 ok, L2 FAIL, L3 FAIL, L4 FAIL, L5 FAIL; S5: L1 ok, L2 FAIL, L3 FAIL, L4 FAIL, L5 FAIL",
-        "  W S5: wire traceparent=00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01; map trace_id=b0892b57b7ac2eb2a71fe7bb0d931bf8; map request traceparent=00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01; no backend map with that parent_span_id; response \"null\" vs no recorder \"{ \\\"user\\\": { \\\"id\\\": \\\"a9698aaa-861f-4604-860b-0541bdb45ec9\\\", \\\"aud\\\": \\\"authenticated\\\", \\\"role\\\": \\\"authentic\"",
+        "  W S5: wire traceparent=00-4fa734e173aa35f2e00d5946337d8dd2-f5760c32ab13e6ac-01; map trace_id=4fa734e173aa35f2e00d5946337d8dd2; map request traceparent=00-4fa734e173aa35f2e00d5946337d8dd2-f5760c32ab13e6ac-01; no backend map with that parent_span_id; response \"null\" vs no recorder \"{ \\\"user\\\": { \\\"id\\\": \\\"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\\\", \\\"aud\\\": \\\"authenticated\\\", \\\"role\\\": \\\"authentic\"",
         "  W browser console: Access to fetch at 'http://localhost:54321/functions/v1/local:%20Whatever%20function%20is%20currently%20served%20by%20the%20CLI' from origin 'http://127.0.0.1:3300' has been blocked by CORS policy: Response to preflight ",
         "(P, diagnostic, app CORS patched) S3: L1 ok, L2 ok, L3 ok, L4 FAIL, L5 ok; S5: L1 ok, L2 ok, L3 ok, L4 FAIL, L5 ok",
-        "  P S5: POST_select-from-table-with-auth-rls_fd2ddc912741611c_002.appmap.json trace_id=14183e3a2e0b20bf92f9f22881e33b4f parent_span_id=fd2ddc912741611c; link: {\"span_id\":\"fd2ddc912741611c\",\"request\":{\"method\":\"POST\",\"url\":\"http://localhost:54321/functions/v1/select-from-table-with-auth-rls\",\"status\":200},\"backend\":{\"path\":\"/tmp/acc-fullstack-work/rec/; diagram shows {\"click\":true,\"handler\":false,\"backend\":true,\"db\":false}",
+        "  P S5: POST_select-from-table-with-auth-rls_b00785532833ead8_002.appmap.json trace_id=b55e784ccedf2f5d39f34e3fe56bfe72 parent_span_id=b00785532833ead8; link: {\"span_id\":\"b00785532833ead8\",\"request\":{\"method\":\"POST\",\"url\":\"http://localhost:54321/functions/v1/select-from-table-with-auth-rls\",\"status\":200},\"backend\":{\"path\":\"/tmp/ci-sim/acc-fullstack/re; diagram shows {\"click\":true,\"handler\":false,\"backend\":true,\"db\":false}",
         "  appmap-link on P: 7 frontend map(s), 2 backend map(s): 2/9 requests linked, 0 orphan backend map(s)"
       ]
     }
@@ -119,27 +119,27 @@
   "timings": {
     "browserSequence": {
       "baseline": [
-        11144,
-        11316
+        10931,
+        10992
       ],
       "zeroTouch": [
-        32308
+        32271
       ],
       "workaround": [
-        13271,
-        13628
+        13259,
+        13343
       ]
     },
     "direct20xR2": {
-      "plain": 258.4919560000126,
-      "recorded": 276.495013000007
+      "plain": 287.1124570000102,
+      "recorded": 278.12103000000934
     }
   },
   "tools": {
     "node": "v22.22.2",
     "deno": "deno 2.9.7 (stable, release, x86_64-unknown-linux-gnu)",
     "appmapCli": "3.204.0",
-    "recorderRepoHead": "a32a126cbdffc7a031af25b27abfd0c136b1c5d0",
+    "recorderRepoHead": "d77f15a57e43c797e0956eb034f531b0c583fbdb",
     "appVersions": {
       "@supabase/supabase-js": "2.117.1",
       "@supabase/auth-ui-react": "0.2.8",

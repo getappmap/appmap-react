@@ -11,7 +11,7 @@
       "name": "funwithappmap-react",
       "type": "requests"
     },
-    "trace_id": "0dbea443172a41c18f4a55fafca8023a"
+    "trace_id": "eb23b07050682c5288ce3c70a256360b"
   },
   "classMap": [
     {
@@ -47,7 +47,7 @@
         "url": "http://localhost:54321/auth/v1/signup",
         "headers": {
           "content-type": "application/json;charset=UTF-8",
-          "traceparent": "00-0dbea443172a41c18f4a55fafca8023a-94ae5f26ab357ae8-01"
+          "traceparent": "00-eb23b07050682c5288ce3c70a256360b-0765fa3fce4efd1c-01"
         }
       }
     },
@@ -56,7 +56,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 1,
-      "elapsed": 0.09220000000018626,
+      "elapsed": 0.10120000000018627,
       "http_client_response": {
         "status_code": 200,
         "headers": {
@@ -79,7 +79,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 3,
-      "elapsed": 0.00019999999972060322,
+      "elapsed": 0.00019999999925494194,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -102,7 +102,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 5,
-      "elapsed": 0,
+      "elapsed": 0.0002000000001862645,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",
@@ -148,7 +148,7 @@
       "event": "return",
       "thread_id": 1,
       "parent_id": 9,
-      "elapsed": 0.00010000000009313225,
+      "elapsed": 0.0002000000001862645,
       "return_value": {
         "class": "Object",
         "value": "[object Object]",

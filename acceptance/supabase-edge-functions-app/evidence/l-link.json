@@ -1,6 +1,6 @@
 {
   "zeroTouch": {
-    "linkStdout": "0 frontend map(s), 0 backend map(s): 0/0 requests linked, 0 orphan backend map(s)\nwrote ../../../tmp/acc-fullstack-work/links/Z/appmap-links.json and 0 diagram(s)",
+    "linkStdout": "0 frontend map(s), 0 backend map(s): 0/0 requests linked, 0 orphan backend map(s)\nwrote ../acc-fullstack/links/Z/appmap-links.json and 0 diagram(s)",
     "S3": {
       "step": "S3",
       "L1": false,
@@ -25,7 +25,7 @@
       "L4": false,
       "L4quote": "diagram shows {\"click\":false,\"handler\":false,\"backend\":false,\"db\":false} (no diagram written)",
       "L5": false,
-      "L5quote": "response \"\" vs no recorder \"{ \\\"user\\\": { \\\"id\\\": \\\"a9698aaa-861f-4604-860b-0541bdb45ec9\\\", \\\"aud\\\": \\\"authenticated\\\", \\\"role\\\": \\\"authentic\""
+      "L5quote": "response \"\" vs no recorder \"{ \\\"user\\\": { \\\"id\\\": \\\"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\\\", \\\"aud\\\": \\\"authenticated\\\", \\\"role\\\": \\\"authentic\""
     },
     "dialogs": [],
     "corsErrors": [
@@ -33,15 +33,15 @@
     ]
   },
   "workaroundDiagnostic": {
-    "linkStdout": "5 frontend map(s), 0 backend map(s): 0/5 requests linked, 0 orphan backend map(s)\nwrote ../../../tmp/acc-fullstack-work/links/W/appmap-links.json and 0 diagram(s)",
+    "linkStdout": "5 frontend map(s), 0 backend map(s): 0/5 requests linked, 0 orphan backend map(s)\nwrote ../acc-fullstack/links/W/appmap-links.json and 0 diagram(s)",
     "S3": {
       "step": "S3",
       "L1": true,
-      "L1quote": "wire traceparent=00-798453f05f8063c0cdece0e794795653-98b97b3c51e2cd85-01; map trace_id=798453f05f8063c0cdece0e794795653; map request traceparent=00-798453f05f8063c0cdece0e794795653-98b97b3c51e2cd85-01",
+      "L1quote": "wire traceparent=00-2ff122f2655075bdd332b350e19f882b-97ae0fa8bf5c7d6a-01; map trace_id=2ff122f2655075bdd332b350e19f882b; map request traceparent=00-2ff122f2655075bdd332b350e19f882b-97ae0fa8bf5c7d6a-01",
       "L2": false,
       "L2quote": "no backend map with that parent_span_id",
       "L3": false,
-      "L3quote": "link: {\"span_id\":\"98b97b3c51e2cd85\",\"request\":{\"method\":\"POST\",\"url\":\"http://localhost:54321/functions/v1/select-from-table-with-auth-rls\",\"status\":0},\"backend\":null}; orphans 0",
+      "L3quote": "link: {\"span_id\":\"97ae0fa8bf5c7d6a\",\"request\":{\"method\":\"POST\",\"url\":\"http://localhost:54321/functions/v1/select-from-table-with-auth-rls\",\"status\":0},\"backend\":null}; orphans 0",
       "L4": false,
       "L4quote": "diagram shows {\"click\":false,\"handler\":false,\"backend\":false,\"db\":false} (no diagram written)",
       "L5": false,
@@ -50,15 +50,15 @@
     "S5": {
       "step": "S5",
       "L1": true,
-      "L1quote": "wire traceparent=00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01; map trace_id=b0892b57b7ac2eb2a71fe7bb0d931bf8; map request traceparent=00-b0892b57b7ac2eb2a71fe7bb0d931bf8-48cec8e3b5bd77c2-01",
+      "L1quote": "wire traceparent=00-4fa734e173aa35f2e00d5946337d8dd2-f5760c32ab13e6ac-01; map trace_id=4fa734e173aa35f2e00d5946337d8dd2; map request traceparent=00-4fa734e173aa35f2e00d5946337d8dd2-f5760c32ab13e6ac-01",
       "L2": false,
       "L2quote": "no backend map with that parent_span_id",
       "L3": false,
-      "L3quote": "link: {\"span_id\":\"48cec8e3b5bd77c2\",\"request\":{\"method\":\"POST\",\"url\":\"http://localhost:54321/functions/v1/select-from-table-with-auth-rls\",\"status\":0},\"backend\":null}; orphans 0",
+      "L3quote": "link: {\"span_id\":\"f5760c32ab13e6ac\",\"request\":{\"method\":\"POST\",\"url\":\"http://localhost:54321/functions/v1/select-from-table-with-auth-rls\",\"status\":0},\"backend\":null}; orphans 0",
       "L4": false,
       "L4quote": "diagram shows {\"click\":false,\"handler\":false,\"backend\":false,\"db\":false} (no diagram written)",
       "L5": false,
-      "L5quote": "response \"null\" vs no recorder \"{ \\\"user\\\": { \\\"id\\\": \\\"a9698aaa-861f-4604-860b-0541bdb45ec9\\\", \\\"aud\\\": \\\"authenticated\\\", \\\"role\\\": \\\"authentic\""
+      "L5quote": "response \"null\" vs no recorder \"{ \\\"user\\\": { \\\"id\\\": \\\"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\\\", \\\"aud\\\": \\\"authenticated\\\", \\\"role\\\": \\\"authentic\""
     },
     "dialogs": [
       {
@@ -81,15 +81,15 @@
     ]
   },
   "corsPatchedDiagnostic": {
-    "linkStdout": "7 frontend map(s), 2 backend map(s): 2/9 requests linked, 0 orphan backend map(s)\nwrote ../../../tmp/acc-fullstack-work/links/P/appmap-links.json and 2 diagram(s)",
+    "linkStdout": "7 frontend map(s), 2 backend map(s): 2/9 requests linked, 0 orphan backend map(s)\nwrote ../acc-fullstack/links/P/appmap-links.json and 2 diagram(s)",
     "S3": {
       "step": "S3",
       "L1": true,
-      "L1quote": "wire traceparent=00-94e174ae5ec8f77e14d1cd5cff2c8f9b-139170be7d9166c0-01; map trace_id=94e174ae5ec8f77e14d1cd5cff2c8f9b; map request traceparent=00-94e174ae5ec8f77e14d1cd5cff2c8f9b-139170be7d9166c0-01",
+      "L1quote": "wire traceparent=00-bf8dbf777e6c4134397ad0bd3b085794-d8c301a1e47e2646-01; map trace_id=bf8dbf777e6c4134397ad0bd3b085794; map request traceparent=00-bf8dbf777e6c4134397ad0bd3b085794-d8c301a1e47e2646-01",
       "L2": true,
-      "L2quote": "POST_select-from-table-with-auth-rls_139170be7d9166c0_001.appmap.json trace_id=94e174ae5ec8f77e14d1cd5cff2c8f9b parent_span_id=139170be7d9166c0",
+      "L2quote": "POST_select-from-table-with-auth-rls_d8c301a1e47e2646_001.appmap.json trace_id=bf8dbf777e6c4134397ad0bd3b085794 parent_span_id=d8c301a1e47e2646",
       "L3": true,
-      "L3quote": "link: {\"span_id\":\"139170be7d9166c0\",\"request\":{\"method\":\"POST\",\"url\":\"http://localhost:54321/functions/v1/select-from-table-with-auth-rls\",\"status\":200},\"backend\":{\"path\":\"/tmp/acc-fullstack-work/rec/P/backend/POST_select-from-table-with-auth-rls_139170be7d9166c0_001.appmap.json\",\"name\":\"POST /select-from-table-with-auth-rls\"}}; orphans 0",
+      "L3quote": "link: {\"span_id\":\"d8c301a1e47e2646\",\"request\":{\"method\":\"POST\",\"url\":\"http://localhost:54321/functions/v1/select-from-table-with-auth-rls\",\"status\":200},\"backend\":{\"path\":\"/tmp/ci-sim/acc-fullstack/rec/P/backend/POST_select-from-table-with-auth-rls_d8c301a1e47e2646_001.appmap.json\",\"name\":\"POST /select-from-table-with-auth-rls\"}}; orphans 0",
       "L4": false,
       "L4quote": "diagram shows {\"click\":true,\"handler\":false,\"backend\":true,\"db\":false}",
       "L5": true,
@@ -98,15 +98,15 @@
     "S5": {
       "step": "S5",
       "L1": true,
-      "L1quote": "wire traceparent=00-14183e3a2e0b20bf92f9f22881e33b4f-fd2ddc912741611c-01; map trace_id=14183e3a2e0b20bf92f9f22881e33b4f; map request traceparent=00-14183e3a2e0b20bf92f9f22881e33b4f-fd2ddc912741611c-01",
+      "L1quote": "wire traceparent=00-b55e784ccedf2f5d39f34e3fe56bfe72-b00785532833ead8-01; map trace_id=b55e784ccedf2f5d39f34e3fe56bfe72; map request traceparent=00-b55e784ccedf2f5d39f34e3fe56bfe72-b00785532833ead8-01",
       "L2": true,
-      "L2quote": "POST_select-from-table-with-auth-rls_fd2ddc912741611c_002.appmap.json trace_id=14183e3a2e0b20bf92f9f22881e33b4f parent_span_id=fd2ddc912741611c",
+      "L2quote": "POST_select-from-table-with-auth-rls_b00785532833ead8_002.appmap.json trace_id=b55e784ccedf2f5d39f34e3fe56bfe72 parent_span_id=b00785532833ead8",
       "L3": true,
-      "L3quote": "link: {\"span_id\":\"fd2ddc912741611c\",\"request\":{\"method\":\"POST\",\"url\":\"http://localhost:54321/functions/v1/select-from-table-with-auth-rls\",\"status\":200},\"backend\":{\"path\":\"/tmp/acc-fullstack-work/rec/P/backend/POST_select-from-table-with-auth-rls_fd2ddc912741611c_002.appmap.json\",\"name\":\"POST /select-from-table-with-auth-rls\"}}; orphans 0",
+      "L3quote": "link: {\"span_id\":\"b00785532833ead8\",\"request\":{\"method\":\"POST\",\"url\":\"http://localhost:54321/functions/v1/select-from-table-with-auth-rls\",\"status\":200},\"backend\":{\"path\":\"/tmp/ci-sim/acc-fullstack/rec/P/backend/POST_select-from-table-with-auth-rls_b00785532833ead8_002.appmap.json\",\"name\":\"POST /select-from-table-with-auth-rls\"}}; orphans 0",
       "L4": false,
       "L4quote": "diagram shows {\"click\":true,\"handler\":false,\"backend\":true,\"db\":false}",
       "L5": true,
-      "L5quote": "response \"{ \\\"user\\\": { \\\"id\\\": \\\"b3c0fdd9-4952-40a7-9e85-52b5aa8a9034\\\", \\\"aud\\\": \\\"authenticated\\\", \\\"role\\\": \\\"authentic\" vs no recorder \"{ \\\"user\\\": { \\\"id\\\": \\\"a9698aaa-861f-4604-860b-0541bdb45ec9\\\", \\\"aud\\\": \\\"authenticated\\\", \\\"role\\\": \\\"authentic\""
+      "L5quote": "response \"{ \\\"user\\\": { \\\"id\\\": \\\"b8bb86c3-ad92-45b7-8aca-2506b698371b\\\", \\\"aud\\\": \\\"authenticated\\\", \\\"role\\\": \\\"authentic\" vs no recorder \"{ \\\"user\\\": { \\\"id\\\": \\\"44285f1a-2af3-4dd0-a7b8-f8b0277c8213\\\", \\\"aud\\\": \\\"authenticated\\\", \\\"role\\\": \\\"authentic\""
     },
     "dialogs": [
       {
