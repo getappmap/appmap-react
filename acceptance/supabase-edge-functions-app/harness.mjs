@@ -53,6 +53,7 @@ const cfg = (name) => path.join(APP, name);
 const FE_CONFIGS = {
   baseline: cfg('vite.config.cra.mjs'),
   Z: cfg('vite.config.appmap.mjs'),
+  ZL: cfg('vite.config.appmap-link.mjs'),
   W: cfg('vite.config.appmap-workaround.mjs'),
 };
 
@@ -119,9 +120,11 @@ const Zpar = await browserPass('Z-parallel', { fe: 'Z', recorded: true, mode: 'p
 log('W: config-only workaround (diagnostic), twice');
 const W1 = await browserPass('W1', { fe: 'W', recorded: true });
 const W2 = await browserPass('W2', { fe: 'W', recorded: true });
-log('P: W + the app patched to allow traceparent in CORS (diagnostic only; an app change)');
-const P = await browserPass('P', { fe: 'W', recorded: true, corsPatch: true });
-const Ppar = await browserPass('P-parallel', { fe: 'W', recorded: true, mode: 'parallel', corsPatch: true });
+log('ZL: zero-touch + the one linking setting (propagateTraceHeaderOrigins: the function\'s origin), app unpatched');
+const ZL = await browserPass('ZL', { fe: 'ZL', recorded: true });
+log('P: ZL + the app patched to allow traceparent in CORS (diagnostic only; an app change)');
+const P = await browserPass('P', { fe: 'ZL', recorded: true, corsPatch: true });
+const Ppar = await browserPass('P-parallel', { fe: 'ZL', recorded: true, mode: 'parallel', corsPatch: true });
 
 // ------------------------------------------------------- direct requests R1-R4
 async function directSeries(tag, { recorded = true } = {}) {
@@ -264,7 +267,7 @@ verdict('A', 'FAIL', [
 ]);
 
 // --- B ---------------------------------------------------------------------
-const allMaps = [Z, Zpar, W1, P, Ppar].flatMap((p) => [...listMaps(p.frontendDir), ...listMaps(p.backendDir)])
+const allMaps = [Z, Zpar, W1, ZL, P, Ppar].flatMap((p) => [...listMaps(p.frontendDir), ...listMaps(p.backendDir)])
   .concat(listMaps(R1run.dir), listMaps(Ib.dir));
 const bReport = allMaps.map(validateFile);
 save('b-validate.json', bReport);
@@ -279,7 +282,10 @@ verdict('B', bReport.length && bValid === bReport.length && zMaps > 0 ? 'PASS' :
 ]);
 
 // --- C ---------------------------------------------------------------------
-function frontendItems(pass) {
+// traceparent on the cross-origin function call: 'absent' in a pass without
+// propagateTraceHeaderOrigins (the recorder must not stamp an unlisted
+// cross-origin request), 'present' in the linking config.
+function frontendItems(pass, { traceparent = 'absent' } = {}) {
   const items = [];
   const add = (id, expect, status, quote) => items.push({ id, expect, status, quote });
   // A step can open more than one interaction window (S4: the view-switch
@@ -312,10 +318,13 @@ function frontendItems(pass) {
       return;
     }
     const c = m.clients.find((x) => x.method === method && x.url === url);
-    const exp = `${method} ${url.replace('http://localhost:54321', '')} -> ${status}${needTp ? ' with traceparent' : ''}`;
+    const tpWanted = needTp ? traceparent : 'any';
+    const exp = `${method} ${url.replace('http://localhost:54321', '')} -> ${status}${tpWanted === 'present' ? ' with traceparent' : tpWanted === 'absent' ? ' without traceparent (cross-origin, not listed)' : ''}`;
     if (!c) add(id, exp, 'missing', m.clients.map((x) => `${x.method} ${x.url} ${x.status}`).join(', ') || 'no http_client_request');
     else {
-      const tpOk = !needTp || (c.traceparent && c.traceparent.split('-')[1] === m.trace_id);
+      const tpOk =
+        tpWanted === 'any' ||
+        (tpWanted === 'absent' ? !c.traceparent : !!c.traceparent && c.traceparent.split('-')[1] === m.trace_id);
       add(id, exp, c.status === status && tpOk ? 'found' : 'wrong', `${c.method} ${c.url} status=${c.status} traceparent=${c.traceparent ?? 'none'}`);
     }
   };
@@ -377,15 +386,17 @@ function backendItems(run) {
 }
 const cZ = frontendItems(Z);
 const cW = frontendItems(W1);
+const cZL = frontendItems(ZL, { traceparent: 'present' });
 const cR = backendItems(R1run);
-save('c-ground-truth.json', { zeroTouchFrontend: cZ, workaroundFrontendDiagnostic: cW, backend: cR });
+save('c-ground-truth.json', { zeroTouchFrontend: cZ, workaroundFrontendDiagnostic: cW, linkingConfigFrontendDiagnostic: cZL, backend: cR });
 const tally = (items) => items.reduce((t, i) => ((t[i.status] = (t[i.status] ?? 0) + 1), t), {});
 const bad = (items) => items.filter((i) => i.status !== 'found').map((i) => `${i.id} ${i.status}: ${i.expect} [${String(i.quote).slice(0, 140)}]`);
 verdict('C', [...cZ, ...cR].every((i) => i.status === 'found') ? 'PASS' : 'FAIL', [
-  `zero-touch frontend: ${j(tally(cZ))}; backend: ${j(tally(cR))}; (diagnostic) workaround frontend: ${j(tally(cW))}`,
+  `zero-touch frontend: ${j(tally(cZ))}; backend: ${j(tally(cR))}; (diagnostic) workaround frontend: ${j(tally(cW))}; (diagnostic) linking config frontend: ${j(tally(cZL))}`,
   ...bad(cZ).slice(0, 8),
   ...bad(cR),
   ...bad(cW).map((s) => `(W) ${s}`),
+  ...bad(cZL).map((s) => `(ZL) ${s}`),
 ]);
 
 // --- D ---------------------------------------------------------------------
@@ -537,7 +548,7 @@ results.timings = {
 };
 save('j-overhead.json', results.timings);
 verdict('J', 'MEASURED', [
-  `browser S1-S6 wall time: no recorder ${wall(base1)} / ${wall(base2)} ms; recorded (W config) ${wall(W1)} / ${wall(W2)} ms; zero-touch ${wall(Z)} ms (app broken, not comparable)`,
+  `browser S1-S6 wall time: no recorder ${wall(base1)} / ${wall(base2)} ms; recorded zero-touch ${wall(Z)} ms${Z.report.appDidNotRender ? ' (app did not render, not comparable)' : ''}; recorded (W config) ${wall(W1)} / ${wall(W2)} ms`,
   `20 direct R2 requests: plain ${jDirect.plain.toFixed(0)} ms, recorded ${jDirect.recorded.toFixed(0)} ms (${((100 * (jDirect.recorded - jDirect.plain)) / jDirect.plain).toFixed(0)}%)`,
 ]);
 
@@ -599,14 +610,22 @@ function sameS5(a, b) {
   }
 }
 const LZ = linkCheck(Z, 'Z');
+const LZL = linkCheck(ZL, 'ZL');
 const LW = linkCheck(W1, 'W');
 const LP = linkCheck(P, 'P');
-save('l-link.json', { zeroTouch: LZ, workaroundDiagnostic: LW, corsPatchedDiagnostic: LP });
+save('l-link.json', { zeroTouch: LZ, linkingConfig: LZL, workaroundDiagnostic: LW, corsPatchedDiagnostic: LP });
 const lStr = (L) => ['S3', 'S5'].map((id) => `${id}: ${['L1', 'L2', 'L3', 'L4', 'L5'].map((k) => `${k} ${L[id][k] ? 'ok' : 'FAIL'}`).join(', ')}`).join('; ');
-const lOk = ['S3', 'S5'].every((id) => ['L1', 'L2', 'L3', 'L4', 'L5'].every((k) => LZ[id][k]));
+// L is judged in the linking configuration: zero-touch plus
+// propagateTraceHeaderOrigins for the function's origin, the one setting
+// the recorder needs to stamp a cross-origin request (without it the
+// recorder, by design, sends no traceparent there).
+const lOk = ['S3', 'S5'].every((id) => ['L1', 'L2', 'L3', 'L4', 'L5'].every((k) => LZL[id][k]));
 verdict('L', lOk ? 'PASS' : 'FAIL', [
-  `zero-touch: ${lStr(LZ)}`,
-  `  S5 ${LZ.S5.L1quote}`,
+  `linking config (zero-touch + propagateTraceHeaderOrigins, app unpatched): ${lStr(LZL)}`,
+  `  ZL S5: ${LZL.S5.L1quote}; ${LZL.S5.L2quote}; ${LZL.S5.L5quote}`,
+  ...LZL.corsErrors.slice(0, 1).map((c) => `  ZL browser console: ${c}`),
+  `zero-touch (no linking setting: cross-origin requests not stamped, by design): ${lStr(LZ)}`,
+  `  S5 ${LZ.S5.L1quote}; ${LZ.S5.L5quote}`,
   `(W, diagnostic) ${lStr(LW)}`,
   `  W S5: ${LW.S5.L1quote}; ${LW.S5.L2quote}; ${LW.S5.L5quote}`,
   ...LW.corsErrors.slice(0, 1).map((c) => `  W browser console: ${c}`),
@@ -618,6 +637,7 @@ verdict('L', lOk ? 'PASS' : 'FAIL', [
 // ---------------------------------------------------------------- evidence
 for (const [name, dir] of [
   ['Z/frontend', Z.frontendDir], ['Z/backend', Z.backendDir], ['W1/frontend', W1.frontendDir], ['W1/backend', W1.backendDir],
+  ['ZL/frontend', ZL.frontendDir], ['ZL/backend', ZL.backendDir],
   ['P/frontend', P.frontendDir], ['P/backend', P.backendDir], ['R-run1/backend', R1run.dir], ['R-h/backend', Hrun.dir],
   ['I-backend/backend', Ib.dir], ['P-parallel/frontend', Ppar.frontendDir], ['P-parallel/backend', Ppar.backendDir],
 ]) copyDir(dir, path.join(EVID, 'recordings', name));
