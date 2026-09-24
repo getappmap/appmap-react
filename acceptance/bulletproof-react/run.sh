@@ -271,20 +271,58 @@ done
 python3 - "$OUT/h-seq-compare.json" "$OUT/h-diff" <<'EOF' | tee -a "$OUT/run.log"
 import json, sys, glob, os
 r = json.load(open(sys.argv[1]))
-print('before vs after: same', len(r['same']), 'different', sorted(r['different']))
+print('official sequence diagrams (reported, not required), before vs after: same', len(r['same']), 'different', sorted(r['different']))
 EOF
-H_OK=$(python3 - "$OUT/h-seq-compare.json" "$OUT/h-appmap-trace.txt" <<'EOF'
-import json, sys
-r = json.load(open(sys.argv[1]))
-expected = {'should_render_discussion.sequence.json', 'should_update_discussion.sequence.json',
-            'should_create_and_delete_a_comment_on_the_discussion.sequence.json'}
-trace = open(sys.argv[2]).read()
-# The change must show in exactly the three comment-loading tests, and the
-# diff must name the changed request (/comments ... page).
-shows = set(r['different']) == expected and 'comments' in json.dumps(r['different'])
-print('PASS' if shows and 'page' in trace else 'FAIL')
+# The change is query-only (page=1 dropped). By the AppMap spec the query
+# is in the event's `message`, which the official sequence diagram does not
+# render, so the official diff above cannot show it: it is reported, not
+# required. The change must show in appmap-trace, which reads `message`:
+# in exactly the three comment-loading tests, each GET /comments that had
+# page=1 is now without it, and nothing else may be marked changed in any
+# test (random ids may not be normalized here, only in G and I).
+H_OK=$(python3 - "$OUT/h-appmap-trace.txt" "$OUT/h-trace-check.json" <<'EOF'
+import json, re, sys
+text = open(sys.argv[1]).read()
+expected = {'should render discussion', 'should update discussion',
+            'should create and delete a comment on the discussion'}
+# appmap-trace prints, per interaction: its name at column 0, an indented
+# caption, the ASCII tree, then a ```mermaid block; a final "traced N" line.
+blocks, name, in_mermaid = {}, None, False
+for line in text.split('\n'):
+    if line.startswith('```'):
+        in_mermaid = not in_mermaid
+        continue
+    if in_mermaid:
+        continue
+    if re.match(r'^[A-Za-z]', line) and not line.startswith('traced '):
+        name = line.strip()
+        blocks[name] = []
+    elif name is not None:
+        blocks[name].append(line)
+marks = {n: [re.sub(r'^[\s│├└─]*', '', l).split('  [')[0].strip()
+             for l in lines if re.match(r'^[\s│├└─]*[+-] ', l)]
+         for n, lines in blocks.items()}
+old = re.compile(r'^- → network: GET /comments\?discussionId=[^&\s]+&page=1$')
+new = re.compile(r'^\+ → network: GET /comments\?discussionId=[^&\s]+$')
+report = {'interactions': len(blocks), 'shows_change': {}, 'other_marks': {}}
+for n, m in marks.items():
+    change = [x for x in m if old.match(x) or new.match(x)]
+    other = [x for x in m if x not in change]
+    if n in expected:
+        n_old = sum(1 for x in change if old.match(x))
+        report['shows_change'][n] = n_old > 0 and n_old == len(change) - n_old
+    else:
+        other += change
+    if other:
+        report['other_marks'][n] = other
+report['missing_expected'] = sorted(expected - set(blocks))
+ok = not report['missing_expected'] and all(report['shows_change'].get(n) for n in expected) and not report['other_marks']
+report['verdict'] = 'PASS' if ok else 'FAIL'
+json.dump(report, open(sys.argv[2], 'w'), indent=2)
+print(report['verdict'])
 EOF
 )
+python3 -c "import json,sys; r=json.load(open(sys.argv[1])); print('appmap-trace: change shown in', r['shows_change'], '| missing', r['missing_expected'], '| other changed steps:', {k: v[:3] for k, v in r['other_marks'].items()})" "$OUT/h-trace-check.json" | tee -a "$OUT/run.log"
 verdict H "$H_OK"
 
 # ------------------------------------------------------------------ J --
