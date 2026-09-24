@@ -378,6 +378,30 @@ def noise(tests_dir):
 
 
 # ---------------------------------------------------------------- G/I --
+# Stability / concurrency comparisons only (G, I; never H): the ids the
+# app's mock backend generates for discussions and comments are random per
+# run (a UUID, or a 21-character nanoid), and appear in request URLs. Like
+# timestamps they are not behaviour, so they are replaced by <id> with
+# exactly this regex before comparing, and the official tool's `digest` /
+# `subtreeDigest` fields, which are hashes computed over those same URLs,
+# are left out of these two comparisons.
+RANDOM_ID = re.compile(
+    r'(https://api\.bulletproofapp\.com/(?:discussions|comments)/)'
+    r'(?:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[A-Za-z0-9_-]{21})'
+    r'(?=$|[/?\s])')
+NORMALIZE_IDS = {'G', 'I'}
+
+
+def norm_ids(node):
+    if isinstance(node, dict):
+        return {k: norm_ids(v) for k, v in node.items() if k not in ('digest', 'subtreeDigest')}
+    if isinstance(node, list):
+        return [norm_ids(v) for v in node]
+    if isinstance(node, str):
+        return RANDOM_ID.sub(r'\1<id>', node)
+    return node
+
+
 def norm_seq(node):
     if isinstance(node, dict):
         return {k: norm_seq(v) for k, v in sorted(node.items())
@@ -409,7 +433,11 @@ def compare_seq(dir_a, dir_b, label):
             out[os.path.basename(f)] = json.load(open(f))
         return out
     a, b = load(dir_a), load(dir_b)
+    if label in NORMALIZE_IDS:
+        a = {k: norm_ids(v) for k, v in a.items()}
+        b = {k: norm_ids(v) for k, v in b.items()}
     rep = {'label': label, 'a': dir_a, 'b': dir_b, 'only_in_a': sorted(set(a) - set(b)),
+           'ids_normalized': label in NORMALIZE_IDS, 'id_regex': RANDOM_ID.pattern if label in NORMALIZE_IDS else None,
            'only_in_b': sorted(set(b) - set(a)), 'same': [], 'different': {}}
     for k in sorted(set(a) & set(b)):
         if norm_seq(a[k]) == norm_seq(b[k]):
