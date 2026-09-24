@@ -13,6 +13,12 @@ jobs:
         with:
           node-version: 20
           cache: npm
+      # `deno` is needed by examples/petclinic-react/test/e2e/deno-fullstack.test.ts,
+      # which otherwise skips itself. Installing it here makes the Deno half of
+      # the full-stack e2e test run on every PR instead of being silently skipped.
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v2.x
       - run: npm ci
       - run: npm run typecheck --workspaces --if-present
       - run: npm run build --workspaces --if-present
