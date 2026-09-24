@@ -510,6 +510,10 @@ def browser(inter_dir, report_path):
                 m = json.load(open(os.path.join(inter_dir, fname)))
                 methods = sorted({e['method_id'] for e in calls(m)})
                 entry['maps'].append({'file': fname, 'name': m['metadata']['name'],
+                                      # reported, not judged: whether the recorder marked
+                                      # the window as covering several interactions
+                                      'ambiguous': m['metadata'].get('ambiguous', False),
+                                      'interactions': m['metadata'].get('interactions'),
                                       'has_users_work': 'getUsers' in methods,
                                       'has_dashboard_work': 'DashboardRoute' in methods})
             merged = any(x['has_users_work'] and x['has_dashboard_work'] for x in entry['maps'])
