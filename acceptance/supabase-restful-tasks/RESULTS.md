@@ -39,7 +39,7 @@ is the same code run with the checks as they were before the check changes liste
 | W4 waitUntil overlap | FAIL | FAIL | **PASS** | A and B recorded separately, each with only its own calls. |
 | W2 self-heal | PASS | PASS | **PASS** | |
 | W3 crash self-heal | FAIL | PASS | **PASS** | SIGKILL / SIGTERM / SIGINT each leave one truncated map. |
-| J Overhead | PASS (measured) | PASS | **PASS** (measured) | 200 requests: plain 970 ms, unstamped 962 ms (0.99x), stamped 1040 ms (1.07x). |
+| J Overhead | PASS (measured) | PASS | **PASS** (measured) | 200 requests: plain 1136 ms, unstamped 1111 ms (0.98x), stamped 1060 ms (0.93x); an earlier run: 970 / 962 / 1040 ms. Within noise. |
 
 `run.sh` exits 0: nothing fails (F is NOT RUN, which the harness does not count as a failure).
 

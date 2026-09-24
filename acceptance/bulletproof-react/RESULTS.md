@@ -35,7 +35,7 @@ change 2) before the other check changes.
 | G. Stability | PASS | FAIL | **PASS** | 21/21 identical (random mock-backend ids normalized, rule (d)). |
 | H. Change detection | FAIL | FAIL | **FAIL** | appmap-trace shows the change in all three comment-loading tests, but also every random id the mock backend generates, see below. |
 | I. Concurrency | FAIL | FAIL | **FAIL** | Vitest isolation: 21/21 identical (PASS). Browser, two clicks 20 ms apart: one window, now marked `ambiguous` and naming both clicks, but still one map (FAIL, known limitation). |
-| J. Overhead | MEASURED (+7%) | MEASURED | MEASURED | 11.3 / 11.3 s without, 11.8 / 11.8 s with (+5%). |
+| J. Overhead | MEASURED (+7%) | MEASURED | MEASURED | median 10.9 s without, 11.8 s with (+9%, local CI run sharing the machine); an earlier run: 11.3 → 11.8 s (+5%). |
 | Browser | FAIL (0 maps zero-touch) | FAIL | **FAIL** | B1–B4: every expected function and request found, one map each; 6/6 requests on the wire carry `traceparent` (the page load included). B5: see I. |
 
 The recorder no longer changes the app's behaviour: all 21 tests pass with it (before: `discussions.test.tsx`

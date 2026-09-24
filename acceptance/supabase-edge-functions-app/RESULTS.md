@@ -40,7 +40,7 @@ Run: fresh clone of `integration/pr1`, `CI=true`, `npm ci`, then `acceptance/sup
 | G. Stability | NOT RUN | **PASS** | Backend R1–R3 identical across runs; frontend S1–S6 (W config) identical. |
 | H. Change detection | PASS | **PASS** | appmap-trace, per request: R1 and R2 "1 added, 1 removed" (`- GET /rest/v1/users?select=*`, `+ …?select=id`), nothing else; R3 "No behavior change". Official diff: sees nothing (query is in `message`), reported. |
 | I. Concurrency | FAIL | **PASS** | 6 concurrent stamped requests → 6 maps, each with exactly its own 2 outbound calls, each stamped with its own trace id. Browser: 3 users → 3 maps, 1 request each. |
-| J. Overhead | MEASURED | MEASURED | Browser S1–S6: 11.1 / 11.2 s without, 14.4 s zero-touch. 20 direct requests: 305 ms plain, 278 ms recorded. |
+| J. Overhead | MEASURED | MEASURED | Browser S1–S6: 10.9 / 10.8 s without, 13.7 s zero-touch (+26%). 20 direct requests: 249 ms plain, 251 ms recorded. |
 | L. Cross-map link | FAIL | **FAIL** | Judged with the one linking setting. The app's function refuses the `traceparent` header (CORS, pinned SHA), so the browser blocks the call. With that one CORS line patched (pass P, an app change): L1–L5 all ok for S3 and S5. |
 
 **Remaining failures, and why they are not recorder bugs to fix here:**
@@ -50,7 +50,9 @@ Run: fresh clone of `integration/pr1`, `CI=true`, `npm ci`, then `acceptance/sup
 - **L** — linking a cross-origin backend needs `propagateTraceHeaderOrigins` (config) *and* a backend that
   allows the `traceparent` request header. At `74a3be9` the function's `_shared/cors.ts` allows only
   `authorization, x-client-info, apikey, content-type` (EXPECTATIONS R4), so with the setting on, the
-  browser blocks the call (L2–L5 fail, the app shows an error). Without the setting the recorder no longer
+  browser sends the preflight and then blocks the call: the app shows an error (L5 fails), no backend map
+  exists (L2–L4 fail), and L1 fails too, because the map lists the blocked request as unanswered (network
+  error), without its headers, so the header on the wire has no recorded counterpart. Without the setting the recorder no longer
   sends the header, so the app works (L5 ok) but nothing can link (L1 fails). Upstream Supabase added
   `traceparent` to that list later (fc5db9bb); with that one line (pass P), every L item passes and the
   stitched diagram is click → `App.invokeFunction` → `POST /functions/v1/…` → `index.handler` →
