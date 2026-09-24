@@ -84,6 +84,9 @@ fi
 
 # recorder deps (babel for the build-time transform) at the recorder repo root
 [ -d "$ROOT/node_modules/@babel/core" ] || (cd "$ROOT" && npm ci --no-audit --no-fund --silent) || fail_setup "recorder npm ci"
+# the recorder package's entry points are its built dist/ (README: build
+# first when installing from a checkout)
+(cd "$ROOT" && npm run build --workspace recorder > "$WORK/recorder-build.log" 2>&1) || fail_setup "recorder build (see $WORK/recorder-build.log)"
 VITE_VERSION=$(node -p "require('$ROOT/node_modules/vite/package.json').version")
 
 # --- app at the pinned SHA (clean clone every run) ---------------------------

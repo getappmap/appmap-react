@@ -54,7 +54,10 @@ echo "app HEAD: $(git -C "$WORK/bulletproof-react" rev-parse HEAD)" | tee -a "$O
 # tarball, same integrity hash, from the default registry.
 sed -i 's#https://registry.npmmirror.com/#https://registry.yarnpkg.com/#' "$APP/yarn.lock"
 ( cd "$APP" && yarn install --frozen-lockfile --ignore-scripts --network-concurrency 8 >"$OUT/yarn-install.log" 2>&1 ) || setup_ok=0
-# Install the recorder as a dev dependency straight from this checkout.
+# Install the recorder as a dev dependency straight from this checkout. Its
+# entry points are the built dist/ (README: build first when installing from
+# a checkout).
+( cd "$RECORDER_REPO" && npm run build --workspace recorder >"$OUT/recorder-build.log" 2>&1 ) || setup_ok=0
 ( cd "$APP" && yarn add -D "file:$RECORDER_REPO/recorder" --ignore-scripts >"$OUT/yarn-add-recorder.log" 2>&1 ) || setup_ok=0
 # Config files only; the extra test dir is copied in just for its own run so
 # the app's default test glob never picks it up.
