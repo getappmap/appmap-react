@@ -117,3 +117,22 @@ Proof, this time in the pipeline a browser uses:
 - Headless Chromium (Playwright) on the example app's dev server and on
   bulletproof-react's: the page loads the recorder with no console
   error, and a click writes an interaction map to the collector.
+
+## Amendment (2026-09-24): the page load gets its own window
+
+Windows open on `click`/`submit`, so what the page does while it loads —
+before any interaction — was recorded nowhere, and its requests carried
+no `traceparent` (bulletproof-react's `GET /auth/me` on every page load,
+`acceptance/bulletproof-react` browser check). `installInteractionRecorder`
+now takes `recordPageLoad`: when set, it opens a window as soon as it is
+installed, named `load <path>`, which closes on idle like any other. The
+zero-touch injection sets it (the recorder script is in `<head>`, so it
+runs before the app's entry module). A click while that window is still
+open is absorbed and marked `ambiguous`, like any overlapping interaction.
+Off by default for callers of the API. Test:
+`recorder/test/interactionRecording.test.ts` ("the page load").
+
+Known limitation, unchanged: the browser has no async context, so two
+interactions close together (e.g. two clicks 20 ms apart) land in one
+window. The map is no longer silently named after the first one only: it
+is marked `ambiguous: true` and lists both in `metadata.interactions`.

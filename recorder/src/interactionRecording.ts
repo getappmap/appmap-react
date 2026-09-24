@@ -31,6 +31,11 @@ export interface InteractionRecorderOptions {
    * The backend's CORS must allow the `traceparent` request header, or
    * the browser blocks the request. See propagation.ts. */
   propagateTraceHeaderOrigins?: OriginPattern[];
+  /** Also open a window when the recorder is installed, named
+   * `load <path>`, so the requests and renders of the initial page load
+   * (before any click) are recorded and stamped too. The Vite plugin's
+   * zero-touch injection turns this on. Default false. */
+  recordPageLoad?: boolean;
 }
 
 export const COLLECTOR_PATH = '/__appmap/interactions';
@@ -63,8 +68,11 @@ export function installInteractionRecorder(options: InteractionRecorderOptions =
     }
     // A window opened elsewhere (e.g. a test recording) is respected.
     if (active) return;
+    openWindow(describeInteraction(event));
+  };
 
-    const interactions = [describeInteraction(event)];
+  const openWindow = (description: string) => {
+    const interactions = [description];
     const metadata: Metadata = {
       name: interactions[0],
       app,
@@ -102,6 +110,10 @@ export function installInteractionRecorder(options: InteractionRecorderOptions =
   };
 
   for (const type of triggers) document.addEventListener(type, onTrigger, { capture: true });
+  if (options.recordPageLoad && !activeRecording()) {
+    const where = (globalThis as { location?: { pathname?: string } }).location?.pathname ?? '/';
+    openWindow(`load ${where}`);
+  }
   return () => {
     for (const type of triggers) document.removeEventListener(type, onTrigger, { capture: true });
     if (timer) clearInterval(timer);

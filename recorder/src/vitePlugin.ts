@@ -178,7 +178,7 @@ export function appmapVitePlugin(options: AppMapPluginOptions): Plugin {
       const regexps = propagateOrigins
         .filter((p): p is RegExp => typeof p !== 'string')
         .map((p) => `new RegExp(${JSON.stringify(p.source)}, ${JSON.stringify(p.flags)})`);
-      const json = JSON.stringify({ app: options.app, propagateTraceHeaderOrigins: strings });
+      const json = JSON.stringify({ app: options.app, recordPageLoad: true, propagateTraceHeaderOrigins: strings });
       const recorderOptions = regexps.length
         ? `Object.assign(${json}, { propagateTraceHeaderOrigins: ${JSON.stringify(strings)}.concat([${regexps.join(', ')}]) })`
         : json;

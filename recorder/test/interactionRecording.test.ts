@@ -87,3 +87,45 @@ describe('interaction recorder: overlapping interactions', () => {
     expect(shipped[0].metadata.ambiguous).toBeUndefined();
   });
 });
+
+describe('interaction recorder: the page load', () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  // A request the page makes while loading, before any click (e.g.
+  // bulletproof-react's GET /auth/me), had no window: it was neither
+  // recorded nor stamped.
+  it('recordPageLoad records the initial load in its own window, stamped', async () => {
+    const shipped: any[] = [];
+    const sent: Request[] = [];
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+        if (String(input).endsWith('/__appmap/interactions')) shipped.push(JSON.parse(String(init!.body)));
+        else sent.push(new Request(input, init));
+        return new Response('{}', { status: 200 });
+      }),
+    );
+    const uninstall = installInteractionRecorder({ app: 'test', idleMs: 20, recordPageLoad: true });
+    try {
+      await fetch('http://localhost:3000/api/auth/me'); // the app, loading (same origin as the page)
+      await vi.waitFor(() => expect(shipped).toHaveLength(1), { timeout: 2000 });
+    } finally {
+      uninstall();
+    }
+    expect(shipped[0].metadata.name).toBe('load /');
+    const call = shipped[0].events.find((e: any) => e.http_client_request);
+    expect(call.http_client_request.url).toBe('http://localhost:3000/api/auth/me');
+    expect(sent[0].headers.get('traceparent')).toBe(call.http_client_request.headers.traceparent);
+  });
+
+  it('is off by default', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(null, { status: 204 })));
+    const uninstall = installInteractionRecorder({ app: 'test', idleMs: 20 });
+    try {
+      await new Promise((r) => setTimeout(r, 80));
+      expect(fetch).not.toHaveBeenCalled();
+    } finally {
+      uninstall();
+    }
+  });
+});
