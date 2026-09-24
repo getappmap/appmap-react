@@ -1,5 +1,5 @@
-import type { FunctionInfo } from './types';
-import { activeRecording } from './session';
+import type { FunctionInfo } from './types.js';
+import { activeRecording } from './session.js';
 
 // Hand-written instrumentation wrappers. Each is exactly the prologue /
 // epilogue the build-time transform (docs/design/03) will inject:

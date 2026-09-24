@@ -7,8 +7,8 @@ import type {
   Metadata,
   PackageEntry,
   ParameterValue,
-} from './types';
-import { className, functionName, safeStringify } from './stringify';
+} from './types.js';
+import { className, functionName, safeStringify } from './stringify.js';
 
 /** Default maximum captured length of any single value string, like
  * APPMAP_EVENT_VALUESIZE in the .NET agent. Overridable at runtime via

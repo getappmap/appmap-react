@@ -1,6 +1,6 @@
-import { activeRecording } from './session';
-import { randomHex, type CallToken, type Recording } from './recording';
-import { CAPTURED_REQUEST_HEADERS, CAPTURED_RESPONSE_HEADERS } from './fetchPatch';
+import { activeRecording } from './session.js';
+import { randomHex, type CallToken, type Recording } from './recording.js';
+import { CAPTURED_REQUEST_HEADERS, CAPTURED_RESPONSE_HEADERS } from './fetchPatch.js';
 
 // The XMLHttpRequest twin of fetchPatch.ts. axios (and every other
 // XHR-based client) never calls fetch, so without this an axios app's

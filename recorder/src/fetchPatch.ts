@@ -1,5 +1,5 @@
-import { activeRecording } from './session';
-import { randomHex } from './recording';
+import { activeRecording } from './session.js';
+import { randomHex } from './recording.js';
 
 // Wraps globalThis.fetch while a recording is active, emitting
 // http_client_request / http_client_response events. Composes with MSW:

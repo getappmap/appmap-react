@@ -1,6 +1,6 @@
-import { Recording } from './recording';
-import { patchFetch, unpatchFetch } from './fetchPatch';
-import { patchXhr, unpatchXhr } from './xhrPatch';
+import { Recording } from './recording.js';
+import { patchFetch, unpatchFetch } from './fetchPatch.js';
+import { patchXhr, unpatchXhr } from './xhrPatch.js';
 
 // Session resolution — the doc 01 decision, amended (docs/design/01,
 // "Per-request async context"). Two ways a recording can be "the one

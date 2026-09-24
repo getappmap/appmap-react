@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { relative, join } from 'node:path';
 import type { IndexHtmlTransformContext, Plugin } from 'vite';
-import { transformSource } from './transform';
+import { transformSource } from './transform.js';
 
 const COLLECTOR_PATH = '/__appmap/interactions';
 const COLLECTOR_BODY_LIMIT = 50 * 1024 * 1024;

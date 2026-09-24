@@ -103,6 +103,34 @@ npm test --workspace examples/deno-edge         # real deno run, if deno is on P
 node linker/bin/appmap-trace.mjs examples/petclinic-react/tmp/appmap
 ```
 
+### Using the recorder in another Vite/Vitest app
+
+The recorder package is built to `recorder/dist` (`npm run build`;
+`npm pack` builds it for you) and imported by these specifiers:
+
+```bash
+npm pack --workspace recorder                   # -> funwithappmap-react-recorder-<ver>.tgz
+cd your-app && npm install -D /path/to/funwithappmap-react-recorder-<ver>.tgz
+```
+
+```ts
+// vite.config.ts
+import { appmapVitePlugin } from '@funwithappmap/react-recorder/vite';
+export default defineConfig({
+  plugins: [appmapVitePlugin({ include: ['src'], app: 'your-app' }), react()],
+  test: { setupFiles: ['./appmap.setup.ts'] },
+});
+
+// appmap.setup.ts (Vitest: one AppMap per test in tmp/appmap/tests)
+import { registerAppMapHooks } from '@funwithappmap/react-recorder/vitest';
+registerAppMapHooks({ app: 'your-app' });
+```
+
+With `app` set, `vite` dev also records one AppMap per user interaction
+into `tmp/appmap/interactions` (doc 07). Installing straight from a
+checkout (`file:…/recorder`) works too, once `npm run build` has run
+there.
+
 To run the example app against a live PetClinicGo backend
 (`FunwithAppMapandClaudeGolang/examples/PetClinicGo` on :8080):
 

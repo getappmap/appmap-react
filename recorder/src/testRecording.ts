@@ -1,8 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { Metadata } from './types';
-import { Recording, setValueSizeCap } from './recording';
-import { startRecording, stopRecording } from './session';
+import type { Metadata } from './types.js';
+import { Recording, setValueSizeCap } from './recording.js';
+import { startRecording, stopRecording } from './session.js';
 
 // Test recording: one AppMap per test, written to tmp/appmap/tests/.
 // This is milestone 1 (docs/design/01): RTL under Vitest runs in

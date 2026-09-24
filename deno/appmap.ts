@@ -18,8 +18,9 @@
 //   Deno.serve(withAppMap(handleRequest, { app: 'what2say' }));
 //
 // Run with: deno run -A --unstable-sloppy-imports <entry>
-// (sloppy imports because the recorder core uses extensionless
-// relative imports). Output: APPMAP_DIR (default tmp/appmap/requests),
+// (sloppy imports because the recorder core imports its siblings as
+// `./x.js` — what its Node build needs — and Deno maps those to the .ts
+// sources only with sloppy imports). Output: APPMAP_DIR (default tmp/appmap/requests),
 // or POSTed to APPMAP_COLLECTOR if set.
 //
 // This file is not part of the Node/Vitest suite — it's exercised by

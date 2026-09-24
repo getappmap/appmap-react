@@ -1,6 +1,6 @@
-import type { Metadata } from './types';
-import { Recording } from './recording';
-import { startRecording, stopRecording, activeRecording } from './session';
+import type { Metadata } from './types.js';
+import { Recording } from './recording.js';
+import { startRecording, stopRecording, activeRecording } from './session.js';
 
 // Interaction-window recording (docs/design/01 §design, spiked for
 // docs/design/04): one AppMap per user interaction. The window opens at

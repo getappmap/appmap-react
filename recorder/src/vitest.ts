@@ -1,15 +1,15 @@
 import { afterEach, beforeEach } from 'vitest';
-import { activeRecording } from './session';
+import { activeRecording } from './session.js';
 import {
   startTestRecording,
   finishTestRecording,
   type TestRecordingOptions,
-} from './testRecording';
+} from './testRecording.js';
 
 // Vitest-only module (imports 'vitest' and, via testRecording, node:fs);
 // deliberately separate from index.ts so the core recorder stays
 // loadable in a browser.
-export { startTestRecording, finishTestRecording, type TestRecordingOptions } from './testRecording';
+export { startTestRecording, finishTestRecording, type TestRecordingOptions } from './testRecording.js';
 
 /** Install beforeEach/afterEach hooks that record every test in the
  * importing project. Call from a Vitest setup file. */
