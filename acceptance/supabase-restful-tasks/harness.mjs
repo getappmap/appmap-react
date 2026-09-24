@@ -333,8 +333,13 @@ const expectedDel = [`GET ${GW}/rest/v1/tasks?select=*&id=eq.2 200`, `DELETE ${G
 const hProblems = [];
 if (j(hChanged) !== j(['R6'])) hProblems.push(`requests whose diagram changed: ${j(hChanged)} (expected only R6)`);
 if (j(delClients) !== j(expectedDel)) hProblems.push(`R6 after change has clients ${j(delClients)}, expected ${j(expectedDel)}`);
-if (!delOfficial?.diff || !/eq\.2/.test(delOfficial.diff)) hProblems.push(`official sequence-diagram-diff text for R6 does not name the added GET: ${j(delOfficial?.diff?.slice(0, 400))}`);
-if (!traceDelText.includes('New call frontend→network: GET /rest/v1/tasks?select=*&id=eq.2')) hProblems.push(`appmap-trace --baseline for DELETE did not name the added call: ${j(traceDelText.slice(0, 400))}`);
+// The official diagram renders an HTTP client call from its `url`, which
+// by the AppMap spec excludes the query (it is in `message`): the official
+// diff can name the added GET but not its query. It must name the added
+// GET; the query-level change must show in appmap-trace, which reads
+// `message`.
+if (!delOfficial?.diff || !delOfficial.diff.includes(`added HTTP client request \`GET ${GW}/rest/v1/tasks\``)) hProblems.push(`official sequence-diagram-diff text for R6 does not name the added GET: ${j(delOfficial?.diff?.slice(0, 400))}`);
+if (!traceDelText.includes('New call restful-tasks→network: GET /rest/v1/tasks?select=*&id=eq.2')) hProblems.push(`appmap-trace --baseline for DELETE did not name the added call: ${j(traceDelText.slice(0, 400))}`);
 const traceOthers = fs.existsSync(traceOut) ? fs.readdirSync(traceOut).filter((f) => f.endsWith('.md') && !f.startsWith('DELETE')) : [];
 for (const f of traceOthers) if (!fs.readFileSync(path.join(traceOut, f), 'utf8').includes('No behavior change')) hProblems.push(`appmap-trace reports a change in ${f}`);
 const traceCaption = (traceDelText.match(/^> (.*)$/m) ?? [])[1];
