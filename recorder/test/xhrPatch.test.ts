@@ -6,6 +6,7 @@ import { http, HttpResponse } from 'msw';
 import { Recording } from '../src/recording';
 import { startRecording, stopRecording, activeRecording } from '../src/session';
 import { installInteractionRecorder } from '../src/interactionRecording';
+import { setPropagateTraceHeaderOrigins } from '../src/propagation';
 import type { Event } from '../src/types';
 
 // XMLHttpRequest traffic (axios and every other XHR client) must be
@@ -54,8 +55,14 @@ describe('XMLHttpRequest recording against a real server', () => {
     await new Promise<void>((r) => server.listen(0, '127.0.0.1', r));
     const addr = server.address() as { port: number };
     origin = `http://127.0.0.1:${addr.port}`;
+    // Cross-origin from jsdom's page (http://localhost:3000); this backend
+    // allows traceparent, so it is listed, as a user linking to it would.
+    setPropagateTraceHeaderOrigins([origin]);
   });
-  afterAll(() => new Promise<void>((r) => server.close(() => r())));
+  afterAll(() => {
+    setPropagateTraceHeaderOrigins([]);
+    return new Promise<void>((r) => server.close(() => r()));
+  });
   afterEach(() => {
     if (activeRecording()) stopRecording();
     seen.length = 0;
@@ -110,6 +117,75 @@ describe('XMLHttpRequest recording against a real server', () => {
   });
 });
 
+describe('a cross-origin backend whose CORS does not allow traceparent (Supabase functions default)', () => {
+  // The recorder must never break the app. Before cross-origin stamping
+  // became opt-in, the XHR below carried traceparent, the browser's
+  // preflight was refused (the header is not in Access-Control-Allow-
+  // Headers) and the request failed with status 0.
+  let server: Server;
+  let origin: string;
+  const seen: IncomingHttpHeaders[] = [];
+  beforeAll(async () => {
+    server = createServer((req, res) => {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Headers', 'authorization, x-client-info, apikey, content-type');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      if (req.method === 'OPTIONS') return res.end('ok');
+      seen.push(req.headers);
+      res.setHeader('Content-Type', 'application/json');
+      res.end('{"user":null,"data":[]}');
+    });
+    await new Promise<void>((r) => server.listen(0, '127.0.0.1', r));
+    origin = `http://127.0.0.1:${(server.address() as { port: number }).port}`;
+  });
+  afterAll(() => new Promise<void>((r) => server.close(() => r())));
+  afterEach(() => {
+    if (activeRecording()) stopRecording();
+    setPropagateTraceHeaderOrigins([]);
+    seen.length = 0;
+  });
+
+  it('still works while recorded: the request is recorded but not stamped', async () => {
+    const recording = startRecording(new Recording(metadata()));
+    const req = await xhr('POST', `${origin}/functions/v1/fn`, { 'Content-Type': 'application/json' });
+    stopRecording();
+
+    expect(req.status).toBe(200);
+    expect(req.responseText).toBe('{"user":null,"data":[]}');
+    expect(seen).toHaveLength(1);
+    expect(seen[0].traceparent).toBeUndefined();
+    const [call, ret] = httpEvents(recording.events) as any[];
+    expect(call.http_client_request).toMatchObject({ request_method: 'POST', url: `${origin}/functions/v1/fn` });
+    expect(call.http_client_request.headers.traceparent).toBeUndefined();
+    expect(ret.http_client_response.status_code).toBe(200);
+  });
+
+  it('fetch: recorded, not stamped', async () => {
+    const recording = startRecording(new Recording(metadata()));
+    const res = await fetch(`${origin}/functions/v1/fn`, { method: 'POST', body: '{}' });
+    stopRecording();
+    expect(res.status).toBe(200);
+    expect(seen[0].traceparent).toBeUndefined();
+    const [call] = httpEvents(recording.events) as any[];
+    expect(call.http_client_request.headers.traceparent).toBeUndefined();
+  });
+
+  it('is stamped once the user lists the origin (and then fails if the backend does not allow it)', async () => {
+    setPropagateTraceHeaderOrigins([origin]);
+    const recording = startRecording(new Recording(metadata()));
+    // Opting in is the user's call: this backend refuses the header, so the
+    // browser (here jsdom: "Headers traceparent forbidden") blocks the
+    // request. That is why it is opt-in.
+    await expect(xhr('POST', `${origin}/functions/v1/fn`, { 'Content-Type': 'application/json' })).rejects.toThrow(
+      'xhr failed',
+    );
+    stopRecording();
+    expect(seen).toHaveLength(0);
+    const [call] = httpEvents(recording.events) as any[];
+    expect(call.http_client_request.headers.traceparent).toMatch(new RegExp(`^00-${recording.traceId}-`));
+  });
+});
+
 describe('XMLHttpRequest recording through an MSW interceptor (jsdom + msw/node)', () => {
   const mocked: Headers[] = [];
   const msw = setupServer(
@@ -121,7 +197,22 @@ describe('XMLHttpRequest recording through an MSW interceptor (jsdom + msw/node)
   beforeAll(() => msw.listen({ onUnhandledRequest: 'error' }));
   afterAll(() => msw.close());
 
+  afterEach(() => {
+    setPropagateTraceHeaderOrigins([]);
+    mocked.length = 0;
+  });
+
+  it('does not stamp a cross-origin XHR whose origin is not listed', async () => {
+    const recording = startRecording(new Recording(metadata()));
+    await xhr('GET', 'https://api.example.test/comments?discussionId=d1&page=1');
+    stopRecording();
+    expect(mocked[0].get('traceparent')).toBeNull();
+    const [call] = httpEvents(recording.events) as any[];
+    expect(call.http_client_request.url).toBe('https://api.example.test/comments');
+  });
+
   it('records a mocked XHR (MSW never calls the real send) and MSW sees the traceparent', async () => {
+    setPropagateTraceHeaderOrigins(['https://api.example.test']);
     const recording = startRecording(new Recording(metadata()));
     const req = await xhr('GET', 'https://api.example.test/comments?discussionId=d1&page=1');
     stopRecording();

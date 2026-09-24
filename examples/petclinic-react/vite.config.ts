@@ -13,7 +13,21 @@ export default defineConfig({
   // appmap.yml equivalent: instrument everything under src/. The plugin
   // is dev/test-only; production builds get untouched code. `app` also
   // injects interaction recording without application code changes.
-  plugins: [appmapVitePlugin({ include: ['src'], app: 'petclinic-react' }), react()],
+  //
+  // propagateTraceHeaderOrigins: in the browser the app calls its backend
+  // through the same-origin /api proxy below, which is always stamped with
+  // traceparent. The tests call cross-origin backends (MSW's
+  // http://localhost:8080, and the real deno-edge example on :8000 in
+  // test/e2e); cross-origin requests are stamped only for listed origins
+  // (docs/design/02, "Cross-origin requests").
+  plugins: [
+    appmapVitePlugin({
+      include: ['src'],
+      app: 'petclinic-react',
+      propagateTraceHeaderOrigins: ['http://localhost:8080', 'http://localhost:8000'],
+    }),
+    react(),
+  ],
   resolve: {
     alias: [
       { find: '@funwithappmap/react-recorder/vitest', replacement: recorderSrc('vitest.ts') },

@@ -20,6 +20,11 @@ if (typeof __APPMAP_EVENT_VALUESIZE__ !== 'undefined') {
 }
 export { startRecording, stopRecording, activeRecording } from './session.js';
 export {
+  setPropagateTraceHeaderOrigins,
+  shouldPropagateTraceHeader,
+  type OriginPattern,
+} from './propagation.js';
+export {
   instrument,
   instrumentComponent,
   instrumentHook,

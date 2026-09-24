@@ -1,5 +1,6 @@
 import { activeRecording } from './session.js';
 import { randomHex } from './recording.js';
+import { shouldPropagateTraceHeader } from './propagation.js';
 
 // Wraps globalThis.fetch while a recording is active, emitting
 // http_client_request / http_client_response events. Composes with MSW:
@@ -10,8 +11,12 @@ import { randomHex } from './recording.js';
 // traceparent header — the recording's trace-id plus a fresh span-id per
 // request. The backend agent copies it into its request AppMap's
 // metadata; the linker joins on span-id. Requests are only ever stamped
-// while a recording is active, so production traffic is untouched.
-// XMLHttpRequest (axios) gets the same treatment in xhrPatch.ts.
+// while a recording is active, so production traffic is untouched, and
+// in a browser only same-origin requests and origins the user listed are
+// stamped (propagation.ts): a header the backend's CORS doesn't allow
+// would make the browser block the request. Every request is recorded
+// either way. XMLHttpRequest (axios) gets the same treatment in
+// xhrPatch.ts.
 
 let originalFetch: typeof globalThis.fetch | undefined;
 
@@ -32,7 +37,9 @@ export function patchFetch(): void {
     if (!recording) return underlying(input, init);
 
     const request = new Request(input, init);
-    request.headers.set('traceparent', `00-${recording.traceId}-${randomHex(8)}-01`);
+    if (shouldPropagateTraceHeader(request.url)) {
+      request.headers.set('traceparent', `00-${recording.traceId}-${randomHex(8)}-01`);
+    }
     const token = recording.httpClientRequest(
       request.method,
       request.url,

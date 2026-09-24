@@ -159,6 +159,28 @@ into `tmp/appmap/interactions` (doc 07). Installing straight from a
 checkout (`file:…/recorder`) works too, once `npm run build` has run
 there.
 
+**Linking to a backend on another origin needs one setting.** Every
+request made while recording is recorded, but only same-origin requests
+carry the `traceparent` header that links a frontend map to its backend
+map. A cross-origin request carries it only when its origin is listed,
+because a header the backend's CORS policy does not allow makes the
+browser block the request and would break your app (this is
+OpenTelemetry's `propagateTraceHeaderCorsUrls` model):
+
+```ts
+appmapVitePlugin({
+  include: ['src'],
+  app: 'your-app',
+  propagateTraceHeaderOrigins: ['https://api.example.com'], // or APPMAP_PROPAGATE_TRACE_HEADER_ORIGINS=https://api.example.com
+});
+```
+
+That backend must also allow the header: `traceparent` in its
+`Access-Control-Allow-Headers` (for a Supabase edge function, add it to
+`corsHeaders` in `_shared/cors.ts`). Server-side code (Deno, Node) has no
+CORS and stamps every outgoing request. See doc 02, "Cross-origin
+requests".
+
 To run the example app against a live PetClinicGo backend
 (`FunwithAppMapandClaudeGolang/examples/PetClinicGo` on :8080):
 

@@ -1,6 +1,7 @@
 import { activeRecording } from './session.js';
 import { randomHex, type CallToken, type Recording } from './recording.js';
 import { CAPTURED_REQUEST_HEADERS, CAPTURED_RESPONSE_HEADERS } from './fetchPatch.js';
+import { shouldPropagateTraceHeader } from './propagation.js';
 
 // The XMLHttpRequest twin of fetchPatch.ts. axios (and every other
 // XHR-based client) never calls fetch, so without this an axios app's
@@ -13,7 +14,8 @@ import { CAPTURED_REQUEST_HEADERS, CAPTURED_RESPONSE_HEADERS } from './fetchPatc
 // every new instance is observed:
 //
 // - open(): if a recording is active, remember it and stamp the request
-//   with a traceparent (the recording's trace id, a fresh span id);
+//   with a traceparent (the recording's trace id, a fresh span id) when
+//   propagation.ts allows it for the request's origin;
 // - setRequestHeader(): capture the headers worth keeping;
 // - the `loadstart` / `loadend` events: record http_client_request /
 //   http_client_response.
@@ -114,7 +116,9 @@ function observe(xhr: Xhr): void {
         headers: {},
         parent: recording.currentParent(),
       };
-      xhr.setRequestHeader('traceparent', `00-${recording.traceId}-${randomHex(8)}-01`);
+      if (shouldPropagateTraceHeader(pending.url)) {
+        xhr.setRequestHeader('traceparent', `00-${recording.traceId}-${randomHex(8)}-01`);
+      }
     }
     return result;
   };

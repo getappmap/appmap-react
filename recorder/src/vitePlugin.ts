@@ -2,6 +2,12 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { relative, join } from 'node:path';
 import type { IndexHtmlTransformContext, Plugin } from 'vite';
 import { transformSource } from './transform.js';
+import {
+  PROPAGATE_ENV,
+  parseOriginPatterns,
+  serializeOriginPatterns,
+  type OriginPattern,
+} from './propagation.js';
 
 const COLLECTOR_PATH = '/__appmap/interactions';
 const COLLECTOR_BODY_LIMIT = 50 * 1024 * 1024;
@@ -32,6 +38,16 @@ export interface AppMapPluginOptions {
   force?: boolean;
   /** App name for zero-touch interaction recording injection. */
   app?: string;
+  /** Cross-origin backends whose requests get a `traceparent` header, so
+   * their AppMaps can be linked to the frontend's: origins
+   * ('https://api.example.com'), RegExps tested against the request URL,
+   * or '*'. Same-origin requests are always stamped; other cross-origin
+   * requests never are, because a header the backend's CORS does not
+   * allow makes the browser block the request. A listed backend must
+   * list `traceparent` in its Access-Control-Allow-Headers. Also read
+   * from APPMAP_PROPAGATE_TRACE_HEADER_ORIGINS (comma-separated). Applies
+   * to browser interaction recording and to Vitest test recording. */
+  propagateTraceHeaderOrigins?: OriginPattern[];
 }
 
 export function appmapVitePlugin(options: AppMapPluginOptions): Plugin {
@@ -49,11 +65,20 @@ export function appmapVitePlugin(options: AppMapPluginOptions): Plugin {
     if (options.exclude?.some((dir) => rel === dir || rel.startsWith(dir + '/'))) return undefined;
     return rel;
   };
+  const propagateOrigins = [
+    ...(options.propagateTraceHeaderOrigins ?? []),
+    ...parseOriginPatterns(process.env[PROPAGATE_ENV]),
+  ];
 
   return {
     name: 'appmap-instrument',
     enforce: 'pre',
     config() {
+      // Vitest runs tests in worker processes spawned after the config is
+      // resolved; they inherit this, and the recorder reads it at load
+      // (propagation.ts). The browser gets it through the injected
+      // interaction recorder instead (load() below).
+      if (propagateOrigins.length) process.env[PROPAGATE_ENV] = serializeOriginPatterns(propagateOrigins);
       // APPMAP_EVENT_VALUESIZE, like the .NET agent: propagate the
       // value-size cap into the client bundle, since the in-page
       // recorder has no process.env of its own. Read by recorder/src/
@@ -132,9 +157,17 @@ export function appmapVitePlugin(options: AppMapPluginOptions): Plugin {
     },
     load(id) {
       if (id !== RESOLVED_INTERACTION_RECORDER_VIRTUAL_ID) return;
+      const strings = propagateOrigins.filter((p): p is string => typeof p === 'string');
+      const regexps = propagateOrigins
+        .filter((p): p is RegExp => typeof p !== 'string')
+        .map((p) => `new RegExp(${JSON.stringify(p.source)}, ${JSON.stringify(p.flags)})`);
+      const json = JSON.stringify({ app: options.app, propagateTraceHeaderOrigins: strings });
+      const recorderOptions = regexps.length
+        ? `Object.assign(${json}, { propagateTraceHeaderOrigins: ${JSON.stringify(strings)}.concat([${regexps.join(', ')}]) })`
+        : json;
       return [
         `import { installInteractionRecorder } from '@funwithappmap/react-recorder';`,
-        `installInteractionRecorder(${JSON.stringify({ app: options.app })});`,
+        `installInteractionRecorder(${recorderOptions});`,
       ].join('\n');
     },
     // Zero-touch interaction recording (docs/design/07). A plain-function

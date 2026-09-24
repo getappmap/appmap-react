@@ -1,6 +1,7 @@
 import type { Metadata } from './types.js';
 import { Recording } from './recording.js';
 import { startRecording, stopRecording, activeRecording } from './session.js';
+import { setPropagateTraceHeaderOrigins, type OriginPattern } from './propagation.js';
 
 // Interaction-window recording (docs/design/01 §design, spiked for
 // docs/design/04): one AppMap per user interaction. The window opens at
@@ -24,6 +25,12 @@ export interface InteractionRecorderOptions {
   maxMs?: number;
   /** DOM event types that open a window. */
   triggers?: string[];
+  /** Cross-origin targets whose requests get a `traceparent` header
+   * (same-origin requests always do): origins such as
+   * 'https://api.example.com', RegExps tested against the URL, or '*'.
+   * The backend's CORS must allow the `traceparent` request header, or
+   * the browser blocks the request. See propagation.ts. */
+  propagateTraceHeaderOrigins?: OriginPattern[];
 }
 
 export const COLLECTOR_PATH = '/__appmap/interactions';
@@ -37,6 +44,7 @@ export function installInteractionRecorder(options: InteractionRecorderOptions =
     maxMs = 10_000,
     triggers = ['click', 'submit'],
   } = options;
+  if (options.propagateTraceHeaderOrigins) setPropagateTraceHeaderOrigins(options.propagateTraceHeaderOrigins);
 
   let timer: ReturnType<typeof setInterval> | undefined;
   let open: { recording: Recording; interactions: string[]; sameTask: boolean } | undefined;

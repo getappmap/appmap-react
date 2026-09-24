@@ -222,3 +222,46 @@ until the recorder bugs it found are fixed; CI does not hide that.
 `examples/petclinic-react/test/e2e/deno-fullstack.test.ts` (doc 09)
 stays as a fast regression test, but both of its ends are this repo's
 own code, so it is not the proof.
+
+## Amendment (2026-09-24): cross-origin requests — stamp only what the user lists
+
+The recorder stamped `traceparent` on every `fetch`/XHR made while a
+recording was open. On a real app that broke the app: Supabase's
+edge-functions example calls its function on another origin
+(`localhost:54321` from a page on `:3300`), the function's CORS policy
+allows `authorization, x-client-info, apikey, content-type` and not
+`traceparent`, so the browser's preflight failed and every "Invoke
+Function" click ended in `FunctionsFetchError`
+(`acceptance/supabase-edge-functions-app`, bug 3). A recorder must never
+break the app it records.
+
+The recorder now follows OpenTelemetry's browser model
+(`propagateTraceHeaderCorsUrls`), in `recorder/src/propagation.ts`:
+
+- **same-origin requests** are always stamped (no preflight is involved);
+- **cross-origin requests** are stamped only when their origin is listed in
+  the Vite plugin's `propagateTraceHeaderOrigins` option (or
+  `APPMAP_PROPAGATE_TRACE_HEADER_ORIGINS`, comma-separated): an origin, a
+  RegExp tested against the request URL, or `'*'`;
+- **no page origin** (Node, Deno — server-side code, no CORS): every
+  outgoing request is stamped, as before.
+
+Every request is still recorded as `http_client_request`/`response`;
+only the header is withheld. The option reaches the browser through the
+injected interaction recorder (`installInteractionRecorder({
+propagateTraceHeaderOrigins })`) and Vitest test recording through the
+environment (the plugin sets the variable before Vitest starts its
+workers). `setPropagateTraceHeaderOrigins()` sets it at runtime.
+
+**What the user must configure to link a cross-origin backend** — the
+one thing zero-touch cannot do for them: list the backend's origin, and
+make the backend allow the header (`traceparent` in its
+`Access-Control-Allow-Headers`). Supabase added `traceparent` to the
+example functions' `corsHeaders` upstream (fc5db9bb); a function written
+before that needs the same one-line change.
+
+Tests: `recorder/test/propagation.test.ts`, and in
+`recorder/test/xhrPatch.test.ts` "a cross-origin backend whose CORS does
+not allow traceparent" (jsdom enforces CORS for XHR: before this change
+the request failed with "Headers traceparent forbidden").
+
