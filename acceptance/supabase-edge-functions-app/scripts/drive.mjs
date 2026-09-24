@@ -58,6 +58,12 @@ const browser = await chromium.launch({
 async function newPage(report, tag) {
   const context = await browser.newContext();
   const page = await context.newPage();
+  // CPU_THROTTLE=N slows the page's CPU N-fold (Chrome DevTools), to
+  // reproduce slow CI runners locally.
+  if (Number(process.env.CPU_THROTTLE ?? 1) > 1) {
+    const cdp = await context.newCDPSession(page);
+    await cdp.send('Emulation.setCPUThrottlingRate', { rate: Number(process.env.CPU_THROTTLE) });
+  }
   // Local only. Not via page.route(): with request interception on,
   // Playwright answers CORS preflights itself, which would hide exactly the
   // preflight behaviour this harness has to observe. External hosts are made
@@ -66,6 +72,18 @@ async function newPage(report, tag) {
     const u = new URL(r.url());
     if (u.port !== '54321') return; // only the Supabase gateway (app traffic)
     report.wire.push({ tag, t: Date.now(), method: r.method(), url: r.url(), headers: r.headers() });
+  });
+  // Error responses from the Supabase gateway, with their bodies, so a
+  // failing step can be diagnosed from the report alone.
+  page.on('response', async (res) => {
+    const u = new URL(res.url());
+    if (u.port !== '54321' || res.status() < 400) return;
+    let body = '';
+    try {
+      body = (await res.text()).slice(0, 400);
+    } catch {}
+    report.errorResponses = report.errorResponses ?? [];
+    report.errorResponses.push({ tag, status: res.status(), method: res.request().method(), url: res.url(), body });
   });
   page.on('requestfailed', (r) => {
     const u = new URL(r.url());
@@ -113,10 +131,19 @@ async function step(report, id, desc, fn) {
 }
 
 async function signUp(page, email) {
-  // @supabase/auth-ui-react 0.2.x: sign-in view first, link to sign-up view.
-  await page.getByText("Don't have an account? Sign up").click();
+  // @supabase/auth-ui-react 0.2.x shows the sign-in view first. Its inputs are
+  // uncontrolled, and switching views runs a useEffect that resets the form's
+  // React state to the values carried over from the previous view
+  // (EmailAuth.js: handleViewChange + useEffect(..., [authView])). Typing
+  // into the sign-up view before that effect has run leaves the DOM filled
+  // but the state empty, and the app POSTs an empty email (GoTrue: 422
+  // "Anonymous sign-ins are disabled") -- seen on slower Actions runners and
+  // reproduced locally by delaying React's scheduler. So type the email and
+  // password in the sign-in view, then switch: the app itself carries both
+  // over to the sign-up view, whatever the timing.
   await page.locator('input[name="email"]').fill(email);
   await page.locator('input[name="password"]').fill(PASSWORD);
+  await page.getByText("Don't have an account? Sign up").click();
   await page.getByRole('button', { name: 'Sign up' }).click();
   await page.getByText(`Logged in as ${email}`).waitFor({ timeout: 15000 });
 }
@@ -170,6 +197,10 @@ async function parallel() {
       return report;
     }
     await page.locator('select').selectOption(FN);
+    // Sign-up is the first thing typed on this page: let the form's mount
+    // effects run first (they reset its state; see signUp).
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(500);
     try {
       await signUp(page, email);
     } catch (e) {

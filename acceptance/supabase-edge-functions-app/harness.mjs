@@ -104,6 +104,7 @@ async function browserPass(tag, { fe, recorded, mode = 'sequence', corsPatch = f
     for (const c of report.console.filter((c) => c.type === 'error').slice(-4)) log(`   ${tag} console: ${c.text.slice(0, 200)}`);
     for (const f of report.failed.slice(-4)) log(`   ${tag} failed request: ${f.method} ${f.url.slice(0, 80)} ${f.error}`);
     for (const d of report.dialogs.slice(-3)) log(`   ${tag} dialog: ${d.message.slice(0, 160)}`);
+    for (const e of (report.errorResponses ?? []).slice(-4)) log(`   ${tag} error response: ${e.status} ${e.method} ${e.url.slice(0, 80)} ${e.body.slice(0, 200)}`);
   }
   return { tag, report, frontendDir, backendDir };
 }
@@ -281,10 +282,12 @@ verdict('B', bReport.length && bValid === bReport.length && zMaps > 0 ? 'PASS' :
 function frontendItems(pass) {
   const items = [];
   const add = (id, expect, status, quote) => items.push({ id, expect, status, quote });
-  const one = (id) => {
+  // A step can open more than one interaction window (S4: the view-switch
+  // click, then the submit); judge the map that carries the step's request.
+  const one = (id, urlPart) => {
     const maps = feSummary(pass, id);
     if (!maps.length) add(id, 'one frontend interaction map', 'missing', stepOf(pass, id).error ?? 'no map collected');
-    return maps[0];
+    return (urlPart && maps.find((m) => m.clients.some((c) => c.url.includes(urlPart)))) || maps[0];
   };
   const fnItem = (id, m, method, lineno) => {
     const f = m?.functions.find((x) => x.method_id === method || (method === '*' && x.lineno === lineno));
@@ -309,7 +312,7 @@ function frontendItems(pass) {
   m = one('S3');
   fnItem('S3', m, 'invokeFunction', 16);
   clientItem('S3', m, 'POST', FN_URL, 200, true);
-  m = one('S4');
+  m = one('S4', '/auth/v1/signup');
   clientItem('S4', m, 'POST', 'http://localhost:54321/auth/v1/signup', 200, false);
   fnItem('S4', m, 'App', 10);
   m = one('S5');
@@ -439,7 +442,12 @@ function compareSeq(filesA, filesB, keyOf, label) {
   }
   return { same, different, onlyA: Object.keys(a).filter((k) => !(k in b)), onlyB: Object.keys(b).filter((k) => !(k in a)) };
 }
-const stepKey = (pass) => (f) => pass.report.steps.find((s) => s.frontend.includes(f))?.id ?? path.basename(f);
+const stepKey = (pass) => (f) => {
+  const s = pass.report.steps.find((x) => x.frontend.includes(f));
+  if (!s) return path.basename(f);
+  const i = s.frontend.indexOf(f);
+  return i ? `${s.id}#${i + 1}` : s.id;
+};
 const reqKey = (run) => (f) => Object.entries(run.obs).find(([, o]) => o?.file === f)?.[0] ?? path.basename(f);
 const gBackend = compareSeq(['R1', 'R2', 'R3'].map((k) => R1run.obs[k].file).filter(Boolean), ['R1', 'R2', 'R3'].map((k) => R2run.obs[k].file).filter(Boolean), (f) => reqKey(R1run)(f) !== path.basename(f) ? reqKey(R1run)(f) : reqKey(R2run)(f), 'g-backend');
 const gW = compareSeq(listMaps(W1.frontendDir), listMaps(W2.frontendDir), (f) => stepKey(W1)(f) !== path.basename(f) ? stepKey(W1)(f) : stepKey(W2)(f), 'g-w');
