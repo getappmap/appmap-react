@@ -397,9 +397,17 @@ for (let round = 1; round <= 3; round++) {
     recorded.push(own.k);
     const tag = `req#${own.k} ${own.method} ${own.path}`;
     if (s.servers.length !== 1) leaks.push(`${tag}: ${s.servers.length} http_server_request events ${j(s.servers.map((x) => `${x.method} ${x.path}`))}`);
-    const foreignFns = s.functions.filter((fn) => fn.fn !== own.fn || (own.method !== 'POST' && fn.params[1] !== String(own.id)) || (own.method === 'POST' && !fn.params[1]?.includes(own.marker)));
+    // This request's own entry call, the anonymous Deno.serve handler
+    // (index.ts:68, recorded since the requested fix), is not a leak: it is
+    // the first function call and is nested in no other function. Any other
+    // call, including a second handler call, is judged as before.
+    const first = s.functions[0];
+    const entry = first && first.fn === 'index.handler' && first.lineno === 68 && !first.ancestors.some((a) => s.functions.some((g) => g.id === a)) ? first : undefined;
+    const appFns = s.functions.filter((fn) => fn !== entry);
+    const foreignFns = appFns.filter((fn) => fn.fn !== own.fn || (own.method !== 'POST' && fn.params[1] !== String(own.id)) || (own.method === 'POST' && !fn.params[1]?.includes(own.marker)));
     if (foreignFns.length) leaks.push(`${tag}: ${foreignFns.length} foreign function call(s): ${j(foreignFns.slice(0, 4).map((x) => `${x.fn}(${x.params.slice(1).join(',')})`))}${foreignFns.length > 4 ? '…' : ''}`);
-    if (s.functions.length - foreignFns.length !== 1) leaks.push(`${tag}: own handler function recorded ${s.functions.length - foreignFns.length} times`);
+    if (appFns.length - foreignFns.length !== 1) leaks.push(`${tag}: own handler function recorded ${appFns.length - foreignFns.length} times`);
+    if (entry && appFns.some((fn) => !fn.ancestors.includes(entry.id))) leaks.push(`${tag}: function call(s) outside this request's Deno.serve handler`);
     const ownUrl = (c) => c.method === ({ GET: 'GET', PUT: 'PATCH', DELETE: 'DELETE', POST: 'POST' })[own.method] && c.url === `${GW}/rest/v1/tasks${own.url}`;
     const foreignCl = s.clients.filter((c) => !ownUrl(c));
     if (foreignCl.length) leaks.push(`${tag}: ${foreignCl.length} foreign outbound call(s): ${j(foreignCl.slice(0, 4).map((c) => `${c.method} ${c.url.replace(GW, '')}`))}${foreignCl.length > 4 ? '…' : ''}`);
