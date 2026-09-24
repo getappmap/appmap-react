@@ -265,3 +265,22 @@ Tests: `recorder/test/propagation.test.ts`, and in
 not allow traceparent" (jsdom enforces CORS for XHR: before this change
 the request failed with "Headers traceparent forbidden").
 
+
+## Amendment (2026-09-24): the stitched diagram shows the frontend handler and the backend's outgoing calls
+
+On the Supabase edge-functions app the link held but the stitched diagram
+was `click → POST /functions/v1/… → 200` and nothing else
+(`acceptance/supabase-edge-functions-app`, bug 7): `diagram.mjs` drew no
+frontend events at all, and on the backend only `sql_query` and function
+calls — but an edge function reaches its database through PostgREST, over
+HTTP, so its "DB" step is an `http_client_request`, which was not drawn.
+
+`appmap-link` now hands each interaction's own map to the renderer, which
+draws its function calls in event order with each request where it was
+made (`FE -> FE : App.invokeFunction`, then `FE -> BE0 : POST …`), and
+draws a backend's outgoing HTTP calls to a `network` participant with the
+query from the event's `message` (`BE0 -> NET : GET /rest/v1/users?select=*`).
+Its summary line no longer counts a backend map that calls out as a
+frontend map: `1 frontend map(s), 1 backend map(s) (1 of them also make
+outgoing requests; 0 linked onward)`. Such maps are still linked onward,
+so a middle tier works as before. Tests: `linker/test/link.test.mjs`.

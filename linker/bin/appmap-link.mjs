@@ -38,6 +38,7 @@ writeFileSync(
 );
 
 const backendByPath = new Map(backends.map((b) => [b.path, b.appmap]));
+const frontendByPath = new Map(frontends.map((f) => [f.path, f.appmap]));
 let diagrams = 0;
 for (const link of links) {
   if (!link.requests.some((r) => r.backend)) continue;
@@ -45,14 +46,24 @@ for (const link of links) {
     .split('/')
     .pop()
     .replace(/\.appmap\.json$/, '');
-  writeFileSync(join(out, `${name}.puml`), renderSequenceDiagram(link, backendByPath));
+  writeFileSync(join(out, `${name}.puml`), renderSequenceDiagram(link, backendByPath, frontendByPath.get(link.interaction.path)));
   diagrams++;
 }
 
-const linked = links.reduce((n, l) => n + l.requests.filter((r) => r.backend).length, 0);
-const total = links.reduce((n, l) => n + l.requests.length, 0);
+// A backend request map that itself calls out (a middle tier, or an edge
+// function calling PostgREST) is linked onward like a frontend map, but
+// it is not an interaction: count it as a backend map only, and count
+// only interactions' requests in the totals.
+const interactions = links.filter((l) => !backendByPath.has(l.interaction.path));
+const linked = interactions.reduce((n, l) => n + l.requests.filter((r) => r.backend).length, 0);
+const total = interactions.reduce((n, l) => n + l.requests.length, 0);
+const middle = links.length - interactions.length;
+const onward = links
+  .filter((l) => backendByPath.has(l.interaction.path))
+  .reduce((n, l) => n + l.requests.filter((r) => r.backend).length, 0);
 console.log(
-  `${frontends.length} frontend map(s), ${backends.length} backend map(s): ` +
-    `${linked}/${total} requests linked, ${orphanBackends.length} orphan backend map(s)`,
+  `${interactions.length} frontend map(s), ${backends.length} backend map(s)` +
+    (middle ? ` (${middle} of them also make outgoing requests; ${onward} linked onward)` : '') +
+    `: ${linked}/${total} requests linked, ${orphanBackends.length} orphan backend map(s)`,
 );
 console.log(`wrote ${relative('.', join(out, 'appmap-links.json'))} and ${diagrams} diagram(s)`);
