@@ -5,10 +5,14 @@
 // runs the real appmap-link CLI and asserts the frontend and backend
 // maps stitch by traceparent ids.
 //
-// Unlike test/e2e/fullstack.test.tsx (the Go half), this needs no
-// sibling repo — the Deno backend lives in this repo, at
-// examples/deno-edge. Only requires the `deno` binary; skips itself
-// cleanly otherwise, so plain `npm test` stays green everywhere.
+// This needs no sibling repo — the Deno backend lives in this repo, at
+// examples/deno-edge. Only requires the `deno` binary. Locally it skips
+// itself when `deno` is missing; in CI (CI=true) a missing `deno` is a
+// failure, so this test can never silently skip on a PR run.
+//
+// Both ends of this test are this repo's own code (recorder + example
+// backend). The end-to-end proof against a real open-source app is
+// acceptance/supabase-edge-functions-app (docs/design/02, 2026-09-24).
 
 import { mkdirSync, rmSync, copyFileSync, readdirSync, readFileSync, existsSync } from 'node:fs';
 import { join, basename, dirname } from 'node:path';
@@ -40,6 +44,15 @@ const PET_LOOKUP_ENTRY = join(REPO_ROOT, 'examples', 'deno-edge', 'src', 'petLoo
 const E2E_DIR = join(EXAMPLE_ROOT, 'tmp', 'appmap', 'e2e-deno');
 
 const denoAvailable = spawnSync('deno', ['--version']).status === 0;
+const inCI = process.env.CI === 'true' || process.env.CI === '1';
+
+if (!denoAvailable && inCI) {
+  describe('full-stack: React ↔ real deno-edge (zero-touch) ↔ appmap-link', () => {
+    it('requires `deno` on PATH in CI', () => {
+      throw new Error('`deno` is not on PATH and CI=true: this e2e test must run on every CI run, not skip');
+    });
+  });
+}
 
 describe.skipIf(!denoAvailable)('full-stack: React ↔ real deno-edge (zero-touch) ↔ appmap-link', () => {
   const frontendDir = join(E2E_DIR, 'frontend');

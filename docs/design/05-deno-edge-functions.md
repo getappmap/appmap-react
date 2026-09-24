@@ -103,3 +103,12 @@ Everything Deno-specific lives in `deno/appmap.ts` alone.
   convention the linker's real-PetClinicGo integration test already
   uses for an optional external dependency. `deno/test/` covers the
   driver's own logic without needing the binary at all.
+
+## Amendment 2026-09-24: CI runs the real `deno run` spike
+
+The last consequence above no longer holds. CI installs Deno and runs
+`examples/deno-edge`'s smoke test and the React ↔ Deno e2e test on
+every push and PR, and both now **fail** instead of skipping when
+`deno` is missing and `CI=true`. CI also runs the Deno acceptance
+suites against real Supabase code (`acceptance/supabase-restful-tasks`,
+and the full-stack `acceptance/supabase-edge-functions-app`).

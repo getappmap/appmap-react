@@ -3,9 +3,11 @@
 Status: **accepted**, validated by the spike in
 [`../../linker`](../../linker) plus the stamping in
 [`../../recorder/src/fetchPatch.ts`](../../recorder/src/fetchPatch.ts)
-— originally against **simulated** backend maps; since the 2026-06-12
-amendment below, also end to end against the **real** PetClinicGo
-server emitting real backend maps.
+— originally against **simulated** backend maps; from the 2026-06-12
+amendment to the 2026-09-24 one, against the real PetClinicGo server
+(that test is now retired); since the 2026-09-24 amendment, end to end
+against a real open-source React + Deno app
+(`acceptance/supabase-edge-functions-app`).
 
 This is the project's headline goal landing deliberately early, on
 hand-instrumentation, before the build-time transform (doc 03) exists:
@@ -139,7 +141,7 @@ network conditions. That lands with the sibling follow-ups.
   backend maps; the simulator then becomes test fixture machinery
   only.
 
-## Amendment 2026-06-12: end-to-end integration test, no simulator
+## Amendment 2026-06-12: end-to-end integration test, no simulator (retired 2026-09-24, see below)
 
 The join now has a fully real automated proof:
 [`examples/petclinic-react/test/e2e/fullstack.test.tsx`](../../examples/petclinic-react/test/e2e/fullstack.test.tsx)
@@ -172,3 +174,37 @@ simulator's synthetic maps (the diagram renderer now draws the DB lane
 only when sql_query events exist). That depth is precisely what the Go
 agent's own instrumentation roadmap delivers; when it does, this test
 upgrades for free.
+
+## Amendment 2026-09-24: the Go-backed e2e test is retired; the proof is a real OSS app
+
+`examples/petclinic-react/test/e2e/fullstack.test.tsx` (the 2026-06-12
+amendment above) has been removed. It was a weak proof: both ends were
+this project's own novel tracers (the React recorder and the
+experimental Go middleware) vouching for each other, it needed a
+checkout of a private sibling repo, and it therefore skipped itself in
+CI — so it never actually ran on a PR.
+
+The end-to-end proof of the join is now
+[`acceptance/supabase-edge-functions-app`](../../acceptance/supabase-edge-functions-app),
+run by CI on every push and PR:
+
+- the app is Supabase's own edge-functions example
+  (`supabase/supabase` @ `74a3be9`): a React app (the "Edge Functions
+  Test Client") that calls the `select-from-table-with-auth-rls` Deno
+  edge function via `supabase.functions.invoke`, which calls GoTrue and
+  queries Postgres through PostgREST under row-level security;
+- everything runs on localhost from real parts (Postgres, the GoTrue
+  and PostgREST release binaries, the app's own migrations), driven by
+  real Chromium through Playwright, with no edits to the app's source;
+- the checks are the shared acceptance spec (A–J, official validator
+  `@appland/appmap-validate`) plus the join itself: the browser's
+  request carries `traceparent`, the Deno map has the matching
+  `parent_span_id`, `appmap-link` joins them, and the stitched diagram
+  shows click → handler → backend → DB.
+
+Its `EXPECTATIONS.md` was written before any recording and its
+`RESULTS.md` records what actually happened. It is expected to fail
+until the recorder bugs it found are fixed; CI does not hide that.
+`examples/petclinic-react/test/e2e/deno-fullstack.test.ts` (doc 09)
+stays as a fast regression test, but both of its ends are this repo's
+own code, so it is not the proof.

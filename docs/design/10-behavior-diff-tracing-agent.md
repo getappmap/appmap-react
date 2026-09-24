@@ -104,6 +104,7 @@ fetch; that is fixed and regression-tested.
 
 ## Not covered
 
-The full-stack e2e test still needs a live PetClinicGo backend and is skipped
-without one (doc 02); the backend maps used here are the simulated ones, which
-share the exact v1.2 shape the real Go middleware will emit.
+The backend maps used here are the simulated ones, which share the exact v1.2
+shape the real Go middleware will emit. (The PetClinicGo-backed e2e test this
+paragraph used to point at was retired on 2026-09-24; the full-stack proof is
+now `acceptance/supabase-edge-functions-app`, see doc 02.)

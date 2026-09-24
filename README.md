@@ -29,10 +29,28 @@ specific to this repo is in `docs/design/`.
 ## Status
 
 Eleven design docs, listed below with what each one proved. Highlights:
-full-stack linking (doc 02) now has a real end-to-end test with no
-external dependency (doc 09), and both runtimes record with zero
-application-code changes (docs 06 and 07). Interaction-window capture
-is still pending a manual real-browser run (doc 04).
+full-stack linking (doc 02) is tested end to end against a **real
+open-source app neither side was built around** — Supabase's
+edge-functions example (a React app calling a Deno edge function, with
+real Postgres, GoTrue and PostgREST on localhost) — in
+[`acceptance/supabase-edge-functions-app`](acceptance/supabase-edge-functions-app),
+which CI runs on every PR. Read its `RESULTS.md` for the current state:
+it is expected to fail until the recorder bugs it found are fixed.
+Both runtimes record with zero application-code changes on this repo's
+own examples (docs 06 and 07). Interaction-window capture in a real
+browser is exercised by the acceptance runs.
+
+### Acceptance suites (real OSS apps, run by CI on every PR)
+
+| Suite | What it proves | App |
+|---|---|---|
+| [`acceptance/supabase-edge-functions-app`](acceptance/supabase-edge-functions-app) | the full-stack join: a real Chromium click in the React app → `fetch` with `traceparent` → Deno backend map with matching `parent_span_id` → `appmap-link` stitch | `supabase/supabase` examples/edge-functions (app + `select-from-table-with-auth-rls`) @ `74a3be9` |
+| [`acceptance/bulletproof-react`](acceptance/bulletproof-react) | the React recorder, checks A–J, Vitest + real browser | `alan2207/bulletproof-react` @ `9506629` |
+| [`acceptance/supabase-restful-tasks`](acceptance/supabase-restful-tasks) | the Deno recorder, checks A–J | `supabase/supabase` examples/edge-functions `restful-tasks` @ `74a3be9` |
+
+Each has `EXPECTATIONS.md` (written before any recording), `run.sh`
+(clean clone at the pinned SHA → every check, non-zero exit on any
+failure) and `RESULTS.md`.
 
 - [`recorder/`](recorder) — the recorder core (Enter/Exit + CallToken
   contract, value capture with size caps, `fetch` →
@@ -51,12 +69,13 @@ is still pending a manual real-browser run (doc 04).
   to backend request maps via W3C Trace Context (`traceparent`) ids,
   emitting `appmap-links.json` and a stitched PlantUML sequence
   diagram per interaction (click → component → fetch → handler →
-  SQL). A clearly-marked simulator can synthesize backend maps, and a
-  **real end-to-end integration test** boots the actual PetClinicGo
-  server (with its new AppMap middleware) and asserts the stitch on
-  real maps — it runs automatically when the Go toolchain and the Go
-  sibling repo are present (`PETCLINIC_GO_DIR` to point elsewhere),
-  and skips itself otherwise. See the doc 02 amendment.
+  SQL). A clearly-marked simulator can synthesize backend maps for the
+  demo. The real end-to-end proof is
+  [`acceptance/supabase-edge-functions-app`](acceptance/supabase-edge-functions-app)
+  (a real OSS React + Deno app, real browser, real backend recordings);
+  see the doc 02 amendment of 2026-09-24. The earlier PetClinicGo-backed
+  e2e test was retired: it depended on this project's own experimental
+  Go tracer and a sibling repo, and skipped itself in CI.
 - [`deno/`](deno) — `withAppMap`, a per-request session driver for
   `Deno.serve` / Supabase edge functions: reuses the same recorder
   core and the same build-time transform (unchanged), adding only a
@@ -94,8 +113,12 @@ npm run link:demo                               # tests + simulate backend + lin
 ls examples/petclinic-react/tmp/appmap/links/   # appmap-links.json + .puml diagrams
 
 npm test --workspace examples/deno-edge         # real deno run, if deno is on PATH
-                                                 # (this also runs the real React <-> Deno
-                                                 # e2e test in examples/petclinic-react, doc 09)
+                                                 # (examples/petclinic-react also has a React <-> Deno
+                                                 # e2e test against this repo's own deno-edge example, doc 09;
+                                                 # with CI=true both fail instead of skipping without deno)
+
+# full-stack e2e on a real OSS app (needs deno, postgres binaries, chromium; see run.sh)
+acceptance/supabase-edge-functions-app/run.sh
 
 # tracing agent: ASCII + mermaid per interaction (add --baseline <dir> to diff)
 node linker/bin/appmap-trace.mjs examples/petclinic-react/tmp/appmap
