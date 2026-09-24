@@ -191,11 +191,16 @@ export function instrumentBabelPlugin(relPath: string, runtimeModule: string, co
         const init = path.get('init');
         if (!idPath.isIdentifier() || !init.node) return;
 
-        // const name = useCallback(fn, deps) / useMemo(fn, deps) — wrap
-        // just the callback argument, leave the hook call itself alone.
+        // const name = useCallback(fn, deps) / useMemo(fn, deps), also
+        // spelled React.useCallback / React.useMemo — wrap just the
+        // callback argument, leave the hook call itself alone.
         if (init.isCallExpression()) {
           const callee = init.node.callee;
-          const calleeName = t.isIdentifier(callee) ? callee.name : undefined;
+          const calleeName = t.isIdentifier(callee)
+            ? callee.name
+            : t.isMemberExpression(callee) && !callee.computed && t.isIdentifier(callee.property)
+              ? callee.property.name
+              : undefined;
           if (calleeName !== 'useCallback' && calleeName !== 'useMemo') return;
           const first = init.get('arguments')[0];
           if (!first || (!first.isArrowFunctionExpression() && !first.isFunctionExpression())) return;
