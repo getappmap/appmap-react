@@ -2,6 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { relative, join } from 'node:path';
 import type { IndexHtmlTransformContext, Plugin } from 'vite';
 import { syntaxFor, transformSource } from './transform.js';
+import { DEFAULT_TEST_EXCLUDE, pathMatcher } from './pathMatch.js';
 import {
   PROPAGATE_ENV,
   parseOriginPatterns,
@@ -29,11 +30,18 @@ const RESOLVED_INTERACTION_RECORDER_VIRTUAL_ID = `\0${INTERACTION_RECORDER_VIRTU
 // builds, unless `force` overrides.
 
 export interface AppMapPluginOptions {
-  /** Project-root-relative directory prefixes to instrument (the
-   * appmap.yml `packages:` equivalent), e.g. ['src']. */
+  /** What to instrument (the appmap.yml `packages:` equivalent), relative
+   * to the project root: directory prefixes or files ('src'), or globs
+   * ('src/**\/*.tsx'). See pathMatch.ts. */
   include: string[];
-  /** Directory prefixes to skip within include. */
+  /** What to skip within include, in the same forms ('src/testing',
+   * '**\/*.stories.tsx'). Applied on top of `defaultExclude`. */
   exclude?: string[];
+  /** Test code excluded unless you say otherwise: `__tests__/` and
+   * `__mocks__/` directories and `*.test.*` / `*.spec.*` files
+   * (DEFAULT_TEST_EXCLUDE). Pass your own list to replace it, or `false`
+   * to instrument test files too. */
+  defaultExclude?: readonly string[] | false;
   /** Instrument even in production builds. Default: never. */
   force?: boolean;
   /** App name for zero-touch interaction recording injection. */
@@ -50,19 +58,25 @@ export interface AppMapPluginOptions {
   propagateTraceHeaderOrigins?: OriginPattern[];
 }
 
+export { DEFAULT_TEST_EXCLUDE };
+
 export function appmapVitePlugin(options: AppMapPluginOptions): Plugin {
   let root = process.cwd();
   let base = '/';
   let enabled = true;
   let building = false;
 
+  const included = pathMatcher(options.include);
+  const excluded = pathMatcher([
+    ...(options.defaultExclude === false ? [] : (options.defaultExclude ?? DEFAULT_TEST_EXCLUDE)),
+    ...(options.exclude ?? []),
+  ]);
   const selected = (id: string): string | undefined => {
     const file = id.split('?')[0];
-    if (!/\.[jt]sx?$/.test(file) || file.includes('/node_modules/')) return undefined;
-    const rel = relative(root, file);
+    if (!/\.([mc]?[jt]s|[jt]sx)$/.test(file) || file.includes('/node_modules/')) return undefined;
+    const rel = relative(root, file).split('\\').join('/');
     if (rel.startsWith('..')) return undefined;
-    if (!options.include.some((dir) => rel === dir || rel.startsWith(dir + '/'))) return undefined;
-    if (options.exclude?.some((dir) => rel === dir || rel.startsWith(dir + '/'))) return undefined;
+    if (!included(rel) || excluded(rel)) return undefined;
     return rel;
   };
   const propagateOrigins = [

@@ -173,3 +173,27 @@ And a recorder must never break the app: if the transform still cannot
 parse a file, the plugin now serves it uninstrumented and prints
 `appmap: not instrumenting <file>: <reason>` instead of failing the
 request. Tests: `recorder/test/vitePluginSelection.test.ts`.
+
+## Amendment (2026-09-24): globs in `include`/`exclude`; test files excluded by default
+
+`exclude` took only directory prefixes. bulletproof-react co-locates its
+tests (`src/**/__tests__/*.test.tsx`), so with `include: ['src']` the
+functions its test files define (`renderDiscussion`, `TestDialog`,
+`TestDrawer`) were recorded as app code, and the only way to keep them
+out was to list every test directory by hand
+(`acceptance/bulletproof-react`, bug 8).
+
+`include` and `exclude` entries are now either a directory prefix / file
+(as before) or a glob matched against the project-relative path: `*`
+within a segment, `**` across segments, `?`, `{a,b}`
+(`recorder/src/pathMatch.ts`). And test code is excluded by default —
+`DEFAULT_TEST_EXCLUDE`:
+
+```
+**/__tests__/**
+**/__mocks__/**
+**/*.{test,spec}.{js,jsx,ts,tsx,mjs,cjs,mts,cts}
+```
+
+`defaultExclude: [...]` replaces that list; `defaultExclude: false`
+instruments test files too. Tests: `recorder/test/vitePluginSelection.test.ts`.

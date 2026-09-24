@@ -154,6 +154,10 @@ import { registerAppMapHooks } from '@funwithappmap/react-recorder/vitest';
 registerAppMapHooks({ app: 'your-app' });
 ```
 
+`include`/`exclude` take directory prefixes or globs
+(`'**/*.stories.tsx'`); test files (`__tests__/`, `__mocks__/`,
+`*.test.*`, `*.spec.*`) are excluded by default (`defaultExclude`, doc 03).
+
 With `app` set, `vite` dev also records one AppMap per user interaction
 into `tmp/appmap/interactions` (doc 07). Installing straight from a
 checkout (`file:…/recorder`) works too, once `npm run build` has run
