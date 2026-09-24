@@ -85,6 +85,14 @@ export interface ParameterValue {
   size?: number;
   /** Stable identity for object-valued params within one recording. */
   object_id?: number;
+  /** A plain object's fields (name + class), per the spec's parameter
+   * `properties`: the shape survives the 100-character value cap. */
+  properties?: ParameterProperty[];
+}
+
+export interface ParameterProperty {
+  name: string;
+  class: string;
 }
 
 export interface CallEvent {
@@ -105,7 +113,7 @@ export interface ReturnEvent {
   thread_id: number;
   parent_id: number;
   elapsed?: number;
-  return_value?: { class: string; value: string; size?: number; object_id?: number };
+  return_value?: { class: string; value: string; size?: number; object_id?: number; properties?: ParameterProperty[] };
   exceptions?: { class: string; message: string; object_id: number }[];
 }
 

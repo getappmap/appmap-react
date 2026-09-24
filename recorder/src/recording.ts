@@ -7,6 +7,7 @@ import type {
   Metadata,
   PackageEntry,
   ParameterValue,
+  ParameterProperty,
 } from './types.js';
 import { className, functionName, readDataProperty, safeStringify } from './stringify.js';
 import { currentCallId } from './session.js';
@@ -43,7 +44,7 @@ export function formatValue(
   v: unknown,
   tracker?: ObjectIdTracker,
   name?: string,
-): { class: string; value: string; size?: number; object_id?: number } {
+): { class: string; value: string; size?: number; object_id?: number; properties?: ParameterProperty[] } {
   // Never JSON.stringify / String() an unknown value: that runs its
   // getters and toJSON and can change what the app does (stringify.ts).
   const cls = v === undefined ? 'undefined' : className(v);
@@ -64,10 +65,12 @@ export function formatValue(
   }
   str = capValue(str);
 
-  const result: { class: string; value: string; size?: number; object_id?: number } = {
+  const result: { class: string; value: string; size?: number; object_id?: number; properties?: ParameterProperty[] } = {
     class: cls,
     value: str,
   };
+  const properties = plainObjectProperties(v);
+  if (properties) result.properties = properties;
 
   if (v !== null && typeof v === 'object') {
     result.size = Array.isArray(v) ? ownLength(v) : Object.keys(v as object).length;
@@ -82,6 +85,28 @@ export function formatValue(
   }
 
   return result;
+}
+
+const MAX_PROPERTIES = 50;
+
+/** The spec's parameter `properties` for a plain object (prototype
+ * Object.prototype or null): each own enumerable data property's name and
+ * class, read from descriptors only (no getter is run; accessors are left
+ * out). A value is cut to 100 characters, so without this an argument like
+ * `{ email, firstName, lastName, password, teamName }` lost its last
+ * fields entirely. */
+function plainObjectProperties(v: unknown): ParameterProperty[] | undefined {
+  if (v === null || typeof v !== 'object' || Array.isArray(v)) return undefined;
+  const proto = Object.getPrototypeOf(v);
+  if (proto !== Object.prototype && proto !== null) return undefined;
+  const out: ParameterProperty[] = [];
+  for (const key of Object.keys(v as object)) {
+    if (out.length >= MAX_PROPERTIES) break;
+    const d = Object.getOwnPropertyDescriptor(v, key);
+    if (!d || !('value' in d)) continue;
+    out.push({ name: key, class: d.value === undefined ? 'undefined' : className(d.value) });
+  }
+  return out.length ? out : undefined;
 }
 
 /** Cut a value string to the cap, "…" included (no off-by-one), never

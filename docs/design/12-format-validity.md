@@ -64,3 +64,18 @@ exception messages, HTTP headers and query parameters):
   `Bearer [REDACTED]`.
 
 Tested in `recorder/test/redaction.test.ts`.
+
+## Amendment (2026-09-24): an object's shape survives the value cap
+
+With values cut to 100 characters, a plain object argument lost its later
+fields entirely: bulletproof-react's
+`registerWithEmailAndPassword({ email, firstName, lastName, password, teamName })`
+was recorded as `{"email":…,"firstName":…,"lastName":…,"…` — no
+`teamName` anywhere. The schema's parameter `properties` (a list of
+`{ name, class }`) is the spec's way to carry an object's shape, and the
+recorder now writes it for plain objects (prototype `Object.prototype` or
+null), on parameters and return values: every own enumerable *data*
+property, read from its descriptor (no getter is run; accessor properties
+are left out; at most 50). Class instances and arrays get none. Tests:
+`recorder/test/valueCapture.test.ts` ("parameter properties").
+
