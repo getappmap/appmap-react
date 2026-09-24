@@ -39,15 +39,26 @@ export function installInteractionRecorder(options: InteractionRecorderOptions =
   } = options;
 
   let timer: ReturnType<typeof setInterval> | undefined;
+  let open: { recording: Recording; interactions: string[]; sameTask: boolean } | undefined;
 
   const onTrigger = (event: Event) => {
-    // An open window absorbs further triggers (interaction-window
-    // scoping); a window opened elsewhere (e.g. a test recording) is
-    // respected the same way.
-    if (activeRecording()) return;
+    const active = activeRecording();
+    if (active && active === open?.recording) {
+      // A trigger dispatched in the same task as the one that opened the
+      // window is part of the same user action (clicking a submit button
+      // fires click, then submit).
+      if (open.sameTask) return;
+      // Otherwise the open window absorbs it, but records that it did:
+      // the map now covers more than one interaction.
+      open.interactions.push(describeInteraction(event));
+      return;
+    }
+    // A window opened elsewhere (e.g. a test recording) is respected.
+    if (active) return;
 
+    const interactions = [describeInteraction(event)];
     const metadata: Metadata = {
-      name: describeInteraction(event),
+      name: interactions[0],
       app,
       client: {
         name: '@funwithappmap/react-recorder',
@@ -56,6 +67,9 @@ export function installInteractionRecorder(options: InteractionRecorderOptions =
       recorder: { name: 'funwithappmap-react', type: 'requests' },
     };
     const recording = startRecording(new Recording(metadata));
+    const opened = { recording, interactions, sameTask: true };
+    open = opened;
+    setTimeout(() => (opened.sameTask = false), 0);
 
     const openedAt = Date.now();
     let lastCount = -1; // force at least one full idle interval
@@ -68,6 +82,12 @@ export function installInteractionRecorder(options: InteractionRecorderOptions =
       lastCount = recording.events.length;
       if (idle || Date.now() - openedAt >= maxMs) {
         clearInterval(timer);
+        open = undefined;
+        if (interactions.length > 1) {
+          recording.metadata.name = interactions.join(' + ');
+          recording.metadata.interactions = interactions;
+          recording.metadata.ambiguous = true;
+        }
         ship(stopRecording(), collectorUrl);
       }
     }, idleMs);

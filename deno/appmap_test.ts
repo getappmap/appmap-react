@@ -8,7 +8,7 @@
 // wired into CI via .github/workflows/ci.yml's `deno` job.)
 
 import assert from 'node:assert/strict';
-import { withAppMap } from './appmap.ts';
+import { autoInstrument, withAppMap } from './appmap.ts';
 
 async function waitForFile(dir: string, timeoutMs = 2000): Promise<string> {
   const deadline = Date.now() + timeoutMs;
@@ -118,5 +118,88 @@ Deno.test('withAppMap captures EdgeRuntime.waitUntil background work (docs/desig
   } finally {
     globalThis.fetch = originalFetch;
     delete globals.EdgeRuntime;
+  }
+});
+
+Deno.test('concurrent stamped requests each get their own recording; unstamped traffic is never stamped', async () => {
+  // docs/design/01, "Per-request async context". Stamped and unstamped
+  // requests overlap in time; every stamped one must end up in its own
+  // file holding only its own events, and no outbound call made for an
+  // unstamped request may carry a traceparent.
+  const dir = await Deno.makeTempDir({ prefix: 'appmap-deno-test-concurrent-' });
+  const sent: { url: string; traceparent: string | null }[] = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = (input: RequestInfo | URL, init?: RequestInit) => {
+    const request = new Request(input, init);
+    sent.push({ url: request.url, traceparent: request.headers.get('traceparent') });
+    return Promise.resolve(Response.json({ ok: true }));
+  };
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  try {
+    const lookup = autoInstrument(
+      async function lookup(id: string) {
+        await sleep(id.length * 3);
+        await fetch(`https://db.example/items/${id}`);
+        return id;
+      },
+      { definedClass: 'items', methodId: 'lookup', path: 'items.ts', lineno: 1 },
+      ['id'],
+    );
+    const handler = async (req: Request) => {
+      const id = new URL(req.url).searchParams.get('id')!;
+      await sleep(5);
+      await lookup(id);
+      return Response.json({ id });
+    };
+    const wrapped = withAppMap(handler, { app: 'concurrent', dir });
+
+    const trace = (i: number) => `${String(i).padStart(2, '0')}${'e'.repeat(30)}`;
+    const span = (i: number) => `${String(i).padStart(2, '0')}${'f'.repeat(14)}`;
+    const stamped = Array.from({ length: 6 }, (_, i) =>
+      wrapped(
+        new Request(`http://localhost/items?id=s${'x'.repeat(i)}`, {
+          headers: { traceparent: `00-${trace(i)}-${span(i)}-01` },
+        }),
+      ),
+    );
+    const unstamped = Array.from({ length: 4 }, (_, i) =>
+      wrapped(new Request(`http://localhost/items?id=u${'y'.repeat(i)}`)),
+    );
+    for (const res of await Promise.all([...stamped, ...unstamped])) assert.equal(res.status, 200);
+
+    const deadline = Date.now() + 3000;
+    let files: string[] = [];
+    while (Date.now() < deadline) {
+      files = [...Deno.readDirSync(dir)].filter((e) => e.name.endsWith('.appmap.json')).map((e) => e.name);
+      if (files.length >= 6) break;
+      await sleep(10);
+    }
+    assert.equal(files.length, 6, `one file per stamped request, got ${files.join(', ')}`);
+
+    for (let i = 0; i < 6; i++) {
+      const file = files.find((f) => f.includes(`_${span(i)}_`));
+      assert.ok(file, `recording for stamped request ${i}`);
+      const appmap = JSON.parse(await Deno.readTextFile(`${dir}/${file}`));
+      const calls = appmap.events.filter((e: { event: string }) => e.event === 'call');
+      const lookups = calls.filter((e: { method_id?: string }) => e.method_id === 'lookup');
+      assert.deepEqual(
+        lookups.map((e: { parameters: { value: string }[] }) => e.parameters[0].value),
+        [`s${'x'.repeat(i)}`],
+        `request ${i} recorded only its own lookup`,
+      );
+      const clients = calls.filter((e: { http_client_request?: unknown }) => e.http_client_request);
+      assert.equal(clients.length, 1, `request ${i} recorded only its own outbound call`);
+      assert.ok(clients[0].http_client_request.headers.traceparent.startsWith(`00-${trace(i)}-`));
+      assert.equal(calls.filter((e: { http_server_request?: unknown }) => e.http_server_request).length, 1);
+      assert.equal(appmap.metadata.truncated, undefined);
+    }
+
+    for (const s of sent) {
+      const id = s.url.split('/').pop()!;
+      if (id.startsWith('u')) assert.equal(s.traceparent, null, `unstamped request's call to ${s.url} was stamped`);
+      else assert.ok(s.traceparent?.startsWith(`00-${trace(id.length - 1)}-`), `${s.url} stamped with its own trace`);
+    }
+  } finally {
+    globalThis.fetch = originalFetch;
   }
 });

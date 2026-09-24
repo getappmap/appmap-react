@@ -74,13 +74,14 @@ event list is flat and linked by `parent_id` (doc 01), not by position.
 The server-request event is an async leaf (opened via `openDangling`),
 so nothing is mis-nested under it.
 
-**Cost: the ambient session stays held.** One-at-a-time recording
-(doc 01) now extends across the whole background window, so a second
-stamped request arriving during those 2–4 minutes runs **unrecorded**.
-Accepted: for capturing a specific journey this is fine, and the
-alternative (concurrent recordings) is the doc 01 async-gap problem we
-have deliberately deferred. If overlapping long-running recordings ever
-matter, that's the trigger to revisit mechanisms 2/3 there.
+**Overlap.** Each stamped request records in its own async context
+(doc 01, "Per-request async context" amendment), and `waitUntil`
+promises are collected for the recording of the context that registered
+them. A second stamped request arriving during a long background window
+therefore gets its own map, and its own background work lands there —
+not in the first request's map. (Before that amendment the ambient
+session stayed held for the whole window, the second request ran
+unrecorded, and its background work leaked into the first map.)
 
 **Scope.** No-ops cleanly where `EdgeRuntime.waitUntil` doesn't exist —
 plain `deno run`, the zero-touch runner, the Node/Vitest suite — so

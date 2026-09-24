@@ -180,3 +180,54 @@ Ordinary sequential (non-overlapping) calls are unaffected and stay on
 one thread, as before. See `recorder/test/concurrency.test.ts` for the
 Promise.all case this fixes, asserted against the actual pairing
 + positional-nesting invariant standard tooling relies on.
+
+## Amendment (2026-09-24): per-request async context
+
+Acceptance testing against a real Supabase edge function showed the
+"one ambient session" design breaking exactly where this doc said it
+would: on a server. With one module-global session, every instrumented
+call and every `fetch` in the process was attributed to whichever
+recording happened to be open — a burst of 20 stamped + 10 unstamped
+requests produced **one** map holding all 30 requests' calls, and the
+29 foreign outbound calls went out stamped with the open recording's
+`traceparent`, so `appmap-link` would have joined them to the wrong map.
+`withAppMap`'s "one at a time" check only stopped a second recording
+from *starting*; it did nothing to stop other requests' events from
+*entering* the open one.
+
+**Fix: mechanism 2 (AsyncLocalStorage) where the runtime has it.**
+`recorder/src/session.ts` now has two kinds of recording:
+
+- **Scoped** (Deno, and any Node driver): the driver installs an
+  `AsyncLocalStorage` with `installAsyncContext()` and runs each unit
+  of work inside `runInRecording(recording, fn)`. `activeRecording()`
+  answers from the *current async context*, so each request sees only
+  its own recording; every stamped request gets its own map, however
+  many are in flight. Unstamped requests run inside `runUnrecorded()`
+  and see no recording at all — their code is never recorded and their
+  outbound calls are never stamped. A scoped recording is closed with
+  `closeScopedRecording()`; work still running in its context after
+  that (un-awaited background promises) is neither recorded nor
+  stamped. `node:async_hooks` works in both Deno and Node; session.ts
+  only uses it through a structural interface, so it never imports it
+  and stays loadable in a browser bundle.
+- **Ambient** (`startRecording`/`stopRecording`), unchanged: test
+  recording and browser interaction windows. The browser still has no
+  async context, which is why doc 04's window scoping remains.
+
+The outbound-request patches stay installed while any recording, of
+either kind, is open (reference counted).
+
+**Browser: overlapping interactions are marked, not split.** Without
+async context the recorder cannot tell which of two overlapping
+interactions a later event (a fetch response, a re-render) belongs to.
+Splitting the window at the second trigger would present a guess as
+fact — the first interaction's in-flight response would land in the
+second map. So a window that absorbs a second trigger keeps going, but
+the map says so: its name lists every interaction
+(`click a "Users" + click a "Dashboard"`), `metadata.interactions`
+holds them in order and `metadata.ambiguous` is `true`. Previously it
+was silently named after the first click only. A trigger dispatched in
+the same task as the one that opened the window (clicking a submit
+button fires `click`, then `submit`) is the same user action and is not
+counted as a second interaction.

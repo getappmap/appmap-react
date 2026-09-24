@@ -29,6 +29,12 @@ export interface Metadata {
   // docs/design/11). The map is balanced and safe to sanitize, but
   // incomplete: some returns are synthetic.
   truncated?: boolean;
+  // Interaction maps only (docs/design/04): set when more than one
+  // interaction fired while the window was open. The browser has no
+  // async context to attribute events by, so the map holds the work of
+  // all of them; `interactions` lists them in order.
+  interactions?: string[];
+  ambiguous?: boolean;
 }
 
 export type ClassMapEntry = PackageEntry | ClassEntry | FunctionEntry;

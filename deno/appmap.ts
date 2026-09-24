@@ -33,9 +33,25 @@
 // type checker. This was never actually exercised until
 // deno/appmap_test.ts (added alongside CI automation) started running
 // `deno check` for the first time.
+import { AsyncLocalStorage } from 'node:async_hooks';
 import { Recording } from '../recorder/src/recording';
-import { startRecording, stopRecording, activeRecording } from '../recorder/src/session';
+import {
+  activeRecording,
+  closeScopedRecording,
+  installAsyncContext,
+  openScopedRecording,
+  runInRecording,
+  runUnrecorded,
+  type RecordingContext,
+} from '../recorder/src/session';
 import { autoInstrument } from '../recorder/src/instrument';
+
+// Per-request async context (docs/design/01, "Per-request async
+// context"): every request runs in its own AsyncLocalStorage context, so
+// concurrent requests each record only their own events, and an
+// unrecorded request's code never sees (or stamps outbound calls with)
+// another request's recording. node:async_hooks works under Deno.
+installAsyncContext(new AsyncLocalStorage<RecordingContext>());
 
 // Re-export so this file can serve as the transform's `runtimeModule`.
 export { autoInstrument };
@@ -64,13 +80,13 @@ export interface WithAppMapOptions {
   dir?: string;
 }
 
-// Promises the current recording is waiting on before it closes — the
-// background tasks the handler handed to EdgeRuntime.waitUntil (docs/design/11).
-// Module-level because EdgeRuntime.waitUntil is a shared global and the
-// one-at-a-time recording invariant (doc 01) guarantees only one
-// recording is collecting at a time. `undefined` outside a recording, so
-// the patch never touches waitUntil calls we aren't recording.
-let pendingWaitUntil: Promise<unknown>[] | undefined;
+// Promises each open recording is waiting on before it closes — the
+// background tasks its handler handed to EdgeRuntime.waitUntil
+// (docs/design/11). EdgeRuntime.waitUntil is one shared global, so the
+// patch looks up the recording of the *calling* async context; a
+// recording is only in here while its handler is running, so the patch
+// never touches waitUntil calls we aren't recording.
+const pendingWaitUntil = new WeakMap<Recording, Promise<unknown>[]>();
 let waitUntilPatched = false;
 
 // Wrap EdgeRuntime.waitUntil once so that, while a recording is open,
@@ -90,7 +106,9 @@ function patchWaitUntil(): void {
   er.waitUntil = (promise: Promise<unknown>): void => {
     // Swallow rejections in our copy only (so allSettled can't be
     // skewed); the original still sees the unaltered promise.
-    if (pendingWaitUntil) pendingWaitUntil.push(Promise.resolve(promise).catch(() => {}));
+    const recording = activeRecording();
+    const pending = recording && pendingWaitUntil.get(recording);
+    if (pending) pending.push(Promise.resolve(promise).catch(() => {}));
     original(promise);
   };
   waitUntilPatched = true;
@@ -103,16 +121,14 @@ export function withAppMap(handler: Handler, options: WithAppMapOptions = {}): H
 
   return async (req: Request): Promise<Response> => {
     const match = TRACEPARENT.exec(req.headers.get('traceparent') ?? '');
-    // Record only stamped requests (recording-driven semantics), and only
-    // one at a time — the ambient-session invariant from doc 01. A
-    // request arriving while another is being recorded runs unrecorded.
-    // (With waitUntil capture, "being recorded" now extends through the
-    // background window; a request arriving during it is skipped, doc 11.)
-    if (!match || activeRecording()) return handler(req);
+    // Record only stamped requests (recording-driven semantics). Every
+    // stamped request gets its own recording, however many are in flight;
+    // an unstamped one runs in a context with no recording at all.
+    if (!match) return runUnrecorded(() => handler(req));
 
     patchWaitUntil();
     const url = new URL(req.url);
-    const recording = startRecording(
+    const recording = openScopedRecording(
       new Recording({
         name: `${req.method} ${url.pathname}`,
         app: options.app,
@@ -134,24 +150,24 @@ export function withAppMap(handler: Handler, options: WithAppMapOptions = {}): H
     // Collect waitUntil promises the handler registers during its (sync
     // path to the) response.
     const deferred: Promise<unknown>[] = [];
-    pendingWaitUntil = deferred;
+    pendingWaitUntil.set(recording, deferred);
 
     const finalize = (): void => {
-      pendingWaitUntil = undefined;
-      stopRecording();
+      pendingWaitUntil.delete(recording);
+      closeScopedRecording(recording);
       void ship(recording, dir, collector, ++seq);
     };
 
     let status = 500;
     try {
-      const response = await handler(req);
+      const response = await runInRecording(recording, () => handler(req), token.callId);
       status = response.status;
       // Record the real response now, at its true time — not after the
       // background work. Background call/return events (fetches, SQL) land
       // after this server-response event in the flat list; that ordering
       // is unusual but valid (parent_id linkage, doc 01).
       recording.httpServerResponse(token, status);
-      pendingWaitUntil = undefined; // handler done registering
+      pendingWaitUntil.delete(recording); // handler done registering
       if (deferred.length > 0) {
         // Do NOT block the response on the background work — that is why
         // the handler used waitUntil. Keep the recording open and finalize

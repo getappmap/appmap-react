@@ -99,10 +99,10 @@ describe('withAppMap', () => {
     vi.unstubAllGlobals();
   });
 
-  it('leaves a second stamped request unrecorded while the first is still in flight', async () => {
-    // The ambient-session invariant (doc 01): one recording at a time,
-    // process-wide, across every withAppMap instance. A request arriving
-    // mid-recording must run unrecorded, not throw or corrupt state.
+  it('records a second stamped request in its own recording while the first is still in flight', async () => {
+    // Per-request async context (docs/design/01): overlapping stamped
+    // requests each get their own recording — the old one-at-a-time rule
+    // dropped the second one and let its events leak into the first.
     let releaseFirst!: () => void;
     const gate = new Promise<void>((resolve) => {
       releaseFirst = resolve;
@@ -113,18 +113,26 @@ describe('withAppMap', () => {
     });
     const fastHandler = vi.fn(async () => new Response('second'));
 
-    const firstPromise = withAppMap(slowHandler, { app: 'test' })(stampedRequest('3'.repeat(16)));
-    const secondResponse = await withAppMap(fastHandler, { app: 'test' })(stampedRequest('4'.repeat(16)));
+    const firstPromise = withAppMap(slowHandler, { app: 'test' })(stampedRequest('3'.repeat(16), 'http://localhost/first'));
+    const secondResponse = await withAppMap(fastHandler, { app: 'test' })(stampedRequest('4'.repeat(16), 'http://localhost/second'));
+    await new Promise((resolve) => setTimeout(resolve, 0));
 
     expect(await secondResponse.text()).toBe('second');
     expect(fastHandler).toHaveBeenCalledTimes(1);
-    expect(mkdir).not.toHaveBeenCalled(); // nothing shipped yet — the first request is still open
+    // The second request shipped on its own while the first is still open.
+    expect(writeTextFile).toHaveBeenCalledTimes(1);
+    expect(writeTextFile.mock.calls[0][0]).toContain('_4444444444444444_');
 
     releaseFirst();
     await firstPromise;
     await new Promise((resolve) => setTimeout(resolve, 0));
 
-    expect(mkdir).toHaveBeenCalledTimes(1); // only the first request's recording ships
+    expect(writeTextFile).toHaveBeenCalledTimes(2);
+    expect(writeTextFile.mock.calls[1][0]).toContain('_3333333333333333_');
+    for (const [, body] of writeTextFile.mock.calls) {
+      const servers = JSON.parse(body).events.filter((e: { http_server_request?: unknown }) => e.http_server_request);
+      expect(servers).toHaveLength(1);
+    }
   });
 
   it('increments the sequence number across successive requests on the same wrapped handler', async () => {
