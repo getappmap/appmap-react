@@ -246,3 +246,98 @@ Deno.test('a recorded request is one call tree rooted at its http_server_request
     globalThis.fetch = originalFetch;
   }
 });
+
+// Crash safety (docs/design/11, "Crashes"): a process that dies with a
+// recording still open must leave a truncated-but-valid map behind.
+async function crashChild(dir: string, mode: 'wait' | 'throw') {
+  const appmapModule = new URL('./appmap.ts', import.meta.url).href;
+  const script = `${dir}/child.ts`;
+  await Deno.writeTextFile(
+    script,
+    `import { autoInstrument, withAppMap } from ${JSON.stringify(appmapModule)};
+const dir = ${JSON.stringify(`${dir}/out`)};
+const ingest = autoInstrument(async function ingest(n: number) {
+  await new Promise(() => {});
+}, { definedClass: 'probe', methodId: 'ingest', path: 'probe.ts', lineno: 1 }, ['n']);
+const wrapped = withAppMap(async () => {
+  void ingest(1);
+  ${mode === 'throw' ? "setTimeout(() => { throw new Error('boom'); }, 300);" : ''}
+  await new Promise((r) => setTimeout(r, 60_000));
+  return new Response('ok');
+}, { dir });
+void wrapped(new Request('http://localhost/probe/ingest', {
+  method: 'POST',
+  headers: { traceparent: '00-${'7'.repeat(32)}-${'8'.repeat(16)}-01' },
+}));
+console.log('ready');
+`,
+  );
+  const child = new Deno.Command(Deno.execPath(), {
+    args: ['run', '-A', '--unstable-sloppy-imports', script],
+    stdout: 'piped',
+    stderr: 'null',
+  }).spawn();
+  const reader = child.stdout.getReader();
+  let out = '';
+  while (!out.includes('ready')) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    out += new TextDecoder().decode(value);
+  }
+  reader.releaseLock();
+  void child.stdout.cancel();
+  return child;
+}
+
+const mapsIn = (dir: string, suffix: string) => {
+  try {
+    return [...Deno.readDirSync(dir)].map((e) => e.name).filter((n) => n.endsWith(suffix));
+  } catch {
+    return [];
+  }
+};
+
+for (const signal of ['SIGTERM', 'SIGINT'] as const) {
+  Deno.test(`${signal} while a recording is open writes it, truncated, and the process still ends`, async () => {
+    const dir = await Deno.makeTempDir({ prefix: `appmap-deno-test-${signal}-` });
+    const child = await crashChild(dir, 'wait');
+    await new Promise((r) => setTimeout(r, 100));
+    child.kill(signal);
+    const status = await child.status;
+    assert.equal(status.signal, signal, 'the signal still ends the process');
+    const files = mapsIn(`${dir}/out`, '.appmap.json');
+    assert.equal(files.length, 1);
+    const appmap = JSON.parse(await Deno.readTextFile(`${dir}/out/${files[0]}`));
+    assert.equal(appmap.metadata.truncated, true);
+    assert.ok(appmap.events.some((e: { method_id?: string }) => e.method_id === 'ingest'));
+    assert.deepEqual(mapsIn(`${dir}/out`, '.part'), []);
+  });
+}
+
+Deno.test('an uncaught error while a recording is open writes it, truncated', async () => {
+  const dir = await Deno.makeTempDir({ prefix: 'appmap-deno-test-throw-' });
+  const child = await crashChild(dir, 'throw');
+  const status = await child.status;
+  assert.equal(status.success, false);
+  const files = mapsIn(`${dir}/out`, '.appmap.json');
+  assert.equal(files.length, 1);
+  assert.equal(JSON.parse(await Deno.readTextFile(`${dir}/out/${files[0]}`)).metadata.truncated, true);
+});
+
+Deno.test('kill -9 leaves a partial recording that the next start repairs', async () => {
+  const dir = await Deno.makeTempDir({ prefix: 'appmap-deno-test-sigkill-' });
+  const child = await crashChild(dir, 'wait');
+  await new Promise((r) => setTimeout(r, 900)); // past the first snapshots
+  child.kill('SIGKILL');
+  await child.status;
+  assert.deepEqual(mapsIn(`${dir}/out`, '.appmap.json'), []);
+  assert.equal(mapsIn(`${dir}/out`, '.appmap.json.part').length, 1);
+
+  withAppMap(() => new Response('ok'), { dir: `${dir}/out` }); // next start
+  const files = mapsIn(`${dir}/out`, '.appmap.json');
+  assert.equal(files.length, 1);
+  assert.deepEqual(mapsIn(`${dir}/out`, '.part'), []);
+  const appmap = JSON.parse(await Deno.readTextFile(`${dir}/out/${files[0]}`));
+  assert.equal(appmap.metadata.truncated, true);
+  assert.ok(appmap.events.some((e: { method_id?: string }) => e.method_id === 'ingest'));
+});

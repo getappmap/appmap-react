@@ -79,8 +79,9 @@ is still pending a manual real-browser run (doc 04).
   that gap is named, not silently missing. See
   [doc 06](docs/design/06-zero-touch-deno.md).
   Work a handler hands to `EdgeRuntime.waitUntil` (runs after the
-  response is sent) is recorded too, and a recording cut off mid-write
-  is repaired rather than lost. See
+  response is sent) is recorded too, and a recording cut off by a
+  signal, a crash or even `kill -9` is kept (truncated) rather than
+  lost. See
   [doc 11](docs/design/11-waituntil-background-work.md).
 - [`linker/bin/appmap-trace.mjs`](linker/bin/appmap-trace.mjs) — the
   tracing agent: shows each interaction as an ASCII call tree and a
