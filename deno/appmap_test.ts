@@ -41,6 +41,7 @@ Deno.test('withAppMap records a traceparent-stamped request and writes an AppMap
   const appmap = JSON.parse(await Deno.readTextFile(`${dir}/${file}`));
 
   assert.equal(appmap.version, '1.12');
+  assert.ok(appmap.metadata.language.version, 'language.version is required by the spec');
   assert.equal(appmap.metadata.trace_id, traceId);
   assert.equal(appmap.metadata.parent_span_id, spanId);
   assert.equal(appmap.metadata.recorder.name, 'funwithappmap-deno');
@@ -199,6 +200,48 @@ Deno.test('concurrent stamped requests each get their own recording; unstamped t
       if (id.startsWith('u')) assert.equal(s.traceparent, null, `unstamped request's call to ${s.url} was stamped`);
       else assert.ok(s.traceparent?.startsWith(`00-${trace(id.length - 1)}-`), `${s.url} stamped with its own trace`);
     }
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
+Deno.test('a recorded request is one call tree rooted at its http_server_request, with language.version', async () => {
+  const dir = await Deno.makeTempDir({ prefix: 'appmap-deno-test-tree-' });
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = () => Promise.resolve(new Response(null, { status: 204 }));
+  try {
+    const deleteTask = autoInstrument(
+      async function deleteTask(id: string) {
+        await new Promise((r) => setTimeout(r, 1));
+        await fetch(`http://db.example/rest/v1/tasks?id=eq.${id}`, { method: 'DELETE' });
+        return Response.json({});
+      },
+      { definedClass: 'index', methodId: 'deleteTask', path: 'index.ts', lineno: 38 },
+      ['id'],
+    );
+    const wrapped = withAppMap((req) => deleteTask(new URL(req.url).pathname.split('/').pop()!), { dir });
+    await wrapped(
+      new Request('http://localhost/restful-tasks/2?verbose=1', {
+        method: 'DELETE',
+        headers: { traceparent: `00-${'1'.repeat(32)}-${'2'.repeat(16)}-01` },
+      }),
+    );
+    const file = await waitForFile(dir);
+    const appmap = JSON.parse(await Deno.readTextFile(`${dir}/${file}`));
+    assert.equal(appmap.metadata.language.version, Deno.version.typescript);
+    const shape = appmap.events.map((e: Record<string, any>) =>
+      `${e.event}:${e.thread_id}:${e.method_id ?? e.http_server_request?.path_info ?? e.http_client_request?.url ?? ''}`,
+    );
+    assert.deepEqual(shape, [
+      'call:1:/restful-tasks/2',
+      'call:1:deleteTask',
+      'call:1:http://db.example/rest/v1/tasks',
+      'return:1:',
+      'return:1:',
+      'return:1:',
+    ]);
+    assert.deepEqual(appmap.events[0].message, [{ name: 'verbose', class: 'String', value: '1' }]);
+    assert.deepEqual(appmap.events[2].message, [{ name: 'id', class: 'String', value: 'eq.2' }]);
   } finally {
     globalThis.fetch = originalFetch;
   }

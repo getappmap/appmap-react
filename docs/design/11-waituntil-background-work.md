@@ -67,12 +67,12 @@ pipeline's own instrumented calls and its stamped outbound fetches land
 in the same map — the edge function shows up complete, and as a middle
 tier in the full-stack stitch.
 
-**Event ordering.** The `http_server_response` (202) event is emitted
-before the background `call`/`return` events. That's unusual — a
-request's "response" appears before some of its work — but valid: the
-event list is flat and linked by `parent_id` (doc 01), not by position.
-The server-request event is an async leaf (opened via `openDangling`),
-so nothing is mis-nested under it.
+**Event ordering.** The `http_server_response` (202) is recorded at
+its true time, before the background work. In the serialized map (doc
+12) the background calls nest under the request — they were started by
+its handler — so the `http_server_response` appears after them, closing
+the request's tree; its `elapsed` still says when the response went
+out.
 
 **Overlap.** Each stamped request records in its own async context
 (doc 01, "Per-request async context" amendment), and `waitUntil`

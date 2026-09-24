@@ -1,5 +1,5 @@
 import type { FunctionInfo } from './types.js';
-import { activeRecording } from './session.js';
+import { activeRecording, runInCall } from './session.js';
 
 // Hand-written instrumentation wrappers. Each is exactly the prologue /
 // epilogue the build-time transform (docs/design/03) will inject:
@@ -27,7 +27,10 @@ export function instrument<F extends AnyFn>(fn: F, info: FunctionInfo, argNames?
     }));
     const token = recording.enter(info, captured);
     try {
-      const result = fn.apply(this, args as never[]);
+      // Run the body as this call, so calls it makes from async
+      // continuations (after an await, in a timer) still nest under it
+      // where the runtime has async context (session.ts).
+      const result = runInCall(recording, token.callId, () => fn.apply(this, args as never[]));
       if (result instanceof Promise) {
         // The call is yielding control back to its caller now, even
         // though it's still logically open — see the thread-assignment

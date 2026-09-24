@@ -1,5 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { createRequire } from 'node:module';
 import { withAppMap } from '../appmap.ts';
+
+const { validate } = createRequire(import.meta.url)('@appland/appmap-validate') as {
+  validate: (data: unknown) => void;
+};
 
 // withAppMap (deno/appmap.ts) has real logic beyond the Recording
 // primitive already covered in examples/petclinic-react/test/
@@ -76,6 +81,10 @@ describe('withAppMap', () => {
       event: 'return',
       http_server_response: { status_code: 200 },
     });
+    // Valid at the version it declares (official validator), query
+    // string in `message`.
+    expect(() => validate(appmap)).not.toThrow();
+    expect(appmap.events[0].message).toEqual([{ name: 'x', class: 'String', value: '1' }]);
   });
 
   it('ships to APPMAP_COLLECTOR via fetch instead of the filesystem when set', async () => {

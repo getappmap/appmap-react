@@ -2,7 +2,9 @@
 
 An [AppMap](https://appmap.io) agent for React (browser) apps and Deno
 edge functions, sharing one recorder core. Together they record
-[AppMap v1.12](https://github.com/getappmap/appmap) JSON from component
+[AppMap](https://github.com/getappmap/appmap) 1.12 JSON — checked with
+the official validator, see [doc 12](docs/design/12-format-validity.md) —
+from component
 renders, hooks, event handlers, `fetch` and `XMLHttpRequest` calls,
 and `Deno.serve`
 requests — and the headline goal is **full-stack linking**:
@@ -29,7 +31,7 @@ specific to this repo is in `docs/design/`.
 
 ## Status
 
-Eleven design docs, listed below with what each one proved. Highlights:
+Twelve design docs, listed below with what each one proved. Highlights:
 full-stack linking (doc 02) now has a real end-to-end test with no
 external dependency (doc 09), and both runtimes record with zero
 application-code changes (docs 06 and 07). Interaction-window capture
@@ -39,7 +41,8 @@ is still pending a manual real-browser run (doc 04).
   contract, value capture with size caps, `fetch` and
   `XMLHttpRequest` (axios) → `http_client_request`/`response` events
   with `traceparent` stamping,
-  AppMap v1.12 serializer), Vitest per-test recording hooks
+  AppMap 1.12 serializer, validated by the official
+  `@appland/appmap-validate`), Vitest per-test recording hooks
   (`./vitest`), and the Vite plugin (`./vite`) that auto-instruments
   top-level functions in configured paths — dev/test only, with
   components and hooks labeled by naming convention.
@@ -182,3 +185,6 @@ not history rewrites.
 - [11 — recording background work (`EdgeRuntime.waitUntil`)](docs/design/11-waituntil-background-work.md)
   (found by the first real edge function the Deno driver met; also
   repairs recordings cut off mid-write)
+- [12 — format validity and the declared version](docs/design/12-format-validity.md)
+  (every recording mode checked with the official validator; calls
+  serialized as a tree; why the declared version is 1.12)

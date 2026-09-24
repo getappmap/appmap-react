@@ -59,6 +59,7 @@ export { autoInstrument };
 
 declare const Deno: {
   env: { get(key: string): string | undefined };
+  version?: { deno: string; typescript: string };
   mkdir(path: string, options?: { recursive?: boolean }): Promise<void>;
   writeTextFile(path: string, text: string): Promise<void>;
 };
@@ -133,7 +134,9 @@ export function withAppMap(handler: Handler, options: WithAppMapOptions = {}): H
       new Recording({
         name: `${req.method} ${url.pathname}`,
         app: options.app,
-        language: { name: 'typescript', engine: 'deno' },
+        // The spec requires language.version: the TypeScript version
+        // Deno compiles with (engine: deno). Unknown only under a stub.
+        language: { name: 'typescript', engine: 'deno', version: Deno.version?.typescript ?? 'unknown' },
         client: {
           name: '@funwithappmap/react-recorder',
           url: 'https://github.com/getappmap/appmap-react',
@@ -145,9 +148,13 @@ export function withAppMap(handler: Handler, options: WithAppMapOptions = {}): H
     recording.metadata.trace_id = match[1];
     recording.metadata.parent_span_id = match[2];
 
-    const token = recording.httpServerRequest(req.method, url.pathname, {
-      traceparent: match[0],
-    });
+    const token = recording.httpServerRequest(
+      req.method,
+      url.pathname,
+      { traceparent: match[0] },
+      undefined,
+      url.searchParams,
+    );
     // Collect waitUntil promises the handler registers during its (sync
     // path to the) response.
     const deferred: Promise<unknown>[] = [];

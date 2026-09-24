@@ -88,8 +88,10 @@ exactly the prologue/epilogue the doc 03 transform will inject, with
 `try/finally` (and promise `.then` chaining for async functions)
 playing the role of Go's `defer`.
 
-**Why linearized events tolerate async overlap.** AppMap v1.12 events
-are a flat list where each `return` names its `call` via `parent_id`.
+**Why linearized events tolerate async overlap.** (Superseded for the
+serialized form by doc 12, which emits the events as a call tree.)
+AppMap events are a flat list where each `return` names its `call` via
+`parent_id`.
 Two in-flight fetches interleave in the stream but stay correctly
 paired — no tree structure has to be repaired when completions arrive
 out of order.

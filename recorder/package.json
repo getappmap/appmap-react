@@ -2,7 +2,7 @@
   "name": "@funwithappmap/react-recorder",
   "private": true,
   "version": "0.0.1",
-  "description": "Hand-instrumentation AppMap recorder for React (spike for docs/design/01).",
+  "description": "AppMap recorder for React apps (Vite plugin, Vitest hooks, browser interaction recording): records AppMap 1.12, validated with the official @appland/appmap-validate.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -39,6 +39,7 @@
     "@types/babel__core": "^7.20.5"
   },
   "devDependencies": {
+    "@appland/appmap-validate": "^2.5.1",
     "jsdom": "^26.1.0",
     "msw": "^2.7.5",
     "typescript": "^5.8.3",

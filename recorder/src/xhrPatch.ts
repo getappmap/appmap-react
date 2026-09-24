@@ -46,6 +46,8 @@ interface Pending {
   method: string;
   url: string;
   headers: Record<string, string>;
+  /** The call that opened the request: its event is recorded later. */
+  parent: number | undefined;
   token?: CallToken;
 }
 
@@ -105,7 +107,13 @@ function observe(xhr: Xhr): void {
     const recording = activeRecording();
     if (recording) {
       const [method, url] = args as [string, string | URL];
-      pending = { recording, method: String(method).toUpperCase(), url: absoluteUrl(url), headers: {} };
+      pending = {
+        recording,
+        method: String(method).toUpperCase(),
+        url: absoluteUrl(url),
+        headers: {},
+        parent: recording.currentParent(),
+      };
       xhr.setRequestHeader('traceparent', `00-${recording.traceId}-${randomHex(8)}-01`);
     }
     return result;
@@ -120,7 +128,7 @@ function observe(xhr: Xhr): void {
 
   const start = () => {
     if (pending && !pending.token) {
-      pending.token = pending.recording.httpClientRequest(pending.method, pending.url, pending.headers);
+      pending.token = pending.recording.httpClientRequest(pending.method, pending.url, pending.headers, pending.parent);
     }
   };
   xhr.addEventListener('loadstart', start);

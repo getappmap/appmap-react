@@ -1,8 +1,9 @@
-// AppMap data format v1.12 — the subset this agent emits.
+// AppMap data format — the subset this agent emits (declared version:
+// APPMAP_VERSION in recording.ts, checked with the official validator).
 // https://github.com/getappmap/appmap (appmap.json spec)
 
 export interface AppMap {
-  version: '1.12';
+  version: string;
   metadata: Metadata;
   classMap: ClassMapEntry[];
   events: Event[];
@@ -35,6 +36,14 @@ export interface Metadata {
   // all of them; `interactions` lists them in order.
   interactions?: string[];
   ambiguous?: boolean;
+  // HTTP calls that never got a response the format can express (see
+  // UnansweredHttpRequest in recording.ts).
+  unanswered_http_requests?: {
+    event: 'http_client_request' | 'http_server_request';
+    request_method: string;
+    url: string;
+    reason: string;
+  }[];
 }
 
 export type ClassMapEntry = PackageEntry | ClassEntry | FunctionEntry;
@@ -97,7 +106,7 @@ export interface ReturnEvent {
   parent_id: number;
   elapsed?: number;
   return_value?: { class: string; value: string; size?: number; object_id?: number };
-  exceptions?: { class: string; message: string }[];
+  exceptions?: { class: string; message: string; object_id: number }[];
 }
 
 export interface HttpClientRequestEvent {
@@ -109,6 +118,8 @@ export interface HttpClientRequestEvent {
     url: string;
     headers?: Record<string, string>;
   };
+  /** Query parameters (the spec keeps them out of `url`). */
+  message: ParameterValue[];
 }
 
 export interface HttpClientResponseEvent {
@@ -133,6 +144,8 @@ export interface HttpServerRequestEvent {
     normalized_path_info?: string;
     headers?: Record<string, string>;
   };
+  /** Query parameters. */
+  message: ParameterValue[];
 }
 
 export interface HttpServerResponseEvent {

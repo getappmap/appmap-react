@@ -2,7 +2,7 @@
   "name": "appmap-react",
   "private": true,
   "version": "0.0.1",
-  "description": "AppMap agent for React (browser) and Deno edge functions: records AppMap v1.12 and links frontend AppMaps to backend AppMaps via W3C Trace Context.",
+  "description": "AppMap agent for React (browser) and Deno edge functions: records AppMap 1.12 (validated with the official @appland/appmap-validate) and links frontend AppMaps to backend AppMaps via W3C Trace Context.",
   "workspaces": [
     "recorder",
     "linker",

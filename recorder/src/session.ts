@@ -1,4 +1,4 @@
-import { Recording } from './recording.js';
+import type { Recording } from './recording.js';
 import { patchFetch, unpatchFetch } from './fetchPatch.js';
 import { patchXhr, unpatchXhr } from './xhrPatch.js';
 
