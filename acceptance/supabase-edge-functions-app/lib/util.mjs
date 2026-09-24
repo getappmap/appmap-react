@@ -203,6 +203,12 @@ export function gatewayLines() {
 }
 
 /** Flatten an AppMap into what the checks compare. */
+/** url + '?' + the event's message parameters (name=value, in order). */
+export function withQuery(url, message) {
+  const q = (message ?? []).map((m) => `${m.name}=${m.value}`).join('&');
+  return q ? `${url}?${q}` : url;
+}
+
 export function summarize(appmap) {
   const returns = new Map(appmap.events.filter((e) => e.event === 'return').map((e) => [e.parent_id, e]));
   const out = {
@@ -231,7 +237,10 @@ export function summarize(appmap) {
     } else if (e.http_client_request) {
       out.clients.push({
         method: e.http_client_request.request_method,
-        url: e.http_client_request.url,
+        // AppMap spec: http_client_request.url is the URL "excluding the query
+        // string"; the query parameters are the event's `message`. Rebuild
+        // path+query from both so URL comparisons see what went on the wire.
+        url: withQuery(e.http_client_request.url, e.message),
         traceparent: e.http_client_request.headers?.traceparent,
         status: r?.http_client_response?.status_code,
       });
