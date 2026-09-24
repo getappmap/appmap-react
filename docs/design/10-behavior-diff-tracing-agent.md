@@ -135,3 +135,28 @@ Three things acceptance runs on real apps showed:
 
 Tests: `linker/test/trace-agent.test.mjs` ("a backend request map
 traced on its own") and `linker/test/trace-cli.test.mjs`.
+
+## Amendment (2026-09-24, later): same-named interactions; what "changed" counts
+
+Two more things the acceptance runs showed:
+
+- **Same-named interactions were diffed against the wrong baseline.**
+  Every direct request to one edge function is named
+  `POST /<function>`, and a button clicked twice gives two maps with the
+  same name. The baseline was a map keyed by name, so every such
+  interaction was diffed against the *last* baseline map of that name
+  (`acceptance/supabase-edge-functions-app` H: R1 and R2 were compared
+  with R3, which makes no outbound call, so their unchanged
+  `GET /auth/v1/user` showed as added). appmap-trace now pairs
+  same-named interactions by occurrence in recording order (the file
+  name's trailing sequence number), and writes them to `name`,
+  `name__2`, … instead of overwriting one file.
+- **"1 added, 3 changed" for one inserted call.** The summary counted
+  every step that *contains* a change (the request, the handler, the
+  function around the call). It now counts a step as changed only when
+  its own outcome changed; steps that contain a change are still marked
+  `~` in the tree. A linked request's outcome now includes what the
+  backend answered (its `http_server_response` status), so a changed
+  backend status is a changed step.
+
+Tests: `linker/test/trace-cli.test.mjs`.

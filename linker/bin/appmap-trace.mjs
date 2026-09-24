@@ -69,8 +69,33 @@ function loadSet(scanDirs) {
 
 const current = loadSet(dirs);
 const base = baseline ? loadSet([baseline]) : null;
-const baseByName = new Map();
-if (base) for (const f of base.frontends) baseByName.set(f.appmap.metadata?.name, f.appmap);
+
+// Pair each interaction with its baseline by name. Several interactions can
+// share a name (every direct request to one edge function is
+// "POST /<function>"; a button clicked twice gives two
+// 'click button "…"' maps): pair them by occurrence, in recording order
+// (the recorder's per-run sequence number, the file name's last _NNN).
+// Keying a Map by name alone paired every one of them with the *last*
+// baseline map of that name, so unchanged calls showed up as added.
+const seqOf = (p) => Number(/_(\d+)\.appmap\.json$/.exec(p)?.[1] ?? Number.MAX_SAFE_INTEGER);
+const inRecordingOrder = (list) => [...list].sort((a, b) => seqOf(a.path) - seqOf(b.path) || a.path.localeCompare(b.path));
+const occurrence = new Map(); // current path -> index among same-named maps
+{
+  const seen = new Map();
+  for (const f of inRecordingOrder(current.frontends)) {
+    const name = f.appmap.metadata?.name;
+    occurrence.set(f.path, seen.get(name) ?? 0);
+    seen.set(name, (seen.get(name) ?? 0) + 1);
+  }
+}
+const baseByName = new Map(); // name -> baseline maps, in recording order
+if (base) {
+  for (const f of inRecordingOrder(base.frontends)) {
+    const name = f.appmap.metadata?.name;
+    if (!baseByName.has(name)) baseByName.set(name, []);
+    baseByName.get(name).push(f.appmap);
+  }
+}
 
 if (out) mkdirSync(out, { recursive: true });
 
@@ -79,7 +104,7 @@ for (const f of current.frontends) {
   const name = f.appmap.metadata?.name ?? f.path;
   if (filter && !name.includes(filter)) continue;
 
-  const baselineAppmap = base ? baseByName.get(name) : undefined;
+  const baselineAppmap = base ? baseByName.get(f.appmap.metadata?.name)?.[occurrence.get(f.path)] : undefined;
   const result = renderInteraction(f.appmap, {
     spanToBackend: current.spanToBackend,
     baselineAppmap,
@@ -88,7 +113,9 @@ for (const f of current.frontends) {
   });
 
   rendered++;
-  const slug = sanitize(name);
+  // Same-named interactions get their own files: name, name__2, …
+  const n = occurrence.get(f.path) ?? 0;
+  const slug = sanitize(name) + (n ? `__${n + 1}` : '');
 
   if (out) {
     if (format === 'ascii' || format === 'both')

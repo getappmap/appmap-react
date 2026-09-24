@@ -184,6 +184,9 @@ function frontendNodeToModel(node, labels, spanToBackend, lane = 'frontend') {
     // frontend calls it did attribute here rather than discarding them, so a
     // call is never silently dropped no matter how the events interleaved.
     const backendKids = backend ? backendChildren(backend, app) : [];
+    // What the backend itself answered (its http_server_response), so a
+    // changed backend status is a changed outcome of this step.
+    const served = backend ? serverStatus(backend) : null;
     const strayKids = node.children.map((c) => frontendNodeToModel(c, labels, spanToBackend, lane));
     return {
       kind: 'fetch',
@@ -191,7 +194,7 @@ function frontendNodeToModel(node, labels, spanToBackend, lane = 'frontend') {
       target: app,
       label: `${method} ${pathOf(url)}${queryOf(url, e.message)}`,
       labels: ['http'],
-      detail: { status: status ?? null, linked: Boolean(backend) },
+      detail: { status: status ?? null, linked: Boolean(backend), served },
       children: [...backendKids, ...strayKids],
     };
   }
@@ -211,6 +214,12 @@ function frontendNodeToModel(node, labels, spanToBackend, lane = 'frontend') {
     },
     children: node.children.map((c) => frontendNodeToModel(c, labels, spanToBackend, lane)),
   };
+}
+
+function serverStatus(appmap) {
+  const call = appmap.events?.find((e) => e.http_server_request);
+  const ret = call && appmap.events.find((e) => e.event === 'return' && e.parent_id === call.id);
+  return ret?.http_server_response?.status_code ?? null;
 }
 
 /** Model children for a backend request map: its handler calls become
@@ -283,7 +292,7 @@ export function nodeDigest(node) {
  * even though it is the same step (same nodeDigest). */
 function detailDigest(node) {
   const d = node.detail ?? {};
-  if (node.kind === 'fetch') return `status=${d.status}|linked=${d.linked}`;
+  if (node.kind === 'fetch') return `status=${d.status}|linked=${d.linked}|served=${d.served ?? ''}`;
   if (node.kind === 'sql') return `sql=${d.sql}`;
   return `exc=${d.exception ?? ''}|ret=${d.returnClass ?? ''}`;
 }
@@ -336,8 +345,12 @@ function diffNode(base, cur, summary) {
   const childChanged = node.children.some((c) => c.status !== 'unchanged');
   const outcomeChanged = base ? detailDigest(base) !== detailDigest(cur) : false;
   node.status = outcomeChanged || childChanged ? 'changed' : 'unchanged';
-  if (node.status === 'changed') summary.changed++;
-  else summary.unchanged++;
+  // Count a step as changed only when its own outcome changed. A step that
+  // merely contains a change is still marked '~' in the tree, but counting
+  // it too made one inserted call read "1 added, 3 changed" (the request,
+  // the handler and the function around it).
+  if (outcomeChanged) summary.changed++;
+  else if (!childChanged) summary.unchanged++;
   node.outcomeChanged = outcomeChanged;
   return node;
 }
