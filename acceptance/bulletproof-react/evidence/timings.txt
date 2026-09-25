@@ -1,5 +1,0 @@
-plain-1 12.048938522 rc=0
-plain-2 11.186873649 rc=0
-recorded-1 12.423003977 rc=1
-recorded-2 12.241686852 rc=1
-recorded-h 12.648862266 rc=1

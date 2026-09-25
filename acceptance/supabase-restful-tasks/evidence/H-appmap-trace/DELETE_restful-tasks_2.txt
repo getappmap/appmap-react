@@ -1,7 +1,0 @@
-DELETE /restful-tasks/2
-  Behavior changed — 1 added, 3 changed. New call frontend→network: GET /rest/v1/tasks?select=*&id=eq.2.
-
-└─ ~ undefined.undefined
-   └─ ~ index.deleteTask  [io.sql]
-      ├─ + → network: GET /rest/v1/tasks?select=*&id=eq.2  [http]  (200, no backend map)
-      └─ … (1 unchanged)

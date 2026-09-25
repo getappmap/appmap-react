@@ -1,2 +1,0 @@
-changed HTTP client request `DELETE http://127.0.0.1:54321/rest/v1/tasks?id=eq.2` to HTTP client request `GET http://127.0.0.1:54321/rest/v1/tasks?select=*&id=eq.2` and changed to return 200 instead of 204
-added HTTP client request `DELETE http://127.0.0.1:54321/rest/v1/tasks?id=eq.2`

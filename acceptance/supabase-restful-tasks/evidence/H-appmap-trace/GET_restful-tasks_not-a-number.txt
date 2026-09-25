@@ -1,4 +1,0 @@
-GET /restful-tasks/not-a-number
-  No behavior change: every step matched the baseline.
-
-└─ … (1 unchanged)

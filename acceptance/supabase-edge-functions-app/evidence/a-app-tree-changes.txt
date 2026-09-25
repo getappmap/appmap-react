@@ -1,5 +1,0 @@
-M examples/edge-functions/app/package.json
-?? examples/edge-functions/app/cra-compat.mjs
-?? examples/edge-functions/app/vite.config.appmap-workaround.mjs
-?? examples/edge-functions/app/vite.config.appmap.mjs
-?? examples/edge-functions/app/vite.config.cra.mjs

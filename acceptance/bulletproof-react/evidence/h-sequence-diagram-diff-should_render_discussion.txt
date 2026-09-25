@@ -1,1 +1,0 @@
-/home/user/acc-work/run-b/out/seq-run1/should_render_discussion.sequence.json and /home/user/acc-work/run-b/out/seq-run-h/should_render_discussion.sequence.json are identical
