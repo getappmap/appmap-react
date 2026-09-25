@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { parseTraceparent, outgoingRequests, linkMaps, isFrontendMap, isBackendMap } from '../src/link.mjs';
 import { renderSequenceDiagram } from '../src/diagram.mjs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+
+const LINK_CLI = fileURLToPath(new URL('../bin/appmap-link.mjs', import.meta.url));
 
 const TRACE = 'a'.repeat(32);
 const SPAN_OWNER = '1'.repeat(16);
@@ -153,5 +160,98 @@ describe('renderSequenceDiagram', () => {
     );
     const puml = renderSequenceDiagram(links[0], new Map());
     expect(puml).toContain('(no backend map)');
+  });
+});
+
+// acceptance/supabase-edge-functions-app (bug 7): the stitched diagram of a
+// React app calling a Supabase edge function showed the click and the
+// backend call only. The frontend handler was in the frontend map but the
+// diagram drew no frontend events, and the function reaches its database
+// through PostgREST over HTTP, which was not drawn either. And appmap-link
+// counted the edge function's own maps (they call out) as frontend maps.
+function interactionMap() {
+  return {
+    version: '1.12',
+    metadata: { name: 'click button "Invoke Function"', trace_id: TRACE },
+    classMap: [],
+    events: [
+      { id: 1, event: 'call', thread_id: 1, defined_class: 'App', method_id: 'invokeFunction', path: 'src/App.js', lineno: 16 },
+      {
+        id: 2,
+        event: 'call',
+        thread_id: 1,
+        http_client_request: {
+          request_method: 'POST',
+          url: 'http://localhost:54321/functions/v1/select-from-table-with-auth-rls',
+          headers: { traceparent: `00-${TRACE}-${SPAN_OWNER}-01` },
+        },
+        message: [],
+      },
+      { id: 3, event: 'return', thread_id: 1, parent_id: 2, http_client_response: { status_code: 200 } },
+      { id: 4, event: 'return', thread_id: 1, parent_id: 1 },
+    ],
+  };
+}
+function edgeFunctionMap() {
+  return {
+    version: '1.12',
+    metadata: { name: 'POST /select-from-table-with-auth-rls', app: 'select-from-table-with-auth-rls', trace_id: TRACE, parent_span_id: SPAN_OWNER },
+    classMap: [],
+    events: [
+      { id: 1, event: 'call', thread_id: 1, http_server_request: { request_method: 'POST', path_info: '/select-from-table-with-auth-rls' }, message: [] },
+      { id: 2, event: 'call', thread_id: 1, defined_class: 'index', method_id: 'handler', path: 'index.ts', lineno: 10 },
+      { id: 3, event: 'call', thread_id: 1, http_client_request: { request_method: 'GET', url: 'http://127.0.0.1:54321/auth/v1/user' }, message: [] },
+      { id: 4, event: 'return', thread_id: 1, parent_id: 3, http_client_response: { status_code: 200 } },
+      {
+        id: 5,
+        event: 'call',
+        thread_id: 1,
+        http_client_request: { request_method: 'GET', url: 'http://127.0.0.1:54321/rest/v1/users' },
+        message: [{ name: 'select', class: 'String', value: '*' }],
+      },
+      { id: 6, event: 'return', thread_id: 1, parent_id: 5, http_client_response: { status_code: 200 } },
+      { id: 7, event: 'return', thread_id: 1, parent_id: 2 },
+      { id: 8, event: 'return', thread_id: 1, parent_id: 1, http_server_response: { status_code: 200 } },
+    ],
+  };
+}
+
+describe('stitched diagram for a frontend handler → edge function → PostgREST', () => {
+  it('draws the frontend handler and the backend\'s outgoing (database) calls', () => {
+    const fe = { path: 'fe/invoke.appmap.json', appmap: interactionMap() };
+    const be = { path: 'be/fn.appmap.json', appmap: edgeFunctionMap() };
+    const { links } = linkMaps([fe], [be]);
+    const puml = renderSequenceDiagram(links[0], new Map([[be.path, be.appmap]]), fe.appmap);
+    const lines = puml.split('\n');
+    const at = (s) => lines.indexOf(s);
+    expect(at('User -> FE : click button "Invoke Function"')).toBeGreaterThan(0);
+    expect(at('FE -> FE : App.invokeFunction')).toBeGreaterThan(at('User -> FE : click button "Invoke Function"'));
+    expect(at('FE -> BE0 : POST /functions/v1/select-from-table-with-auth-rls')).toBeGreaterThan(at('FE -> FE : App.invokeFunction'));
+    expect(at('BE0 -> BE0 : index.handler')).toBeGreaterThan(at('FE -> BE0 : POST /functions/v1/select-from-table-with-auth-rls'));
+    expect(at('BE0 -> NET : GET /auth/v1/user')).toBeGreaterThan(at('BE0 -> BE0 : index.handler'));
+    expect(at('BE0 -> NET : GET /rest/v1/users?select=*')).toBeGreaterThan(at('BE0 -> NET : GET /auth/v1/user'));
+    expect(at('NET --> BE0 : 200')).toBeGreaterThan(0);
+    expect(at('BE0 --> FE : 200')).toBeGreaterThan(at('BE0 -> NET : GET /rest/v1/users?select=*'));
+    expect(puml).toContain('participant "network" as NET');
+  });
+
+  it('appmap-link counts an edge function map that calls out as a backend map, not a frontend map', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'appmap-link-'));
+    try {
+      mkdirSync(join(dir, 'fe'));
+      mkdirSync(join(dir, 'be'));
+      writeFileSync(join(dir, 'fe', 'invoke.appmap.json'), JSON.stringify(interactionMap()));
+      writeFileSync(join(dir, 'be', 'fn.appmap.json'), JSON.stringify(edgeFunctionMap()));
+      const r = spawnSync(process.execPath, [LINK_CLI, join(dir, 'fe'), join(dir, 'be'), '--out', join(dir, 'links')], { encoding: 'utf8' });
+      expect(r.status, r.stderr).toBe(0);
+      expect(r.stdout).toContain(
+        '1 frontend map(s), 1 backend map(s) (1 of them also make outgoing requests; 0 linked onward): 1/1 requests linked, 0 orphan backend map(s)',
+      );
+      const puml = readFileSync(join(dir, 'links', 'invoke.puml'), 'utf8');
+      expect(puml).toContain('FE -> FE : App.invokeFunction');
+      expect(puml).toContain('BE0 -> NET : GET /rest/v1/users?select=*');
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });

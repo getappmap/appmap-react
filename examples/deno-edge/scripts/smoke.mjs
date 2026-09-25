@@ -6,7 +6,9 @@
 // written, with the right shape. Mirrors the linker's own "runs
 // automatically when the [external tool] is present, skips itself
 // otherwise" convention; no Deno binary means this reports itself as
-// skipped rather than failing the suite.
+// skipped rather than failing the suite -- except in CI (CI=true),
+// where a missing Deno binary is a failure, so it can never silently
+// skip on a PR run.
 
 import { spawn, spawnSync } from 'node:child_process';
 import { mkdirSync, readFileSync, readdirSync, rmSync, existsSync, unlinkSync } from 'node:fs';
@@ -29,6 +31,10 @@ function hasDeno() {
 }
 
 if (!hasDeno()) {
+  if (process.env.CI === 'true' || process.env.CI === '1') {
+    console.error('deno-edge smoke test: `deno` not found on PATH and CI=true — failing instead of skipping.');
+    process.exit(1);
+  }
   console.log('deno-edge smoke test: `deno` not found on PATH — skipping (this is not a failure).');
   process.exit(0);
 }

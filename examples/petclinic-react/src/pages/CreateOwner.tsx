@@ -1,6 +1,5 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { instrumentHandler } from '@funwithappmap/react-recorder';
 import { createOwner, ApiError } from '../api/client';
 import { useClinic } from '../context/ClinicContext';
 
@@ -14,28 +13,23 @@ export function CreateOwner() {
   const set = (field: keyof typeof form) => (e: { target: { value: string } }) =>
     setForm((f) => ({ ...f, [field]: e.target.value }));
 
-  const submit = instrumentHandler(
-    async () => {
-      setSubmitting(true);
-      setError(undefined);
-      try {
-        const owner = await createOwner(apiBase, form);
-        navigate(`/owners/${owner.id}`);
-      } catch (err) {
-        // The backend's validation error path: POST /owners → 400
-        // {"error": "..."} rendered in the UI.
-        setError(err instanceof ApiError ? err.message : 'could not create owner');
-      } finally {
-        setSubmitting(false);
-      }
-    },
-    {
-      definedClass: 'CreateOwner',
-      methodId: 'submit',
-      path: 'src/pages/CreateOwner.tsx',
-      lineno: 17,
-    },
-  );
+  // Instrumented by the transform (docs/design/03): nested named
+  // consts inside a component body are wrapped automatically, no
+  // manual instrumentHandler / hardcoded line numbers needed.
+  const submit = async () => {
+    setSubmitting(true);
+    setError(undefined);
+    try {
+      const owner = await createOwner(apiBase, form);
+      navigate(`/owners/${owner.id}`);
+    } catch (err) {
+      // The backend's validation error path: POST /owners → 400
+      // {"error": "..."} rendered in the UI.
+      setError(err instanceof ApiError ? err.message : 'could not create owner');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();

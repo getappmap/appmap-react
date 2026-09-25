@@ -111,7 +111,7 @@ function buildBackendMap(req) {
   ret({ http_server_response: { status_code: req.status ?? 200 } });
 
   return {
-    version: '1.2',
+    version: '1.12',
     metadata: {
       name: route,
       app: 'PetClinicGo',

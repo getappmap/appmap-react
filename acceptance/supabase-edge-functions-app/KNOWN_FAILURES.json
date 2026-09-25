@@ -1,0 +1,46 @@
+{
+  "note": "Every verdict this suite must produce. A FAIL here is a known, documented limitation (see RESULTS.md); it is still reported as FAIL. CI fails if any verdict differs from this file, if a known failure starts passing, or if a failing check's evidence line changes. Update this file only together with RESULTS.md.",
+  "checks": {
+    "A": {
+      "verdict": "FAIL",
+      "reason": "The app is Create React App; the recorder integrates only with Vite, so the harness runs the app under Vite (no app source edits). Pre-registered in EXPECTATIONS.md; counts against the recorder.",
+      "evidence": [
+        "toolchain substitution needed: the recorder has no Create React App / webpack integration"
+      ]
+    },
+    "B": {
+      "verdict": "PASS"
+    },
+    "C": {
+      "verdict": "PASS"
+    },
+    "D": {
+      "verdict": "PASS"
+    },
+    "E": {
+      "verdict": "PASS"
+    },
+    "F": {
+      "verdict": "PASS (analog)"
+    },
+    "G": {
+      "verdict": "PASS"
+    },
+    "H": {
+      "verdict": "PASS"
+    },
+    "I": {
+      "verdict": "PASS"
+    },
+    "J": {
+      "verdict": "MEASURED"
+    },
+    "L": {
+      "verdict": "FAIL",
+      "reason": "At the pinned app SHA the function's CORS rules do not allow the traceparent header, so with cross-origin linking turned on the browser blocks the call, and without it there is nothing to link. With only that CORS header added (diagnostic pass P), L1-L5 all pass.",
+      "evidence": [
+        "(P, diagnostic, app CORS patched) S3: L1 ok, L2 ok, L3 ok, L4 ok, L5 ok; S5: L1 ok, L2 ok, L3 ok, L4 ok, L5 ok"
+      ]
+    }
+  }
+}

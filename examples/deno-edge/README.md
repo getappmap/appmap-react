@@ -16,8 +16,9 @@ below), sends one `traceparent`-stamped request and one plain request,
 and asserts exactly one AppMap was written — for the stamped request
 only — with the right trace/span ids and call events; and asserts the
 source file on disk was never touched. If `deno` isn't on `PATH`, it
-reports itself as skipped rather than failing (the same convention
-`linker`'s real-PetClinicGo integration test already uses).
+reports itself as skipped rather than failing — except in CI
+(`CI=true`), where a missing `deno` fails the run, so it cannot
+silently skip on a PR.
 
 ## Do it by hand — zero-touch (recommended)
 

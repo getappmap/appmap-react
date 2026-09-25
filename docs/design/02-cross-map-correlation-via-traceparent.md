@@ -3,9 +3,11 @@
 Status: **accepted**, validated by the spike in
 [`../../linker`](../../linker) plus the stamping in
 [`../../recorder/src/fetchPatch.ts`](../../recorder/src/fetchPatch.ts)
-— originally against **simulated** backend maps; since the 2026-06-12
-amendment below, also end to end against the **real** PetClinicGo
-server emitting real backend maps.
+— originally against **simulated** backend maps; from the 2026-06-12
+amendment to the 2026-09-24 one, against the real PetClinicGo server
+(that test is now retired); since the 2026-09-24 amendment, end to end
+against a real open-source React + Deno app
+(`acceptance/supabase-edge-functions-app`).
 
 This is the project's headline goal landing deliberately early, on
 hand-instrumentation, before the build-time transform (doc 03) exists:
@@ -55,7 +57,7 @@ makes timestamps unsafe for ordering.
 
 ## The linker: `appmap-link`
 
-AppMap v1.2 has no cross-map link concept, so we don't fight the
+AppMap v1.12 has no cross-map link concept, so we don't fight the
 format. [`linker/`](../../linker) is a small dependency-free Node CLI
 that scans directories of maps (frontend = has `http_client_request`
 events; backend = has `http_server_request` events) and:
@@ -139,7 +141,7 @@ network conditions. That lands with the sibling follow-ups.
   backend maps; the simulator then becomes test fixture machinery
   only.
 
-## Amendment 2026-06-12: end-to-end integration test, no simulator
+## Amendment 2026-06-12: end-to-end integration test, no simulator (retired 2026-09-24, see below)
 
 The join now has a fully real automated proof:
 [`examples/petclinic-react/test/e2e/fullstack.test.tsx`](../../examples/petclinic-react/test/e2e/fullstack.test.tsx)
@@ -172,3 +174,114 @@ simulator's synthetic maps (the diagram renderer now draws the DB lane
 only when sql_query events exist). That depth is precisely what the Go
 agent's own instrumentation roadmap delivers; when it does, this test
 upgrades for free.
+
+## Amendment (2026-09-24): XMLHttpRequest
+
+Stamping lived only in the `fetch` patch, so an app whose HTTP client is
+axios (XHR under the hood) — bulletproof-react in the acceptance run —
+produced no `http_client_request` events and sent no `traceparent` at
+all: nothing to link. `recorder/src/xhrPatch.ts` now wraps
+`XMLHttpRequest` the same way while a recording is open: `open()`
+stamps the request, and the `loadstart`/`loadend` events record the
+request/response pair. It observes the instance the app holds rather
+than `XMLHttpRequest.prototype`, because request interceptors such as
+MSW answer mocked requests without calling the real `send()`. The
+interaction window's idle check counts these requests too, so a window
+no longer closes before an XHR's response arrives.
+
+## Amendment 2026-09-24: the Go-backed e2e test is retired; the proof is a real OSS app
+
+`examples/petclinic-react/test/e2e/fullstack.test.tsx` (the 2026-06-12
+amendment above) has been removed. It was a weak proof: both ends were
+this project's own novel tracers (the React recorder and the
+experimental Go middleware) vouching for each other, it needed a
+checkout of a private sibling repo, and it therefore skipped itself in
+CI — so it never actually ran on a PR.
+
+The end-to-end proof of the join is now
+[`acceptance/supabase-edge-functions-app`](../../acceptance/supabase-edge-functions-app),
+run by CI on every push and PR:
+
+- the app is Supabase's own edge-functions example
+  (`supabase/supabase` @ `74a3be9`): a React app (the "Edge Functions
+  Test Client") that calls the `select-from-table-with-auth-rls` Deno
+  edge function via `supabase.functions.invoke`, which calls GoTrue and
+  queries Postgres through PostgREST under row-level security;
+- everything runs on localhost from real parts (Postgres, the GoTrue
+  and PostgREST release binaries, the app's own migrations), driven by
+  real Chromium through Playwright, with no edits to the app's source;
+- the checks are the shared acceptance spec (A–J, official validator
+  `@appland/appmap-validate`) plus the join itself: the browser's
+  request carries `traceparent`, the Deno map has the matching
+  `parent_span_id`, `appmap-link` joins them, and the stitched diagram
+  shows click → handler → backend → DB.
+
+Its `EXPECTATIONS.md` was written before any recording and its
+`RESULTS.md` records what actually happened; its "Update" section says
+what still fails and why (the recorder bugs it found are fixed). CI does
+not hide a failing check.
+`examples/petclinic-react/test/e2e/deno-fullstack.test.ts` (doc 09)
+stays as a fast regression test, but both of its ends are this repo's
+own code, so it is not the proof.
+
+## Amendment (2026-09-24): cross-origin requests — stamp only what the user lists
+
+The recorder stamped `traceparent` on every `fetch`/XHR made while a
+recording was open. On a real app that broke the app: Supabase's
+edge-functions example calls its function on another origin
+(`localhost:54321` from a page on `:3300`), the function's CORS policy
+allows `authorization, x-client-info, apikey, content-type` and not
+`traceparent`, so the browser's preflight failed and every "Invoke
+Function" click ended in `FunctionsFetchError`
+(`acceptance/supabase-edge-functions-app`, bug 3). A recorder must never
+break the app it records.
+
+The recorder now follows OpenTelemetry's browser model
+(`propagateTraceHeaderCorsUrls`), in `recorder/src/propagation.ts`:
+
+- **same-origin requests** are always stamped (no preflight is involved);
+- **cross-origin requests** are stamped only when their origin is listed in
+  the Vite plugin's `propagateTraceHeaderOrigins` option (or
+  `APPMAP_PROPAGATE_TRACE_HEADER_ORIGINS`, comma-separated): an origin, a
+  RegExp tested against the request URL, or `'*'`;
+- **no page origin** (Node, Deno — server-side code, no CORS): every
+  outgoing request is stamped, as before.
+
+Every request is still recorded as `http_client_request`/`response`;
+only the header is withheld. The option reaches the browser through the
+injected interaction recorder (`installInteractionRecorder({
+propagateTraceHeaderOrigins })`) and Vitest test recording through the
+environment (the plugin sets the variable before Vitest starts its
+workers). `setPropagateTraceHeaderOrigins()` sets it at runtime.
+
+**What the user must configure to link a cross-origin backend** — the
+one thing zero-touch cannot do for them: list the backend's origin, and
+make the backend allow the header (`traceparent` in its
+`Access-Control-Allow-Headers`). Supabase added `traceparent` to the
+example functions' `corsHeaders` upstream (fc5db9bb); a function written
+before that needs the same one-line change.
+
+Tests: `recorder/test/propagation.test.ts`, and in
+`recorder/test/xhrPatch.test.ts` "a cross-origin backend whose CORS does
+not allow traceparent" (jsdom enforces CORS for XHR: before this change
+the request failed with "Headers traceparent forbidden").
+
+
+## Amendment (2026-09-24): the stitched diagram shows the frontend handler and the backend's outgoing calls
+
+On the Supabase edge-functions app the link held but the stitched diagram
+was `click → POST /functions/v1/… → 200` and nothing else
+(`acceptance/supabase-edge-functions-app`, bug 7): `diagram.mjs` drew no
+frontend events at all, and on the backend only `sql_query` and function
+calls — but an edge function reaches its database through PostgREST, over
+HTTP, so its "DB" step is an `http_client_request`, which was not drawn.
+
+`appmap-link` now hands each interaction's own map to the renderer, which
+draws its function calls in event order with each request where it was
+made (`FE -> FE : App.invokeFunction`, then `FE -> BE0 : POST …`), and
+draws a backend's outgoing HTTP calls to a `network` participant with the
+query from the event's `message` (`BE0 -> NET : GET /rest/v1/users?select=*`).
+Its summary line no longer counts a backend map that calls out as a
+frontend map: `1 frontend map(s), 1 backend map(s) (1 of them also make
+outgoing requests; 0 linked onward)`. Such maps are still linked onward,
+so a middle tier works as before. Tests: `linker/test/link.test.mjs`.

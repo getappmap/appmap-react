@@ -30,25 +30,27 @@ import { withAppMap } from './appmap.ts';
 Deno.serve(withAppMap(handleRequest, { app: 'what2say' }));
 ```
 
-One `Recording` per request, gated the same way doc 01's ambient
-session already is — module-level, one at a time, process-wide:
+One `Recording` per stamped request, each in its own async context
+(doc 01, "Per-request async context" amendment):
 
-- **No `traceparent` header, or a recording already active** → the
-  wrapped handler runs unrecorded and untouched. This is
-  recording-driven by design (same as the frontend side): production
-  traffic is silent unless something upstream chose to stamp it.
-- **A stamped request, no recording active** → a `Recording` starts,
-  `metadata.trace_id`/`parent_span_id` are copied from the incoming
-  header (doc 02's join key — a backend request map carries the
-  *caller's* ids, never its own), `httpServerRequest`/
+- **No `traceparent` header** → the wrapped handler runs unrecorded and
+  untouched, in a context with no recording at all, so even while other
+  requests are being recorded its code is not recorded and its outbound
+  calls are not stamped. This is recording-driven by design (same as
+  the frontend side): production traffic is silent unless something
+  upstream chose to stamp it.
+- **A stamped request** → a `Recording` opens, scoped to that request's
+  async context. `metadata.trace_id`/`parent_span_id` are copied from
+  the incoming header (doc 02's join key — a backend request map
+  carries the *caller's* ids, never its own), `httpServerRequest`/
   `httpServerResponse` bracket the call, and the finished map ships
   after the response is ready to send — never blocking it.
 
-The one-recording-at-a-time invariant is enforced by `withAppMap`
-itself checking `activeRecording()` before starting, not by
-`startRecording`'s own defensive throw — a second stamped request
-arriving mid-flight should degrade to unrecorded, not crash the
-request. `deno/test/withAppMap.test.ts` pins this with two concurrent
+Concurrent stamped requests each get their own map holding only their
+own events. (This replaced an earlier one-recording-at-a-time rule that
+let concurrent requests' events leak into whichever map was open.)
+`deno/appmap_test.ts` pins this with overlapping stamped and unstamped
+requests; `deno/test/withAppMap.test.ts` with two concurrent
 `withAppMap`-wrapped handlers and a held promise gate.
 
 ## Shipping: file or collector
@@ -103,3 +105,12 @@ Everything Deno-specific lives in `deno/appmap.ts` alone.
   convention the linker's real-PetClinicGo integration test already
   uses for an optional external dependency. `deno/test/` covers the
   driver's own logic without needing the binary at all.
+
+## Amendment 2026-09-24: CI runs the real `deno run` spike
+
+The last consequence above no longer holds. CI installs Deno and runs
+`examples/deno-edge`'s smoke test and the React ↔ Deno e2e test on
+every push and PR, and both now **fail** instead of skipping when
+`deno` is missing and `CI=true`. CI also runs the Deno acceptance
+suites against real Supabase code (`acceptance/supabase-restful-tasks`,
+and the full-stack `acceptance/supabase-edge-functions-app`).

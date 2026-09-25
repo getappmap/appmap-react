@@ -1,8 +1,9 @@
-// AppMap data format v1.2 — the subset this agent emits.
+// AppMap data format — the subset this agent emits (declared version:
+// APPMAP_VERSION in recording.ts, checked with the official validator).
 // https://github.com/getappmap/appmap (appmap.json spec)
 
 export interface AppMap {
-  version: '1.2';
+  version: string;
   metadata: Metadata;
   classMap: ClassMapEntry[];
   events: Event[];
@@ -23,6 +24,26 @@ export interface Metadata {
   // Backend request maps only: the span-id of the frontend fetch that
   // caused this request (copied from the incoming traceparent).
   parent_span_id?: string;
+  // Set by toAppMap() when it had to synthesize returns for calls still
+  // open at serialization time (a hard teardown mid-flight — e.g. a
+  // Supabase edge function killed during EdgeRuntime.waitUntil work,
+  // docs/design/11). The map is balanced and safe to sanitize, but
+  // incomplete: some returns are synthetic.
+  truncated?: boolean;
+  // Interaction maps only (docs/design/04): set when more than one
+  // interaction fired while the window was open. The browser has no
+  // async context to attribute events by, so the map holds the work of
+  // all of them; `interactions` lists them in order.
+  interactions?: string[];
+  ambiguous?: boolean;
+  // HTTP calls that never got a response the format can express (see
+  // UnansweredHttpRequest in recording.ts).
+  unanswered_http_requests?: {
+    event: 'http_client_request' | 'http_server_request';
+    request_method: string;
+    url: string;
+    reason: string;
+  }[];
 }
 
 export type ClassMapEntry = PackageEntry | ClassEntry | FunctionEntry;
@@ -60,6 +81,18 @@ export interface ParameterValue {
   class: string;
   value: string;
   kind?: 'req';
+  /** Element/key count for array/object values. */
+  size?: number;
+  /** Stable identity for object-valued params within one recording. */
+  object_id?: number;
+  /** A plain object's fields (name + class), per the spec's parameter
+   * `properties`: the shape survives the 100-character value cap. */
+  properties?: ParameterProperty[];
+}
+
+export interface ParameterProperty {
+  name: string;
+  class: string;
 }
 
 export interface CallEvent {
@@ -80,8 +113,8 @@ export interface ReturnEvent {
   thread_id: number;
   parent_id: number;
   elapsed?: number;
-  return_value?: { class: string; value: string };
-  exceptions?: { class: string; message: string }[];
+  return_value?: { class: string; value: string; size?: number; object_id?: number; properties?: ParameterProperty[] };
+  exceptions?: { class: string; message: string; object_id: number }[];
 }
 
 export interface HttpClientRequestEvent {
@@ -93,6 +126,8 @@ export interface HttpClientRequestEvent {
     url: string;
     headers?: Record<string, string>;
   };
+  /** Query parameters (the spec keeps them out of `url`). */
+  message: ParameterValue[];
 }
 
 export interface HttpClientResponseEvent {
@@ -117,6 +152,8 @@ export interface HttpServerRequestEvent {
     normalized_path_info?: string;
     headers?: Record<string, string>;
   };
+  /** Query parameters. */
+  message: ParameterValue[];
 }
 
 export interface HttpServerResponseEvent {

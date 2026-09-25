@@ -14,7 +14,7 @@
 // this way; see doc 06's Tier 2 for that gap, documented rather than
 // silently unsupported.
 
-import { readFileSync, writeFileSync, unlinkSync } from 'node:fs';
+import { readFileSync, writeFileSync, unlinkSync, readdirSync, renameSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -85,6 +85,30 @@ function cleanup() {
   } catch {
     // already gone — fine
   }
+  healPartialRecordings();
+}
+
+// A child killed outright (kill -9) can't flush its open recordings; the
+// driver snapshots them as `<file>.part` while they run (deno/appmap.ts,
+// "crash safety"). Each is already a valid, truncated map: keep it.
+function healPartialRecordings() {
+  if (process.env.APPMAP_COLLECTOR) return;
+  const dir = path.resolve(process.env.APPMAP_DIR ?? 'tmp/appmap/requests');
+  let names: string[];
+  try {
+    names = readdirSync(dir);
+  } catch {
+    return; // nothing recorded
+  }
+  for (const name of names) {
+    if (!name.endsWith('.appmap.json.part')) continue;
+    try {
+      renameSync(path.join(dir, name), path.join(dir, name.slice(0, -'.part'.length)));
+      console.error(`appmap-deno: kept partial recording ${name.slice(0, -'.part'.length)} (truncated)`);
+    } catch {
+      // raced with something else — leave it
+    }
+  }
 }
 
 let exiting = false;
@@ -99,6 +123,10 @@ process.on('SIGTERM', forwardSignal);
 child.on('exit', (code, signal) => {
   cleanup();
   if (signal) {
+    // End the same way the child did; drop our forwarding handlers first
+    // or the re-raised signal would just be caught by them again.
+    process.removeListener('SIGINT', forwardSignal);
+    process.removeListener('SIGTERM', forwardSignal);
     process.kill(process.pid, signal);
   } else {
     process.exit(code ?? 1);

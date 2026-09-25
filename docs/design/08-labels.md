@@ -106,7 +106,7 @@ this cost one iteration on this doc's own test suite before landing on
 - Nothing here requires touching the doc 06/07 zero-touch story — a
   `@label` comment or a `supabase.from()` call is already in the
   developer's own code; the transform reads what's there.
-- Built-in labels currently only run inside the same top-level
-  function the transform wraps — a call nested inside a closure the
-  transform doesn't reach (doc 03's "nested functions are not
-  instrumented" boundary) is invisible to this pass too.
+- Built-in labels are attributed to the top-level function whose body
+  contains the recognized call. Nested handlers are also instrumented
+  by the current transform, but do not receive a separate built-in
+  label from that call.

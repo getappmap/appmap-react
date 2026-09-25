@@ -50,3 +50,14 @@ yet does both against the same real backend in one test. That would
 mean reshaping which endpoint the app's own data client calls, or
 adding a page that calls `deno-edge`'s API — not done here, flagged as
 a real gap rather than implied to be covered.
+
+## Amendment 2026-09-24
+
+`test/e2e/fullstack.test.tsx` (the Go half referred to above) has been
+removed; see doc 02's amendment of the same date. This test stays, and
+in CI (`CI=true`) it now fails instead of skipping when `deno` is
+missing. Its backend (`examples/deno-edge`) is this repo's own example,
+so it is a regression test, not the proof: the "user-driven flow
+against a real backend" gap named above is what
+`acceptance/supabase-edge-functions-app` covers, against a real
+open-source React + Deno app in real Chromium.

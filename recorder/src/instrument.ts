@@ -1,5 +1,5 @@
-import type { FunctionInfo } from './types';
-import { activeRecording } from './session';
+import type { FunctionInfo } from './types.js';
+import { activeRecording, runInCall } from './session.js';
 
 // Hand-written instrumentation wrappers. Each is exactly the prologue /
 // epilogue the build-time transform (docs/design/03) will inject:
@@ -27,8 +27,15 @@ export function instrument<F extends AnyFn>(fn: F, info: FunctionInfo, argNames?
     }));
     const token = recording.enter(info, captured);
     try {
-      const result = fn.apply(this, args as never[]);
+      // Run the body as this call, so calls it makes from async
+      // continuations (after an await, in a timer) still nest under it
+      // where the runtime has async context (session.ts).
+      const result = runInCall(recording, token.callId, () => fn.apply(this, args as never[]));
       if (result instanceof Promise) {
+        // The call is yielding control back to its caller now, even
+        // though it's still logically open — see the thread-assignment
+        // design in recording.ts.
+        recording.leaveSyncFrame(token);
         return result.then(
           (value) => {
             recording.exit(token, { returnValue: value });
@@ -71,15 +78,20 @@ export function instrumentHandler<F extends AnyFn>(fn: F, info: Omit<FunctionInf
 }
 
 /** Runtime entry point for the build-time transform (docs/design/03).
- * Labels come from two sources, merged, not one replacing the other:
- * naming conventions (PascalCase → component, use[A-Z]… → hook) and
- * any `@label` comment tags the transform found (docs/design/08). */
-export function autoInstrument<F extends AnyFn>(fn: F, info: FunctionInfo, argNames?: string[]): F {
+ * Labels from the transform (comments/built-ins) are additive to
+ * naming-convention labels (PascalCase → component, use[A-Z]… → hook). */
+export function autoInstrument<F extends AnyFn>(
+  fn: F,
+  info: FunctionInfo,
+  argNames?: string[],
+): F {
   const conventionLabel = /^use[A-Z]/.test(info.methodId)
     ? 'hook'
     : /^[A-Z]/.test(info.methodId)
       ? 'component'
       : undefined;
-  const labels = [...(info.labels ?? []), ...(conventionLabel ? [conventionLabel] : [])];
+  const labels = [
+    ...new Set([...(info.labels ?? []), ...(conventionLabel ? [conventionLabel] : [])]),
+  ];
   return instrument(fn, { ...info, labels: labels.length ? labels : undefined }, argNames);
 }

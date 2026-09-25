@@ -1,0 +1,54 @@
+{
+  "note": "Every verdict this suite must produce. A FAIL here is a known, documented limitation (see RESULTS.md); it is still reported as FAIL. CI fails if any verdict differs from this file, if a known failure starts passing, or if a failing check's evidence line changes. Update this file only together with RESULTS.md.",
+  "checks": {
+    "C": {
+      "verdict": "PASS"
+    },
+    "C-traceparent-gate": {
+      "verdict": "PASS"
+    },
+    "C-structure": {
+      "verdict": "PASS"
+    },
+    "D": {
+      "verdict": "PASS"
+    },
+    "E": {
+      "verdict": "PASS"
+    },
+    "G": {
+      "verdict": "PASS"
+    },
+    "H": {
+      "verdict": "PASS"
+    },
+    "I": {
+      "verdict": "PASS"
+    },
+    "W1-waitUntil-capture": {
+      "verdict": "PASS"
+    },
+    "W4-waitUntil-overlap": {
+      "verdict": "PASS"
+    },
+    "W2-self-heal-fire-and-forget": {
+      "verdict": "PASS"
+    },
+    "W3-crash-self-heal": {
+      "verdict": "PASS"
+    },
+    "J": {
+      "verdict": "PASS"
+    },
+    "B": {
+      "verdict": "PASS"
+    },
+    "A": {
+      "verdict": "PASS"
+    },
+    "F": {
+      "verdict": "NOT RUN",
+      "reason": "The app has no tests, and the Deno recorder has no test-recording mode."
+    }
+  }
+}

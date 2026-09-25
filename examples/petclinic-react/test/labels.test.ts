@@ -100,7 +100,13 @@ describe('label merging at runtime (autoInstrument)', () => {
 
   it('combines a compile-time label with the naming-convention label for a component', () => {
     stopRecording();
-    startRecording(new Recording({ name: 'test' }));
+    startRecording(
+      new Recording({
+        name: 'test',
+        client: { name: 'labels.test', url: 'https://example.invalid' },
+        recorder: { name: 'funwithappmap-react', type: 'tests' },
+      }),
+    );
     const Component = autoInstrument(
       () => 'ok',
       { definedClass: 'x', methodId: 'LoginForm', path: 'src/x.tsx', labels: ['security.authentication'] },
@@ -114,7 +120,13 @@ describe('label merging at runtime (autoInstrument)', () => {
 
   it('a plain function with no compile-time label still gets no labels at all', () => {
     stopRecording();
-    startRecording(new Recording({ name: 'test' }));
+    startRecording(
+      new Recording({
+        name: 'test',
+        client: { name: 'labels.test', url: 'https://example.invalid' },
+        recorder: { name: 'funwithappmap-react', type: 'tests' },
+      }),
+    );
     const fn = autoInstrument(() => 'ok', { definedClass: 'x', methodId: 'helper', path: 'src/x.ts' }, []);
     fn();
     const appmap = stopRecording().toAppMap();

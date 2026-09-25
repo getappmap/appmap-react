@@ -27,14 +27,14 @@ amendments are dated sections, not history rewrites.
 
 ## What the React agent records
 
-AppMap JSON v1.2, same as the siblings. Mapping:
+AppMap JSON v1.12, same as the siblings. Mapping:
 
 - Components → classMap classes (module/file → package); renders and
   event handlers → `call`/`return` events with props/args captured
   (size-capped, like APPMAP_EVENT_VALUESIZE in the .NET agent).
 - Hooks (`useState`/`useEffect`/custom) → labeled function events.
 - `fetch`/XHR → `http_client_request` / `http_client_response` events
-  (already in the v1.2 spec — this is the linking hook, see below).
+  (already in the v1.12 spec — this is the linking hook, see below).
 - Recording unit: **one AppMap per user interaction** (the analogue of
   per-HTTP-request on servers): start at the triggering DOM event,
   stop when the microtask queue drains / idle timeout. Route
@@ -92,7 +92,7 @@ backend map's incoming `traceparent` parent-span-id. One interaction
 fans out to N fetches → 1 frontend map linked to N backend request
 maps (1:N, by design).
 
-**The linker:** AppMap v1.2 has no cross-map link concept, so don't
+**The linker:** AppMap v1.12 has no cross-map link concept, so don't
 fight the format — build a small CLI (`appmap-link`) that scans a
 directory of frontend + backend maps and:
 

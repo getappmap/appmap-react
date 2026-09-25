@@ -88,8 +88,10 @@ exactly the prologue/epilogue the doc 03 transform will inject, with
 `try/finally` (and promise `.then` chaining for async functions)
 playing the role of Go's `defer`.
 
-**Why linearized events tolerate async overlap.** AppMap v1.2 events
-are a flat list where each `return` names its `call` via `parent_id`.
+**Why linearized events tolerate async overlap.** (Superseded for the
+serialized form by doc 12, which emits the events as a call tree.)
+AppMap events are a flat list where each `return` names its `call` via
+`parent_id`.
 Two in-flight fetches interleave in the stream but stay correctly
 paired — no tree structure has to be repaired when completions arrive
 out of order.
@@ -144,3 +146,90 @@ windows. Those are doc 04's spike.
   If real-world interaction recording shows frequent overlap (slow
   fetches + fast clicking), that surfaces as thrown errors we can
   measure, and becomes the trigger to invest in mechanism 3.
+
+## Amendment (2026-09-01): thread assignment under concurrency
+
+The "why linearized events tolerate async overlap" claim above is true
+for *pairing* (`return.parent_id` always identifies the right `call`,
+regardless of settlement order) but was incomplete for *hierarchical
+reconstruction*. `thread_id` is a required AppMap field precisely
+because a single flat, positionally-nested event stream ("push on
+call, pop on return, per thread") can only represent one call being
+open at a time on a given thread — true concurrent siblings (e.g. both
+legs of a `Promise.all`, both still open at once) violate that if they
+share a `thread_id`. The doc 01 spike's own owner-detail example
+(`getOwner` and `getVets` both fetching concurrently, sharing
+`thread_id: 1`) is exactly this shape, and would reconstruct
+incorrectly under the positional-stack model standard AppMap tooling
+uses, even though `parent_id` pairing alone stayed correct.
+
+**Fix:** `Recording` (`recorder/src/recording.ts`) now assigns threads
+based on real synchronous nesting rather than a single constant. It
+tracks `syncStack` — call ids currently *synchronously* executing,
+mirroring the real single-threaded JS call stack, popped the instant a
+call yields control back to its caller (returns, or hands back a
+pending `Promise`) — plus which threads currently have a call that has
+left its sync frame but not yet settled ("dangling"). A new call
+inherits its parent's thread when safe; when the candidate thread
+already has a dangling, non-ancestor call open (a genuine concurrent
+sibling), it gets a fresh thread instead. This requires no
+`AsyncLocalStorage`, Zone.js, or continuation-passing (mechanisms 2/3
+above stay exactly as expensive/deferred as before) — it only needs to
+know whether an invocation's result was a `Promise`, which the
+Enter/Exit wrapper already had to know.
+
+Ordinary sequential (non-overlapping) calls are unaffected and stay on
+one thread, as before. See `recorder/test/concurrency.test.ts` for the
+Promise.all case this fixes, asserted against the actual pairing
++ positional-nesting invariant standard tooling relies on.
+
+## Amendment (2026-09-24): per-request async context
+
+Acceptance testing against a real Supabase edge function showed the
+"one ambient session" design breaking exactly where this doc said it
+would: on a server. With one module-global session, every instrumented
+call and every `fetch` in the process was attributed to whichever
+recording happened to be open — a burst of 20 stamped + 10 unstamped
+requests produced **one** map holding all 30 requests' calls, and the
+29 foreign outbound calls went out stamped with the open recording's
+`traceparent`, so `appmap-link` would have joined them to the wrong map.
+`withAppMap`'s "one at a time" check only stopped a second recording
+from *starting*; it did nothing to stop other requests' events from
+*entering* the open one.
+
+**Fix: mechanism 2 (AsyncLocalStorage) where the runtime has it.**
+`recorder/src/session.ts` now has two kinds of recording:
+
+- **Scoped** (Deno, and any Node driver): the driver installs an
+  `AsyncLocalStorage` with `installAsyncContext()` and runs each unit
+  of work inside `runInRecording(recording, fn)`. `activeRecording()`
+  answers from the *current async context*, so each request sees only
+  its own recording; every stamped request gets its own map, however
+  many are in flight. Unstamped requests run inside `runUnrecorded()`
+  and see no recording at all — their code is never recorded and their
+  outbound calls are never stamped. A scoped recording is closed with
+  `closeScopedRecording()`; work still running in its context after
+  that (un-awaited background promises) is neither recorded nor
+  stamped. `node:async_hooks` works in both Deno and Node; session.ts
+  only uses it through a structural interface, so it never imports it
+  and stays loadable in a browser bundle.
+- **Ambient** (`startRecording`/`stopRecording`), unchanged: test
+  recording and browser interaction windows. The browser still has no
+  async context, which is why doc 04's window scoping remains.
+
+The outbound-request patches stay installed while any recording, of
+either kind, is open (reference counted).
+
+**Browser: overlapping interactions are marked, not split.** Without
+async context the recorder cannot tell which of two overlapping
+interactions a later event (a fetch response, a re-render) belongs to.
+Splitting the window at the second trigger would present a guess as
+fact — the first interaction's in-flight response would land in the
+second map. So a window that absorbs a second trigger keeps going, but
+the map says so: its name lists every interaction
+(`click a "Users" + click a "Dashboard"`), `metadata.interactions`
+holds them in order and `metadata.ambiguous` is `true`. Previously it
+was silently named after the first click only. A trigger dispatched in
+the same task as the one that opened the window (clicking a submit
+button fires `click`, then `submit`) is the same user action and is not
+counted as a second interaction.
