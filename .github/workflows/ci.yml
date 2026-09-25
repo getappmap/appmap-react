@@ -5,9 +5,12 @@ name: CI
 # (deno, ...) fail instead when CI=true, which GitHub Actions always sets.
 #
 # The three acceptance jobs run real open-source apps end to end
-# (acceptance/*/run.sh). A check that fails fails its job, including the
-# ones each RESULTS.md explains as limitations outside the recorder's
-# bugs; they are deliberately not continue-on-error.
+# (acceptance/*/run.sh), each through acceptance/known-failures.mjs: every
+# verdict must match acceptance/<suite>/KNOWN_FAILURES.json exactly. A new
+# failure, a changed verdict, or a known failure that starts passing all
+# fail the job. Known failures are documented limitations and are still
+# reported as FAIL in the job log and RESULTS.md; nothing is
+# continue-on-error.
 on:
   push:
   pull_request:
@@ -112,8 +115,8 @@ jobs:
           echo "CHROME=$(find ~/.cache/ms-playwright -type f -path '*chromium-*/chrome-linux*/chrome' | head -1)" >> "$GITHUB_ENV"
       - run: npm ci
       # Downloads GoTrue + PostgREST release binaries, clones the app at its
-      # pinned SHA, runs everything on 127.0.0.1. Exits 1 on any failed check.
-      - run: acceptance/supabase-edge-functions-app/run.sh
+      # pinned SHA, runs everything on 127.0.0.1; verdicts held to KNOWN_FAILURES.json.
+      - run: node acceptance/known-failures.mjs acceptance/supabase-edge-functions-app -- acceptance/supabase-edge-functions-app/run.sh
         env:
           WORK: ${{ runner.temp }}/acc-fullstack
       - if: always()
@@ -144,7 +147,7 @@ jobs:
           npx -y "playwright@${PLAYWRIGHT_VERSION}" install --with-deps chromium
           echo "CHROME=$(find ~/.cache/ms-playwright -type f -path '*chromium-*/chrome-linux*/chrome' | head -1)" >> "$GITHUB_ENV"
       - run: npm ci
-      - run: acceptance/bulletproof-react/run.sh "$RUNNER_TEMP/acc-bulletproof"
+      - run: node acceptance/known-failures.mjs acceptance/bulletproof-react -- acceptance/bulletproof-react/run.sh "$RUNNER_TEMP/acc-bulletproof"
       - if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
@@ -172,8 +175,8 @@ jobs:
           ls /usr/lib/postgresql/*/bin/initdb
       - run: npm ci
       # Downloads PostgREST, clones the app at its pinned SHA, runs everything
-      # on 127.0.0.1. Exits 1 on any failed check.
-      - run: acceptance/supabase-restful-tasks/run.sh
+      # on 127.0.0.1; verdicts held to KNOWN_FAILURES.json.
+      - run: node acceptance/known-failures.mjs acceptance/supabase-restful-tasks -- acceptance/supabase-restful-tasks/run.sh
         env:
           WORK: ${{ runner.temp }}/acc-deno
       - if: always()

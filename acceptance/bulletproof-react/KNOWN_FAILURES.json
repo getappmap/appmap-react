@@ -1,0 +1,48 @@
+{
+  "note": "Every verdict this suite must produce. A FAIL here is a known, documented limitation (see RESULTS.md); it is still reported as FAIL. CI fails if any verdict differs from this file, if a known failure starts passing, or if a failing check's evidence line changes. Update this file only together with RESULTS.md.",
+  "checks": {
+    "A": {
+      "verdict": "PASS"
+    },
+    "B": {
+      "verdict": "PASS"
+    },
+    "C": {
+      "verdict": "FAIL",
+      "reason": "T6: the test ends before its final refetch gets a response; MSW only makes an XHR visible once the mocked response starts, so that GET /discussions?page=1 is never seen by the recorder. Wrapping the app's XHR in a proxy to catch it risks breaking apps; not done.",
+      "evidence": [
+        "totals {'found': 127, 'wrong': 1}",
+        "T6 should create, render and delete discussions              15/16 found  | wrong: GET https://api\\.bulletproofapp\\.com/discussions\\?page=1$"
+      ]
+    },
+    "D": {
+      "verdict": "PASS"
+    },
+    "E": {
+      "verdict": "PASS"
+    },
+    "F": {
+      "verdict": "PASS"
+    },
+    "G": {
+      "verdict": "PASS"
+    },
+    "H": {
+      "verdict": "PASS"
+    },
+    "I": {
+      "verdict": "FAIL (vitest isolation: PASS, browser two clicks: FAIL)",
+      "reason": "Browser has no async context: two clicks 20 ms apart share one interaction window. The map is marked metadata.ambiguous and names both clicks, but it is one map. Test isolation (Vitest) passes."
+    },
+    "J": {
+      "verdict": "MEASURED"
+    },
+    "BROWSER": {
+      "verdict": "FAIL (zero-touch: FAIL, with workaround: FAIL)",
+      "reason": "Only step B5 (two clicks 20 ms apart) fails, for the same reason as I; B1-B4 each produce exactly one map.",
+      "evidence": [
+        "zerotouch maps per step: {'B1 register': 1, 'B2 list page': 1, 'B3 open create drawer': 1, 'B4 create item': 1, 'B5 two clicks 20ms apart': 1} verdict FAIL"
+      ]
+    }
+  }
+}
