@@ -282,7 +282,12 @@ EOF
 # required. The change must show in appmap-trace, which reads `message`:
 # in exactly the three comment-loading tests, each GET /comments that had
 # page=1 is now without it, and nothing else may be marked changed in any
-# test (random ids may not be normalized here, only in G and I).
+# test. The mock backend mints a random id per created discussion/comment
+# on every run, so the before and after runs name the same resource
+# differently; those ids are normalized with the same regex as G and I
+# (scripts/analyze.py RANDOM_ID), and a "- X" / "+ X" pair that is identical
+# after normalizing is the same step, not a change. Anything else marked is
+# still a failure.
 H_OK=$(python3 - "$OUT/h-appmap-trace.txt" "$OUT/h-trace-check.json" <<'EOF'
 import json, re, sys
 text = open(sys.argv[1]).read()
@@ -302,8 +307,22 @@ for line in text.split('\n'):
         blocks[name] = []
     elif name is not None:
         blocks[name].append(line)
-marks = {n: [re.sub(r'^[\s│├└─]*', '', l).split('  [')[0].strip()
-             for l in lines if re.match(r'^[\s│├└─]*[+-] ', l)]
+RANDOM_ID = re.compile(r'(/(?:discussions|comments)/)'
+                       r'(?:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|[A-Za-z0-9_-]{21})'
+                       r'(?=$|[/?\s])')
+def cancel_id_pairs(ms):
+    norm = [RANDOM_ID.sub(r'\1<id>', x) for x in ms]
+    keep = [True] * len(ms)
+    for i, x in enumerate(norm):
+        if not keep[i] or not x.startswith('- '):
+            continue
+        for j, y in enumerate(norm):
+            if keep[j] and j != i and y == '+ ' + x[2:] and ms[j] != '+ ' + ms[i][2:]:
+                keep[i] = keep[j] = False
+                break
+    return [x for x, k in zip(ms, keep) if k]
+marks = {n: cancel_id_pairs([re.sub(r'^[\s│├└─]*', '', l).split('  [')[0].strip()
+                             for l in lines if re.match(r'^[\s│├└─]*[+-] ', l)])
          for n, lines in blocks.items()}
 old = re.compile(r'^- → network: GET /comments\?discussionId=[^&\s]+&page=1$')
 new = re.compile(r'^\+ → network: GET /comments\?discussionId=[^&\s]+$')
