@@ -33,7 +33,7 @@ change 2) before the other check changes.
 | E. Exception | PASS | PASS | **PASS** | `useAuthorization` return: `Error: User does not exist!` (with `object_id`). |
 | F. Failing test | PASS | PASS | **PASS** | `test_status: "failed"`, `Head` call present. |
 | G. Stability | PASS | FAIL | **PASS** | 21/21 identical (random mock-backend ids normalized, rule (d)). |
-| H. Change detection | FAIL | FAIL | **FAIL** | appmap-trace shows the change in all three comment-loading tests, but also every random id the mock backend generates, see below. |
+| H. Change detection | FAIL | FAIL | **PASS** | appmap-trace shows the change (`page` dropped from `GET /comments`) in exactly the three comment-loading tests and nothing else, once the mock backend's random ids are normalized (check change 7). |
 | I. Concurrency | FAIL | FAIL | **FAIL** | Vitest isolation: 21/21 identical (PASS). Browser, two clicks 20 ms apart: one window, now marked `ambiguous` and naming both clicks, but still one map (FAIL, known limitation). |
 | J. Overhead | MEASURED (+7%) | MEASURED | MEASURED | median 10.9 s without, 11.8 s with (+9%, local CI run sharing the machine); an earlier run: 11.3 → 11.8 s (+5%). |
 | Browser | FAIL (0 maps zero-touch) | FAIL | **FAIL** | B1–B4: every expected function and request found, one map each; 6/6 requests on the wire carry `traceparent` (the page load included). B5: see I. |
@@ -51,11 +51,6 @@ failed 3/3 under the recorder).
   (MSW fires `loadstart` then, and intercepts `send()` itself), so a request still waiting when the
   recording closes leaves nothing. Not fixed: seeing it would mean wrapping the app's XHR object in a
   proxy, which risks breaking apps. Left failing.
-- **H** — the change (`page` dropped from `GET /comments`) shows in exactly the three expected tests
-  (`- GET /comments?discussionId=…&page=1`, `+ GET /comments?discussionId=…`). But the app's MSW mock
-  backend gives discussions and comments random ids on every run, so the before/after diff also shows
-  `GET /discussions/<id1>` → `<id2>` in four tests. Rule (d) allows normalizing such ids only in G and I,
-  so H counts them and fails.
 - **I (browser) and Browser B5** — the browser has no async context, so two clicks 20 ms apart share one
   interaction window. The map is now marked `ambiguous: true` with both clicks in
   `metadata.interactions` instead of being silently named after the first, but the check requires two
@@ -96,6 +91,17 @@ Each is its own commit; the message quotes the old and new rule. EXPECTATIONS.md
 6. **H requires the query change in the trace diff** (f7c7411, rule (f)): the official diagrams cannot
    show a query-only change (the query is in `message`); they are reported. H requires appmap-trace to show
    each `…&page=1` → without `page` in the three comment-loading tests, and nothing else changed anywhere.
+
+7. **H ignores the mock backend's random ids** (4965306, rule (d) extended to H): the before and after
+   runs name the same created discussion/comment by different random ids, which is run-to-run noise like a
+   timestamp. With the same regex as G and I, a `- X` / `+ X` pair that is identical once the ids are
+   normalized is the same step. Anything else marked still fails H (checked: turning one GET into a POST in
+   the saved trace output makes H fail).
+
+In CI this suite runs through `acceptance/known-failures.mjs`: every verdict must match
+`KNOWN_FAILURES.json` exactly (C, I and Browser are listed as known failures, with C's evidence line), and
+a known failure that starts passing also fails the job. Local CI run of 7877d44 on Node 22: every verdict
+matches.
 
 Reporting only: B5's evidence shows the `ambiguous` flag (a619051). Setup only: `run.sh` builds the
 recorder before installing it (2cc967c); shellcheck cleanups (0ddada4).
