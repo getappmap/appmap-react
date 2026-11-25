@@ -2,6 +2,7 @@
   "name": "@funwithappmap/react-recorder",
   "private": true,
   "version": "0.0.1",
+  "license": "SEE LICENSE IN LICENSE",
   "description": "Hand-instrumentation AppMap recorder for React (spike for docs/design/01).",
   "type": "module",
   "main": "src/index.ts",

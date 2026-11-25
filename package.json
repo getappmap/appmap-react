@@ -2,6 +2,7 @@
   "name": "appmap-react",
   "private": true,
   "version": "0.0.1",
+  "license": "SEE LICENSE IN LICENSE",
   "description": "AppMap agent for React (browser) and Deno edge functions: records AppMap v1.2 from both and links frontend AppMaps to backend AppMaps via W3C Trace Context.",
   "workspaces": [
     "recorder",
