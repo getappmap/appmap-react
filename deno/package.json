@@ -2,6 +2,7 @@
   "name": "funwithappmap-deno",
   "private": true,
   "version": "0.0.1",
+  "license": "SEE LICENSE IN LICENSE",
   "description": "Deno session driver: per-request AppMap recording for Deno.serve / Supabase edge functions.",
   "bin": {
     "appmap-deno": "bin/appmap-deno.ts"
