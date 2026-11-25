@@ -48,7 +48,7 @@ const E2E_DIR = join(EXAMPLE_ROOT, 'tmp', 'appmap', 'e2e');
 
 const PETCLINIC_GO_DIR =
   process.env.PETCLINIC_GO_DIR ??
-  join(REPO_ROOT, '..', 'FunwithAppMapandClaudeGolang', 'FunwithAppMapandClaudeGolang', 'examples', 'PetClinicGo');
+  join(REPO_ROOT, '..', 'appmap-go', 'examples', 'PetClinicGo');
 
 const goAvailable = spawnSync('go', ['version']).status === 0;
 const backendAvailable = goAvailable && existsSync(join(PETCLINIC_GO_DIR, 'main.go'));

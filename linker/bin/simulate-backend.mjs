@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // simulate-backend: synthesize the backend request AppMaps that the
-// PetClinicGo agent's HTTP middleware WILL emit once it exists (sibling
-// repo follow-up in docs/HANDOFF.md) — one request-recording map per
+// PetClinicGo agent's HTTP middleware will emit (a follow-up in the
+// appmap-go repo) — one request-recording map per
 // http_client_request found in the given frontend maps, with the
 // incoming traceparent copied into metadata (trace_id, parent_span_id).
 //

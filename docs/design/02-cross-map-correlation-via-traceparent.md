@@ -125,7 +125,7 @@ network conditions. That lands with the sibling follow-ups.
   timestamps across machines; order comes from span ids and the
   frontend map's event order.
 
-## Sibling-repo follow-ups (own sessions, per the handoff)
+## Follow-ups in sibling repos
 
 - **Go repo:** when the HTTP middleware gets built (its doc 03-ish),
   include traceparent capture into request-AppMap metadata
