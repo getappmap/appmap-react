@@ -131,3 +131,7 @@ not history rewrites.
 - [09 — real end-to-end test: React ↔ real Deno backend](docs/design/09-real-e2e-deno.md)
   (no sibling repo needed, unlike the Go e2e test — real appmap-deno
   process, real fetch, real appmap-link, on every checkout with `deno`)
+
+## License
+
+MIT. See [LICENSE](LICENSE).
