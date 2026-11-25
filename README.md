@@ -12,19 +12,17 @@ only ever produces its own isolated trace, so `linker/` exists
 specifically to stitch a browser interaction to the backend request(s)
 it caused.
 
-Alpha. Started as the third in a family of AppMap agent prototypes,
-all owned by evlawler:
+Alpha. One of a family of AppMap agents:
 
 | Repo | Runtime | Approach |
 |---|---|---|
-| `Fun-with-Appmap-and-Claude-` | .NET | Harmony runtime instrumentation, ASP.NET Core middleware |
-| `FunwithAppMapandClaudeGolang` | Go | toolexec build-time rewriting, `context.Context` sessions |
+| [`appmap-dotnet`](https://github.com/getappmap/appmap-dotnet) | .NET | Harmony runtime instrumentation, ASP.NET Core middleware |
+| [`appmap-go`](https://github.com/getappmap/appmap-go) | Go | toolexec build-time rewriting, `context.Context` sessions |
 | this repo | React (browser) + Deno | build-time injection (Vite plugin / Babel transform), zero-touch recording on both sides |
 
 The React and Go agents use the same PetClinic domain, so a stitched
-sequence diagram can span both. The full design brief for that
-earlier work is in [`docs/HANDOFF.md`](docs/HANDOFF.md); everything
-specific to this repo is in `docs/design/`.
+sequence diagram can span both. The design notes for this repo are in
+`docs/design/`.
 
 ## Status
 
@@ -89,7 +87,7 @@ npm test --workspace examples/deno-edge         # real deno run, if deno is on P
 ```
 
 To run the example app against a live PetClinicGo backend
-(`FunwithAppMapandClaudeGolang/examples/PetClinicGo` on :8080):
+(`appmap-go/examples/PetClinicGo` on :8080):
 
 ```bash
 npm run dev --workspace examples/petclinic-react

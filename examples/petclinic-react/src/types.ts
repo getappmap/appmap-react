@@ -1,5 +1,5 @@
 // Mirrors the PetClinicGo response shapes
-// (FunwithAppMapandClaudeGolang/examples/PetClinicGo/internal/web/handlers.go).
+// (appmap-go/examples/PetClinicGo/internal/web/handlers.go).
 
 export interface Pet {
   id: number;

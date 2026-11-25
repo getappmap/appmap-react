@@ -29,7 +29,7 @@ Doc 01 made the decision; this doc implements it. A window
   without it the window would close before the response and the
   re-render it causes.
 
-The microtask-drain idea from the handoff reduces, in practice, to
+The microtask-drain idea reduces, in practice, to
 this idle check: with no native hook for "queue drained" available to
 page script, "no recorded activity for one interval" is the observable
 proxy.
@@ -83,7 +83,7 @@ locally:
 
 ```bash
 # terminal 1: the Go backend
-cd FunwithAppMapandClaudeGolang/examples/PetClinicGo && go run .
+cd appmap-go/examples/PetClinicGo && go run .
 
 # terminal 2: this repo
 npm run dev --workspace examples/petclinic-react
